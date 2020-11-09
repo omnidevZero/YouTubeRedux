@@ -1,12 +1,10 @@
 'use strict';
     var reduxSettingsJSON;
-    //var hideCastButton = true;
-    //var smallPlayer = false; //WIP - current style changes cause multiple issues
-    //var darkPlaylist = true;
 
     var flags = {
         "likesChanged":false,
-        "stylesChanged":false
+        "stylesChanged":false,
+        "vidUnpaused": false
     }
     var likesInterval;
     var YTReduxURLPath;
@@ -28,6 +26,7 @@
             confirmButton.click();
             console.log('Clicked at: ' + new Date());
                 document.querySelector('video').play();
+                flags.vidUnpaused = true;
                 console.log('Unpaused at: ' + new Date());
                 document.querySelector('paper-dialog').remove();
         }
@@ -155,6 +154,10 @@ background-color: #3a3a3a !important;
                 YTReduxURLPath = location.pathname;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
+                if (flags.vidUnpaused == true){
+                    document.querySelector('video').play();
+                    flags.vidUnpaused = false;
+                }
                 main();
             }
         },100);
