@@ -174,5 +174,5 @@ yt-img-shadow.ytd-channel-list-sub-menu-avatar-renderer {
 
 /*ADDITIONAL*/
 ytd-rich-grid-renderer {
-    --ytd-rich-grid-items-per-row: 6;
+    --ytd-rich-grid-items-per-row: 6 !important;
 }
