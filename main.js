@@ -137,6 +137,9 @@ background-color: #3a3a3a !important;
     function main(){
         //console.log('Start main')
         getSettings();
+        if (reduxSettingsJSON.autoConfirm){
+            var interval = interval == undefined ? setInterval(confirmIt, 500) : undefined;
+        }
         changeGridWidth();
         addCustomStyles();
         var changeLikes = reduxSettingsJSON.showRawValues ? setInterval(changeLikesCounter,10) : '';
@@ -155,7 +158,7 @@ background-color: #3a3a3a !important;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
                 if (flags.vidUnpaused == true){
-                    document.querySelector('video').play();
+                    setTimeout(function(){document.querySelector('video').play()},5000); //TODO - properly detect video loaded event
                     flags.vidUnpaused = false;
                 }
                 main();
@@ -163,5 +166,4 @@ background-color: #3a3a3a !important;
         },100);
     }
 
-    var interval = interval == undefined ? setInterval(confirmIt, 500) : undefined;
     start();
