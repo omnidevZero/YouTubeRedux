@@ -158,7 +158,10 @@ background-color: #3a3a3a !important;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
                 if (flags.vidUnpaused == true){
-                    setTimeout(function(){document.querySelector('video').play()},5000); //TODO - properly detect video loaded event
+                    setTimeout(function(){
+                        console.log('delayed play')
+                        document.querySelector('video').play()
+                    },5000); //TODO - properly detect video loaded event
                     flags.vidUnpaused = false;
                 }
                 main();
