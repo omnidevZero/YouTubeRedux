@@ -12,7 +12,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") == null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": true,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -159,10 +159,9 @@ background-color: #3a3a3a !important;
                 flags.likesChanged = false;
                 if (flags.vidUnpaused == true){
                     setTimeout(function(){
-                        console.log('delayed play')
                         document.querySelector('video').play()
                     },5000); //TODO - properly detect video loaded event
-                    flags.vidUnpaused = false;
+                    //flags.vidUnpaused = false; //keep doing delayed play because it still sometimes pauses
                 }
                 main();
             }
