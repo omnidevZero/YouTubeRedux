@@ -42,23 +42,22 @@
     function changeGridWidth(){
         if (location.pathname == "/"){
             var retry = setInterval(function(){
-                //console.log('Change grid')
                 var styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
                 var currentStyle = styleItem.style.cssText;
                 var currentStyleArray = currentStyle.split(";");
-                var currentSettings = [];
-                currentStyleArray.pop();
-                currentStyleArray.forEach(element => {
-                    currentSettings.push(element.slice(-1));
-                });
+                var currentSettings = currentStyle.match(/\d+/gm);
 
-                var newSettings = currentSettings;
-                newSettings[0] = reduxSettingsJSON.gridItems + " !important"; //to override different important from css
-                for (var i = 0; i < currentStyleArray.length; i++){
-                    currentStyleArray[i] = currentStyleArray[i].slice(0,-1) + newSettings[i];
+                for (var i = 0; i < currentStyleArray.length-1; i++){ //split, replace and join settings on the fly
+                    if (currentStyleArray[i].includes('--ytd-rich-grid-items-per-row')){
+                        var splitElement = currentStyleArray[i].split(":");
+                        splitElement[1] = reduxSettingsJSON.gridItems + " !important"; //to override different important from css
+                        currentStyleArray[i] = splitElement.join(":");  
+                    }
                 }
-                styleItem.style.cssText = currentStyleArray.join(";") + ";";
-                if (currentStyle != "" && currentSettings[0] == reduxSettingsJSON.gridItems + " !important"){clearInterval(retry);};
+                styleItem.style.cssText = currentStyleArray.join(";");
+                console.log(currentStyle)
+                console.log(currentSettings)
+                if (currentStyle != "" && currentStyle.includes('--ytd-rich-grid-items-per-row:' + reduxSettingsJSON.gridItems)){clearInterval(retry);};
             },100);
         }
     }
@@ -75,6 +74,7 @@ max-height:480px;
 .html5-video-container video {
 max-width:calc(480px * ( 16 / 9 ));
 max-height:480px;
+height:auto;
 }
 [class="ytp-chrome-bottom"] {
 width: calc(100% - (2 * 12px)) !important;
@@ -108,6 +108,9 @@ background-color: #525252;
 }
 ytd-playlist-panel-video-renderer[selected] {
 background-color: #3a3a3a !important;
+}
+yt-formatted-string[has-link-only_]:not([force-default-style]) a.yt-simple-endpoint.yt-formatted-string:visited {
+color: #CACACA;
 }
 ` : '';
             var customStyle = document.createElement("style");

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <style>
+        body {
+            min-width: 300px;
+            max-width: 316px;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            font-size: 75%;
+        }
+        button {
+          max-width: 130px;
+          outline: none;
+          border:none;
+          transition-duration:0.15s;
+          background:none;
+        }
+        button:hover {
+            transform: scale(1.05);
+            transition-duration:0.15s;
+            cursor:pointer;
+            transition-timing-function: cubic-bezier(0.12, 3.4, 1, 1.27);
+        }
+        label {
+            display:block;
+        }
+        fieldset {
+            margin-bottom: 5px;
+        }
+        #header {
+            text-align: center;
+            font-size:20px;
+            font-style: italic;
+            font-weight: bold;
+            text-shadow: 0px 1px black;
+            color: red;
+        }
+        #donate-message {
+            font-style: italic;
+        }
+        .pure {
+            font-style: normal !important;
+        }
+        #donate-message img {
+            height: 100%;
+            width: 100%;
+            margin-top: 8px;
+        }
+        input {
+            margin: 0px 5px 0px 5px;
+        }
+        label {
+            margin: 2px 0px 2px 0px;
+        }
+        .outer-warning {
+            position:absolute;
+            top:15px;
+            left:0;
+            height:calc(100% - 15px);
+            width:100%;
+            display:table;
+            background-color: rgb(255,255,255,0.75);
+        }
+        .warning {
+            font-style: italic;
+            font-weight: bold;
+            font-size:16px;
+            margin: 30px 0px 30px 0px;
+            display:table-cell;
+            vertical-align: middle;
+            pointer-events: none;
+        }
+        .mini {
+            max-width: 30px;
+        }
+        input[type="range"] {
+            top:4px;
+            position:relative;
+            min-width:200px;
+        }
+        .note {
+            font-size:10px;
+            margin-bottom:20px;
+            text-align:right;
+        }
+      </style>
+    </head>
+    <body>
+        <div id="header">YouTube Redux Settings</div>
+        <fieldset style="position:relative;">
+            <legend>Settings</legend>
+            <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
+            <label><input type="checkbox" name="hideCastButton" class="settings">Hide 'Play on TV' button</label>
+            <label><input type="checkbox" name="darkPlaylist" class="settings">Use dark theme for playlists</label>
+            <label><input type="checkbox" name="showRawValues" class="settings">Show raw values for likes/dislikes</label>
+            <div style="text-align:center; display:none;" class="outer-warning"><div class="warning"><span style="color:red;"></span><span style="color:black;">PLEASE VISIT YOUTUBE IN ORDER TO CHANGE SETTINGS</div></div>
+        </fieldset>
+        <fieldset>
+            <legend>Experimental/WIP</legend>
+            <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
+            <label><input type="checkbox" name="smallPlayer" class="settings">Use small default video player</label>
+        </fieldset>
+        <div class="note">Note: most settings require a page refresh to take effect.</div>
+        <div id="donate-message" style="text-align:center;">If you enjoyed this extension and you really have nothing to do with your money, consider donating! <span class="pure">:)</span>
+            <br>
+      <button id="donate"><img src="/images/donate.png" alt="Donation button"></img></button></div>
+      <script src="popup.js"></script>
+    </body>
+  </html>

@@ -1,0 +1,178 @@
+/*GENERAL STYLES*/
+#video-title.ytd-rich-grid-media {
+    --yt-spec-text-primary: #167ac6 !important;
+    font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
+    line-height:1.8rem !important;
+}
+#text.ytd-channel-name {
+    font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
+}
+#metadata-line.ytd-video-meta-block span.ytd-video-meta-block {
+    font-size:11px !important;
+    font-style:italic !important;
+}
+ytd-rich-item-renderer {
+    margin-bottom:20px !important;
+}
+    ytd-guide-section-renderer {
+    --paper-item-min-height: 30px !important;
+}
+#guide-links-primary.ytd-guide-renderer > a, #guide-links-secondary.ytd-guide-renderer > a {
+    font-size:10px !important;
+}
+#guide-section-title.ytd-guide-section-renderer {
+    color:#F00 !important;
+}
+.guide-icon.ytd-guide-entry-renderer {
+    --iron-icon-height: 20px !important;
+    --iron-icon-width: 20px !important;
+    margin-right: 15px !important;
+    color:#878787 !important;
+}
+yt-img-shadow.ytd-guide-entry-renderer {
+    border-radius:0% !important;
+    margin-right: 15px !important;
+}
+    
+/*VIDEO STYLES*/
+#like-bar.ytd-sentiment-bar-renderer {
+    background: #167ac6 !important;
+}
+#author-thumbnail.ytd-comment-renderer yt-img-shadow.ytd-comment-renderer {
+    border-radius:0% !important;
+}
+#author-thumbnail.ytd-comment-simplebox-renderer {
+    border-radius:0% !important;
+}
+#avatar.ytd-video-owner-renderer {
+    border-radius:0% !important;
+}
+#author-text.yt-simple-endpoint.ytd-comment-renderer {
+    color: #128ee9 !important;
+}
+ytd-author-comment-badge-renderer {
+    --ytd-author-comment-badge-name-color: #128ee9 !important;
+}
+.more-button.ytd-comment-replies-renderer, .less-button.ytd-comment-replies-renderer {
+    color: #2793e6 !important;
+}
+span.yt-view-count-renderer {
+    font-size:18px !important;
+    font-variant:small-caps !important;
+}
+ytd-watch-flexy:not([theater]):not([fullscreen]) #primary.ytd-watch-flexy, ytd-watch-flexy:not([theater]):not([fullscreen]) #secondary.ytd-watch-flexy {
+    padding-top:12px !important;
+}
+ytd-expander.ytd-video-secondary-info-renderer {
+    line-height:15px !important;
+    font-size:13px !important;
+}
+#description.ytd-video-secondary-info-renderer {
+    max-width:none !important;
+}
+#vote-count-middle.ytd-comment-action-buttons-renderer {
+    color: #128ee9 !important;
+}
+.content.ytd-metadata-row-header-renderer {
+    display:none !important;
+}
+ytd-metadata-row-renderer {
+    margin:0 !important;
+}
+#title.ytd-metadata-row-renderer {
+    font-size:11px !important;
+    margin:0 !important;
+}
+.content.ytd-metadata-row-renderer {
+    font-size:11px !important;
+    font-weight:normal !important;
+}
+ytd-author-comment-badge-renderer[creator] {
+    background-color: silver !important;
+}
+    
+/*PLAYLIST STYLES*/
+#text.ytd-alert-with-button-renderer {
+    color:#0066ff !important;
+}
+#contributor.ytd-playlist-video-renderer, #index.ytd-playlist-video-renderer, #content.ytd-playlist-video-renderer {
+    padding: 4px 0 !important;
+}
+    
+/*SEARCH RESULTS STYLES*/
+ytd-playlist-renderer[use-prominent-thumbs] ytd-playlist-thumbnail.ytd-playlist-renderer {
+    max-width: 246px !important;
+}
+ytd-thumbnail:not([rich-grid-thumbnail]) {
+    max-width: 246px !important;
+}
+#video-title.ytd-video-renderer {
+    color:#167ac6 !important;
+}
+#video-title.ytd-playlist-renderer {
+    color:#167ac6 !important;
+}
+ytd-video-renderer[use-prominent-thumbs] #channel-info.ytd-video-renderer {
+    padding:0 !important;
+}
+ytd-search-filter-renderer.ytd-search-filter-group-renderer {
+    padding: 2px 0 0 !important;
+}
+#video-title.ytd-radio-renderer {
+    color:#167ac6 !important;
+}
+    
+/*CHANNEL STYLES*/
+#video-title.ytd-grid-playlist-renderer {
+    color:#167ac6 !important;
+}
+#video-title.yt-simple-endpoint.ytd-grid-video-renderer {
+    color:#167ac6 !important;
+}
+.tab-content.paper-tab {
+    font-size:13px !important;
+}
+paper-tab.ytd-c4-tabbed-header-renderer {
+    padding: 0 8px !important;
+}
+#selectionBar.paper-tabs {
+    border-bottom: 2px solid #f00 !important;
+}
+#description.ytd-channel-about-metadata-renderer, #bio.ytd-channel-about-metadata-renderer {
+    font-size:13px !important;
+}
+#title.ytd-grid-channel-renderer {
+    color:#167ac6 !important;
+}
+yt-img-shadow.ytd-grid-channel-renderer {
+    border-radius: 0% !important;
+}
+#avatar.ytd-c4-tabbed-header-renderer {
+    border-radius: 0% !important;
+}
+yt-img-shadow.ytd-mini-channel-renderer {
+    border-radius: 0% !important;
+}
+#items.ytd-vertical-channel-section-renderer > *.ytd-vertical-channel-section-renderer:not(:first-child) {
+    padding-top: 8px !important;
+}
+.grid-subheader.ytd-shelf-renderer {
+    margin-top: 12px !important;
+}
+#contents.ytd-shelf-renderer {
+    margin-top: 12px !important;
+}
+    
+/*FEED STYLES*/
+yt-img-shadow.ytd-channel-list-sub-menu-avatar-renderer {
+    width: 40px !important;
+    height: 40px !important;
+}
+#contents.ytd-channel-list-sub-menu-renderer {
+    max-width:300px !important;
+}
+
+/*ADDITIONAL*/
+ytd-rich-grid-renderer {
+    --ytd-rich-grid-items-per-row: 6 !important;
+}

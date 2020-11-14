@@ -2,12 +2,8 @@ var donateButton = document.querySelector('#donate');
 var globalURL;
 var currentSettings;
 
-donateButton.onclick = function(element) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.executeScript(
-        tabs[0].id,
-        {code: 'window.open("https://paypal.me/kowpowkow");'});
-  });
+donateButton.onclick = function() {
+  window.open("https://paypal.me/kowpowkow");
 };
 
 chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
