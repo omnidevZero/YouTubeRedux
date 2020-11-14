@@ -55,8 +55,6 @@
                     }
                 }
                 styleItem.style.cssText = currentStyleArray.join(";");
-                console.log(currentStyle)
-                console.log(currentSettings)
                 if (currentStyle != "" && currentStyle.includes('--ytd-rich-grid-items-per-row:' + reduxSettingsJSON.gridItems)){clearInterval(retry);};
             },100);
         }
@@ -114,7 +112,8 @@ color: #CACACA;
 }
 ` : '';
             var customStyle = document.createElement("style");
-            customStyle.innerHTML = `` + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist;
+            var customStyleInner = conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist;
+            customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;
         }
