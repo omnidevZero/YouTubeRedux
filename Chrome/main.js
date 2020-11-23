@@ -3,8 +3,7 @@
 
     var flags = {
         "likesChanged":false,
-        "stylesChanged":false,
-        "vidUnpaused": false
+        "stylesChanged":false
     }
     var likesInterval;
     var YTReduxURLPath;
@@ -22,13 +21,10 @@
 
     function confirmIt(){
         var confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button');
-        if (confirmButton != null){
+        if (confirmButton != null && !document.querySelector('paper-dialog[aria-hidden="true"]')){
             confirmButton.click();
-            console.log('Clicked at: ' + new Date());
-                document.querySelector('video').play();
-                flags.vidUnpaused = true;
-                console.log('Unpaused at: ' + new Date());
-                document.querySelector('paper-dialog').remove();
+            document.querySelector('video').play();
+            //console.log('Clicked at: ' + new Date());
         }
     }
 
@@ -159,12 +155,6 @@ color: #CACACA;
                 YTReduxURLPath = location.pathname;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
-                if (flags.vidUnpaused == true){
-                    setTimeout(function(){
-                        document.querySelector('video').play()
-                    },5000); //TODO - properly detect video loaded event
-                    //flags.vidUnpaused = false; //keep doing delayed play because it still sometimes pauses
-                }
                 main();
             }
         },100);
