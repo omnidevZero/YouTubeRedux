@@ -8,6 +8,7 @@
     var likesInterval;
     var YTReduxURLPath;
     var YTReduxURLSearch;
+    var aspectRatio = window.screen.width / window.screen.height;
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") == null){
@@ -61,14 +62,18 @@
             var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"] {display:none !important;}` : '';
             var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
-ytd-watch-flexy[flexy_] #player-container-outer.ytd-watch-flexy {
-max-width:calc(480px * ( 16 / 9 ));
-max-height:480px;
+#player-container-outer {
+width:calc(480px * ${aspectRatio}) !important;
+height:480px !important;
+}
+.html5-video-container {
+    width:100% !important;
+    height:100% !important;
 }
 .html5-video-container video {
-max-width:calc(480px * ( 16 / 9 ));
-max-height:480px;
-height:auto;
+width:100% !important;
+height:100% !important;
+left:0 !important;
 }
 [class="ytp-chrome-bottom"] {
 width: calc(100% - (2 * 12px)) !important;
@@ -132,11 +137,17 @@ color: #CACACA;
         }
     }
 
+    function recalc(){
+        //console.log('Recalculate video dimensions');
+    }
+
     function main(){
-        //console.log('Start main')
         getSettings();
         if (reduxSettingsJSON.autoConfirm){
             var interval = interval == undefined ? setInterval(confirmIt, 500) : undefined;
+        }
+        if (reduxSettingsJSON.smallPlayer){
+            recalc();
         }
         changeGridWidth();
         addCustomStyles();
