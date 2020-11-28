@@ -62,9 +62,16 @@
             var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"] {display:none !important;}` : '';
             var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
+#primary {
+    max-width: calc((100vh - (var(--ytd-watch-flexy-masthead-height) + var(--ytd-margin-6x) + var(--ytd-watch-flexy-space-below-player))) * (${window.screen.width} / ${window.screen.height})) !important;
+    min-width: calc(var(--ytd-watch-flexy-min-player-height) * (${window.screen.width} / ${window.screen.height})) !important;
+}
 #player-container-outer {
 width:calc(480px * ${aspectRatio}) !important;
 height:480px !important;
+}
+#player-container-inner {
+padding-top: calc(${window.screen.height} / ${window.screen.width} * 100%) !important;
 }
 .html5-video-container {
 width:100% !important;
