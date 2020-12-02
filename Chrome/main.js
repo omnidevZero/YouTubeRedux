@@ -60,6 +60,7 @@
     function addCustomStyles(){
         if (!flags.stylesChanged){
             var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"] {display:none !important;}` : '';
+            var previewHeightOffset = '303px'; //TODO get real offset from default height to small height (currently 720px to 480px)
             var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
 #primary {
@@ -84,6 +85,9 @@ left:0 !important;
 }
 [class="ytp-chrome-bottom"] {
 width: calc(100% - (2 * 12px)) !important;
+}
+div[aria-live="polite"].ytp-tooltip.ytp-preview:not(.ytp-text-detail) {
+    top: ${previewHeightOffset} !important;
 }
 ` : '';
             var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
@@ -153,7 +157,7 @@ color: #CACACA;
         if (reduxSettingsJSON.autoConfirm){
             var interval = interval == undefined ? setInterval(confirmIt, 500) : undefined;
         }
-        if (reduxSettingsJSON.smallPlayer){
+        if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
             recalc();
         }
         changeGridWidth();
