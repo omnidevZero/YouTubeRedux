@@ -87,7 +87,7 @@ left:0 !important;
 width: calc(100% - (2 * 12px)) !important;
 }
 div[aria-live="polite"].ytp-tooltip.ytp-preview:not(.ytp-text-detail) {
-    top: ${previewHeightOffset} !important;
+    /*top: ${previewHeightOffset} !important;*/
 }
 ` : '';
             var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
