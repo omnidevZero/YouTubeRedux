@@ -32,7 +32,7 @@
     function resumePlayback(){
         if (!document.querySelector('ytd-miniplayer[active]') && document.querySelector('.ytp-play-button > svg > path').getAttribute('d') == 'M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z'){ //click play if it's the displayed button icon and there is no mini player
             document.querySelector('.ytp-play-button').click();
-            console.log('Unpaused at: ' + new Date());
+            console.log('YouTube Redux Unpaused at: ' + new Date());
         }
     }
 
@@ -60,7 +60,6 @@
     function addCustomStyles(){
         if (!flags.stylesChanged){
             var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"] {display:none !important;}` : '';
-            var previewHeightOffset = '303px'; //TODO get real offset from default height to small height (currently 720px to 480px)
             var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
 #primary {
@@ -85,9 +84,6 @@ left:0 !important;
 }
 [class="ytp-chrome-bottom"] {
 width: calc(100% - (2 * 12px)) !important;
-}
-div[aria-live="polite"].ytp-tooltip.ytp-preview:not(.ytp-text-detail) {
-    /*top: ${previewHeightOffset} !important;*/
 }
 ` : '';
             var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
@@ -128,6 +124,8 @@ color: #CACACA;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;
+
+            //window.dispatchEvent(new Event('resize'));
         }
     }
 
@@ -148,8 +146,44 @@ color: #CACACA;
         }
     }
 
+    function isTheater(){
+        if (document.querySelector('ytd-watch-flexy[theater]') != null){
+            return true;
+        }
+    }
+
+    function isFullscreen(){
+        if (document.querySelector('ytd-watch-flexy[fullscreen]') != null){
+            return true;
+        }
+    }
+
     function recalc(){
         //console.log('Recalculate video dimensions');
+        var previewHeightOffset = '303px'; //TODO get real offset from default height to small height (currently 720px to 480px)
+        var observerConfig = {
+            attributeFilter: ["style"]
+        }
+        var previewElement;
+
+        function fixPreview(){
+            if (!isTheater() && !isFullscreen()){
+                previewElement.style.top = previewHeightOffset; 
+            }
+        }
+
+        function setObserver(){
+            var observer = new MutationObserver(fixPreview);
+            observer.observe(previewElement, observerConfig); 
+        }
+
+        var checkForPreview = setInterval(() => {
+            previewElement = document.querySelector('div[aria-live="polite"]:not(.iron-a11y-announcer)');
+            if (previewElement != null && previewElement != undefined){
+                clearInterval(checkForPreview);
+                setObserver();
+            }
+        }, 100)
     }
 
     function main(){
