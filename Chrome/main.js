@@ -1,6 +1,5 @@
 'use strict';
     var reduxSettingsJSON;
-
     var flags = {
         "likesChanged":false,
         "stylesChanged":false
@@ -12,7 +11,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") == null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -186,6 +185,64 @@ color: #CACACA;
         }, 100)
     }
 
+    function startObserving(){
+        console.log('observing for changes')
+
+        function insertDummy(){
+            console.log('start inserting')
+            var infiniteStopped = false;
+            var comments = document.querySelectorAll('ytd-comment-thread-renderer');
+            var suggestions = document.querySelectorAll('ytd-compact-video-renderer');
+            if (comments.length >= 0 && !infiniteStopped){
+                observer.disconnect();
+                var dummyComment = document.createElement('div');
+                dummyComment.id = 'dummyComment';
+                dummyComment.style = 'height:2000px;width:100%; text-align:center;';
+                dummyComment.innerHTML = '<input type="button" style="height:30px; width:50%; transition-duration: 0.5s;" value="Show more..."></input>';
+                contentsElement.append(dummyComment);
+                infiniteStopped = true;
+                document.onscroll = preventScrolling;
+                document.querySelector('#dummyComment > input').addEventListener('click', () => {
+                    dummyComment.remove();
+                    infiniteStopped = false;
+                    window.scrollBy({top: 100, left: 0, behavior: "smooth"});
+                    observer.observe(contentsElement, observerConfig);
+                });
+            }
+        }
+
+        var observerConfig = {
+            childList: true
+        }
+        var contentsElement = document.querySelector('#contents.style-scope.ytd-item-section-renderer');
+        var observer = new MutationObserver(insertDummy);
+        observer.observe(contentsElement, observerConfig);
+    }
+
+    function preventScrolling(){
+        var blocker = document.querySelector('#dummyComment > input');
+        if (blocker != null && window.scrollY >= blocker.offsetTop - (window.innerHeight/2)){
+            blocker.scrollIntoView({block: "center"});
+        }
+    }
+
+    function checkForComments(){
+        var checkForCommentsInt = setInterval(() => {
+            console.log('check for comments')
+            if (document.querySelector('#contents > ytd-comment-thread-renderer') != null){
+                clearInterval(checkForCommentsInt);
+                startObserving();
+            }
+        }, 500)
+    }
+
+    function clearStuff(){
+        document.onscroll = function(){};
+        if (!!document.querySelector('#dummyComment')){
+            document.querySelector('#dummyComment').remove();  
+        }
+    }
+
     function main(){
         getSettings();
         if (reduxSettingsJSON.autoConfirm){
@@ -193,6 +250,9 @@ color: #CACACA;
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
             recalc();
+        }
+        if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
+            checkForComments();
         }
         changeGridWidth();
         addCustomStyles();
@@ -211,6 +271,9 @@ color: #CACACA;
                 YTReduxURLPath = location.pathname;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
+                if (reduxSettingsJSON.disableInfiniteScrolling){
+                    clearStuff();
+                }
                 main();
             }
         },100);
