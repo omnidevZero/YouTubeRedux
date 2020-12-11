@@ -123,19 +123,6 @@ color: #CACACA;
             var customStyleInner = conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
-            if (reduxSettingsJSON.alignContentToPlayer){
-                waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
-                function alignItems(){
-                    console.log(document.querySelector('#columns > #primary > #primary-inner').getBoundingClientRect().left)
-                    var calcPadding = document.querySelector('.html5-video-container video').getBoundingClientRect().left - document.querySelector('#columns > #primary > #primary-inner').getBoundingClientRect().left;
-                    
-                    document.querySelector('#redux-style').innerHTML += `
-                    #columns > #primary > #primary-inner {
-                        padding: 0 ${calcPadding}px 0 ${calcPadding}px;
-                    }
-                    `;
-                }
-            }
             flags.stylesChanged = true;
 
             //window.dispatchEvent(new Event('resize'));
@@ -150,6 +137,31 @@ color: #CACACA;
                 callback();
             }
         }, interval);
+    }
+
+    function alignItems(){
+        var player = document.querySelector('.html5-video-container video');
+        var content = document.querySelector('#columns > #primary > #primary-inner');
+        var calcPadding = player == null || content == null ? 0 : player.getBoundingClientRect().left - content.getBoundingClientRect().left;
+        if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null){
+            waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
+        } else {
+            var reduxAlignElement = document.querySelector('#redux-style-align');
+            var calcInner = `
+            #columns > #primary > #primary-inner {
+                padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;
+            }
+            `;
+            if (reduxAlignElement == null){
+                var customStyle = document.createElement("style");
+                customStyle.id = 'redux-style-align';
+                var customStyleInner = calcInner;
+                customStyle.appendChild(document.createTextNode(customStyleInner));
+                document.head.append(customStyle); 
+            } else {
+                reduxAlignElement.innerHTML = calcInner;
+            }
+        }
     }
 
     function changeLikesCounter(){
@@ -274,6 +286,9 @@ color: #CACACA;
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
             checkForComments();
+        }
+        if (reduxSettingsJSON.alignContentToPlayer && window.location.href.includes('/watch?')){
+            waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
         }
         changeGridWidth();
         addCustomStyles();
