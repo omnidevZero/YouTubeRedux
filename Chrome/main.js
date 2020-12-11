@@ -159,7 +159,10 @@ color: #CACACA;
                 customStyle.appendChild(document.createTextNode(customStyleInner));
                 document.head.append(customStyle); 
             } else {
-                reduxAlignElement.innerHTML = calcInner;
+                if (reduxAlignElement != null){
+                    reduxAlignElement.textContent = "";
+                }
+                reduxAlignElement.appendChild(document.createTextNode(calcInner));
             }
         }
     }
