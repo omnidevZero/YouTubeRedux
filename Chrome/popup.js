@@ -31,6 +31,16 @@ document.querySelector('input[type="range"]').addEventListener('change', functio
   changeGridWidth(this.value);
 })
 
+document.querySelector('input[name="smallPlayer"]').addEventListener('change', () => {
+  if (document.querySelector('input[name="smallPlayer"]').checked){
+    document.querySelector('input[name="alignContentToPlayer"]').removeAttribute('disabled');
+  } else {
+    document.querySelector('input[name="alignContentToPlayer"]').setAttribute('disabled', '');
+    document.querySelector('input[name="alignContentToPlayer"]').checked = false;
+    saveSettings();
+  }
+})
+
 document.querySelector('.slider-control').addEventListener('change', function(){
   var slider = document.querySelector('input[type="range"]');
   slider.value = this.value;
@@ -84,6 +94,10 @@ function changeGridWidth(numberOfItems){
           itemsCheck[i].checked = Object.values(currentSettings)[j];
         }
       }
+    }
+    //uncheck subsetting
+    if (document.querySelector('input[name="smallPlayer"]').checked){
+      document.querySelector('input[name="alignContentToPlayer"]').removeAttribute('disabled');
     }
   }
 

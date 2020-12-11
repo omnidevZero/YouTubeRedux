@@ -11,7 +11,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") == null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "alignContentToPlayer": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -119,13 +119,35 @@ color: #CACACA;
 }
 ` : '';
             var customStyle = document.createElement("style");
+            customStyle.id = 'redux-style';
             var customStyleInner = conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
+            if (reduxSettingsJSON.alignContentToPlayer){
+                waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
+                function alignItems(){
+                    var calcPadding = document.querySelector('.html5-video-container video').getBoundingClientRect().left - document.querySelector('#columns > #primary > #primary-inner').getBoundingClientRect().left;
+                    document.querySelector('#redux-style').innerHTML += `
+                    #columns > #primary > #primary-inner {
+                        padding: 0 ${calcPadding}px 0 ${calcPadding}px;
+                    }
+                    `;
+                }
+            }
             flags.stylesChanged = true;
 
             //window.dispatchEvent(new Event('resize'));
         }
+    }
+
+    function waitForElement(selector, interval, callback){
+        var wait = setInterval(() => {
+            var element = document.querySelector(selector)
+            if (element != null){
+                clearInterval(wait);
+                callback();
+            }
+        }, interval);
     }
 
     function changeLikesCounter(){
@@ -186,10 +208,8 @@ color: #CACACA;
     }
 
     function startObserving(){
-        console.log('observing for changes')
 
         function insertDummy(){
-            console.log('start inserting')
             var infiniteStopped = false;
             var comments = document.querySelectorAll('ytd-comment-thread-renderer');
             var suggestions = document.querySelectorAll('ytd-compact-video-renderer');
@@ -228,7 +248,6 @@ color: #CACACA;
 
     function checkForComments(){
         var checkForCommentsInt = setInterval(() => {
-            console.log('check for comments')
             if (document.querySelector('#contents > ytd-comment-thread-renderer') != null){
                 clearInterval(checkForCommentsInt);
                 startObserving();
