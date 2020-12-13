@@ -152,8 +152,7 @@ color: #CACACA;
                 padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;
             }
             #secondary.ytd-watch-flexy {
-                position: relative;
-                right: ${calcPadding}px;
+                transform: translateX(-${calcPadding}px);
             }
             #playlist > #container {
                 max-height: calc(${document.querySelector('video').offsetHeight}px + 2px) !important;
