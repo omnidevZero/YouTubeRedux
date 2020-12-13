@@ -33,10 +33,10 @@ document.querySelector('input[type="range"]').addEventListener('change', functio
 
 document.querySelector('input[name="smallPlayer"]').addEventListener('change', () => {
   if (document.querySelector('input[name="smallPlayer"]').checked){
-    document.querySelector('input[name="alignContentToPlayer"]').removeAttribute('disabled');
+    document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
   } else {
-    document.querySelector('input[name="alignContentToPlayer"]').setAttribute('disabled', '');
-    document.querySelector('input[name="alignContentToPlayer"]').checked = false;
+    document.querySelector('input[name="blackBars"]').setAttribute('disabled', '');
+    document.querySelector('input[name="blackBars"]').checked = false;
     saveSettings();
   }
 })
@@ -97,7 +97,7 @@ function changeGridWidth(numberOfItems){
     }
     //uncheck subsetting
     if (document.querySelector('input[name="smallPlayer"]').checked){
-      document.querySelector('input[name="alignContentToPlayer"]').removeAttribute('disabled');
+      document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
     }
   }
 

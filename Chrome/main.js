@@ -11,7 +11,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") == null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "alignContentToPlayer": false}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -142,7 +142,7 @@ color: #CACACA;
     function alignItems(){
         var player = document.querySelector('.html5-video-container video');
         var content = document.querySelector('#columns > #primary > #primary-inner');
-        var calcPadding = player == null || content == null ? 0 : player.getBoundingClientRect().left - content.getBoundingClientRect().left;
+        var calcPadding = player == null || content == null ? 0 : Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
         if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null){
             waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
         } else {
@@ -151,7 +151,21 @@ color: #CACACA;
             #columns > #primary > #primary-inner {
                 padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;
             }
+            #secondary.ytd-watch-flexy {
+                position: relative;
+                right: ${calcPadding}px;
+            }
+            #playlist > #container {
+                max-height: calc(${document.querySelector('video').offsetHeight}px + 2px) !important;
+            }
             `;
+            if (reduxSettingsJSON.blackBars){
+                calcInner += `
+                .html5-video-container video {
+                    background-color: black;
+                }
+                `;
+            }
             if (reduxAlignElement == null){
                 var customStyle = document.createElement("style");
                 customStyle.id = 'redux-style-align';
@@ -286,12 +300,10 @@ color: #CACACA;
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
             recalc();
+            waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
             checkForComments();
-        }
-        if (reduxSettingsJSON.alignContentToPlayer && window.location.href.includes('/watch?')){
-            waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
         }
         changeGridWidth();
         addCustomStyles();
