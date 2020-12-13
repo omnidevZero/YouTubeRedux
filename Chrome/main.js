@@ -96,6 +96,13 @@ background-color: #1a1a1a;
 ytd-playlist-panel-renderer[collapsible] .title.ytd-playlist-panel-renderer {
 color: #fff;
 }
+.title.ytd-playlist-panel-renderer {
+--yt-endpoint-color: white;
+}
+.title.ytd-playlist-panel-renderer a:hover {
+--yt-endpoint-color: white;
+color: white !important;
+}
 .publisher.ytd-playlist-panel-renderer {
 color: #B8B8B8;
 }
@@ -114,7 +121,7 @@ background-color: #525252;
 ytd-playlist-panel-video-renderer[selected] {
 background-color: #3a3a3a !important;
 }
-yt-formatted-string[has-link-only_]:not([force-default-style]) a.yt-simple-endpoint.yt-formatted-string:visited {
+#publisher-container > yt-formatted-string[has-link-only_]:not([force-default-style]) a.yt-simple-endpoint.yt-formatted-string:visited {
 color: #CACACA;
 }
 ` : '';
