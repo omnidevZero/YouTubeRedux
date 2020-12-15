@@ -67,7 +67,6 @@
 }
 #player-container-outer {
 width:calc(480px * ${aspectRatio}) !important;
-height:480px !important;
 }
 #player-container-inner {
 padding-top: calc(${window.screen.height} / ${window.screen.width} * 100%) !important;
