@@ -35,6 +35,9 @@ yt-img-shadow.ytd-guide-entry-renderer {
 }
     
 /*VIDEO STYLES*/
+.title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
+    font-size: 20px;
+}
 #like-bar.ytd-sentiment-bar-renderer {
     background: #167ac6 !important;
 }

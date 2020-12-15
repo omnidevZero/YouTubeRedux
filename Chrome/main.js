@@ -10,7 +10,7 @@
     var aspectRatio = window.screen.width / window.screen.height;
 
     function getSettings(){
-        if (localStorage.getItem("reduxSettings") == null){
+        if (localStorage.getItem("reduxSettings") === null){
             var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
