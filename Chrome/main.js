@@ -162,7 +162,7 @@ color: #CACACA;
                 transform: translateX(-${calcPadding}px);
             }
             #playlist > #container {
-                max-height: calc(${document.querySelector('video').offsetHeight}px + 1px) !important;
+                max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
             }
             `;
             if (reduxSettingsJSON.blackBars){
