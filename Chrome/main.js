@@ -66,7 +66,8 @@ max-width: calc((100vh - (var(--ytd-watch-flexy-masthead-height) + var(--ytd-mar
 min-width: calc(var(--ytd-watch-flexy-min-player-height) * (${window.screen.width} / ${window.screen.height})) !important;
 }
 #player-container-outer {
-width:calc(480px * ${aspectRatio}) !important;
+max-width: calc(480px * ${aspectRatio}) !important;
+min-width: 0 !important;
 }
 #player-container-inner {
     padding-top: calc(${window.screen.height} / ${window.screen.width} * 100%) !important;
@@ -161,7 +162,7 @@ color: #CACACA;
                 transform: translateX(-${calcPadding}px);
             }
             #playlist > #container {
-                max-height: calc(${document.querySelector('video').offsetHeight}px + 2px) !important;
+                max-height: calc(${document.querySelector('video').offsetHeight}px + 1px) !important;
             }
             `;
             if (reduxSettingsJSON.blackBars){
