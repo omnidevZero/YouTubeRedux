@@ -2,7 +2,8 @@
     var reduxSettingsJSON;
     var flags = {
         "likesChanged":false,
-        "stylesChanged":false
+        "stylesChanged":false,
+        "isRearranged":false
     }
     var likesInterval;
     var YTReduxURLPath;
@@ -11,7 +12,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -292,17 +293,139 @@ color: #CACACA;
         }, 500)
     }
 
-    function clearStuff(){
+    function clearScrollingStuff(){
         document.onscroll = function(){};
         if (!!document.querySelector('#dummyComment')){
             document.querySelector('#dummyComment').remove();  
         }
     }
 
+    function rearrangeInfo(){
+        var infoTop = document.querySelector('#top-row.ytd-video-secondary-info-renderer');
+        var infoBar = document.querySelector('#info.ytd-video-primary-info-renderer');
+        var infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
+        var topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
+        var miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
+        document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
+        var dateElement = document.querySelector('#date > yt-formatted-string');
+        var dateOuter = document.querySelector('#info-text > #date');
+        var descriptionElement = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content');
+        var descriptionElementInner = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content > #description');
+        var descriptionMeta = document.querySelector('#primary-inner > #meta > #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander');
+        var views = document.querySelector('#info-text > #count');
+        var likesContainer = document.querySelector('#info > #menu-container');
+        var likesBar = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer');
+        var likesWithValues =  document.querySelector('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer');
+        var subButton =  document.querySelector('ytd-video-secondary-info-renderer > #container > #top-row > #subscribe-button');
+        var uploadInfo =  document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info');
+        var channelName = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #channel-name');
+        var subCount = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count');
+        var reduxSubDiv = document.createElement('div');
+        reduxSubDiv.id = 'reduxSubDiv';
+        dateElement.classList.add('redux-moved-date');
+
+        infoBar.prepend(infoTop);
+        infoContents.append(miscButton);
+        moveTopLevelItems();
+        descriptionElement.prepend(dateElement);
+        if (dateOuter != null){dateOuter.remove()};
+        likesContainer.prepend(likesBar);
+        likesContainer.prepend(views);
+        uploadInfo.prepend(reduxSubDiv);
+        reduxSubDiv.append(subButton);
+        reduxSubDiv.append(subCount);
+        uploadInfo.prepend(channelName);
+
+        var style = document.createElement('style');
+        style.id = 'redux-style-rearrange';
+        var innerStyle = `
+        /*VID REARRANGE STYLES*/
+        .ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer {
+            display:none;
+        }
+        #reduxSubDiv {
+            display: flex !important;
+            margin-top: 5px !important;
+        }
+        #info.ytd-video-primary-info-renderer > #menu-container {
+            transform: translateY(5px) !important;
+        }
+        #count.ytd-video-primary-info-renderer {
+            width: 100% !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
+        #info > #menu-container > ytd-sentiment-bar-renderer {
+            display: block !important;
+            width:100% !important; 
+            padding:0 !important;
+        }
+        #date > yt-formatted-string, .redux-moved-date {
+            font-weight: 500 !important;
+        }
+        #container > ytd-expander.ytd-video-secondary-info-renderer > #content > #description {
+            margin-top: 5px !important;
+        }
+        #menu.ytd-video-primary-info-renderer {
+            display: flex !important;
+            justify-content: flex-end !important;
+        }
+        #primary-inner > #meta > #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander {
+            margin-left: 0 !important;
+        }
+        #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
+            padding-top: 2px !important;
+        }
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button {
+            margin: 0 !important; 
+            padding: 2px 8px 2px 8px !important; 
+            text-transform: none !important; 
+            font-weight: normal !important; 
+            margin-right: 5px !important; 
+            max-height: 21px !important;
+        }
+        #notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
+            max-height: 21px !important; 
+            max-width: 21px !important; 
+            padding: 0 !important; 
+            margin-right: 5px !important;
+        }
+        #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
+            margin-top: 5px !important;
+        }
+        `;
+        style.appendChild(document.createTextNode(innerStyle));
+        document.querySelector('head').append(style);
+        flags.isRearranged = true;
+    }
+
+    function moveTopLevelItems(){
+        var topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
+        var infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
+        var existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
+        document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
+        for (var i = topLevelElements.length-1; i >= 0; i--){
+            infoContents.insertBefore(topLevelElements[i], existingMovedItem);
+            topLevelElements[i].classList.add('redux-moved-info');
+            topLevelElements[i].style.display = 'inline-block';
+        }
+    }
+
+    function clearMovedInfo(){
+        var moveInfo = document.querySelectorAll('.redux-moved-info');
+        for (var i = 0; i < moveInfo.length; i++){
+            moveInfo[i].remove();
+        }
+        waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
+    }
+
     function main(){
         getSettings();
         if (reduxSettingsJSON.autoConfirm){
             var interval = interval == undefined ? setInterval(confirmIt, 500) : undefined;
+        }
+        if (!reduxSettingsJSON.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged){
+            waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
             recalc();
@@ -329,7 +452,10 @@ color: #CACACA;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
                 if (reduxSettingsJSON.disableInfiniteScrolling){
-                    clearStuff();
+                    clearScrollingStuff();
+                }
+                if (!!document.querySelector('.redux-moved-info')){
+                    clearMovedInfo();
                 }
                 main();
             }
