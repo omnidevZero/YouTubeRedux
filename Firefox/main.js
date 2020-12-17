@@ -12,7 +12,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -126,9 +126,17 @@ background-color: #3a3a3a !important;
 color: #CACACA;
 }
 ` : '';
+var conditionalLogo = reduxSettingsJSON.classicLogo ? `
+#logo-icon-container {
+    content: url('${browser.extension.getURL('/images/classicLogo.png')}');
+    width: 72px !important;
+    height: auto !important;
+}
+` : '';
+
             var customStyle = document.createElement("style");
             customStyle.id = 'redux-style';
-            var customStyleInner = conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist;
+            var customStyleInner = conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;

@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "description": "Adds many classic layout styles back to modern YouTube while making multiple pages more condensed along with additional features!",
     "permissions": ["activeTab"],
     "browser_action": {
@@ -30,6 +30,9 @@
         "exclude_matches": ["*://*.youtube.com/embed/*"],
         "js": ["main.js"]
       }
+    ],
+    "web_accessible_resources": [
+      "images/classicLogo.png"
     ],
     "manifest_version": 2
   }
