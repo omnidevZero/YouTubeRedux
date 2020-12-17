@@ -370,6 +370,7 @@ color: #CACACA;
         }
         #date > yt-formatted-string, .redux-moved-date {
             font-weight: 500 !important;
+            color: var(--yt-spec-text-primary) !important;
         }
         #container > ytd-expander.ytd-video-secondary-info-renderer > #content > #description {
             margin-top: 5px !important;
