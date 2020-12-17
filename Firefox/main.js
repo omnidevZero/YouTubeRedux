@@ -401,6 +401,10 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
             margin-top: 5px !important;
         }
+        #top-level-buttons > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
+            height: 20px !important;
+            width: 20px !important;
+        }
         `;
         style.appendChild(document.createTextNode(innerStyle));
         document.querySelector('head').append(style);
