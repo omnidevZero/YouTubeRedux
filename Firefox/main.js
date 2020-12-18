@@ -344,8 +344,8 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         uploadInfo.prepend(reduxSubDiv);
         reduxSubDiv.append(subButton);
         reduxSubDiv.append(subCount);
-        if (analyticsButton.offsetWidth > 0){reduxSubDiv.prepend(analyticsButton)};
-        if (subscribeButton.offsetWidth > 0){reduxSubDiv.prepend(subscribeButton)};
+        reduxSubDiv.prepend(analyticsButton);
+        reduxSubDiv.prepend(subscribeButton);
         uploadInfo.prepend(channelName);
 
         var style = document.createElement('style');
@@ -389,6 +389,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         }
         #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
             padding-top: 2px !important;
+            margin-left: 4px !important;
         }
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
         #sponsor-button > ytd-button-renderer > a > paper-button, #analytics-button > ytd-button-renderer > a > paper-button {
@@ -396,8 +397,13 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             padding: 2px 8px 2px 8px !important; 
             text-transform: none !important; 
             font-weight: normal !important; 
-            margin-right: 5px !important; 
             max-height: 21px !important;
+        }
+        #sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
+            margin-right: 0px !important;
+        }
+        #sponsor-button.ytd-video-owner-renderer > ytd-button-renderer, #analytics-button.ytd-video-owner-renderer > ytd-button-renderer {
+            margin-right: 4px !important;
         }
         #notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
             max-height: 21px !important; 
