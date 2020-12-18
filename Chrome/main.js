@@ -328,6 +328,7 @@ color: #CACACA;
         var uploadInfo =  document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info');
         var channelName = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #channel-name');
         var subCount = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count');
+        var subscribeButton = document.querySelector('#sponsor-button');
         var reduxSubDiv = document.createElement('div');
         reduxSubDiv.id = 'reduxSubDiv';
         dateElement.classList.add('redux-moved-date');
@@ -342,6 +343,7 @@ color: #CACACA;
         uploadInfo.prepend(reduxSubDiv);
         reduxSubDiv.append(subButton);
         reduxSubDiv.append(subCount);
+        if (!!subscribeButton){reduxSubDiv.prepend(subscribeButton)};
         uploadInfo.prepend(channelName);
 
         var style = document.createElement('style');
@@ -357,6 +359,7 @@ color: #CACACA;
         }
         #info.ytd-video-primary-info-renderer > #menu-container {
             transform: translateY(5px) !important;
+            margin-right: 15px !important;
         }
         #count.ytd-video-primary-info-renderer {
             width: 100% !important;
@@ -385,7 +388,8 @@ color: #CACACA;
         #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
             padding-top: 2px !important;
         }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button {
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
+        #sponsor-button > ytd-button-renderer > a > paper-button {
             margin: 0 !important; 
             padding: 2px 8px 2px 8px !important; 
             text-transform: none !important; 
