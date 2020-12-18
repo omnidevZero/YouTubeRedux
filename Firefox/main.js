@@ -329,6 +329,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         var channelName = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #channel-name');
         var subCount = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count');
         var subscribeButton = document.querySelector('#sponsor-button');
+        var analyticsButton = document.querySelector('#analytics-button');
         var reduxSubDiv = document.createElement('div');
         reduxSubDiv.id = 'reduxSubDiv';
         dateElement.classList.add('redux-moved-date');
@@ -343,7 +344,8 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         uploadInfo.prepend(reduxSubDiv);
         reduxSubDiv.append(subButton);
         reduxSubDiv.append(subCount);
-        if (!!subscribeButton){reduxSubDiv.prepend(subscribeButton)};
+        if (analyticsButton.offsetWidth > 0){reduxSubDiv.prepend(analyticsButton)};
+        if (subscribeButton.offsetWidth > 0){reduxSubDiv.prepend(subscribeButton)};
         uploadInfo.prepend(channelName);
 
         var style = document.createElement('style');
@@ -389,7 +391,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             padding-top: 2px !important;
         }
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
-        #sponsor-button > ytd-button-renderer > a > paper-button {
+        #sponsor-button > ytd-button-renderer > a > paper-button, #analytics-button > ytd-button-renderer > a > paper-button {
             margin: 0 !important; 
             padding: 2px 8px 2px 8px !important; 
             text-transform: none !important; 
