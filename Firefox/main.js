@@ -202,7 +202,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         var dislikes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string')[0];
 
         var observerConfig = {
-            childList: true
+            attributes: true
         }
         var observerLikes = new MutationObserver(fixLikes);
         observerLikes.observe(likes, observerConfig);
@@ -474,7 +474,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             checkForComments();
         }
         if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked){
-            waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]', 10, changeLikesCounter);
+            waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
         }
         changeGridWidth();
         addCustomStyles();
