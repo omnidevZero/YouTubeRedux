@@ -3,7 +3,8 @@
     var flags = {
         "likesChanged":false,
         "stylesChanged":false,
-        "isRearranged":false
+        "isRearranged":false,
+        "likesTracked":false
     }
     var likesInterval;
     var YTReduxURLPath;
@@ -197,19 +198,32 @@ color: #CACACA;
     }
 
     function changeLikesCounter(){
-        if (!flags.likesChanged && document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]')[0] !== undefined){
-            var changeLikesInterval = setInterval(function(){
-                var likes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string')[0];
-                var dislikes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string')[0];
-                var rawLikes = document.querySelectorAll('#info > #menu-container > ytd-sentiment-bar-renderer > paper-tooltip > #tooltip')[0].innerText.split("/")[0].trim();
-                var rawDislikes = document.querySelectorAll('#info > #menu-container > ytd-sentiment-bar-renderer > paper-tooltip > #tooltip')[0].innerText.split("/")[1].trim();
-                likes.innerText = rawLikes;
-                dislikes.innerText = rawDislikes;
-            },10);
-            setTimeout(function(){
-                flags.likesChanged = true;
-                clearInterval(changeLikesInterval);
-            },3000);
+        var likes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string')[0];
+        var dislikes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string')[0];
+
+        var observerConfig = {
+            childList: true
+        }
+        var observerLikes = new MutationObserver(fixLikes);
+        observerLikes.observe(likes, observerConfig);
+        var observerDislikes = new MutationObserver(fixLikes);
+        observerDislikes.observe(dislikes, observerConfig);
+        fixLikes();
+        flags.likesTracked = true;
+
+        function fixLikes(){
+            observerLikes.disconnect();
+            observerDislikes.disconnect();
+
+            var likes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string')[0];
+            var dislikes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string')[0];
+            var rawLikes = document.querySelectorAll('#info > #menu-container > ytd-sentiment-bar-renderer > paper-tooltip > #tooltip')[0].innerText.split("/")[0].trim();
+            var rawDislikes = document.querySelectorAll('#info > #menu-container > ytd-sentiment-bar-renderer > paper-tooltip > #tooltip')[0].innerText.split("/")[1].trim();
+            likes.innerText = rawLikes;
+            dislikes.innerText = rawDislikes;
+
+            observerLikes.observe(likes, observerConfig);
+            observerDislikes.observe(dislikes, observerConfig);
         }
     }
 
@@ -459,12 +473,11 @@ color: #CACACA;
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
             checkForComments();
         }
+        if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked){
+            waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]', 10, changeLikesCounter);
+        }
         changeGridWidth();
         addCustomStyles();
-        var changeLikes = reduxSettingsJSON.showRawValues ? setInterval(changeLikesCounter,10) : '';
-        setTimeout(function(){
-            clearInterval(changeLikes);
-        },3000);
     }
 
     function start(){
