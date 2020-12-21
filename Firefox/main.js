@@ -267,59 +267,108 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         }, 100)
     }
 
-    function startObserving(){
+    function startObservingComments(){
 
-        function insertDummy(){
+        function disableInfiniteComments(){
             var infiniteStopped = false;
             var comments = document.querySelectorAll('ytd-comment-thread-renderer');
-            var suggestions = document.querySelectorAll('ytd-compact-video-renderer');
-            if (comments.length >= 0 && !infiniteStopped){
-                observer.disconnect();
-                var dummyComment = document.createElement('div');
-                dummyComment.id = 'dummyComment';
-                dummyComment.style = 'height:2000px;width:100%; text-align:center;';
-                dummyComment.innerHTML = '<input type="button" style="height:30px; width:50%; transition-duration: 0.5s;" value="Show more..."></input>';
-                contentsElement.append(dummyComment);
-                infiniteStopped = true;
-                document.onscroll = preventScrolling;
-                document.querySelector('#dummyComment > input').addEventListener('click', () => {
-                    dummyComment.remove();
-                    infiniteStopped = false;
-                    window.scrollBy({top: 100, left: 0, behavior: "smooth"});
-                    observer.observe(contentsElement, observerConfig);
-                });
+            var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
+            commentsContElement = commentsContinuation.querySelector('yt-next-continuation');
+            if (comments.length >= maxComments && commentsContElement != null){
+                commentsContElement.remove();
+                addCommentsButton();
             }
         }
 
+        function disableInfiniteRelated(){
+            //TODO code cleaup, remove duplicated var assignments and if condition
+            if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3){
+                related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
+                relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
+            } else {
+                related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
+                relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
+            }
+            
+            console.log(relatedContinuation);
+            if (related.length >= maxRelated && relatedContinuation != null){
+                console.log(related.length + ' | ' + maxRelated)
+                observerRelated.disconnect();
+                relatedContinuation.remove();
+                addRelatedButton();
+                observerRelated.observe(relatedElement, observerConfig);
+            }
+        }
+
+        function addCommentsButton(){
+            var showMoreComments = document.createElement('div');
+            var continueElement = commentsContElement;
+            showMoreComments.id = 'show-more-comments';
+            showMoreComments.style = 'text-align:center; margin-bottom: 16px;';
+            showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none;" value="SHOW MORE"></input>';
+            contentsElement.append(showMoreComments);
+            document.querySelector('#show-more-comments').addEventListener('click', function(){
+                observerComments.disconnect();
+                var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
+                commentsContinuation.append(continueElement);
+                window.scrollBy({top: 50, left: 0, behavior: "smooth"});
+                this.remove();
+                maxComments += commentsInterval;
+                observerComments.observe(contentsElement, observerConfig);
+            });
+        }
+
+        function addRelatedButton(){
+            var showMoreRelated = document.createElement('div');
+            var continueElement = relatedContinuation;
+            showMoreRelated.id = 'show-more-related';
+            showMoreRelated.style = 'text-align:center; margin-bottom: 16px; margin-top: 4px;';
+            showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none;" value="SHOW MORE"></input>';
+            relatedElement.append(showMoreRelated);
+            document.querySelector('#show-more-related').addEventListener('click', function(){
+                observerRelated.disconnect();
+                relatedElement.append(continueElement);
+                window.scrollBy({top: 50, left: 0, behavior: "smooth"});
+                this.remove();
+                maxRelated += relatedInterval;
+                observerRelated.observe(relatedElement, observerConfig);
+            });
+        }
+
+        var maxComments = 20;
+        var commentsInterval = 20;
+        var maxRelated;
+        var relatedInterval = 20;
+        var commentsContElement;
         var observerConfig = {
             childList: true
         }
         var contentsElement = document.querySelector('#contents.style-scope.ytd-item-section-renderer');
-        var observer = new MutationObserver(insertDummy);
-        observer.observe(contentsElement, observerConfig);
-    }
+        var relatedElement;
+        var related;
+        var relatedContinuation;
 
-    function preventScrolling(){
-        var blocker = document.querySelector('#dummyComment > input');
-        if (blocker != null && window.scrollY >= blocker.offsetTop - (window.innerHeight/2)){
-            blocker.scrollIntoView({block: "center"});
+        if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3){ //condition for differences in layout between YT languages
+            related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
+            maxRelated = related.length;
+            relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
+            relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents');
+        } else {
+            related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
+            maxRelated = related.length;
+            relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
+            relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
+        } 
+
+        if (related.length >= maxRelated){
+            relatedContinuation.remove();
+            addRelatedButton();
         }
-    }
 
-    function checkForComments(){
-        var checkForCommentsInt = setInterval(() => {
-            if (document.querySelector('#contents > ytd-comment-thread-renderer') != null){
-                clearInterval(checkForCommentsInt);
-                startObserving();
-            }
-        }, 500)
-    }
-
-    function clearScrollingStuff(){
-        document.onscroll = function(){};
-        if (!!document.querySelector('#dummyComment')){
-            document.querySelector('#dummyComment').remove();  
-        }
+        var observerComments = new MutationObserver(disableInfiniteComments);
+        observerComments.observe(contentsElement, observerConfig);
+        var observerRelated = new MutationObserver(disableInfiniteRelated);
+        observerRelated.observe(relatedElement, observerConfig);
     }
 
     function rearrangeInfo(){
@@ -471,7 +520,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
-            checkForComments();
+            waitForElement('#contents > ytd-comment-thread-renderer', 10, startObservingComments);
         }
         if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked){
             waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
@@ -489,9 +538,6 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
                 YTReduxURLPath = location.pathname;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
-                if (reduxSettingsJSON.disableInfiniteScrolling){
-                    clearScrollingStuff();
-                }
                 if (!!document.querySelector('.redux-moved-info')){
                     clearMovedInfo();
                 }
