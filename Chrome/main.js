@@ -290,9 +290,7 @@ color: #CACACA;
                 relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
             }
             
-            console.log(relatedContinuation);
             if (related.length >= maxRelated && relatedContinuation != null){
-                console.log(related.length + ' | ' + maxRelated)
                 observerRelated.disconnect();
                 relatedContinuation.remove();
                 addRelatedButton();
