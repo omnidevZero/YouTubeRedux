@@ -527,7 +527,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
             waitForElement('#movie_player', 10, recalc);
-            waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
+            waitForElement('#redux-recalc', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
             waitForElement('#contents > ytd-comment-thread-renderer', 10, startObservingComments);
