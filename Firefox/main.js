@@ -85,6 +85,7 @@ height:100% !important;
 width:100% !important;
 height:100% !important;
 left:0 !important;
+top: 0 !important;
 }
 /*[class="ytp-chrome-bottom"] {
     width: calc(100% - 12px) !important;
