@@ -105,7 +105,16 @@
         </fieldset>
         <fieldset>
             <legend>Experimental/WIP</legend>
-            <label><input type="checkbox" name="smallPlayer" class="settings">Use small video player</label>
+            <label style="display:inline-block"><input type="checkbox" name="smallPlayer" class="settings">Use small video player</label>
+            <label style="display:inline-block">| size <select name="smallPlayerWidth" class="settings">
+                <option value=427></option>
+                <option value=640></option>
+                <option value=768></option>
+                <option value=853 style="background-color: #dbe1f8;"></option>
+                <option value=938></option>
+                <option value=1066></option>
+                </select>
+            </label>            
             <label><input type="checkbox" name="blackBars" class="settings subsetting" disabled>Use pillarboxing (add black bars)</label>
             <label><input type="checkbox" name="rearrangeInfo" class="settings">Do not rearrange video info elements</label>
             <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling</label>

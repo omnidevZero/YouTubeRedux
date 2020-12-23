@@ -59,6 +59,12 @@ function saveSettings(){
     newSettings[itemsCheck[i].name] = itemsCheck[i].checked;
   }
 
+  //save selects
+  var selects = document.querySelectorAll('select');
+  selects.forEach(element => {
+    newSettings[element.name] = element.value;
+  });
+
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var storageSettings = JSON.stringify(newSettings);
     chrome.tabs.executeScript(
@@ -95,10 +101,19 @@ function changeGridWidth(numberOfItems){
         }
       }
     }
+    //set size options
+    document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
     //uncheck subsetting
     if (document.querySelector('input[name="smallPlayer"]').checked){
       document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
     }
+  }
+
+  function calculateSizeOptions(){
+    var options = document.querySelectorAll('select[name="smallPlayerWidth"] option');
+    options.forEach(element => {
+      element.innerText = `${element.value}x${Math.ceil(element.value / 1.78)}px`; //fixed at 16:9
+    });
   }
 
   //main
@@ -111,6 +126,7 @@ function changeGridWidth(numberOfItems){
         }, function(result){
           if (result == null || result == undefined){return};
           currentSettings = JSON.parse(result[0]);
+          calculateSizeOptions();
           getSettings();
         }
       )

@@ -9,15 +9,18 @@
     var likesInterval;
     var YTReduxURLPath;
     var YTReduxURLSearch;
-    var aspectRatio = window.screen.width / window.screen.height;
+    var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
+    var playerSize = {}
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
+            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
             reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
+            playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
+            playerSize.height = Math.ceil(playerSize.width / aspectRatio);
         }
     }
 
@@ -68,8 +71,8 @@
     min-width: calc(var(--ytd-watch-flexy-min-player-height) * (${window.screen.width} / ${window.screen.height})) !important;
 }
 #player-container-outer {
-max-width: calc(480px * ${aspectRatio}) !important;
-min-width: 0 !important;
+    max-width: ${playerSize.width}px  !important;
+    min-width: 0 !important;
 }
 #player-container-inner {
 padding-top: calc(${window.screen.height} / ${window.screen.width} * 100%) !important;
@@ -83,9 +86,9 @@ width:100% !important;
 height:100% !important;
 left:0 !important;
 }
-[class="ytp-chrome-bottom"] {
-width: calc(100% - (2 * 12px)) !important;
-}
+/*[class="ytp-chrome-bottom"] {
+    width: calc(100% - 12px) !important;
+}*/
 ` : '';
             var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
 /*DARK PLAYLIST*/
@@ -141,8 +144,6 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;
-
-            //window.dispatchEvent(new Event('resize'));
         }
     }
 
@@ -240,31 +241,40 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
     }
     
     function recalc(){
-        //console.log('Recalculate video dimensions');
-        var previewHeightOffset = '303px'; //TODO get real offset from default height to small height (currently 720px to 480px)
-        var observerConfig = {
-            attributeFilter: ["style"]
-        }
-        var previewElement;
 
-        function fixPreview(){
-            if (!isTheater() && !isFullscreen()){
-                previewElement.style.top = previewHeightOffset; 
-            }
-        }
-
-        function setObserver(){
-            var observer = new MutationObserver(fixPreview);
-            observer.observe(previewElement, observerConfig); 
+        function insertRecalcScript(){
+            var existingRecalc = document.querySelector('#redux-recalc');
+            if (existingRecalc){existingRecalc.remove()};
+            var script = document.createElement('script');
+            script.id = 'redux-recalc';
+            script.innerHTML = `
+            var player = document.querySelector('#movie_player');
+            player.setInternalSize(${playerSize.width},${playerSize.height});
+            `;
+            document.body.append(script);
         }
 
-        var checkForPreview = setInterval(() => {
-            previewElement = document.querySelector('div[aria-live="polite"]:not(.iron-a11y-announcer)');
-            if (previewElement != null && previewElement != undefined){
-                clearInterval(checkForPreview);
-                setObserver();
-            }
-        }, 100)
+        function startRecalc(){
+            var checkingTimeout;
+            var checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
+                var video = document.querySelector('video');
+                var progressBar = document.querySelector('.ytp-chrome-bottom');
+                if (progressBar.offsetWidth+12 >= playerSize.width && progressBar.offsetWidth+12 >= playerSize.width && !isTheater() && !isFullscreen()){ //TODO more precise condition
+                    insertRecalcScript();
+                    if (checkingTimeout != undefined){
+                        clearTimeout(checkingTimeout);
+                        checkingTimeout = undefined;
+                    }
+                } else {
+                    if (checkingTimeout == undefined){
+                        checkingTimeout = setTimeout(() => {
+                            clearInterval(checkingVideo);
+                        }, 5000);
+                    }
+                }
+            }, 10)
+        }
+        startRecalc();
     }
 
     function startObservingComments(){
@@ -358,7 +368,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
         } 
 
-        if (related.length >= maxRelated){
+        if (related.length >= maxRelated && relatedContinuation != null){
             relatedContinuation.remove();
             addRelatedButton();
         }
@@ -514,7 +524,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
-            recalc();
+            waitForElement('#movie_player', 10, recalc);
             waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
