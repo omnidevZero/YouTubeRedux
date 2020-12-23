@@ -247,10 +247,11 @@ color: #CACACA;
             if (existingRecalc){existingRecalc.remove()};
             var script = document.createElement('script');
             script.id = 'redux-recalc';
-            script.innerHTML = `
+            var scriptInner = `
             var player = document.querySelector('#movie_player');
             player.setInternalSize(${playerSize.width},${playerSize.height});
             `;
+            script.appendChild(document.createTextNode(scriptInner));
             document.body.append(script);
         }
 
