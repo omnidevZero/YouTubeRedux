@@ -10,6 +10,7 @@
     var likesInterval;
     var YTReduxURLPath;
     var YTReduxURLSearch;
+    var confirmInterval;
     var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
     var playerSize = {}
 
@@ -30,14 +31,14 @@
         if (confirmButton != null && !document.querySelector('paper-dialog[aria-hidden="true"]')){
             confirmButton.click();
             document.querySelector('video').play();
-            //console.log('Clicked at: ' + new Date());
+            console.log('Clicked at: ' + new Date());
         }
     }
 
     function resumePlayback(){
         if (!document.querySelector('ytd-miniplayer[active]') && document.querySelector('.ytp-play-button > svg > path').getAttribute('d') == 'M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z'){ //click play if it's the displayed button icon and there is no mini player
             document.querySelector('.ytp-play-button').click();
-            console.log('YouTube Redux Unpaused at: ' + new Date());
+            //console.log('YouTube Redux Unpaused at: ' + new Date());
         }
     }
 
@@ -539,7 +540,9 @@ color: #CACACA;
     function main(){
         getSettings();
         if (reduxSettingsJSON.autoConfirm){
-            var interval = interval == undefined ? setInterval(confirmIt, 500) : undefined;
+            if (confirmInterval == undefined){
+                confirmInterval = setInterval(confirmIt, 500);
+            }
         }
         if (!reduxSettingsJSON.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged){
             waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
