@@ -4,7 +4,8 @@
         "likesChanged":false,
         "stylesChanged":false,
         "isRearranged":false,
-        "likesTracked":false
+        "likesTracked":false,
+        "recalcListenersAdded":false
     }
     var likesInterval;
     var YTReduxURLPath;
@@ -241,7 +242,26 @@ color: #CACACA;
         }
     }
 
-    function recalc(){
+    function recalculateVideoSize(){
+
+        function addListenersForRecalc(){
+            var buttons = [
+                document.querySelector('.ytp-size-button')
+                //document.querySelector('.ytp-fullscreen-button')
+            ]
+
+            for (var i = 0; i < buttons.length; i++){
+                buttons[i].addEventListener('click', function(){
+                    startRecalc();
+                    setTimeout(alignItems, 40); //TODO slow systems may struggle with this timeout when exiting fullscreen - properly detect mode change
+                });
+            }
+            document.addEventListener("fullscreenchange", function(){
+                    startRecalc();
+                    setTimeout(alignItems, 40);
+            })
+            flags.recalcListenersAdded = true;
+        }
 
         function insertRecalcScript(){
             var existingRecalc = document.querySelector('#redux-recalc');
@@ -259,7 +279,6 @@ color: #CACACA;
         function startRecalc(){
             var checkingTimeout;
             var checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
-                var video = document.querySelector('video');
                 var progressBar = document.querySelector('.ytp-chrome-bottom');
                 if (progressBar.offsetWidth+12 >= playerSize.width && progressBar.offsetWidth+12 >= playerSize.width && !isTheater() && !isFullscreen()){ //TODO more precise condition
                     insertRecalcScript();
@@ -276,13 +295,13 @@ color: #CACACA;
                 }
             }, 10)
         }
+        if (!flags.recalcListenersAdded){addListenersForRecalc()}; //to recalculate player size when changing between normal, theater and fullscreen modes
         startRecalc();
     }
 
     function startObservingComments(){
 
         function disableInfiniteComments(){
-            var infiniteStopped = false;
             var comments = document.querySelectorAll('ytd-comment-thread-renderer');
             var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
             commentsContElement = commentsContinuation.querySelector('yt-next-continuation');
@@ -526,7 +545,7 @@ color: #CACACA;
             waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
-            waitForElement('#movie_player', 10, recalc);
+            waitForElement('#movie_player', 10, recalculateVideoSize);
             waitForElement('#redux-recalc', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
