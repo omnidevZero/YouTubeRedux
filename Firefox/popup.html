@@ -89,6 +89,65 @@
         .subsetting {
             margin-left:25px;
         }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            border-radius: 50%;
+            border: 1px solid grey;
+            color: grey;
+            font-size: 10px;
+            height: 14px;
+            width: 14px;
+            text-align: center;
+        }
+        .tooltip::before {
+            content: "?";
+        }
+        .tooltip-text {
+            display: none;
+            background-image: linear-gradient(135deg, rgb(112, 111, 111), black);
+            border: 1px solid black;
+            color: white;
+            text-align: left;
+            border-radius: 4px;
+            width: 200px;
+            height: 55px;
+            position: absolute;
+            padding: 5px 5px 5px 5px;
+            top: -27.5px;
+            right: 105%;
+            z-index:2;
+        }
+        .tooltip-text-small {
+            display: none;
+            background-image: linear-gradient(135deg, rgb(112, 111, 111), black);
+            border: 1px solid black;
+            color: white;
+            text-align: left;
+            border-radius: 4px;
+            width: 140px;
+            position: absolute;
+            padding: 5px 5px 5px 5px;
+            top: -14px;
+            right: 105%;
+            z-index:2;
+        }
+        .tooltip:hover .tooltip-text, .tooltip:hover .tooltip-text-small {
+            display: block;
+        }
+
+        .tooltip .tooltip-text::after, .tooltip .tooltip-text-small::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            margin-top: -3px;
+            margin-right: -10px;
+            border-width: 5px;
+            border-color: transparent transparent transparent black;
+            border-style: solid;
+        }
       </style>
     </head>
     <body>
@@ -98,7 +157,7 @@
             <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
             <label><input type="checkbox" name="hideCastButton" class="settings">Hide 'Play on TV' button</label>
             <label><input type="checkbox" name="darkPlaylist" class="settings">Use dark theme for playlists</label>
-            <label><input type="checkbox" name="showRawValues" class="settings">Show precise values for likes/dislikes</label>
+            <label><input type="checkbox" name="showRawValues" class="settings">Show precise values for likes/dislikes<div class="tooltip"><span class="tooltip-text-small">E.g.: changes the displayed value of likes from 6K to 6312.</span></div></label>
             <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
             <label><input type="checkbox" name="classicLogo" class="settings">Restore classic YouTube logo</label>
             <div style="text-align:center; display:none;" class="outer-warning"><div class="warning"><span style="color:red;"></span><span style="color:black;">PLEASE VISIT YOUTUBE IN ORDER TO CHANGE SETTINGS</div></div>
@@ -106,7 +165,7 @@
         <fieldset>
             <legend>Experimental/WIP</legend>
             <label style="display:inline-block"><input type="checkbox" name="smallPlayer" class="settings">Use small video player</label>
-            <label style="display:inline-block">| size <select name="smallPlayerWidth" class="settings">
+            <label style="display:inline-block"><select name="smallPlayerWidth" class="settings">
                 <option value=427></option>
                 <option value=640></option>
                 <option value=768></option>
@@ -114,10 +173,11 @@
                 <option value=938></option>
                 <option value=1066></option>
                 </select>
+                <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
             </label>            
-            <label><input type="checkbox" name="blackBars" class="settings subsetting" disabled>Use pillarboxing (add black bars)</label>
-            <label><input type="checkbox" name="rearrangeInfo" class="settings">Do not recreate old video page layout</label>
+            <label><input type="checkbox" name="blackBars" class="settings subsetting" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the side of a low aspect ratio video (e.g. 4:3).</span></div></label>
             <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling</label>
+            <label><input type="checkbox" name="rearrangeInfo" class="settings">Do not recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
         </fieldset>
         <div class="note">Note: most settings require a page refresh to take effect.</div>
         <div id="donate-message" style="text-align:center; font-size: 11px;">If you enjoyed this extension and you really have nothing to do with your money, consider donating! Thank you regardless! <span class="pure">:)</span>
