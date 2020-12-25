@@ -75,6 +75,7 @@
 #player-container-outer {
     max-width: ${playerSize.width}px  !important;
     min-width: 0 !important;
+    position: relative;
 }
 #player-container-inner {
 padding-top: calc(${window.screen.height} / ${window.screen.width} * 100%) !important;
