@@ -31,7 +31,7 @@
         if (confirmButton != null && !document.querySelector('paper-dialog[aria-hidden="true"]')){
             confirmButton.click();
             document.querySelector('video').play();
-            console.log('Clicked at: ' + new Date());
+            //console.log('Clicked at: ' + new Date());
         }
     }
 
@@ -171,7 +171,8 @@ color: #CACACA;
             var reduxAlignElement = document.querySelector('#redux-style-align');
             var calcInner = `
             #columns > #primary > #primary-inner {
-                padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;
+                padding: 0 ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw 0 ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
+                /*padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;*/
             }
             #secondary.ytd-watch-flexy {
                 transform: translateX(-${calcPadding}px);
