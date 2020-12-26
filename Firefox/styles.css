@@ -64,7 +64,6 @@ ytd-author-comment-badge-renderer {
 }
 span.yt-view-count-renderer {
     font-size:18px !important;
-    font-variant:small-caps !important;
 }
 ytd-watch-flexy:not([theater]):not([fullscreen]) #primary.ytd-watch-flexy, ytd-watch-flexy:not([theater]):not([fullscreen]) #secondary.ytd-watch-flexy {
     padding-top:12px !important;

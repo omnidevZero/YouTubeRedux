@@ -109,10 +109,10 @@
             text-align: left;
             border-radius: 4px;
             width: 200px;
-            height: 55px;
             position: absolute;
             padding: 5px 5px 5px 5px;
-            top: -27.5px;
+            top: 50%;
+            transform: translateY(-50%);
             right: 105%;
             z-index:2;
         }
@@ -123,10 +123,11 @@
             color: white;
             text-align: left;
             border-radius: 4px;
-            width: 140px;
+            width: 130px;
             position: absolute;
             padding: 5px 5px 5px 5px;
-            top: -14px;
+            top: 50%;
+            transform: translateY(-50%);
             right: 105%;
             z-index:2;
         }
@@ -139,7 +140,7 @@
             position: absolute;
             top: 50%;
             left: 100%;
-            margin-top: -3px;
+            margin-top: -5px;
             margin-right: -10px;
             border-width: 5px;
             border-color: transparent transparent transparent black;
@@ -172,7 +173,7 @@
                 </select>
                 <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
             </label>
-            <label><input type="checkbox" name="blackBars" class="settings subsetting" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the side of a low aspect ratio video (e.g. 4:3).</span></div></label>
+            <label><input type="checkbox" name="blackBars" class="settings subsetting" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
             <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling</label>
             <label><input type="checkbox" name="rearrangeInfo" class="settings">Do not recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
         </fieldset>
