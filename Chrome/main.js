@@ -12,7 +12,9 @@
     var YTReduxURLSearch;
     var confirmInterval;
     var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-    var playerSize = {}
+    var playerSize = {};
+    var observerComments;
+    var observerRelated;
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
@@ -309,6 +311,7 @@ color: #CACACA;
             var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
             commentsContElement = commentsContinuation.querySelector('yt-next-continuation');
             if (comments.length >= maxComments && commentsContElement != null){
+                observerComments.disconnect();
                 commentsContElement.remove();
                 addCommentsButton();
             }
@@ -328,7 +331,6 @@ color: #CACACA;
                 observerRelated.disconnect();
                 relatedContinuation.remove();
                 addRelatedButton();
-                observerRelated.observe(relatedElement, observerConfig);
             }
         }
 
@@ -337,10 +339,9 @@ color: #CACACA;
             var continueElement = commentsContElement;
             showMoreComments.id = 'show-more-comments';
             showMoreComments.style = 'text-align:center; margin-bottom: 16px;';
-            showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none;" value="SHOW MORE"></input>';
+            showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary);" value="SHOW MORE"></input>';
             contentsElement.append(showMoreComments);
             document.querySelector('#show-more-comments').addEventListener('click', function(){
-                observerComments.disconnect();
                 var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
                 commentsContinuation.append(continueElement);
                 window.scrollBy({top: 50, left: 0, behavior: "smooth"});
@@ -355,10 +356,9 @@ color: #CACACA;
             var continueElement = relatedContinuation;
             showMoreRelated.id = 'show-more-related';
             showMoreRelated.style = 'text-align:center; margin-bottom: 16px; margin-top: 4px;';
-            showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none;" value="SHOW MORE"></input>';
+            showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary);" value="SHOW MORE"></input>';
             relatedElement.append(showMoreRelated);
             document.querySelector('#show-more-related').addEventListener('click', function(){
-                observerRelated.disconnect();
                 relatedElement.append(continueElement);
                 window.scrollBy({top: 50, left: 0, behavior: "smooth"});
                 this.remove();
@@ -380,14 +380,17 @@ color: #CACACA;
         var related;
         var relatedContinuation;
 
+        if (!!document.querySelector('#show-more-comments')){document.querySelector('#show-more-comments').remove();}
+        if (!!document.querySelector('#show-more-related')){document.querySelector('#show-more-related').remove();}
+
         if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3){ //condition for differences in layout between YT languages
             related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
-            maxRelated = related.length;
+            maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
             relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
             relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents');
         } else {
             related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
-            maxRelated = related.length;
+            maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
             relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
             relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
         } 
@@ -397,9 +400,9 @@ color: #CACACA;
             addRelatedButton();
         }
 
-        var observerComments = new MutationObserver(disableInfiniteComments);
+        observerComments = new MutationObserver(disableInfiniteComments);
         observerComments.observe(contentsElement, observerConfig);
-        var observerRelated = new MutationObserver(disableInfiniteRelated);
+        observerRelated = new MutationObserver(disableInfiniteRelated);
         observerRelated.observe(relatedElement, observerConfig);
     }
 
@@ -574,6 +577,11 @@ color: #CACACA;
                 flags.likesChanged = false;
                 if (!!document.querySelector('.redux-moved-info')){
                     clearMovedInfo();
+                }
+                if (reduxSettingsJSON.disableInfiniteScrolling){
+                    if (observerComments != undefined){observerComments.disconnect();}
+                    if (observerRelated != undefined){observerRelated.disconnect();}
+                    //TODO (?) remove comments because YT sometimes keeps old ones after url change which messes with comments observer checking their length
                 }
                 main();
             }
