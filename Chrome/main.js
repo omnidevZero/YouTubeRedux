@@ -307,26 +307,20 @@ color: #CACACA;
     function startObservingComments(){
 
         function disableInfiniteComments(){
-            var comments = document.querySelectorAll('ytd-comment-thread-renderer');
+            var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
             var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
             commentsContElement = commentsContinuation.querySelector('yt-next-continuation');
             if (comments.length >= maxComments && commentsContElement != null){
                 observerComments.disconnect();
                 commentsContElement.remove();
-                addCommentsButton();
+                if (document.querySelector('#show-more-comments') == null){
+                    addCommentsButton();
+                }
             }
         }
 
         function disableInfiniteRelated(){
-            //TODO code cleaup, remove duplicated var assignments and if condition
-            if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3){
-                related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
-                relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
-            } else {
-                related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
-                relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
-            }
-            
+            setLayoutDifferences();            
             if (related.length >= maxRelated && relatedContinuation != null){
                 observerRelated.disconnect();
                 relatedContinuation.remove();
@@ -341,14 +335,14 @@ color: #CACACA;
             showMoreComments.style = 'text-align:center; margin-bottom: 16px;';
             showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary);" value="SHOW MORE"></input>';
             contentsElement.append(showMoreComments);
-            document.querySelector('#show-more-comments').addEventListener('click', function(){
+            document.querySelector('#show-more-comments').onclick = function(){
                 var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
                 commentsContinuation.append(continueElement);
                 window.scrollBy({top: 50, left: 0, behavior: "smooth"});
                 this.remove();
                 maxComments += commentsInterval;
                 observerComments.observe(contentsElement, observerConfig);
-            });
+            }
         }
 
         function addRelatedButton(){
@@ -367,6 +361,18 @@ color: #CACACA;
             });
         }
 
+        function setLayoutDifferences(){
+            if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3){ //condition for differences in layout between YT languages
+                related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
+                relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
+                relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents');
+            } else {
+                related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
+                relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
+                relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
+            }
+        }
+
         var maxComments = 20;
         var commentsInterval = 20;
         var maxRelated;
@@ -382,19 +388,8 @@ color: #CACACA;
 
         if (!!document.querySelector('#show-more-comments')){document.querySelector('#show-more-comments').remove();}
         if (!!document.querySelector('#show-more-related')){document.querySelector('#show-more-related').remove();}
-
-        if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3){ //condition for differences in layout between YT languages
-            related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
-            maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
-            relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
-            relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents');
-        } else {
-            related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
-            maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
-            relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
-            relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
-        } 
-
+        setLayoutDifferences();
+        maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
         if (related.length >= maxRelated && relatedContinuation != null){
             relatedContinuation.remove();
             addRelatedButton();
@@ -404,6 +399,21 @@ color: #CACACA;
         observerComments.observe(contentsElement, observerConfig);
         observerRelated = new MutationObserver(disableInfiniteRelated);
         observerRelated.observe(relatedElement, observerConfig);
+
+        var sortButtons = document.querySelectorAll('div[slot="dropdown-content"] > #menu > a');
+        sortButtons.forEach(element => {
+            element.onclick = resetCommentsObserver;
+        });
+
+        function resetCommentsObserver() {
+            var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
+            comments.forEach(element => {
+                element.remove();
+            });
+            if (!!document.querySelector('#show-more-comments')){document.querySelector('#show-more-comments').remove();}
+            maxComments = 20;
+            observerComments.observe(contentsElement, observerConfig);
+        };
     }
 
     function rearrangeInfo(){
@@ -557,7 +567,7 @@ color: #CACACA;
             waitForElement('#redux-recalc', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
-            waitForElement('#contents > ytd-comment-thread-renderer', 10, startObservingComments);
+            waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, startObservingComments);  // additional element in selector for videos with disabled comments
         }
         if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked){
             waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
@@ -581,7 +591,10 @@ color: #CACACA;
                 if (reduxSettingsJSON.disableInfiniteScrolling){
                     if (observerComments != undefined){observerComments.disconnect();}
                     if (observerRelated != undefined){observerRelated.disconnect();}
-                    //TODO (?) remove comments because YT sometimes keeps old ones after url change which messes with comments observer checking their length
+                    var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
+                    comments.forEach(element => { //remove comments because YT sometimes keeps old ones after url change which messes with comments observer checking their length; also applied when sorting
+                        element.remove();
+                    });
                 }
                 main();
             }

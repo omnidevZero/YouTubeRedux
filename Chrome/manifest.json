@@ -1,7 +1,7 @@
 {
     "name": "YouTube Redux",
-    "version": "1.3.8",
-    "description": "Adds many classic layout styles back to modern YouTube while making multiple pages more condensed along with additional features!",
+    "version": "1.3.9",
+    "description": "Bring back old YouTube layout styles and features within the Polymer (modern) layout!",
     "permissions": ["activeTab"],
     "browser_action": {
       "default_popup": "popup.html",
