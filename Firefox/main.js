@@ -566,7 +566,19 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
     }
 
-    function main(){
+    function splitTrending(){
+        var elems = document.querySelectorAll('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
+        for (var i = 0; i < elems.length; i++){
+            if (i % 2 != 0){elems[i].style.float = 'left'};
+            elems[i].style.width = '50%';
+            var description = elems[i].querySelector('yt-formatted-string#description-text');
+            description.style.fontSize = '1.2rem';
+            description.style.paddingTop = '4px';
+            description.style.maxHeight = 'calc(2 * var(--yt-thumbnail-attribution-line-height, 3.5rem))';
+        }
+    }
+
+        function main(){
         getSettings();
         if (reduxSettingsJSON.autoConfirm){
             if (confirmInterval == undefined){
@@ -585,6 +597,9 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         }
         if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked){
             waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
+        }
+        if (window.location.href.includes('/feed/trending')){
+            waitForElement('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer', 10, splitTrending);
         }
         changeGridWidth();
         addCustomStyles();
