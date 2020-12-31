@@ -18,7 +18,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6,"hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
+            var newSettings = '{"gridItems": 6,, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -67,7 +67,8 @@
 
     function addCustomStyles(){
         if (!flags.stylesChanged){
-            var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"] {display:none !important;}` : '';
+            var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"]:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}` : '';
+            var conditionalAutoplay = reduxSettingsJSON.hideAutoplayButton ? `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {display:none !important;}` : '';
             var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
 #primary {
@@ -146,7 +147,7 @@ color: #CACACA;
 
             var customStyle = document.createElement("style");
             customStyle.id = 'redux-style';
-            var customStyleInner = conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo;
+            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;
@@ -265,17 +266,30 @@ color: #CACACA;
                     startRecalc();
                     setTimeout(alignItems, 40);
             })
+            window.addEventListener('resize', () => {
+                var repeatInsert = setInterval(() => { //insert in loop for X seconds to prevent YT from overriding
+                    var specialWidth = document.querySelector('video').offsetWidth;
+                    var specialHeight = document.querySelector('video').offsetHeight;
+                    insertRecalcScript(specialWidth, specialHeight);
+                }, 500);
+                setTimeout(() => {
+                    clearInterval(repeatInsert);
+                }, 2000);
+                alignItems();
+            })
             flags.recalcListenersAdded = true;
         }
 
-        function insertRecalcScript(){
+        function insertRecalcScript(width, height){
+            if (width == undefined){width = playerSize.width};
+            if (height == undefined){height = playerSize.height};
             var existingRecalc = document.querySelector('#redux-recalc');
             if (existingRecalc){existingRecalc.remove()};
             var script = document.createElement('script');
             script.id = 'redux-recalc';
             var scriptInner = `
             var player = document.querySelector('#movie_player');
-            player.setInternalSize(${playerSize.width},${playerSize.height});
+            player.setInternalSize(${width},${height});
             `;
             script.appendChild(document.createTextNode(scriptInner));
             document.body.append(script);
