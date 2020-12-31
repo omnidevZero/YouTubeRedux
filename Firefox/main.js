@@ -18,7 +18,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6,, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
+            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
