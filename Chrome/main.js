@@ -334,11 +334,13 @@ color: #CACACA;
         }
 
         function disableInfiniteRelated(){
-            setLayoutDifferences();            
+            setLayoutDifferences();         
             if (related.length >= maxRelated && relatedContinuation != null){
                 observerRelated.disconnect();
                 relatedContinuation.remove();
-                addRelatedButton();
+                if (document.querySelector('#show-more-related') == null){
+                    addRelatedButton();
+                }
             }
         }
 
@@ -366,13 +368,13 @@ color: #CACACA;
             showMoreRelated.style = 'text-align:center; margin-bottom: 16px; margin-top: 4px;';
             showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary);" value="SHOW MORE"></input>';
             relatedElement.append(showMoreRelated);
-            document.querySelector('#show-more-related').addEventListener('click', function(){
+            document.querySelector('#show-more-related').onclick = function(){
                 relatedElement.append(continueElement);
                 window.scrollBy({top: 50, left: 0, behavior: "smooth"});
                 this.remove();
                 maxRelated += relatedInterval;
                 observerRelated.observe(relatedElement, observerConfig);
-            });
+            };
         }
 
         function setLayoutDifferences(){
