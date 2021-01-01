@@ -15,6 +15,7 @@
     var playerSize = {};
     var observerComments;
     var observerRelated;
+    var intervalsArray = [];
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
@@ -159,9 +160,12 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             var element = document.querySelector(selector)
             if (element != null){
                 clearInterval(wait);
+                var index = intervalsArray.indexOf(wait); //get index of and remove the previously added interval from array when it's cleared
+                intervalsArray.splice(index, 1);
                 callback();
             }
         }, interval);
+        intervalsArray.push(wait); //add current interval to array
     }
 
     function alignItems(){
@@ -568,6 +572,13 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
     }
 
+    function clearStoredIntervals(){
+        intervalsArray.forEach(element => {
+            clearInterval(element);
+            intervalsArray.shift();
+        });
+    }
+
     function splitTrending(){
         var elems = document.querySelectorAll('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
         for (var i = 0; i < elems.length; i++){
@@ -620,13 +631,18 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
                     clearMovedInfo();
                 }
                 if (reduxSettingsJSON.disableInfiniteScrolling){
-                    if (observerComments != undefined){observerComments.disconnect();}
-                    if (observerRelated != undefined){observerRelated.disconnect();}
+                    if (observerComments != undefined){
+                        observerComments.disconnect();
+                    }
+                    if (observerRelated != undefined){
+                        observerRelated.disconnect();
+                    }
                     var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
                     comments.forEach(element => { //remove comments because YT sometimes keeps old ones after url change which messes with comments observer checking their length; also applied when sorting
                         element.remove();
                     });
                 }
+                clearStoredIntervals();
                 main();
             }
         },100);
