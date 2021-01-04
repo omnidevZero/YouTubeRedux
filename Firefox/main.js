@@ -353,7 +353,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             var continueElement = commentsContElement;
             showMoreComments.id = 'show-more-comments';
             showMoreComments.style = 'text-align:center; margin-bottom: 16px;';
-            showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary);" value="SHOW MORE"></input>';
+            showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer;" value="SHOW MORE"></input>';
             contentsElement.append(showMoreComments);
             document.querySelector('#show-more-comments').onclick = function(){
                 var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
@@ -370,7 +370,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             var continueElement = relatedContinuation;
             showMoreRelated.id = 'show-more-related';
             showMoreRelated.style = 'text-align:center; margin-bottom: 16px; margin-top: 4px;';
-            showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary);" value="SHOW MORE"></input>';
+            showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer;" value="SHOW MORE"></input>';
             relatedElement.append(showMoreRelated);
             document.querySelector('#show-more-related').onclick = function(){
                 relatedElement.append(continueElement);
@@ -401,7 +401,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
         var observerConfig = {
             childList: true
         }
-        var contentsElement = document.querySelector('#contents.style-scope.ytd-item-section-renderer');
+        var contentsElement = document.querySelector('#comments > #sections > #contents.style-scope.ytd-item-section-renderer');
         var relatedElement;
         var related;
         var relatedContinuation;
@@ -581,6 +581,10 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
 
     function splitTrending(){
         var elems = document.querySelectorAll('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
+        if (elems.length == 0){ //repeat because it can be emptied when navigating through different pages
+            setTimeout(() =>{splitTrending()}, 1000);
+            return;
+        }
         for (var i = 0; i < elems.length; i++){
             if (i % 2 != 0){elems[i].style.float = 'left'};
             elems[i].style.width = '50%';
@@ -612,7 +616,7 @@ var conditionalLogo = reduxSettingsJSON.classicLogo ? `
             waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
         }
         if (window.location.href.includes('/feed/trending')){
-            waitForElement('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer', 10, splitTrending);
+            waitForElement('#primary > ytd-section-list-renderer:not([page-subtype]) > #continuations', 10, splitTrending);
         }
         changeGridWidth();
         addCustomStyles();
