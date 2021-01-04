@@ -3,7 +3,7 @@ var globalURL;
 var currentSettings;
 
 donateButton.onclick = function() {
-  window.open("https://paypal.me/kowpowkow");
+  window.open("https://www.paypal.com/donate?hosted_button_id=MD9WRXSTLB49W");
 };
 
 chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {

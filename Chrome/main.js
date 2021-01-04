@@ -19,7 +19,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
+            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -145,10 +145,19 @@ color: #CACACA;
                 height: auto !important;
             }
             ` : '';
+            var conditionalLikesColors = reduxSettingsJSON.classicLikesColors ? `
+            /*LIKES*/
+            #container > #like-bar.ytd-sentiment-bar-renderer {
+                background: rgb(0 136 29) !important;
+            }
+            #container.ytd-sentiment-bar-renderer {
+                background-color: rgb(222 0 17) !important;
+            }
+            ` : '';
 
             var customStyle = document.createElement("style");
             customStyle.id = 'redux-style';
-            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo;
+            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo + conditionalLikesColors;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;
