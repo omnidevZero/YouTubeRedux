@@ -19,7 +19,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false}';
+            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -154,10 +154,41 @@ var conditionalLikesColors = reduxSettingsJSON.classicLikesColors ? `
     background-color: rgb(222 0 17) !important;
 }
 ` : '';
+var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
+            [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer {
+                display: none;
+            }
+            ` : '';
+            var conditionalFilterVideo = reduxSettingsJSON.filterVideo ? `
+            #items > yt-related-chip-cloud-renderer.ytd-watch-next-secondary-results-renderer {
+                display: none;
+            }
+            #items.ytd-watch-next-secondary-results-renderer ytd-compact-autoplay-renderer:first-child > #contents ytd-compact-video-renderer {
+                padding-bottom: 0;
+            }
+            ` : '';
+            var conditionalFilterMini = reduxSettingsJSON.filterMini ? `
+            [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer:not(:first-child):not(:last-child) {
+                display: none;
+            }
+            [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer {
+                height: 20px !important;
+            }
+            yt-chip-cloud-chip-renderer.ytd-feed-filter-chip-bar-renderer {
+                margin-top: 5px !important;
+                margin-bottom: 5px !important;
+            }
+            ytd-feed-filter-chip-bar-renderer {
+                height: 30px;
+            }
+            [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper > #right-arrow {
+                display: none;
+            }
+            ` : '';
 
             var customStyle = document.createElement("style");
             customStyle.id = 'redux-style';
-            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo + conditionalLikesColors;
+            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo + conditionalLikesColors + conditionalFilterMain + conditionalFilterVideo + conditionalFilterMini;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;

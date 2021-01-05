@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <html>
     <head>
+    <meta charset="UTF-8">
       <style>
         body {
             min-width: 300px;
@@ -86,9 +87,6 @@
             margin-bottom:20px;
             text-align:right;
         }
-        .subsetting {
-            margin-left:25px;
-        }
         .tooltip {
             position: relative;
             display: inline-block;
@@ -149,6 +147,12 @@
             border-color: transparent transparent transparent black;
             border-style: solid;
         }
+        .subsetting::before {
+            margin-left:5px;
+            content:"┕";
+            display: inline-block;
+            opacity: 0.25;
+        }
       </style>
     </head>
     <body>
@@ -163,6 +167,10 @@
             <label><input type="checkbox" name="classicLikesColors" class="settings">Use green/red colors for likes/dislikes</label>
             <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
             <label><input type="checkbox" name="classicLogo" class="settings">Restore classic YouTube logo</label>
+            <div>Video filter settings:</div>
+            <label class="subsetting"><input type="checkbox" name="filterMini" class="settings">Mini home page filter<div class="tooltip"><span class="tooltip-text-small">Leaves only All and Mixes options; scales them down. Note: filters are only displayed if your YT language is set to English.</span></div></label>
+            <label class="subsetting"><input type="checkbox" name="filterMain" class="settings">Hide on home page</label>
+            <label class="subsetting"><input type="checkbox" name="filterVideo" class="settings">Hide on video page</label>
             <div style="text-align:center; display:none;" class="outer-warning"><div class="warning"><span style="color:red;"></span><span style="color:black;">PLEASE VISIT YOUTUBE IN ORDER TO CHANGE SETTINGS</div></div>
         </fieldset>
         <fieldset>
@@ -178,7 +186,7 @@
                 </select>
                 <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
             </label>            
-            <label><input type="checkbox" name="blackBars" class="settings subsetting" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
+            <label class="subsetting"><input type="checkbox" name="blackBars" class="settings" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
             <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling<div class="tooltip"><span class="tooltip-text-small">Limits displayed comments and related videos to 20 items. More will load upon clicking the 'SHOW MORE' button.</span></div></label>
             <label><input type="checkbox" name="rearrangeInfo" class="settings">Do not recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
         </fieldset>
