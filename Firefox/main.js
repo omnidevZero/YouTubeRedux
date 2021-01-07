@@ -19,7 +19,7 @@
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false}';
+            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": false}';
             localStorage.setItem("reduxSettings", newSettings);
             reduxSettingsJSON = JSON.parse(newSettings);
         } else {
@@ -185,10 +185,35 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
                 display: none;
             }
             ` : '';
+            var conditionalExtraLayout = reduxSettingsJSON.extraLayout ? `
+            ytd-app {
+                background-color: #f1f1f1 !important;
+            }
+            ytd-video-primary-info-renderer, ytd-video-secondary-info-renderer {
+                background-color: white !important;
+                padding-left: 15px !important;
+                box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+                border-bottom: 0 !important;
+                margin-bottom: 10px !important;
+            }
+            ytd-comments#comments {
+                background-color: white !important;
+                padding-left: 15px !important;
+                padding-top: 1px !important;
+                box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+            }
+            #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
+                padding-top: 10px;
+            }
+            #secondary-inner.ytd-watch-flexy #related {
+                background-color: white !important;
+                box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+            }
+            ` : '';
 
             var customStyle = document.createElement("style");
             customStyle.id = 'redux-style';
-            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo + conditionalLikesColors + conditionalFilterMain + conditionalFilterVideo + conditionalFilterMini;
+            var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo + conditionalLikesColors + conditionalFilterMain + conditionalFilterVideo + conditionalFilterMini + conditionalExtraLayout;
             customStyle.appendChild(document.createTextNode(customStyleInner));
             document.head.append(customStyle);
             flags.stylesChanged = true;
@@ -409,7 +434,7 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
             var showMoreRelated = document.createElement('div');
             var continueElement = relatedContinuation;
             showMoreRelated.id = 'show-more-related';
-            showMoreRelated.style = 'text-align:center; margin-bottom: 16px; margin-top: 4px;';
+            showMoreRelated.style = 'text-align:center; margin-top: 4px;';
             showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer;" value="SHOW MORE"></input>';
             relatedElement.append(showMoreRelated);
             document.querySelector('#show-more-related').onclick = function(){
