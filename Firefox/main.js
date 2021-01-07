@@ -185,7 +185,7 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
                 display: none;
             }
             ` : '';
-            var conditionalExtraLayout = reduxSettingsJSON.extraLayout ? `
+            var conditionalExtraLayout = reduxSettingsJSON.extraLayout && !isDarkTheme() ? `
             ytd-app {
                 background-color: #f1f1f1 !important;
             }
@@ -313,6 +313,12 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
 
     function isFullscreen(){
         if (document.querySelector('ytd-watch-flexy[fullscreen]') != null){
+            return true;
+        }
+    }
+
+    function isDarkTheme(){
+        if (document.querySelector('html[dark]') != null){
             return true;
         }
     }
