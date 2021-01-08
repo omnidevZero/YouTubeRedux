@@ -139,8 +139,13 @@ color: #CACACA;
 }
 ` : '';
 var conditionalLogo = reduxSettingsJSON.classicLogo ? `
-#logo-icon-container {
-    content: url('${browser.extension.getURL('/images/classicLogo.png')}');
+ytd-masthead #logo-icon-container, #contentContainer #logo-icon-container {
+    content: url('${chrome.extension.getURL('/images/classicLogo.png')}');
+    width: 72px !important;
+    height: auto !important;
+}
+ytd-masthead[dark] #logo-icon-container, html[dark] #contentContainer #logo-icon-container {
+    content: url('${chrome.extension.getURL('/images/classicLogoDark.png')}');
     width: 72px !important;
     height: auto !important;
 }
@@ -185,14 +190,24 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
                 display: none;
             }
             ` : '';
-            var conditionalExtraLayout = reduxSettingsJSON.extraLayout && !isDarkTheme() ? `
+            var conditionalExtraLayout = reduxSettingsJSON.extraLayout ? `
             ytd-app {
                 background-color: #f1f1f1 !important;
+            }
+            html[dark] ytd-app {
+                background-color: var(--yt-spec-general-background-a) !important;
             }
             ytd-video-primary-info-renderer, ytd-video-secondary-info-renderer {
                 background-color: white !important;
                 padding-left: 15px !important;
                 box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+                border-bottom: 0 !important;
+                margin-bottom: 10px !important;
+            }
+            html[dark] ytd-video-primary-info-renderer, html[dark] ytd-video-secondary-info-renderer {
+                background-color: #222222 !important;
+                padding-left: 15px !important;
+                box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
                 border-bottom: 0 !important;
                 margin-bottom: 10px !important;
             }
@@ -202,6 +217,12 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
                 padding-top: 1px !important;
                 box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
             }
+            html[dark] ytd-comments#comments {
+                background-color: #222222 !important;
+                padding-left: 15px !important;
+                padding-top: 1px !important;
+                box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
+            }
             #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
                 padding-top: 10px;
             }
@@ -209,8 +230,17 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
                 background-color: white !important;
                 box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
             }
+            html[dark] #secondary-inner.ytd-watch-flexy #related {
+                background-color: #222222 !important;
+                box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
+            }
+            #always-shown ytd-rich-metadata-renderer {
+                background-color: white;
+            }
+            html[dark] #always-shown ytd-rich-metadata-renderer {
+                background-color: #222222;
+            }
             ` : '';
-
             var customStyle = document.createElement("style");
             customStyle.id = 'redux-style';
             var customStyleInner = conditionalAutoplay + conditionalCast + conditionalPlayerSize + conditionalDarkPlaylist + conditionalLogo + conditionalLikesColors + conditionalFilterMain + conditionalFilterVideo + conditionalFilterMini + conditionalExtraLayout;
