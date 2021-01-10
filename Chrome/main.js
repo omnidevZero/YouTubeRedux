@@ -255,10 +255,7 @@ color: #CACACA;
                 box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
             }
             #always-shown ytd-rich-metadata-renderer {
-                background-color: white;
-            }
-            html[dark] #always-shown ytd-rich-metadata-renderer {
-                background-color: #222222;
+                background: none !important;
             }
             /*EXTRA LAYOUT 2 - HOME*/
             #page-manager ytd-browse[page-subtype="home"]  {
@@ -266,23 +263,26 @@ color: #CACACA;
                 margin-right: 8vw;
             }
             #header.ytd-rich-grid-renderer {
-                /*margin-right: 8vw;*/
-            }
-            #chips-wrapper {
-                width:100% !important;
+                display: none;
             }
             ytd-rich-shelf-renderer {
                 border-top: 1px solid var(--yt-spec-10-percent-layer);
             }
-            #video-title.ytd-rich-grid-media, #video-title.yt-simple-endpoint.ytd-grid-video-renderer {
+            #video-title.ytd-rich-grid-media, 
+            #video-title.yt-simple-endpoint.ytd-grid-video-renderer {
                 font-size: min(13px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
                 line-height: 1.3em !important;
             }
-            #contents.ytd-rich-grid-renderer #text.ytd-channel-name, [page-subtype="subscriptions"] #text.ytd-channel-name, [page-subtype="subscriptions"] #metadata-line.ytd-grid-video-renderer, [page-subtype="channels"] #text.ytd-channel-name, [page-subtype="channels"] #metadata-line.ytd-grid-video-renderer {
+            #contents.ytd-rich-grid-renderer #text.ytd-channel-name, 
+            [page-subtype="subscriptions"] #text.ytd-channel-name, 
+            [page-subtype="subscriptions"] #metadata-line.ytd-grid-video-renderer, 
+            [page-subtype="channels"] #text.complex-string.ytd-channel-name, 
+            [page-subtype="channels"] #metadata-line.ytd-grid-video-renderer {
                 font-size: min(11px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
                 line-height: 1.3em !important;
             }
-            ytd-two-column-browse-results-renderer ytd-thumbnail.ytd-grid-video-renderer, ytd-two-column-browse-results-renderer ytd-grid-video-renderer {
+            ytd-two-column-browse-results-renderer ytd-thumbnail.ytd-grid-video-renderer, 
+            ytd-two-column-browse-results-renderer ytd-grid-video-renderer {
                 width: 10.83vw !important;
             }
             #contents.ytd-section-list-renderer {

@@ -99,6 +99,29 @@ ytd-metadata-row-renderer {
 html:not([dark]) ytd-author-comment-badge-renderer[creator] {
     background-color: silver !important;
 }
+#primary-inner.ytd-watch-flexy #title.ytd-rich-metadata-renderer, #primary-inner.ytd-watch-flexy #subtitle.ytd-rich-metadata-renderer, #primary-inner.ytd-watch-flexy #call-to-action.ytd-rich-metadata-renderer {
+    font-size: 11px !important;
+    line-height: 15px !important;
+    margin-top: 0px !important;
+}
+#primary-inner.ytd-watch-flexy #call-to-action.ytd-rich-metadata-renderer {
+    align-items: normal !important;
+}
+#primary-inner.ytd-watch-flexy #call-to-action.ytd-rich-metadata-renderer yt-icon {
+    display: none;
+}
+#primary-inner.ytd-watch-flexy ytd-thumbnail.ytd-rich-metadata-renderer {
+    max-width: 40px !important;
+    max-height: 56px !important;
+    margin: 0px 10px 0 0 !important;
+}
+#primary-inner.ytd-watch-flexy ytd-rich-metadata-renderer {
+    max-width: 0 !important;
+    min-width: max-content !important;
+}
+#always-shown ytd-rich-metadata-renderer {
+    background: none;
+}
     
 /*PLAYLIST STYLES*/
 #text.ytd-alert-with-button-renderer {
