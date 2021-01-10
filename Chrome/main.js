@@ -749,9 +749,7 @@ color: #CACACA;
 
     function clearMovedInfo(){
         var moveInfo = document.querySelectorAll('.redux-moved-info');
-        for (var i = 0; i < moveInfo.length; i++){
-            moveInfo[i].remove();
-        }
+        moveInfo.forEach(element => element.remove());
         waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
     }
 
@@ -814,9 +812,6 @@ color: #CACACA;
                 YTReduxURLPath = location.pathname;
                 YTReduxURLSearch = location.search;
                 flags.likesChanged = false;
-                if (!!document.querySelector('.redux-moved-info')){
-                    clearMovedInfo();
-                }
                 if (reduxSettingsJSON.disableInfiniteScrolling){
                     if (observerComments != undefined){
                         observerComments.disconnect();
@@ -830,6 +825,9 @@ color: #CACACA;
                     });
                 }
                 clearStoredIntervals();
+                if (!!document.querySelector('.redux-moved-info')){
+                    clearMovedInfo(); //contains an interval
+                }
                 main();
             }
         },100);
