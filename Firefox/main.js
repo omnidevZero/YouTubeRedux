@@ -16,14 +16,33 @@
     var observerComments;
     var observerRelated;
     var intervalsArray = [];
+    var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true}';
+
 
     function getSettings(){
         if (localStorage.getItem("reduxSettings") === null){
-            var newSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": false}';
-            localStorage.setItem("reduxSettings", newSettings);
-            reduxSettingsJSON = JSON.parse(newSettings);
+            localStorage.setItem("reduxSettings", defaultSettings);
+            reduxSettingsJSON = JSON.parse(defaultSettings);
         } else {
             reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
+            var defParsed = JSON.parse(defaultSettings);
+
+            //check which default settings are missing (e.g. due to updates) and add them
+            for (var i in defParsed){ //loop through default settings
+                var settingFound = false;
+                for (var j in reduxSettingsJSON){ //loop through current settings
+                    if (i == j){
+                        settingFound = true;
+                        break;
+                    }
+                }
+                if (!settingFound){
+                    console.log('Missing setting ' + i + ' was added.');
+                    reduxSettingsJSON[i] = defParsed[i];
+                    localStorage.setItem("reduxSettings", JSON.stringify(reduxSettingsJSON));
+                }
+            }
+
             playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
             playerSize.height = Math.ceil(playerSize.width / aspectRatio);
         }
@@ -191,6 +210,7 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
             }
             ` : '';
             var conditionalExtraLayout = reduxSettingsJSON.extraLayout ? `
+            /*EXTRA LAYOUT 1 - VIDEO*/
             ytd-app {
                 background-color: #f1f1f1 !important;
             }
@@ -239,6 +259,68 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
             }
             html[dark] #always-shown ytd-rich-metadata-renderer {
                 background-color: #222222;
+            }
+            /*EXTRA LAYOUT 2 - HOME*/
+            #page-manager ytd-browse[page-subtype="home"]  {
+                margin-left: 8vw;
+                margin-right: 8vw;
+            }
+            #header.ytd-rich-grid-renderer {
+                /*margin-right: 8vw;*/
+            }
+            #chips-wrapper {
+                width:100% !important;
+            }
+            ytd-rich-shelf-renderer {
+                border-top: 1px solid var(--yt-spec-10-percent-layer);
+            }
+            #video-title.ytd-rich-grid-media, #video-title.yt-simple-endpoint.ytd-grid-video-renderer {
+                font-size: min(13px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
+                line-height: 1.3em !important;
+            }
+            #contents.ytd-rich-grid-renderer #text.ytd-channel-name, [page-subtype="subscriptions"] #text.ytd-channel-name, [page-subtype="subscriptions"] #metadata-line.ytd-grid-video-renderer, [page-subtype="channels"] #text.ytd-channel-name, [page-subtype="channels"] #metadata-line.ytd-grid-video-renderer {
+                font-size: min(11px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
+                line-height: 1.3em !important;
+            }
+            ytd-two-column-browse-results-renderer ytd-thumbnail.ytd-grid-video-renderer, ytd-two-column-browse-results-renderer ytd-grid-video-renderer {
+                width: 10.83vw !important;
+            }
+            #contents.ytd-section-list-renderer {
+                padding-left: 10px;
+            }
+            #contents.ytd-rich-grid-renderer, #contents.ytd-section-list-renderer {
+                padding-top: 10px;
+                background: #fff;
+                box-shadow: 0 1px 2px rgba(0,0,0,.1);
+            }
+            html[dark] #contents.ytd-rich-grid-renderer, html[dark] #contents.ytd-section-list-renderer {
+                padding-top: 10px;
+                background: #222222;
+                box-shadow: 0 1px 2px rgba(255,255,255,.1);
+            }
+            ytd-video-meta-block[rich-meta] #metadata-line.ytd-video-meta-block {
+                line-height: 1.3em !important;
+            }
+            ytd-rich-shelf-renderer[is-show-more-hidden] #dismissable.ytd-rich-shelf-renderer {
+                border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
+            }
+            #avatar-link.ytd-rich-grid-media {
+                display:none;
+            }
+            h3.ytd-rich-grid-media, h3.ytd-grid-video-renderer {
+                margin: 4px 0 1px 0 !important;
+            }
+            ytd-guide-entry-renderer[active] {
+                background-color: #f00;
+            }
+            ytd-guide-entry-renderer[active] .guide-icon.ytd-guide-entry-renderer {
+                color: white !important;
+            }
+            ytd-guide-entry-renderer[active] .title.ytd-guide-entry-renderer {
+                color: white !important;
+            }
+            ytd-rich-section-renderer {
+                display:none;
             }
             ` : '';
             var customStyle = document.createElement("style");
