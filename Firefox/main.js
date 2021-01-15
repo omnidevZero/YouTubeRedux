@@ -348,9 +348,11 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
     function alignItems(){
         var player = document.querySelector('.html5-video-container video');
         var content = document.querySelector('#columns > #primary > #primary-inner');
+        var videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
         var calcPadding = player == null || content == null ? 0 : Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
-        if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null){
-            waitForElement('#columns > #primary > #primary-inner', 10, alignItems);
+        if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null || videoInfoElement == null){
+            waitForElement('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer', 10, alignItems);
+            return;
         } else {
             var reduxAlignElement = document.querySelector('#redux-style-align');
             var calcInner = `
@@ -434,7 +436,7 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
             return true;
         }
     }
-    
+
     function recalculateVideoSize(){
 
         function addListenersForRecalc(){
@@ -521,7 +523,7 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
         }
 
         function disableInfiniteRelated(){
-            setLayoutDifferences();            
+            setLayoutDifferences();
             if (related.length >= maxRelated && relatedContinuation != null){
                 observerRelated.disconnect();
                 relatedContinuation.remove();
@@ -776,7 +778,7 @@ var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
         }
     }
 
-        function main(){
+    function main(){
         getSettings();
         if (reduxSettingsJSON.autoConfirm){
             if (confirmInterval == undefined){
