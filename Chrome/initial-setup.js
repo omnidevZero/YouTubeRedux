@@ -285,6 +285,7 @@ color: #CACACA !important;
     #home-page-skeleton .rich-shelf-videos {
         margin-left: 8vw !important;
         margin-right: 8vw !important;
+        transform: translate(20px, 10px);
     }
     #home-page-skeleton .rich-shelf-videos .rich-grid-media-skeleton.mini-mode {
         flex-basis: 205px !important;
