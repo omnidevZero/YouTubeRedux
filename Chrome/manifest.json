@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "description": "Bring back old YouTube layout styles and features within the Polymer (modern) layout!",
     "permissions": ["activeTab"],
     "browser_action": {
@@ -19,6 +19,12 @@
       "128": "images/128.png"
     },
     "content_scripts": [
+      {
+        "matches": ["*://*.youtube.com/*"],
+        "exclude_matches": ["*://*.youtube.com/embed/*"],
+        "js": ["initial-setup.js"],
+        "run_at": "document_start"
+      },
       {
         "matches": ["*://*.youtube.com/*"],
         "exclude_matches": ["*://*.youtube.com/embed/*"],
