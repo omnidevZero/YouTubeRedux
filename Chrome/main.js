@@ -13,6 +13,8 @@
     var confirmInterval;
     var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
     var playerSize = {};
+    playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
+    playerSize.height = Math.ceil(playerSize.width / aspectRatio);
     var observerComments;
     var observerRelated;
     var intervalsArray = [];
