@@ -237,7 +237,7 @@ color: #CACACA !important;
     html[dark] app-drawer#guide[position="left"] {
         border-right: 1px solid var(--yt-spec-10-percent-layer) !important;
     }
-    #masthead-container.ytd-app {
+    #masthead-container.ytd-app #masthead:not([dark]) {
         border-bottom: 1px solid #e8e8e8 !important;
     }
     html[dark] #masthead-container.ytd-app {
