@@ -429,7 +429,7 @@
             margin-left: 0 !important;
         }
         #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
-            padding-top: 2px !important;
+            padding-top: 4px !important;
             margin-left: 4px !important;
         }
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
@@ -438,7 +438,21 @@
             padding: 2px 8px 2px 8px !important; 
             text-transform: none !important; 
             font-weight: normal !important; 
-            max-height: 21px !important;
+            font-size: 12px !important;
+            max-height: 24px !important;
+            height: 24px !important;
+        }
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button > yt-formatted-string, 
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button > yt-formatted-string {
+            padding-top: 1px !important;
+        }
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed])::before, 
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button:not([subscribed])::before {
+            content: url('${chrome.extension.getURL('/images/sub-icon.png')}') !important;
+            background-size: auto !important;
+            width: 16px !important;
+            height: 12px !important;
+            margin-right: 6px !important;
         }
         #sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
             margin-right: 0px !important;
