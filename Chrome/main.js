@@ -260,9 +260,10 @@
         function addCommentsButton(){
             var showMoreComments = document.createElement('div');
             var continueElement = commentsContElement;
+            var showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
             showMoreComments.id = 'show-more-comments';
-            showMoreComments.style = 'text-align:center; margin-bottom: 16px;';
-            showMoreComments.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer;" value="SHOW MORE"></input>';
+            showMoreComments.style = 'text-align:center; margin-bottom: 16px; margin-right: 15px;';
+            showMoreComments.innerHTML = `<input type="button" style="height:30px; width: 100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer; text-transform: uppercase;" value="${showMoreText}"></input>`;
             contentsElement.append(showMoreComments);
             document.querySelector('#show-more-comments').onclick = function(){
                 var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
@@ -277,9 +278,10 @@
         function addRelatedButton(){
             var showMoreRelated = document.createElement('div');
             var continueElement = relatedContinuation;
+            var showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
             showMoreRelated.id = 'show-more-related';
             showMoreRelated.style = 'text-align:center; margin-top: 4px;';
-            showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer;" value="SHOW MORE"></input>';
+            showMoreRelated.innerHTML = `<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer; text-transform: uppercase;" value="${showMoreText}"></input>`;
             relatedElement.append(showMoreRelated);
             document.querySelector('#show-more-related').onclick = function(){
                 relatedElement.append(continueElement);
@@ -450,6 +452,9 @@
         }
         #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
             margin-top: 5px !important;
+        }
+        ytd-expander[collapsed] > #content.ytd-expander {
+            max-height: max(var(--ytd-expander-collapsed-height), 65px) !important;
         }
         #top-level-buttons > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
             height: 20px !important;

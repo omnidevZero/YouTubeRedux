@@ -40,7 +40,7 @@ function addCustomStyles(){
     var conditionalAutoplay = reduxSettingsJSON.hideAutoplayButton ? `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {display:none !important;}` : '';
     var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
-#primary {
+#primary.ytd-watch-flexy {
 max-width: calc((100vh - (var(--ytd-watch-flexy-masthead-height) + var(--ytd-margin-6x) + var(--ytd-watch-flexy-space-below-player))) * (${window.screen.width} / ${window.screen.height})) !important;
 min-width: calc(var(--ytd-watch-flexy-min-player-height) * (${window.screen.width} / ${window.screen.height})) !important;
 }
@@ -190,6 +190,12 @@ color: #CACACA !important;
         border-bottom: 0 !important;
         margin-bottom: 10px !important;
     }
+    ytd-video-secondary-info-renderer {
+        padding-bottom: 8px !important;
+    }
+    .more-button.ytd-video-secondary-info-renderer, .less-button.ytd-video-secondary-info-renderer {
+        font-size: 1.1rem !important;
+    }
     ytd-comments#comments {
         background-color: white !important;
         padding-left: 15px !important;
@@ -205,6 +211,14 @@ color: #CACACA !important;
     #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
         padding-top: 10px !important;
     }
+    #meta.ytd-watch-flexy paper-button#more, #meta.ytd-watch-flexy paper-button#less {
+        width: calc(100% - 15px) !important;
+        border-top: 1px solid #e2e2e2 !important;
+        margin-top: 10px !important;
+    }
+    html[dark] #meta.ytd-watch-flexy paper-button#more, html[dark] #meta.ytd-watch-flexy paper-button#less {
+        border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
+    }
     #secondary-inner.ytd-watch-flexy #related {
         background-color: white !important;
         box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
@@ -217,6 +231,15 @@ color: #CACACA !important;
         background: none !important;
     }
     /*EXTRA LAYOUT 2 - HOME*/
+    app-drawer#guide[position="left"] {
+        border-right: 1px solid #e8e8e8 !important;
+    }
+    #masthead-container.ytd-app {
+        border-bottom: 1px solid #e8e8e8 !important;
+    }
+    html[dark] #masthead-container.ytd-app {
+        border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
+    }
     #page-manager ytd-browse[page-subtype="home"]  {
         margin-left: 8vw !important;
         margin-right: 8vw !important;
@@ -240,6 +263,12 @@ color: #CACACA !important;
         font-size: min(11px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
         line-height: 1.3em !important;
     }
+    ytd-two-column-browse-results-renderer[page-subtype="subscriptions"] {
+        margin-top: 12px !important;
+    }
+    [page-subtype="subscriptions"] ytd-item-section-renderer:first-child .grid-subheader.ytd-shelf-renderer {
+        margin-top: 0px !important;
+    }
     ytd-two-column-browse-results-renderer ytd-thumbnail.ytd-grid-video-renderer, 
     ytd-two-column-browse-results-renderer ytd-grid-video-renderer {
         width: 10.83vw !important;
@@ -251,6 +280,9 @@ color: #CACACA !important;
         padding-top: 10px !important;
         background: #fff !important;
         box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+    }
+    #contents.ytd-rich-grid-renderer {
+        margin-top: 12px !important;
     }
     html[dark] #contents.ytd-rich-grid-renderer, html[dark] #contents.ytd-section-list-renderer {
         padding-top: 10px !important;
@@ -280,6 +312,9 @@ color: #CACACA !important;
     }
     ytd-rich-section-renderer {
         display:none !important;
+    }
+    [page-subtype="channels"] ytd-two-column-browse-results-renderer .flex-container.ytd-compact-station-renderer {
+        background: none !important;
     }
     /*SKELETON*/
     #home-page-skeleton .rich-shelf-videos {
