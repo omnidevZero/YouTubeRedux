@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false}';
 
 getSettings();
 addCustomStyles();
@@ -80,6 +80,9 @@ color: #fff !important;
 .title.ytd-playlist-panel-renderer {
 --yt-endpoint-color: white !important;
 }
+.title.ytd-playlist-panel-renderer a {
+    color: white !important;
+}
 .title.ytd-playlist-panel-renderer a:hover {
 --yt-endpoint-color: white !important;
 color: white !important;
@@ -104,6 +107,19 @@ background-color: #3a3a3a !important;
 }
 #publisher-container > yt-formatted-string[has-link-only_]:not([force-default-style]) a.yt-simple-endpoint.yt-formatted-string:visited {
 color: #CACACA !important;
+}
+#publisher-container > yt-formatted-string[has-link-only_]:not([force-default-style]) a.yt-simple-endpoint.yt-formatted-string {
+color: #B8B8B8 !important;
+}
+#playlist.ytd-watch-flexy #unplayableText:not([hidden]) {
+color: #CACACA !important;
+}
+#playlist.ytd-watch-flexy ytd-playlist-panel-video-renderer[watch-color-update_] #index.ytd-playlist-panel-video-renderer {
+color: #CACACA !important;
+}
+
+#playlist.ytd-watch-flexy .index-message-wrapper.ytd-playlist-panel-renderer {
+color: #B8B8B8 !important;
 }
 ` : '';
     var conditionalLogo = reduxSettingsJSON.classicLogo ? `
@@ -331,6 +347,31 @@ color: #CACACA !important;
         max-width: 205px !important;
     }
     ` : '';
+    var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
+    /*DARKER RED*/
+    ytd-guide-entry-renderer[active] {
+        background-color: #cc181e !important;
+    }
+    yt-formatted-string#guide-section-title.ytd-guide-section-renderer {
+        color: #cc181e !important;
+    }
+    ytd-mini-guide-entry-renderer[active] .guide-icon.ytd-mini-guide-entry-renderer, ytd-mini-guide-entry-renderer[active] .title.ytd-mini-guide-entry-renderer {
+        color: #cc181e !important;
+    }
+    #progress.ytd-thumbnail-overlay-resume-playback-renderer {
+        background-color: #cc181e !important;
+    }
+    paper-button.ytd-subscribe-button-renderer {
+        background-color: #cc181e !important;
+    }
+    .badge-style-type-live-now.ytd-badge-supported-renderer {
+        color: #cc181e !important;
+        border: 1px solid #cc181e !important;
+    }
+    .ytp-swatch-background-color {
+        background-color: #cc181e !important;
+    }
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -342,7 +383,8 @@ color: #CACACA !important;
             conditionalFilterMain,
             conditionalFilterVideo,
             conditionalFilterMini,
-            conditionalExtraLayout
+            conditionalExtraLayout,
+            conditionalDarkerRed
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {

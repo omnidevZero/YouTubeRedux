@@ -41,6 +41,16 @@ document.querySelector('input[name="smallPlayer"]').addEventListener('change', (
   }
 })
 
+document.querySelector('input[name="extraLayout"]').addEventListener('change', () => {
+  if (document.querySelector('input[name="extraLayout"]').checked){
+    document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');
+  } else {
+    document.querySelector('input[name="darkerRed"]').setAttribute('disabled', '');
+    document.querySelector('input[name="darkerRed"]').checked = false;
+    saveSettings();
+  }
+})
+
 document.querySelector('.slider-control').addEventListener('change', function(){
   var slider = document.querySelector('input[type="range"]');
   slider.value = this.value;
@@ -104,6 +114,9 @@ function changeGridWidth(numberOfItems){
         //set size options
         document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
         //uncheck subsetting
+        if (document.querySelector('input[name="extraLayout"]').checked){
+          document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');
+        }
         if (document.querySelector('input[name="smallPlayer"]').checked){
           document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
         }
