@@ -361,7 +361,7 @@ color: #B8B8B8 !important;
     #progress.ytd-thumbnail-overlay-resume-playback-renderer {
         background-color: #cc181e !important;
     }
-    paper-button.ytd-subscribe-button-renderer {
+    paper-button.ytd-subscribe-button-renderer:not([subscribed]) {
         background-color: #cc181e !important;
     }
     .badge-style-type-live-now.ytd-badge-supported-renderer {
