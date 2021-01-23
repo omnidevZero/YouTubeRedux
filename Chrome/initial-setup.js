@@ -352,7 +352,8 @@ color: #B8B8B8 !important;
     ytd-guide-entry-renderer[active] {
         background-color: #cc181e !important;
     }
-    #guide-section-title.ytd-guide-section-renderer {
+    #guide-section-title.ytd-guide-section-renderer,
+    #guide-section-title.ytd-guide-section-renderer a {
         color: #cc181e !important;
     }
     ytd-mini-guide-entry-renderer[active] .guide-icon.ytd-mini-guide-entry-renderer, ytd-mini-guide-entry-renderer[active] .title.ytd-mini-guide-entry-renderer {
@@ -361,7 +362,7 @@ color: #B8B8B8 !important;
     #progress.ytd-thumbnail-overlay-resume-playback-renderer {
         background-color: #cc181e !important;
     }
-    paper-button.ytd-subscribe-button-renderer:not([subscribed]) {
+    #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed]) {
         background-color: #cc181e !important;
     }
     .badge-style-type-live-now.ytd-badge-supported-renderer {
