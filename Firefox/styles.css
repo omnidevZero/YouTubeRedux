@@ -21,7 +21,8 @@ ytd-rich-item-renderer {
 #guide-links-primary.ytd-guide-renderer > a, #guide-links-secondary.ytd-guide-renderer > a {
     font-size:10px !important;
 }
-#guide-section-title.ytd-guide-section-renderer {
+#guide-section-title.ytd-guide-section-renderer,
+#guide-section-title.ytd-guide-section-renderer a {
     color:#F00 !important;
 }
 .guide-icon.ytd-guide-entry-renderer {

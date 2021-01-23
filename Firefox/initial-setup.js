@@ -352,7 +352,8 @@ color: #B8B8B8 !important;
     ytd-guide-entry-renderer[active] {
         background-color: #cc181e !important;
     }
-    yt-formatted-string#guide-section-title.ytd-guide-section-renderer {
+    yt-formatted-string#guide-section-title.ytd-guide-section-renderer,
+    yt-formatted-string#guide-section-title.ytd-guide-section-renderer a {
         color: #cc181e !important;
     }
     ytd-mini-guide-entry-renderer[active] .guide-icon.ytd-mini-guide-entry-renderer, ytd-mini-guide-entry-renderer[active] .title.ytd-mini-guide-entry-renderer {
