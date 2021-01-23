@@ -371,6 +371,9 @@ color: #B8B8B8 !important;
     .ytp-swatch-background-color {
         background-color: #cc181e !important;
     }
+    #logo-icon-container svg > g > g:first-child > path {
+        fill: #cc181e !important;
+    }
     ` : '';
     function mergeOptions(){
         var allStyleOptions = [
