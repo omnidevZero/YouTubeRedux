@@ -570,7 +570,7 @@
                     });
                 }
                 clearStoredIntervals();
-                if (!!document.querySelector('.redux-moved-info')){
+                if (!!document.querySelector('.redux-moved-info') && window.location.href.includes('/watch?')){
                     clearMovedInfo(); //contains an interval
                 }
                 main();
