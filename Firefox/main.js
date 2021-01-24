@@ -543,7 +543,7 @@
             waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
         }
         if (window.location.href.includes('/feed/trending')){
-            waitForElement('#primary > ytd-section-list-renderer:not([page-subtype]) > #continuations', 10, splitTrending);
+            waitForElement('ytd-browse #primary > ytd-section-list-renderer:not([page-subtype]) > #continuations', 10, splitTrending);
         }
         changeGridWidth();
     }
