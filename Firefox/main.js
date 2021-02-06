@@ -5,7 +5,8 @@
         "stylesChanged":false,
         "isRearranged":false,
         "likesTracked":false,
-        "recalcListenersAdded":false
+        "recalcListenersAdded":false,
+        "trueFullscreenListenersAdded":false
     }
     var likesInterval;
     var YTReduxURLPath;
@@ -523,6 +524,36 @@
         }
     }
 
+    function preventScrolling(){
+
+        function scrollingAction(e){
+            e.preventDefault();
+        }
+
+        function keysAction(e){
+            if (e.keyCode == 33 || e.keyCode == 34){
+                e.preventDefault();
+            }
+        }
+
+        document.addEventListener('fullscreenchange', function(e){
+            setTimeout(() => { //timeout accomodates for fullscreen transition animation
+                if (document.querySelector('ytd-watch-flexy[fullscreen]') != null){
+                    console.log('entered fullscreen')
+                    document.querySelector('.ytp-right-controls >button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
+                    document.addEventListener('wheel', scrollingAction, {passive: false});
+                    document.addEventListener('keydown', keysAction, {passive: false});
+                } else {
+                    console.log('exited fullscreen')
+                    document.removeEventListener('wheel', scrollingAction, {passive: false});
+                    document.removeEventListener('keydown', keysAction, {passive: false})
+                }
+            }, 25)
+        })
+
+        flags.trueFullscreenListenersAdded = true;
+    }
+
     function main(){
         if (reduxSettingsJSON.autoConfirm){
             if (confirmInterval == undefined){
@@ -544,6 +575,9 @@
         }
         if (window.location.href.includes('/feed/trending')){
             waitForElement('ytd-browse #primary > ytd-section-list-renderer:not([page-subtype]) > #continuations', 10, splitTrending);
+        }
+        if (reduxSettingsJSON.trueFullscreen && window.location.href.includes('/watch?') && !flags.trueFullscreenListenersAdded){
+            preventScrolling();
         }
         changeGridWidth();
     }
