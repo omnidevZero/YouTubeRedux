@@ -123,12 +123,12 @@ color: #B8B8B8 !important;
 }
 ` : '';
     var conditionalLogo = reduxSettingsJSON.classicLogo ? `
-    ytd-masthead #logo-icon-container, #contentContainer #logo-icon-container {
+    ytd-masthead #logo-icon-container, #contentContainer #logo-icon-container, ytd-topbar-logo-renderer > #logo {
         content: url('${chrome.extension.getURL('/images/classicLogo.png')}') !important;
         width: 72px !important;
         height: auto !important;
     }
-    ytd-masthead[dark] #logo-icon-container, html[dark] #contentContainer #logo-icon-container {
+    ytd-masthead[dark] #logo-icon-container, html[dark] #contentContainer #logo-icon-container, ytd-masthead[dark] ytd-topbar-logo-renderer > #logo, html[dark] ytd-topbar-logo-renderer > #logo {
         content: url('${chrome.extension.getURL('/images/classicLogoDark.png')}') !important;
         width: 72px !important;
         height: auto !important;
