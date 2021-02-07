@@ -228,7 +228,9 @@
                 }
             }, 10)
         }
-        if (!flags.recalcListenersAdded){addListenersForRecalc()}; //to recalculate player size when changing between normal, theater and fullscreen modes
+        if (!flags.recalcListenersAdded){
+            waitForElement('.ytp-size-button', 10, addListenersForRecalc);
+        }; //to recalculate player size when changing between normal, theater and fullscreen modes
         startRecalc();
     }
 
@@ -539,12 +541,10 @@
         document.addEventListener('fullscreenchange', function(e){
             setTimeout(() => { //timeout accomodates for fullscreen transition animation
                 if (document.querySelector('ytd-watch-flexy[fullscreen]') != null){
-                    console.log('entered fullscreen')
                     document.querySelector('.ytp-right-controls >button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
                     document.addEventListener('wheel', scrollingAction, {passive: false});
                     document.addEventListener('keydown', keysAction, {passive: false});
                 } else {
-                    console.log('exited fullscreen')
                     document.removeEventListener('wheel', scrollingAction, {passive: false});
                     document.removeEventListener('keydown', keysAction, {passive: false})
                 }
