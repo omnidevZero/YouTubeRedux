@@ -71,7 +71,7 @@
     }
 
     function alignItems(){
-        var player = document.querySelector('.html5-video-container video');
+        var player = document.querySelector('ytd-watch-flexy .html5-video-container video');
         var content = document.querySelector('#columns > #primary > #primary-inner');
         var videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
         var calcPadding = player == null || content == null ? 0 : Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
@@ -212,7 +212,7 @@
         function startRecalc(){
             var checkingTimeout;
             var checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
-                var progressBar = document.querySelector('.ytp-chrome-bottom');
+            var progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
                 if (progressBar.offsetWidth+12 >= playerSize.width && progressBar.offsetWidth+12 >= playerSize.width && !isTheater() && !isFullscreen()){ //TODO more precise condition
                     insertRecalcScript();
                     if (checkingTimeout != undefined){
@@ -541,7 +541,7 @@
         document.addEventListener('fullscreenchange', function(e){
             setTimeout(() => { //timeout accomodates for fullscreen transition animation
                 if (document.querySelector('ytd-watch-flexy[fullscreen]') != null){
-                    document.querySelector('.ytp-right-controls >button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
+                    document.querySelector('.ytp-right-controls > button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
                     document.addEventListener('wheel', scrollingAction, {passive: false});
                     document.addEventListener('keydown', keysAction, {passive: false});
                 } else {
@@ -564,7 +564,7 @@
             waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
         }
         if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')){
-            waitForElement('#movie_player', 10, recalculateVideoSize);
+            waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);
             waitForElement('#redux-recalc', 10, alignItems);
         }
         if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')){
