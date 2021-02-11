@@ -117,7 +117,7 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
     margin: 0px 10px 0 0 !important;
 }
 #primary-inner.ytd-watch-flexy ytd-rich-metadata-renderer {
-    max-width: 0 !important;
+    max-width: min-content !important;
     min-width: max-content !important;
 }
 #always-shown ytd-rich-metadata-renderer {
