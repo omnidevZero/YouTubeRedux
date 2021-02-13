@@ -69,7 +69,7 @@ width: calc(100% - 12px) !important;
     var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
 /*DARK PLAYLIST*/
 #playlist.ytd-watch-flexy {
-transform: translate(-25px, -1px) !important;
+transform: translate(-12px, -1px) !important;
 }
 .header.ytd-playlist-panel-renderer {
 background-color: #1a1a1a !important;
@@ -238,13 +238,28 @@ color: #B8B8B8 !important;
     #secondary-inner.ytd-watch-flexy #related {
         background-color: white !important;
         box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+        padding-left: 15px !important;
+        padding-top: 7px !important;
+        margin-left: -13px !important;
     }
     html[dark] #secondary-inner.ytd-watch-flexy #related {
         background-color: #222222 !important;
         box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
+        padding-left: 15px !important;
+        padding-top: 7px !important;
+        margin-left: -13px !important;
+    }
+    #secondary-inner.ytd-watch-flexy #playlist + #related:not(#secondary-inner.ytd-watch-flexy #playlist[hidden="true"] + #related) {
+        padding-top: 7px !important;
+    }
+    #secondary-inner.ytd-watch-flexy #playlist[hidden="true"] + #related {
+        padding-top: 15px !important;
     }
     #always-shown ytd-rich-metadata-renderer {
         background: none !important;
+    }
+    #secondary-inner.ytd-watch-flexy ytd-playlist-panel-renderer:not([hidden="true"]) + #related #items > ytd-compact-video-renderer:first-child {
+        padding-top: 8px !important;
     }
     /*EXTRA LAYOUT 2 - HOME*/
     app-drawer#guide[position="left"] {

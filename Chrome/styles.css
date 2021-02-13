@@ -131,6 +131,10 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
 #contributor.ytd-playlist-video-renderer, #index.ytd-playlist-video-renderer, #content.ytd-playlist-video-renderer {
     padding: 4px 0 !important;
 }
+#playlist.ytd-watch-flexy {
+    margin-bottom: 8px !important;
+    margin-left: -13px !important;
+}
     
 /*SEARCH RESULTS STYLES*/
 ytd-playlist-renderer[use-prominent-thumbs] ytd-playlist-thumbnail.ytd-playlist-renderer {
@@ -178,6 +182,9 @@ html:not([dark]) #title.ytd-grid-channel-renderer {
     color:#167ac6 !important;
 }
 yt-img-shadow.ytd-grid-channel-renderer {
+    border-radius: 0% !important;
+}
+yt-img-shadow.ytd-channel-avatar-editor {
     border-radius: 0% !important;
 }
 #avatar.ytd-c4-tabbed-header-renderer {
