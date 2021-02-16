@@ -5,7 +5,7 @@
       <style>
         body {
             min-width: 300px;
-            max-width: 316px;
+            max-width: 587px;
             font-family: "Segoe UI", Tahoma, sans-serif;
             background-image: linear-gradient(-45deg, #748de6a6, transparent);
             font-size: 75%;
@@ -84,7 +84,7 @@
         }
         .note {
             font-size:10px;
-            margin-bottom:20px;
+            margin-bottom:10px;
             text-align:right;
         }
         .tooltip {
@@ -153,6 +153,10 @@
             display: inline-block;
             opacity: 0.25;
         }
+        .columns {
+            column-count: 2;
+            min-width: 545px;
+        }
       </style>
     </head>
     <body>
@@ -160,45 +164,55 @@
         <fieldset style="position:relative;">
             <legend>Settings</legend>
             <div style="text-align:center; display:none; z-index:99" class="outer-warning"><div class="warning"><span style="color:red;"></span><span style="color:black;">PLEASE VISIT YOUTUBE IN ORDER TO CHANGE SETTINGS</div></div>
-            <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
-            <label><input type="checkbox" name="extraLayout" class="settings">Extra layout changes<div class="tooltip"><span class="tooltip-text-small">Adds more classic styles to multiple pages in order to match the old layout more closely.</span></div></label>
-            <label class="subsetting"><input type="checkbox" name="darkerRed" class="settings" disabled>Use darker red color</label>
-            <label style="display:inline-block"><input type="checkbox" name="smallPlayer" class="settings">Use small video player</label>
-            <label style="display:inline-block"><select name="smallPlayerWidth" class="settings">
-                <option value=427></option>
-                <option value=640></option>
-                <option value=768></option>
-                <option value=853 style="background-color: #dbe1f8;"></option>
-                <option value=938></option>
-                <option value=1066></option>
-                </select>
-                <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
-            </label>
-            <label class="subsetting"><input type="checkbox" name="blackBars" class="settings" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
-            <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling<div class="tooltip"><span class="tooltip-text-small">Limits displayed comments and related videos to 20 items. More will load upon clicking the 'SHOW MORE' button.</span></div></label>
-            <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
-            <label><input type="checkbox" name="showRawValues" class="settings">Show precise values for likes/dislikes<div class="tooltip"><span class="tooltip-text-small">E.g.: changes the displayed value of likes from 6K to 6312.</span></div></label>
-            <label><input type="checkbox" name="trueFullscreen" class="settings">True fullscreen mode<div class="tooltip"><span class="tooltip-text-small">Prevents scrolling while in fullscreen mode.</span></div></label>
-            <label><input type="checkbox" name="classicLikesColors" class="settings">Use green/red colors for likes/dislikes</label>
-            <label><input type="checkbox" name="darkPlaylist" class="settings">Use dark theme for playlists</label>
-            <label><input type="checkbox" name="hideAutoplayButton" class="settings">Hide the 'Auto-play' button</label>
-            <label><input type="checkbox" name="hideCastButton" class="settings">Hide the 'Play on TV' button<div class="tooltip"><span class="tooltip-text-small">Removes the button from video controls. AKA the Cast button which allows you to cast video to the paired TV.</span></div></label>
-            <label><input type="checkbox" name="classicLogo" class="settings">Restore classic YouTube logo</label>
-            <fieldset style="padding-top: 0; padding-bottom: 0;"><legend>Video filter settings<div class="tooltip"><span class="tooltip-text-small">Hidden by 'Extra layout changes' setting.<br><p>Mini: Leaves only All and Mixes options on home page; scales them down.<br>No home: hides video filters on home page<br>No video: hides video filters on video page<p>Note: filters are only displayed if your YT language is set to English.</span></div></legend>
-                <div style="text-align: center">
-                    <label style="display:inline-block"><input type="checkbox" name="filterMini" class="settings">Mini</label>
-                    <label style="display:inline-block"><input type="checkbox" name="filterMain" class="settings">No home</label>
-                    <label style="display:inline-block"><input type="checkbox" name="filterVideo" class="settings">No video</label>
+            <div class="columns">
+                <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
+                <label><input type="checkbox" name="extraLayout" class="settings">Extra layout changes<div class="tooltip"><span class="tooltip-text-small">Adds more classic styles to multiple pages in order to match the old layout more closely.</span></div></label>
+                <label class="subsetting"><input type="checkbox" name="darkerRed" class="settings" disabled>Use darker red color</label>
+                <label style="display:inline-block"><input type="checkbox" name="smallPlayer" class="settings">Use small video player</label>
+                <label style="display:inline-block"><select name="smallPlayerWidth" class="settings">
+                    <option value=427></option>
+                    <option value=640></option>
+                    <option value=768></option>
+                    <option value=853 style="background-color: #dbe1f8;"></option>
+                    <option value=938></option>
+                    <option value=1066></option>
+                    </select>
+                    <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
+                </label>
+                <label class="subsetting"><input type="checkbox" name="blackBars" class="settings" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
+                <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling<div class="tooltip"><span class="tooltip-text-small">Limits displayed comments and related videos to 20 items. More will load upon clicking the 'SHOW MORE' button.</span></div></label>
+                <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
+                <label><input type="checkbox" name="showRawValues" class="settings">Show precise values for likes/dislikes<div class="tooltip"><span class="tooltip-text-small">E.g.: changes the displayed value of likes from 6K to 6312.</span></div></label>
+                <label><input type="checkbox" name="trueFullscreen" class="settings">True fullscreen mode<div class="tooltip"><span class="tooltip-text-small">Prevents scrolling while in fullscreen mode.</span></div></label>
+                <label><input type="checkbox" name="classicLikesColors" class="settings">Use green/red colors for likes/dislikes</label>
+                <label><input type="checkbox" name="darkPlaylist" class="settings">Use dark theme for playlists</label>
+                <label><input type="checkbox" name="hideAutoplayButton" class="settings">Hide the 'Auto-play' button</label>
+                <label><input type="checkbox" name="hideCastButton" class="settings">Hide the 'Play on TV' button<div class="tooltip"><span class="tooltip-text-small">Removes the button from video controls. AKA the Cast button which allows you to cast video to the paired TV.</span></div></label>
+                <label><input type="checkbox" name="classicLogo" class="settings">Restore classic YouTube logo</label>
+                <fieldset style="padding-top: 0; padding-bottom: 0;">
+                    <legend>Favicon</legend>
+                    <div style="text-align:center;">
+                        <input type="radio" name="favicon" class="settings" value="1" style="display:inline-block;"><img src='/images/favicon1.ico' style="height:16px; width:16px"></img></input>
+                        <input type="radio" name="favicon" class="settings" value="2" style="display:inline-block;"><img src='/images/favicon2.png' style="height:16px; width:16px"></img></input>
+                        <input type="radio" name="favicon" class="settings" value="3" style="display:inline-block;"><img src='/images/favicon3.ico' style="height:16px; width:16px"></img></input>
+                    </div>
+                </fieldset>
+                <fieldset style="padding-top: 0; padding-bottom: 0;"><legend>Video filter settings<div class="tooltip"><span class="tooltip-text-small">Hidden by 'Extra layout changes' setting.<br><p>Mini: Leaves only All and Mixes options on home page; scales them down.<br>No home: hides video filters on home page<br>No video: hides video filters on video page<p>Note: filters are only displayed if your YT language is set to English.</span></div></legend>
+                    <div style="text-align: center">
+                        <label style="display:inline-block"><input type="checkbox" name="filterMini" class="settings">Mini</label>
+                        <label style="display:inline-block"><input type="checkbox" name="filterMain" class="settings">No home</label>
+                        <label style="display:inline-block"><input type="checkbox" name="filterVideo" class="settings">No video</label>
+                    </div>
+                </fieldset>  
+                <label><input type="checkbox" name="rearrangeInfo" class="settings">Do NOT recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
                 </div>
-            </fieldset>  
-            <label><input type="checkbox" name="rearrangeInfo" class="settings">Do NOT recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
-        </fieldset>
+            </fieldset>
         <fieldset style="display:none">
             <legend>Experimental/WIP</legend>
         </fieldset>
-        <div class="note">Note: most settings require a page refresh to take effect.</div>
-        <div id="donate-message" style="text-align:center; font-size: 11px;">If you enjoyed this extension and you really have nothing to do with your money, consider donating! Thank you regardless! <span class="pure">:)</span>
-            <br>
+      <div class="note">Note: most settings require a page refresh to take effect.</div>
+      <div id="donate-message" style="text-align:center; font-size: 10.5px;">If you enjoyed this extension and you really have nothing to do with your money, consider donating! Thank you regardless! <span class="pure">:)</span>
+      <br>
       <button id="donate"><img src="/images/donate.png" alt="Donation button"></img></button></div>
       <script src="popup.js"></script>
     </body>

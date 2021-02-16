@@ -75,7 +75,15 @@ function saveSettings(){
       newSettings[element.name] = element.value;
     });
 
-  browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    //save favicon radio buttons
+  var radio = document.querySelectorAll('input[type="radio"][name="favicon"]');
+  for (var i = 0; i < radio.length; i++){
+    if (radio[i].checked){
+      newSettings[radio[i].name] = radio[i].value;
+    }
+  }
+  
+    browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var storageSettings = JSON.stringify(newSettings);
     browser.tabs.executeScript(
         tabs[0].id,
@@ -113,6 +121,8 @@ function changeGridWidth(numberOfItems){
     }
         //set size options
         document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
+        //set radio buttons
+        document.querySelector(`input[type="radio"][value="${currentSettings.favicon}"]`).checked = true;
         //uncheck subsetting
         if (document.querySelector('input[name="extraLayout"]').checked){
           document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');

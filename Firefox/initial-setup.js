@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3}';
 
 getSettings();
 addCustomStyles();
@@ -416,4 +416,30 @@ color: #B8B8B8 !important;
     var customStyleInner = mergeOptions();
     customStyle.appendChild(document.createTextNode(customStyleInner));
     document.documentElement.append(customStyle);
+
+    if (reduxSettingsJSON.favicon != "3") changeFavicon();
+
+    function changeFavicon(){
+        switch (reduxSettingsJSON.favicon) {
+            case "1":
+                if (document.querySelector('link[rel="shortcut icon"]') == null){
+                    setTimeout(changeFavicon, 250);
+                    return;
+                }
+                document.querySelector('link[rel="shortcut icon"]').href = chrome.extension.getURL('/images/favicon1.ico');
+                document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = chrome.extension.getURL('/images/favicon1.ico'));
+                break;
+            case "2":
+                if (document.querySelector('link[rel="shortcut icon"]') == null){
+                    setTimeout(changeFavicon, 250);
+                    return;
+                }
+                document.querySelector('link[rel="shortcut icon"]').href = chrome.extension.getURL('/images/favicon2.png');
+                document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = chrome.extension.getURL('/images/favicon2.png'));
+                break;
+    
+            default:
+                break;
+        }
+    }
 }
