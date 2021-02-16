@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "1.7.5",
+    "version": "1.7.6",
     "description": "Bring back old YouTube layout styles and features within the Polymer (modern) layout!",
     "permissions": ["activeTab"],
     "browser_action": {
