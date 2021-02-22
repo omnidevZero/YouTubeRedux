@@ -366,13 +366,13 @@ color: #B8B8B8 !important;
         content: url(${browser.extension.getURL('/images/verified1.png')});
         width: 12px !important;
         height: 9px !important;
-        margin-bottom: 2px !important;
+        margin-bottom: 1px !important;
     }
     .badge-style-type-verified > yt-icon:hover {
         content: url(${browser.extension.getURL('/images/verified2.png')});
         width: 12px !important;
         height: 9px !important;
-        margin-bottom: 2px !important;
+        margin-bottom: 1px !important;
     }
     ` : '';
     var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
