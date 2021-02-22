@@ -361,6 +361,19 @@ color: #B8B8B8 !important;
         min-width: 205px !important;
         max-width: 205px !important;
     }
+    /*MISC*/
+    .badge-style-type-verified > yt-icon {
+        content: url(${chrome.extension.getURL('/images/verified1.png')});
+        width: 12px !important;
+        height: 9px !important;
+        margin-bottom: 2px !important;
+    }
+    .badge-style-type-verified > yt-icon:hover {
+        content: url(${chrome.extension.getURL('/images/verified2.png')});
+        width: 12px !important;
+        height: 9px !important;
+        margin-bottom: 2px !important;
+    }
     ` : '';
     var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
     /*DARKER RED*/

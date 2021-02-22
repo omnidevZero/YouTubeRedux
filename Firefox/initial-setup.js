@@ -124,22 +124,22 @@ color: #B8B8B8 !important;
 ` : '';
     var conditionalLogo = reduxSettingsJSON.classicLogo ? `
     ytd-masthead #logo-icon-container, #contentContainer #logo-icon-container, ytd-topbar-logo-renderer > #logo {
-        content: url('${chrome.extension.getURL('/images/classicLogo.png')}') !important;
+        content: url('${browser.extension.getURL('/images/classicLogo.png')}') !important;
         width: 72px !important;
         height: auto !important;
     }
     ytd-masthead[dark] #logo-icon-container, html[dark] #contentContainer #logo-icon-container, ytd-masthead[dark] ytd-topbar-logo-renderer > #logo, html[dark] ytd-topbar-logo-renderer > #logo {
-        content: url('${chrome.extension.getURL('/images/classicLogoDark.png')}') !important;
+        content: url('${browser.extension.getURL('/images/classicLogoDark.png')}') !important;
         width: 72px !important;
         height: auto !important;
     }
     #start > #masthead-logo, #masthead > #masthead-logo {
-        content: url('${chrome.extension.getURL('/images/classicLogo.png')}') !important;
+        content: url('${browser.extension.getURL('/images/classicLogo.png')}') !important;
         width: 72px !important;
         height: auto !important;
     }
     html[dark] #start > #masthead-logo, html[dark] #masthead > #masthead-logo {
-        content: url('${chrome.extension.getURL('/images/classicLogoDark.png')}') !important;
+        content: url('${browser.extension.getURL('/images/classicLogoDark.png')}') !important;
         width: 72px !important;
         height: auto !important;
     }
@@ -360,6 +360,19 @@ color: #B8B8B8 !important;
         flex-basis: 205px !important;
         min-width: 205px !important;
         max-width: 205px !important;
+    }
+    /*MISC*/
+    .badge-style-type-verified > yt-icon {
+        content: url(${browser.extension.getURL('/images/verified1.png')});
+        width: 12px !important;
+        height: 9px !important;
+        margin-bottom: 2px !important;
+    }
+    .badge-style-type-verified > yt-icon:hover {
+        content: url(${browser.extension.getURL('/images/verified2.png')});
+        width: 12px !important;
+        height: 9px !important;
+        margin-bottom: 2px !important;
     }
     ` : '';
     var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
