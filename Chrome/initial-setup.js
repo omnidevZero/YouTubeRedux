@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false}';
 
 getSettings();
 addCustomStyles();
@@ -167,7 +167,7 @@ color: #B8B8B8 !important;
     }
     ` : '';
     var conditionalFilterMini = reduxSettingsJSON.filterMini ? `
-    [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer:not(:first-child):not(:last-child) {
+    [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer:not(:first-child):not(:nth-last-child(2)) {
         display: none !important;
     }
     [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer {
@@ -351,15 +351,20 @@ color: #B8B8B8 !important;
         background: none !important;
     }
     /*SKELETON*/
-    #home-page-skeleton .rich-shelf-videos {
+    #home-page-skeleton .rich-shelf-videos,
+    #home-page-skeleton #home-container-media {
         margin-left: 8vw !important;
         margin-right: 8vw !important;
-        transform: translate(20px, 10px);
+        transform: translate(20px, -2px);
     }
-    #home-page-skeleton .rich-shelf-videos .rich-grid-media-skeleton.mini-mode {
+    #home-page-skeleton .rich-shelf-videos .rich-grid-media-skeleton.mini-mode,
+    #home-page-skeleton #home-container-media .rich-grid-media-skeleton.mini-mode {
         flex-basis: 205px !important;
         min-width: 205px !important;
         max-width: 205px !important;
+    }
+    #home-page-skeleton .video-details {
+        padding-bottom: 30px !important;
     }
     /*MISC*/
     .badge-style-type-verified > yt-icon {
@@ -404,6 +409,45 @@ color: #B8B8B8 !important;
         fill: #cc181e !important;
     }
     ` : '';
+    var conditionalChannelListView = reduxSettingsJSON.channelListView ? `
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items {
+        counter-reset: video;
+    }
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer {
+        width: 100% !important;
+        margin-bottom: 0 !important;
+        counter-increment: video;
+    }
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #dismissible::before {
+        content: counter(video);
+        top: -36px;
+        position: relative;
+        margin-right: 10px;
+        color: var(--yt-spec-text-secondary) !important;
+        display: inline-block;
+        min-width: 3ch;
+        text-align: center;
+    }
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #dismissible {
+        position: relative !important;
+    }
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer ytd-thumbnail {
+        display: inline-block !important;
+        max-width: 150px !important;
+        max-height: 84px !important;
+    }
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #details.ytd-grid-video-renderer {
+        position: absolute !important;
+        top: 0 !important;
+        display: inline-block !important;
+        margin-left: 10px !important;
+        transform: translateY(-50%) !important;
+        top: 50% !important;
+    }
+    [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #details.ytd-grid-video-renderer > #meta > h3.ytd-grid-video-renderer {
+        margin: 0px 0 1px 0 !important;
+    }
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -416,7 +460,8 @@ color: #B8B8B8 !important;
             conditionalFilterVideo,
             conditionalFilterMini,
             conditionalExtraLayout,
-            conditionalDarkerRed
+            conditionalDarkerRed,
+            conditionalChannelListView
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {

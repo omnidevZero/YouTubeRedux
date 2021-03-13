@@ -64,7 +64,7 @@ html:not([dark]) ytd-author-comment-badge-renderer {
 html:not([dark]) .more-button.ytd-comment-replies-renderer, html:not([dark]) .less-button.ytd-comment-replies-renderer {
     color: #2793e6 !important;
 }
-span.yt-view-count-renderer {
+span.yt-view-count-renderer, span.ytd-video-view-count-renderer {
     font-size:18px !important;
 }
 ytd-watch-flexy:not([theater]):not([fullscreen]) #primary.ytd-watch-flexy, ytd-watch-flexy:not([theater]):not([fullscreen]) #secondary.ytd-watch-flexy {

@@ -554,6 +554,22 @@
         flags.trueFullscreenListenersAdded = true;
     }
 
+    function addFooter(){
+        var footerElement = document.createElement('div');
+        footerElement.id = 'redux-footer';
+        footerElement.style = 'height: 148px; width: 100%; background-color: white; position: fixed; bottom: 0; z-index: 999; margin-left: 8vw !important; border-top: 1px solid grey';
+        footerElement.innerHTML = `
+        <div>Logo</div>
+        <input type="button" value="Language change"></input>
+        <input type="button" value="Region change"></input>
+        <input type="button" value="Restricted mode on/off"></input>
+        <input type="button" value="History"></input>
+        <input type="button" value="Help"></input>
+        
+        `;
+        document.querySelector('#content.ytd-app #page-manager ytd-browse[page-subtype="home"]').append(footerElement);
+    }
+
     function main(){
         if (reduxSettingsJSON.autoConfirm){
             if (confirmInterval == undefined){
@@ -579,6 +595,9 @@
         if (reduxSettingsJSON.trueFullscreen && window.location.href.includes('/watch?') && !flags.trueFullscreenListenersAdded){
             preventScrolling();
         }
+        /*if (true && window.location.pathname == '/' && document.querySelector('#redux-footer') == null){
+            waitForElement('#content.ytd-app #page-manager ytd-browse[page-subtype="home"]', 10, addFooter);
+        }*/
         changeGridWidth();
     }
 
