@@ -213,8 +213,10 @@
         function startRecalc(){
             var checkingTimeout;
             var checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
-            var progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
-                if (progressBar.offsetWidth+12 >= playerSize.width && progressBar.offsetWidth+12 >= playerSize.width && !isTheater() && !isFullscreen()){ //TODO more precise condition
+                var progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
+                var leftEdgeDistancePlayer = document.querySelector('#player-container').getBoundingClientRect().x;
+                var leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner > #info').getBoundingClientRect().x;
+                if ((leftEdgeDistancePlayer > leftEdgeDistanceInfo+10 || progressBar.offsetWidth+12 >= playerSize.width) && !isTheater() && !isFullscreen()){ //TODO more precise condition
                     insertRecalcScript();
                     if (checkingTimeout != undefined){
                         clearTimeout(checkingTimeout);
@@ -527,6 +529,11 @@
         }
     }
 
+    function splitTrendingLoop(){
+        var splitLoop = setInterval(splitTrending, 100);
+        setTimeout(() => {clearInterval(splitLoop)}, 5000);
+    }
+
     function preventScrolling(){
 
         function scrollingAction(e){
@@ -574,8 +581,8 @@
         if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked){
             waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
         }
-        if (window.location.href.includes('/feed/trending')){
-            waitForElement('ytd-browse #primary > ytd-section-list-renderer[page-subtype="trending"] > #continuations', 10, splitTrending);
+        if (window.location.href.includes('/feed/trending') || window.location.href.includes('/feed/explore')){
+            waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);
         }
         if (reduxSettingsJSON.trueFullscreen && window.location.href.includes('/watch?') && !flags.trueFullscreenListenersAdded){
             preventScrolling();
