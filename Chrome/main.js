@@ -23,7 +23,8 @@
     function confirmIt(){
         var confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
         var buttonStatus = document.querySelector('paper-dialog[aria-hidden="true"]') || document.querySelector('ytd-popup-container > tp-yt-paper-dialog[aria-hidden="true"]');
-        var popupTypeCheck = document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > yt-button-renderer').hasAttribute('hidden');
+        var popupElement = document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > yt-button-renderer');
+        var popupTypeCheck = popupElement == null ? false : popupElement.hasAttribute('hidden');
         if (confirmButton != null && !buttonStatus && popupTypeCheck){
             confirmButton.click();
             document.querySelector('video').play();
