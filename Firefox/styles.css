@@ -36,6 +36,25 @@ yt-img-shadow.ytd-guide-entry-renderer {
     margin-right: 15px !important;
 }
     
+#container.ytd-masthead { 
+    height: 50px !important;
+} 
+#header.ytd-app { 
+    height: 50px !important;
+} 
+#guide-spacer.ytd-app { 
+    margin-top: calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px) !important;
+}
+#page-manager.ytd-app {
+    margin-top: calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px) !important;
+}
+ytd-mini-guide-renderer.ytd-app {
+    top: calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px) !important;
+}
+#container.ytd-searchbox {
+    padding: 1px 0px !important;
+}
+
 /*VIDEO STYLES*/
 .title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
     font-size: 20px;

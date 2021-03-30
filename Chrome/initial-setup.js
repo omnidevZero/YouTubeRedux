@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true}';
 
 getSettings();
 addCustomStyles();
@@ -448,6 +448,11 @@ color: #B8B8B8 !important;
         margin: 0px 0 1px 0 !important;
     }
     ` : '';
+    var conditionalSearchAlignLeft = reduxSettingsJSON.searchAlignLeft ? `
+    #center.ytd-masthead { 
+        margin-right: auto !important;
+    } 
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -461,7 +466,8 @@ color: #B8B8B8 !important;
             conditionalFilterMini,
             conditionalExtraLayout,
             conditionalDarkerRed,
-            conditionalChannelListView
+            conditionalChannelListView,
+            conditionalSearchAlignLeft
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {
