@@ -43,13 +43,13 @@ yt-img-shadow.ytd-guide-entry-renderer {
     height: 50px !important;
 } 
 #guide-spacer.ytd-app { 
-    margin-top: calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px) !important;
+    margin-top: max(calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px), 0px) !important;
 }
 #page-manager.ytd-app {
-    margin-top: calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px) !important;
+    margin-top: max(calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px), 0px) !important;
 }
 ytd-mini-guide-renderer.ytd-app {
-    top: calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px) !important;
+    top: max(calc(var(--ytd-masthead-height, var(--ytd-toolbar-height)) - 6px), 0px) !important;
 }
 #container.ytd-searchbox {
     padding: 1px 0px !important;
