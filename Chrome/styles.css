@@ -36,6 +36,8 @@ yt-img-shadow.ytd-guide-entry-renderer {
     margin-right: 15px !important;
 }
 
+/* turned off due to max() not being supported in old browsers
+
 #container.ytd-masthead { 
     height: 50px !important;
 } 
@@ -53,7 +55,7 @@ ytd-mini-guide-renderer.ytd-app {
 }
 #container.ytd-searchbox {
     padding: 1px 0px !important;
-}
+} */
     
 /*VIDEO STYLES*/
 .title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
