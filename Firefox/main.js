@@ -118,8 +118,8 @@
     }
 
     function changeLikesCounter(){
-        var likes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string')[0];
-        var dislikes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string')[0];
+        var likes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+        var dislikes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
 
         var observerConfig = {
             attributes: true
@@ -135,15 +135,28 @@
             observerLikes.disconnect();
             observerDislikes.disconnect();
 
-            var likes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string')[0];
-            var dislikes = document.querySelectorAll('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string')[0];
-            var rawLikes = document.querySelectorAll('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip')[0].innerText.split("/")[0].trim();
-            var rawDislikes = document.querySelectorAll('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip')[0].innerText.split("/")[1].trim();
-            likes.innerText = rawLikes;
-            dislikes.innerText = rawDislikes;
+            var likes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+            var dislikes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+            var rawLikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
+            var rawLikes = rawLikesElement.innerText.split("/")[0];
+            var rawDislikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
+            var rawDislikes = rawDislikesElement.innerText.split("/")[1];
+            if (rawDislikes == undefined) {
+                if (dislikes.children.length > 0) {
+                    likes.innerText = likes.innerText.replace(String.fromCharCode(160), "").replace(/\d+/, "").trim(); //removes &nbsp and digits if they are inserted to vids with disabled comments
+                    dislikes.innerText = dislikes.innerText.replace(String.fromCharCode(160), "").replace(/\d+/, "").trim();
+                }
 
-            observerLikes.observe(likes, observerConfig);
-            observerDislikes.observe(dislikes, observerConfig);
+                observerLikes.observe(likes, observerConfig);
+                observerDislikes.observe(dislikes, observerConfig);
+                return;
+            } else {
+                likes.innerText = rawLikes.trim();
+                dislikes.innerText = rawDislikes.trim();
+
+                observerLikes.observe(likes, observerConfig);
+                observerDislikes.observe(dislikes, observerConfig);
+            }
         }
     }
 

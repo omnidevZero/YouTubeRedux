@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "1.8.2",
+    "version": "1.8.3",
     "description": "Bring back old YouTube layout styles and features within the Polymer (modern) layout!",
     "permissions": ["activeTab"],
     "browser_action": {
@@ -40,7 +40,8 @@
       "images/favicon2.png",
       "images/favicon3.ico",
       "images/verified1.png",
-      "images/verified2.png"
+      "images/verified2.png",
+      "images/plus.svg"
       ],
     "manifest_version": 2
   }

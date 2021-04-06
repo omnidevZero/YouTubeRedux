@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.001" height="20.001" viewBox="0 0 17 17">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #909090;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="redux-plus" data-name="redux-plus" class="cls-1" d="M7,0h3V7h7v3H10v7H7V10H0V7H7V0Z"/>
+</svg>

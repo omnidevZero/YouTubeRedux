@@ -144,6 +144,15 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
 #always-shown ytd-rich-metadata-renderer {
     background: none;
 }
+.redux-moved-info:first-of-type yt-icon {
+    content: url('chrome-extension://__MSG_@@extension_id__/images/plus.svg');
+}
+.redux-moved-info:first-of-type yt-icon-button#button {
+    padding: 9px !important;
+}
+.redux-moved-info:last-of-type + yt-icon-button {
+    transform: translateY(-3px);
+}
     
 /*PLAYLIST STYLES*/
 #text.ytd-alert-with-button-renderer {
