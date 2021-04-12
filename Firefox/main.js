@@ -120,7 +120,6 @@
     function changeLikesCounter(){
         var likes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
         var dislikes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
-
         var observerConfig = {
             attributes: true
         }
@@ -453,8 +452,14 @@
             padding-top: 4px !important;
             margin-left: 4px !important;
         }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
-        #sponsor-button > ytd-button-renderer > a > paper-button, #analytics-button > ytd-button-renderer > a > paper-button {
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, 
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button, 
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
+        #sponsor-button > ytd-button-renderer > a > paper-button, 
+        #sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
+        #analytics-button > ytd-button-renderer > a > paper-button,
+        #analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
             margin: 0 !important; 
             padding: 2px 8px 2px 8px !important; 
             text-transform: none !important; 
@@ -464,12 +469,16 @@
             height: 24px !important;
         }
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button > yt-formatted-string, 
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button > yt-formatted-string {
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button > yt-formatted-string,
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button > yt-formatted-string,
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
             padding-top: 1px !important;
         }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed])::before, 
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button:not([subscribed])::before {
-            content: url('${chrome.extension.getURL('/images/sub-icon.png')}') !important;
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed])::before,
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([subscribed])::before, 
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button:not([subscribed])::before,
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button:not([subscribed])::before {
+            content: url('${browser.extension.getURL('/images/sub-icon.png')}') !important;
             background-size: auto !important;
             width: 16px !important;
             height: 12px !important;

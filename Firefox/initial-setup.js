@@ -209,7 +209,8 @@ color: #B8B8B8 !important;
     ytd-video-secondary-info-renderer {
         padding-bottom: 8px !important;
     }
-    .more-button.ytd-video-secondary-info-renderer, .less-button.ytd-video-secondary-info-renderer {
+    .more-button.ytd-video-secondary-info-renderer, 
+    .less-button.ytd-video-secondary-info-renderer {
         font-size: 1.1rem !important;
     }
     ytd-comments#comments {
@@ -227,12 +228,18 @@ color: #B8B8B8 !important;
     #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
         padding-top: 10px !important;
     }
-    #meta.ytd-watch-flexy paper-button#more, #meta.ytd-watch-flexy paper-button#less {
+    #meta.ytd-watch-flexy paper-button#more,
+    #meta.ytd-watch-flexy tp-yt-paper-button#more,
+    #meta.ytd-watch-flexy paper-button#less,
+    #meta.ytd-watch-flexy tp-yt-paper-button#less {
         width: calc(100% - 15px) !important;
         border-top: 1px solid #e2e2e2 !important;
         margin-top: 10px !important;
     }
-    html[dark] #meta.ytd-watch-flexy paper-button#more, html[dark] #meta.ytd-watch-flexy paper-button#less {
+    html[dark] #meta.ytd-watch-flexy paper-button#more, 
+    html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#more,
+    html[dark] #meta.ytd-watch-flexy paper-button#less,
+    html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#less {
         border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
     }
     #secondary-inner.ytd-watch-flexy #related {
@@ -395,7 +402,8 @@ color: #B8B8B8 !important;
     #progress.ytd-thumbnail-overlay-resume-playback-renderer {
         background-color: #cc181e !important;
     }
-    #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed]) {
+    #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed]),
+    #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([subscribed]) {
         background-color: #cc181e !important;
     }
     .badge-style-type-live-now.ytd-badge-supported-renderer {
