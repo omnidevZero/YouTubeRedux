@@ -1,8 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true}';
-
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": false, "hideHomeAvatars": false}';
 getSettings();
 addCustomStyles();
 
@@ -281,9 +280,15 @@ color: #B8B8B8 !important;
     html[dark] #masthead-container.ytd-app {
         border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
     }
-    #page-manager ytd-browse[page-subtype="home"]  {
-        margin-left: 8vw !important;
-        margin-right: 8vw !important;
+    @media (max-width: 2000px) {
+        #page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer {
+            max-width: 1356.81px !important;  
+        }
+    }
+    @media (min-width: 2001px) {
+        #page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer {
+          max-width: 2713.62px !important;
+        } 
     }
     #header.ytd-rich-grid-renderer {
         display: none !important;
@@ -461,6 +466,17 @@ color: #B8B8B8 !important;
         margin-right: auto !important;
     } 
     ` : '';
+    var conditionalSquareAvatar = reduxSettingsJSON.squareAvatar ? `
+    #masthead #avatar-btn > yt-img-shadow,
+    ytd-popup-container #header yt-img-shadow#avatar { 
+        border-radius: 0 !important;
+    } 
+    ` : '';
+    var conditionalHideAvatars = reduxSettingsJSON.hideHomeAvatars ? `
+    #avatar-link.ytd-rich-grid-media {
+        display:none !important;
+    }
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -475,7 +491,9 @@ color: #B8B8B8 !important;
             conditionalExtraLayout,
             conditionalDarkerRed,
             conditionalChannelListView,
-            conditionalSearchAlignLeft
+            conditionalSearchAlignLeft,
+            conditionalSquareAvatar,
+            conditionalHideAvatars
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {
