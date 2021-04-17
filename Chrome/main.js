@@ -19,6 +19,7 @@
     var observerComments;
     var observerRelated;
     var intervalsArray = [];
+    var isCheckingRecalc = false;
 
     function confirmIt(){
         var confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
@@ -74,10 +75,10 @@
     }
 
     function alignItems(){
-        var player = document.querySelector('ytd-watch-flexy .html5-video-container video');
+        var player = document.querySelector('ytd-watch-flexy .html5-video-container');
         var content = document.querySelector('#columns > #primary > #primary-inner');
         var videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
-        var calcPadding = player == null || content == null ? 0 : Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
+        var calcPadding = Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
         if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null || videoInfoElement == null){
             waitForElement('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer', 10, alignItems);
             return;
@@ -222,6 +223,27 @@
             `;
             script.appendChild(document.createTextNode(scriptInner));
             document.body.append(script);
+
+            if (!isCheckingRecalc) {
+                isCheckingRecalc = true;
+                var checkLoop = setInterval(() => {
+                    checkIfProperlyRecalculated(width, height);
+                }, 100);
+    
+                setTimeout(() => {
+                    clearInterval(checkLoop);
+                    isCheckingRecalc = false;
+                }, 2000);
+
+            }
+        
+            function checkIfProperlyRecalculated(width, height) {
+                var videoPlayerElement = document.querySelector('ytd-watch-flexy .html5-video-container');
+                var bottomBarElement = document.querySelector('.ytp-chrome-bottom');
+                if (bottomBarElement.offsetWidth < videoPlayerElement.offsetWidth*0.9) {
+                    insertRecalcScript(width, height);
+                }
+            }
         }
 
         function startRecalc(){
