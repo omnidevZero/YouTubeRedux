@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": false, "hideHomeAvatars": false}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": false, "hideHomeAvatars": false, "noHomeScaling": false}';
 getSettings();
 addCustomStyles();
 
@@ -477,6 +477,12 @@ color: #B8B8B8 !important;
         display:none !important;
     }
     ` : '';
+    var conditionalNoHomeScaling = reduxSettingsJSON.noHomeScaling ? `
+    #page-manager ytd-browse[page-subtype="home"]  {
+        margin-left: 8vw !important;
+        margin-right: 8vw !important;
+    }
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -493,7 +499,8 @@ color: #B8B8B8 !important;
             conditionalChannelListView,
             conditionalSearchAlignLeft,
             conditionalSquareAvatar,
-            conditionalHideAvatars
+            conditionalHideAvatars,
+            conditionalNoHomeScaling
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {

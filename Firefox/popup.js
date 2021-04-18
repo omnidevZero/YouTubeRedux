@@ -44,9 +44,12 @@ document.querySelector('input[name="smallPlayer"]').addEventListener('change', (
 document.querySelector('input[name="extraLayout"]').addEventListener('change', () => {
   if (document.querySelector('input[name="extraLayout"]').checked){
     document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');
+    document.querySelector('input[name="noHomeScaling"]').removeAttribute('disabled');
   } else {
     document.querySelector('input[name="darkerRed"]').setAttribute('disabled', '');
     document.querySelector('input[name="darkerRed"]').checked = false;
+    document.querySelector('input[name="noHomeScaling"]').setAttribute('disabled', '');
+    document.querySelector('input[name="noHomeScaling"]').checked = false;
     saveSettings();
   }
 })
@@ -126,6 +129,7 @@ function changeGridWidth(numberOfItems){
         //uncheck subsetting
         if (document.querySelector('input[name="extraLayout"]').checked){
           document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');
+          document.querySelector('input[name="noHomeScaling"]').removeAttribute('disabled');
         }
         if (document.querySelector('input[name="smallPlayer"]').checked){
           document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
