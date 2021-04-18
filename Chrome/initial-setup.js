@@ -391,6 +391,112 @@ color: #B8B8B8 !important;
         height: 9px !important;
         margin-bottom: 1px !important;
     }
+    /* Scrollbar */
+    body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar {
+        width: 8px !important;
+    }
+    ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb:hover {
+        background-color: var(--yt-spec-icon-inactive) !important;
+    }
+    ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app::-webkit-scrollbar {
+        background: transparent;
+        width: 8px !important;
+    }
+    ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app::-webkit-scrollbar-thumb {
+        height: 56px;
+        border-radius: 0px !important;
+        border: 0px solid transparent !important;
+        background-clip: content-box;
+        background-color: transparent;
+    }
+    ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app:hover::-webkit-scrollbar-thumb {
+        background-color: var(--yt-spec-icon-disabled) !important;
+    }
     ` : '';
     var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
     /*DARKER RED*/
