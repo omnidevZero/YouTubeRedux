@@ -35,6 +35,9 @@ yt-img-shadow.ytd-guide-entry-renderer {
     border-radius:0% !important;
     margin-right: 15px !important;
 }
+.thumbnail.ytd-notification-renderer {
+    border-radius:0% !important;
+}
 
 /* turned off due to max() not being supported in old browsers
 
@@ -152,6 +155,10 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
 }
 .redux-moved-info:last-of-type + yt-icon-button {
     transform: translateY(-3px);
+}
+#author-thumbnail.ytd-commentbox, ytd-commentbox[is-reply][is-backstage-comment] #author-thumbnail.ytd-commentbox,
+ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
+    border-radius: 0% !important;
 }
     
 /*PLAYLIST STYLES*/

@@ -19,7 +19,21 @@ browser.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
 
 var settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
 for (var i = 0; i < settingsElements.length; i++){
-  document.querySelectorAll('.settings:not(.slider-control)')[i].addEventListener('change', function(){
+  settingsElements[i].addEventListener('change', function(){
+    if (this.parentElement.nextElementSibling != null && this.parentElement.nextElementSibling.classList.contains('subsettings-container')) {
+      var subsettings = this.parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
+      console.log(subsettings)
+      if (this.checked) {
+        subsettings.forEach(element => {
+          element.removeAttribute('disabled');
+        });
+      } else {
+        subsettings.forEach(element => {
+          element.setAttribute('disabled', '');
+          element.checked = false;
+        });
+      }
+    }
     saveSettings();
   })
 }
@@ -29,29 +43,6 @@ document.querySelector('input[type="range"]').addEventListener('change', functio
   inputControl.value = this.value;
   saveSettings();
   changeGridWidth(this.value);
-})
-
-document.querySelector('input[name="smallPlayer"]').addEventListener('change', () => {
-  if (document.querySelector('input[name="smallPlayer"]').checked){
-    document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
-  } else {
-    document.querySelector('input[name="blackBars"]').setAttribute('disabled', '');
-    document.querySelector('input[name="blackBars"]').checked = false;
-    saveSettings();
-  }
-})
-
-document.querySelector('input[name="extraLayout"]').addEventListener('change', () => {
-  if (document.querySelector('input[name="extraLayout"]').checked){
-    document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');
-    document.querySelector('input[name="noHomeScaling"]').removeAttribute('disabled');
-  } else {
-    document.querySelector('input[name="darkerRed"]').setAttribute('disabled', '');
-    document.querySelector('input[name="darkerRed"]').checked = false;
-    document.querySelector('input[name="noHomeScaling"]').setAttribute('disabled', '');
-    document.querySelector('input[name="noHomeScaling"]').checked = false;
-    saveSettings();
-  }
 })
 
 document.querySelector('.slider-control').addEventListener('change', function(){
@@ -122,18 +113,22 @@ function changeGridWidth(numberOfItems){
         }
       }
     }
-        //set size options
-        document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
-        //set radio buttons
-        document.querySelector(`input[type="radio"][value="${currentSettings.favicon}"]`).checked = true;
-        //uncheck subsetting
-        if (document.querySelector('input[name="extraLayout"]').checked){
-          document.querySelector('input[name="darkerRed"]').removeAttribute('disabled');
-          document.querySelector('input[name="noHomeScaling"]').removeAttribute('disabled');
+    //set size options
+    document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
+    //set radio buttons
+    document.querySelector(`input[type="radio"][value="${currentSettings.favicon}"]`).checked = true;
+    //uncheck subsettings
+    var settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
+    for (var i = 0; i < settingsElements.length; i++) {
+      if (settingsElements[i].parentElement.nextElementSibling != null && settingsElements[i].parentElement.nextElementSibling.classList.contains('subsettings-container')) {
+        var subsettings = settingsElements[i].parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
+        if (settingsElements[i].checked) {
+          subsettings.forEach(element => {
+            element.removeAttribute('disabled');
+          });
         }
-        if (document.querySelector('input[name="smallPlayer"]').checked){
-          document.querySelector('input[name="blackBars"]').removeAttribute('disabled');
-        }
+      }
+    }
   }
 
   function calculateSizeOptions(){

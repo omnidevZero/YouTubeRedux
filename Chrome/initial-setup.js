@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": false, "hideHomeAvatars": false, "noHomeScaling": false}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": false, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true}';
 getSettings();
 addCustomStyles();
 
@@ -119,6 +119,9 @@ color: #CACACA !important;
 
 #playlist.ytd-watch-flexy .index-message-wrapper.ytd-playlist-panel-renderer {
 color: #B8B8B8 !important;
+}
+#playlist > #container {
+margin-right: -12px !important;
 }
 ` : '';
     var conditionalLogo = reduxSettingsJSON.classicLogo ? `
@@ -362,6 +365,9 @@ color: #B8B8B8 !important;
     [page-subtype="channels"] ytd-two-column-browse-results-renderer .flex-container.ytd-compact-station-renderer {
         background: none !important;
     }
+    #player.ytd-watch-flexy {
+        margin-bottom: 10px !important;
+    }
     /*SKELETON*/
     #home-page-skeleton .rich-shelf-videos,
     #home-page-skeleton #home-container-media {
@@ -589,6 +595,46 @@ color: #B8B8B8 !important;
         margin-right: 8vw !important;
     }
     ` : '';
+    var conditionalSquareSearch = reduxSettingsJSON.squareSearch ? `
+    yt-img-shadow.ytd-video-renderer  {
+        border-radius: 0 !important;
+    }
+    ` : '';
+    var conditionalExtraSidebarStyles = reduxSettingsJSON.extraSidebarStyles ? `
+    ytd-guide-renderer #sections {
+        padding: 1px 22px !important;
+    }
+    tp-yt-paper-item.ytd-guide-entry-renderer {
+        padding: 0px 10px !important;
+    }
+    #endpoint.yt-simple-endpoint.ytd-guide-entry-renderer,
+    tp-yt-paper-item {
+        min-height: calc( var(--paper-item-min-height) - 2px ) !important;
+        height: calc( var(--paper-item-min-height) - 2px ) !important;
+    }
+    #guide-section-title.ytd-guide-section-renderer {
+        padding: 7px 10px !important;
+        font-size: calc(var(--ytd-tab-system_-_font-size) - 0.2rem) !important;
+    }
+    ytd-guide-signin-promo-renderer {
+        padding: 16px 16px !important;
+    }
+    ytd-guide-signin-promo-renderer #sign-in-button {
+        background-color: var(--yt-spec-call-to-action);
+        color: var(--yt-spec-text-primary-inverse);
+    }
+    ytd-guide-signin-promo-renderer #sign-in-button #button {
+        padding: 5px 10px !important;
+    }
+    ytd-guide-signin-promo-renderer #sign-in-button yt-icon {
+        display: none !important;
+    }
+    ytd-guide-signin-promo-renderer #sign-in-button yt-formatted-string {
+        margin-left: 0 !important;
+        text-transform: none !important;
+        font-size: 11px !important;
+    }
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -606,7 +652,9 @@ color: #B8B8B8 !important;
             conditionalSearchAlignLeft,
             conditionalSquareAvatar,
             conditionalHideAvatars,
-            conditionalNoHomeScaling
+            conditionalNoHomeScaling,
+            conditionalSquareSearch,
+            conditionalExtraSidebarStyles
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {
