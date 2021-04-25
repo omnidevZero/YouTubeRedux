@@ -1,7 +1,7 @@
 var reduxSettingsJSON;
 var playerSize = {};
 var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": false, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true}';
+var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true,"smallPlayer": false, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false}';
 getSettings();
 addCustomStyles();
 
@@ -635,6 +635,42 @@ margin-right: -12px !important;
         font-size: 11px !important;
     }
     ` : '';
+    var conditionalAltVideoLayout = reduxSettingsJSON.altVideoLayout ? `
+    #info-contents ytd-video-primary-info-renderer > yt-icon-button  {
+        transform: translateY(0px) !important;
+    }
+    #player.ytd-watch-flexy {
+        margin-bottom: 0px !important;
+    }
+    #redux-video-header {
+        background-color: white; 
+        padding: 8px 15px 2px 15px; 
+        box-shadow: 0 1px 2px rgb(0 0 0 / 10%) !important;
+    }
+    html[dark] #redux-video-header {
+        background-color: #222222;
+    }
+    ytd-video-primary-info-renderer {
+        padding: 8px 0px !important;
+    }
+    #top-row.ytd-video-secondary-info-renderer {
+        padding-top: 6px !important;
+        margin-bottom: 6px !important;
+    }
+    ` : '';
+    var conditionalAltVideoLayoutExtra = reduxSettingsJSON.altVideoLayoutExtra ? `
+    #info.ytd-video-primary-info-renderer > #menu-container  {
+        transform: translateY(0px) !important;
+    }
+    #info.ytd-video-primary-info-renderer > #menu-container #menu {
+        color: var(--yt-spec-text-secondary); 
+        justify-content: normal !important; 
+        margin-top: 1px;
+    }
+    #info.ytd-video-primary-info-renderer > #top-level-buttons ytd-toggle-button-renderer yt-formatted-string {
+        display: none !important;
+    }
+    ` : '';
     function mergeOptions(){
         var allStyleOptions = [
             conditionalAutoplay, 
@@ -654,7 +690,9 @@ margin-right: -12px !important;
             conditionalHideAvatars,
             conditionalNoHomeScaling,
             conditionalSquareSearch,
-            conditionalExtraSidebarStyles
+            conditionalExtraSidebarStyles,
+            conditionalAltVideoLayout,
+            conditionalAltVideoLayoutExtra
         ];
         var mergedOptions = '';
         allStyleOptions.forEach(element => {

@@ -414,6 +414,8 @@
         var subscribeButton = document.querySelector('#sponsor-button');
         var analyticsButton = document.querySelector('#analytics-button');
         var reduxSubDiv = document.createElement('div');
+        var videoTitle = document.querySelector('#info-contents div#container > h1');
+        var primaryElement = document.querySelector('#columns > #primary > #primary-inner');
         reduxSubDiv.id = 'reduxSubDiv';
         dateElement.classList.add('redux-moved-date');
 
@@ -430,6 +432,14 @@
         reduxSubDiv.prepend(analyticsButton);
         reduxSubDiv.prepend(subscribeButton);
         uploadInfo.prepend(channelName);
+
+        if (reduxSettingsJSON.altVideoLayout) {
+            var reduxHeader = document.createElement('div');
+            reduxHeader.id = 'redux-video-header';
+            primaryElement.prepend(reduxHeader);
+            reduxHeader.append(videoTitle);
+            reduxHeader.append(infoTop);
+        }
 
         var style = document.createElement('style');
         style.id = 'redux-style-rearrange';
@@ -537,12 +547,47 @@
     function moveTopLevelItems(){
         var topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
         var infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
+        var infoDiv = document.querySelector('#info-contents div#info');
+        var miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
         var existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
         document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
-        for (var i = topLevelElements.length-1; i >= 0; i--){
-            infoContents.insertBefore(topLevelElements[i], existingMovedItem);
-            topLevelElements[i].classList.add('redux-moved-info');
-            topLevelElements[i].style.display = 'inline-block';
+        
+        if (reduxSettingsJSON.altVideoLayout) {
+            document.querySelector('ytd-video-primary-info-renderer').style = 'padding-left: 15px !important; padding-top: 15px !important';
+            if (miscButton != null) {
+                infoDiv.prepend(miscButton);
+                miscButton.style = 'transform: translateY(0px)';
+            }
+
+            for (var i = 0; i < topLevelElements.length; i++) {
+                infoDiv.prepend(topLevelElements[i]);
+                topLevelElements[i].classList.add('redux-moved-info');
+                topLevelElements[i].style.display = 'inline-block';
+            }
+            
+            if (reduxSettingsJSON.altVideoLayoutExtra) {
+                var remainingTopLevel = document.querySelector('#info #top-level-buttons');
+                var likesValues = document.querySelectorAll('ytd-toggle-button-renderer #text.ytd-toggle-button-renderer');
+                var menu = document.querySelector('#menu.ytd-video-primary-info-renderer');
+                var likesText = document.createTextNode(`${likesValues[0].getAttribute('aria-label')}, ${likesValues[1].getAttribute('aria-label')}`);
+
+                document.querySelector('#info.ytd-video-primary-info-renderer > #menu-container').style = 'transform: translateY(0px) !important;';
+                for (var i = 0; i < menu.childNodes.length; i++) { //remove existing text nodes
+                    if (menu.childNodes[i].nodeType == 3) {
+                        menu.childNodes[i].remove();
+                    }
+                }
+
+                menu.prepend(likesText);
+                infoDiv.prepend(remainingTopLevel);
+            }
+            
+        } else {
+            for (var i = topLevelElements.length-1; i >= 0; i--) {
+                infoContents.insertBefore(topLevelElements[i], existingMovedItem);
+                topLevelElements[i].classList.add('redux-moved-info');
+                topLevelElements[i].style.display = 'inline-block';
+            }
         }
     }
 
