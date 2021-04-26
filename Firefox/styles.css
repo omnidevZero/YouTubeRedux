@@ -203,13 +203,16 @@ html:not([dark]) #video-title.ytd-grid-playlist-renderer {
 html:not([dark]) #video-title.yt-simple-endpoint.ytd-grid-video-renderer {
     color:#167ac6 !important;
 }
-.tab-content.paper-tab {
+.tab-content.paper-tab,
+.tab-content.tp-yt-paper-tab {
     font-size:13px !important;
 }
-paper-tab.ytd-c4-tabbed-header-renderer {
+paper-tab.ytd-c4-tabbed-header-renderer,
+tp-yt-paper-tab.ytd-c4-tabbed-header-renderer {
     padding: 0 8px !important;
 }
-#selectionBar.paper-tabs {
+#selectionBar.paper-tabs,
+#selectionBar.tp-yt-paper-tabs {
     border-bottom: 2px solid #f00 !important;
 }
 #description.ytd-channel-about-metadata-renderer, #bio.ytd-channel-about-metadata-renderer {
