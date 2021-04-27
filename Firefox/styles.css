@@ -195,6 +195,21 @@ ytd-search-filter-renderer.ytd-search-filter-group-renderer {
 html:not([dark]) #video-title.ytd-radio-renderer {
     color:#167ac6 !important;
 }
+yt-img-shadow.ytd-channel-renderer {
+    border-radius: 0% !important;
+}
+ytd-channel-renderer[use-prominent-thumbs] #avatar-section.ytd-channel-renderer .channel-link.ytd-channel-renderer {
+    -webkit-justify-content: normal !important;
+    justify-content: normal !important;
+}
+ytd-channel-renderer[use-prominent-thumbs] #avatar-section.ytd-channel-renderer {
+    -webkit-flex: 0 !important;
+    flex: 0 !important;
+    margin-right: 22px !important;
+}
+ytd-two-column-search-results-renderer tp-yt-paper-button.ytd-subscribe-button-renderer {
+    margin-right: 15px !important;
+}
     
 /*CHANNEL STYLES*/
 html:not([dark]) #video-title.ytd-grid-playlist-renderer {
