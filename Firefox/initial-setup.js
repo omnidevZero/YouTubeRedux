@@ -325,8 +325,17 @@ margin-right: -12px !important;
     #contents.ytd-section-list-renderer {
         padding-left: 10px !important;
     }
-    #contents.ytd-rich-grid-renderer, #contents.ytd-section-list-renderer {
+    [page-subtype="home"] #contents.ytd-rich-grid-renderer,
+    [page-subtype="subscriptions"] #contents.ytd-section-list-renderer,
+    [page-subtype="channels"] #contents.ytd-section-list-renderer,
+    [page-subtype="channels"] #contents.ytd-rich-grid-renderer {
         padding-top: 10px !important;
+    }
+    [page-subtype="channels"] ytd-channel-featured-content-renderer {
+        padding-top: 0px !important;
+        margin-top: -12px !important;
+    }
+    #contents.ytd-rich-grid-renderer, #contents.ytd-section-list-renderer {
         background: #fff !important;
         box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
     }
@@ -334,7 +343,6 @@ margin-right: -12px !important;
         margin-top: 12px !important;
     }
     html[dark] #contents.ytd-rich-grid-renderer, html[dark] #contents.ytd-section-list-renderer {
-        padding-top: 10px !important;
         background: #222222 !important;
         box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
     }
@@ -396,6 +404,9 @@ margin-right: -12px !important;
         width: 12px !important;
         height: 9px !important;
         margin-bottom: 1px !important;
+    }
+    [page-subtype="channels"] #contents.ytd-section-list-renderer {
+        padding-right: 10px !important;
     }
     /* Scrollbar */
     body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar {
@@ -502,6 +513,43 @@ margin-right: -12px !important;
     }
     ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app:hover::-webkit-scrollbar-thumb {
         background-color: var(--yt-spec-icon-disabled) !important;
+    }
+    /* SUB + MISC BUTTONS */
+    #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
+    #sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
+    #analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
+        margin: 0 !important; 
+        padding: 2px 8px 2px 8px !important; 
+        text-transform: none !important; 
+        font-weight: normal !important; 
+        font-size: 12px !important;
+        max-height: 24px !important;
+        height: 24px !important;
+    }
+    ytd-channel-renderer #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button {
+        margin-right: 10px !important;
+    }
+    #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button > yt-formatted-string {
+        padding-top: 1px !important;
+    }
+    #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([subscribed])::before {
+            content: url('${browser.extension.getURL('/images/sub-icon.png')}') !important;
+            background-size: auto !important;
+            width: 16px !important;
+            height: 12px !important;
+            margin-right: 6px !important;
+    }
+    #sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
+        margin-right: 0px !important;
+    }
+    #sponsor-button.ytd-video-owner-renderer > ytd-button-renderer, #analytics-button.ytd-video-owner-renderer > ytd-button-renderer {
+        margin-right: 4px !important;
+    }
+    #notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
+        max-height: 21px !important; 
+        max-width: 21px !important; 
+        padding: 0 !important; 
+        margin-right: 5px !important;
     }
     ` : '';
     var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
