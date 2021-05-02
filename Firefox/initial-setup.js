@@ -406,7 +406,7 @@ margin-right: -12px !important;
         margin-bottom: 1px !important;
     }
     [page-subtype="channels"] #contents.ytd-section-list-renderer {
-        padding-right: 10px !important;
+        margin-right: -4px !important;
     }
     /* Scrollbar */
     body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar {
