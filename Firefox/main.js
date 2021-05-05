@@ -119,8 +119,8 @@
     }
 
     function changeLikesCounter(){
-        var likes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-        var dislikes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+        var likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+        var dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
         var observerConfig = {
             attributes: true
         }
@@ -135,8 +135,8 @@
             observerLikes.disconnect();
             observerDislikes.disconnect();
 
-            var likes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-            var dislikes = document.querySelector('#top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+            var likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+            var dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
             var rawLikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
             var rawLikes = rawLikesElement.innerText.split("/")[0];
             var rawDislikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
