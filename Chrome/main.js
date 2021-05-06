@@ -412,7 +412,7 @@
         var channelName = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #channel-name');
         var subCount = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count');
         var subscribeButton = document.querySelector('#meta #sponsor-button');
-        var analyticsButton = document.querySelector('#analytics-button');
+        var analyticsButton = document.querySelector('#meta #analytics-button');
         var reduxSubDiv = document.createElement('div');
         var videoTitle = document.querySelector('#info-contents div#container > h1');
         var primaryElement = document.querySelector('#columns > #primary > #primary-inner');
