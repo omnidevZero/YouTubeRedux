@@ -52,6 +52,21 @@ document.querySelector('.slider-control').addEventListener('change', function(){
   changeGridWidth(this.value);
 })
 
+//navigation buttons
+document.querySelector('#right-arrow').addEventListener('click', function() {
+  if (this.hasAttribute('disabled')) return;
+  document.querySelector('#left-arrow').removeAttribute('disabled');
+  document.querySelector('#right-arrow').setAttribute('disabled', '');
+  document.querySelector('#all-pages').style = 'transform: translateX(-100%)';
+})
+
+document.querySelector('#left-arrow').addEventListener('click', function() {
+  if (this.hasAttribute('disabled')) return;
+  document.querySelector('#right-arrow').removeAttribute('disabled');
+  document.querySelector('#left-arrow').setAttribute('disabled', '');
+  document.querySelector('#all-pages').style = 'transform: translateX(0%)';
+})
+
 function saveSettings(){
   var newSettings = {};
   //save slider
