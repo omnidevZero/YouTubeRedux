@@ -149,6 +149,12 @@
             border-color: transparent transparent transparent black;
             border-style: solid;
         }
+        .tooltip a {
+            color: white;
+        }
+        .tooltip a:visited {
+            color: white;
+        }
         .subsetting::before {
             margin-left:5px;
             content:"┕";
@@ -282,6 +288,21 @@
                             <label><input type="checkbox" name="squareAvatar" class="settings">Make own avatar square shaped</label>
                             <label><input type="checkbox" name="squareSearch" class="settings">Use square avatars in search results</label>
                             <label><input type="checkbox" name="classicLogo" class="settings">Restore classic YouTube logo</label>
+                            <label style="display:inline-block">
+                                <input type="checkbox" name="customTitleFont" class="settings">Custom video title font
+                                <label style="display:inline-block">
+                                    <select name="titleFontValue" class="settings">
+                                        <option value=Arial>Arial</option>
+                                        <option value=Montserrat>Montserrat</option>
+                                        <option value="Comic Sans MS">Comic Sans</option>
+                                        <option value=Montserrat>Montserrat</option>
+                                        <option value=Helvetica>Helvetica</option>
+                                        <option value=Lato>Lato</option>
+                                        <option value="Century Gothic">Cent.Gothic</option>
+                                        <option value=Custom>Custom...</option>
+                                    </select>
+                                </label>
+                            </label>
                         </div>
                     </div>
                     <div id="page-2" class="page">

@@ -67,6 +67,17 @@ document.querySelector('#left-arrow').addEventListener('click', function() {
   document.querySelector('#all-pages').style = 'transform: translateX(0%)';
 })
 
+//font selection
+document.querySelector('select[name="titleFontValue"]').addEventListener('change', function() {
+  if (this.querySelector('option:last-child').selected) {
+    let fontChoice = prompt('Enter your custom font name:', 'E.g.: \'Webdings\' or \'Times New Roman\'');
+    if (fontChoice != null) {
+      this.querySelector('option:last-child').value = fontChoice;
+      saveSettings();
+    }
+  }
+});
+
 function saveSettings(){
   var newSettings = {};
   //save slider
@@ -128,8 +139,10 @@ function changeGridWidth(numberOfItems){
         }
       }
     }
-    //set size options
+    //set selects
     document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
+    document.querySelector('select[name="titleFontValue"]').value = currentSettings.titleFontValue == undefined ? "Arial" : currentSettings.titleFontValue;
+    if (document.querySelector('select[name="titleFontValue"]').value == "") document.querySelector('select[name="titleFontValue"]').value = "Custom";
     //set radio buttons
     document.querySelector(`input[type="radio"][value="${currentSettings.favicon}"]`).checked = true;
     //uncheck subsettings
