@@ -61,7 +61,7 @@
         }
     }
 
-    function waitForElement(selector, interval, callback){
+    function waitForElement(selector, interval, callback) {
         var wait = setInterval(() => {
             var element = document.querySelector(selector)
             if (element != null){
@@ -682,11 +682,11 @@
             if (currentLength == 0) return;
     
             let playlistReduxDiv = document.createElement('div');
-            playlistReduxDiv.style = 'transition-duration: 0.5s; transform: translateY(-100%);';
+            playlistReduxDiv.style = 'transition-duration: 0.5s; opacity:0';
             playlistReduxDiv.id = "contents";
             playlistReduxDiv.className += 'redux-playlist style-scope ytd-rich-grid-renderer';
             allContainer.insertBefore(playlistReduxDiv, itemsContainer);
-            setTimeout(() => {playlistReduxDiv.style.transform = 'translateY(0%)';}, baseTimeout);
+            setTimeout(() => {playlistReduxDiv.style.opacity = '1';}, baseTimeout);
     
             for (let i = 0; i < playlistItems.length; i++) {
                 let parentEl = playlistItems[i].closest('ytd-rich-item-renderer');
