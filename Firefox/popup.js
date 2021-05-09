@@ -78,6 +78,17 @@ document.querySelector('select[name="titleFontValue"]').addEventListener('change
   }
 });
 
+//custom small player size
+document.querySelector('select[name="smallPlayerWidth"]').addEventListener('change', function() {
+  if (this.querySelector('option:last-child').selected) {
+    let sizeChoice = prompt('Enter your custom player height in pixels (width will be automatically adjusted).\nTo reset it change to another value and then back to custom.', '900');
+    if (sizeChoice != null) {
+      this.querySelector('option:last-child').value = sizeChoice;
+      saveSettings();
+    }
+  }
+});
+
 function saveSettings(){
   var newSettings = {};
   //save slider
@@ -162,7 +173,11 @@ function changeGridWidth(numberOfItems){
   function calculateSizeOptions(){
     var options = document.querySelectorAll('select[name="smallPlayerWidth"] option');
     options.forEach(element => {
-      element.innerText = `${element.value}x${Math.ceil(element.value / 1.78)}px`; //fixed at 16:9
+      if (element.value == 'Custom') {
+        element.innerText = `Custom...`; //fixed at 16:9
+      } else {
+        element.innerText = `${element.value}x${Math.ceil(element.value / 1.78)}px`; //fixed at 16:9
+      }
     });
   }
 

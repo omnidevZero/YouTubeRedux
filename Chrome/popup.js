@@ -70,9 +70,20 @@ document.querySelector('#left-arrow').addEventListener('click', function() {
 //font selection
 document.querySelector('select[name="titleFontValue"]').addEventListener('change', function() {
   if (this.querySelector('option:last-child').selected) {
-    let fontChoice = prompt('Enter your custom font name:', 'E.g.: \'Webdings\' or \'Times New Roman\'');
+    let fontChoice = prompt('Enter your custom font name.\nTo reset it change to another value and then back to custom.', '\'Times New Roman\'');
     if (fontChoice != null) {
       this.querySelector('option:last-child').value = fontChoice;
+      saveSettings();
+    }
+  }
+});
+
+//custom small player size
+document.querySelector('select[name="smallPlayerWidth"]').addEventListener('change', function() {
+  if (this.querySelector('option:last-child').selected) {
+    let sizeChoice = prompt('Enter your custom player height in pixels (width will be automatically adjusted).\nTo reset it change to another value and then back to custom.', '900');
+    if (sizeChoice != null) {
+      this.querySelector('option:last-child').value = sizeChoice;
       saveSettings();
     }
   }
@@ -141,6 +152,7 @@ function changeGridWidth(numberOfItems){
     }
     //set selects
     document.querySelector('select[name="smallPlayerWidth"]').value = currentSettings.smallPlayerWidth == undefined ? 853 : currentSettings.smallPlayerWidth;
+    if (document.querySelector('select[name="smallPlayerWidth"]').value == "") document.querySelector('select[name="smallPlayerWidth"]').value = "Custom";
     document.querySelector('select[name="titleFontValue"]').value = currentSettings.titleFontValue == undefined ? "Arial" : currentSettings.titleFontValue;
     if (document.querySelector('select[name="titleFontValue"]').value == "") document.querySelector('select[name="titleFontValue"]').value = "Custom";
     //set radio buttons
@@ -162,7 +174,11 @@ function changeGridWidth(numberOfItems){
   function calculateSizeOptions(){
     var options = document.querySelectorAll('select[name="smallPlayerWidth"] option');
     options.forEach(element => {
-      element.innerText = `${element.value}x${Math.ceil(element.value / 1.78)}px`; //fixed at 16:9
+      if (element.value == 'Custom') {
+        element.innerText = `Custom...`; //fixed at 16:9
+      } else {
+        element.innerText = `${element.value}x${Math.ceil(element.value / 1.78)}px`; //fixed at 16:9
+      }
     });
   }
 

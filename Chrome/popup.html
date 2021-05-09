@@ -223,6 +223,16 @@
         redux:not(:empty)::after {
             margin-left: 0.5em;
         }
+        select {
+            border-top: none;
+            border-right: none;
+            border-bottom: 1px solid grey;
+            border-left: none;
+            background: none;
+            outline: none;
+            cursor:pointer;
+            font-size:12px;
+        }
       </style>
     </head>
     <body>
@@ -256,6 +266,7 @@
                                     <option value=853 style="background-color: #dbe1f8;"></option>
                                     <option value=938></option>
                                     <option value=1066></option>
+                                    <option value=Custom>Custom...</option>
                                     </select>
                                     <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
                                 </label>
@@ -267,9 +278,9 @@
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="altVideoLayoutExtra" class="settings" disabled>Also rearrange likes/dislikes</label>
                             </div>
+                            <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling<div class="tooltip"><span class="tooltip-text-small">Limits displayed comments and related videos to 20 items. More will load upon clicking the 'SHOW MORE' button.</span></div></label>
                         </div>
                         <div style="flex: 0 0 50%;">
-                            <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling<div class="tooltip"><span class="tooltip-text-small">Limits displayed comments and related videos to 20 items. More will load upon clicking the 'SHOW MORE' button.</span></div></label>
                             <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
                             <label><input type="checkbox" name="showRawValues" class="settings">Show precise values for likes/dislikes<div class="tooltip"><span class="tooltip-text-small">E.g.: changes the displayed value of likes from 6K to 6312.</span></div></label>
                             <label><input type="checkbox" name="classicLikesColors" class="settings">Use green/red colors for likes/dislikes</label>
@@ -292,7 +303,7 @@
                                         <option value=Arial>Arial</option>
                                         <option value=Montserrat>Montserrat</option>
                                         <option value="Comic Sans MS">Comic Sans</option>
-                                        <option value=Montserrat>Montserrat</option>
+                                        <option value="Motiva Sans">Motiva Sans</option>
                                         <option value=Helvetica>Helvetica</option>
                                         <option value=Lato>Lato</option>
                                         <option value="Century Gothic">Cent.Gothic</option>
