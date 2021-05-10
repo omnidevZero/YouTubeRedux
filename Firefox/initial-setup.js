@@ -5,39 +5,39 @@ var defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastBu
 getSettings();
 addCustomStyles();
 
-function getSettings(){
-    if (localStorage.getItem("reduxSettings") === null){
-        localStorage.setItem("reduxSettings", defaultSettings);
-        reduxSettingsJSON = JSON.parse(defaultSettings);
-    } else {
-        reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
-        var defParsed = JSON.parse(defaultSettings);
+function getSettings() {
+	if (localStorage.getItem("reduxSettings") === null) {
+		localStorage.setItem("reduxSettings", defaultSettings);
+		reduxSettingsJSON = JSON.parse(defaultSettings);
+	} else {
+		reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
+		var defParsed = JSON.parse(defaultSettings);
 
-        //check which default settings are missing (e.g. due to updates) and add them
-        for (var i in defParsed){ //loop through default settings
-            var settingFound = false;
-            for (var j in reduxSettingsJSON){ //loop through current settings
-                if (i == j){
-                    settingFound = true;
-                    break;
-                }
-            }
-            if (!settingFound){
-                console.log('Missing setting ' + i + ' was added.');
-                reduxSettingsJSON[i] = defParsed[i];
-                localStorage.setItem("reduxSettings", JSON.stringify(reduxSettingsJSON));
-            }
-        }
-        reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings")); //reassign in case missing settings were added
-        playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
-        playerSize.height = Math.ceil(playerSize.width / aspectRatio);
-    }
+		//check which default settings are missing (e.g. due to updates) and add them
+		for (var i in defParsed) { //loop through default settings
+			var settingFound = false;
+			for (var j in reduxSettingsJSON) { //loop through current settings
+				if (i == j) {
+					settingFound = true;
+					break;
+				}
+			}
+			if (!settingFound) {
+				console.log('Missing setting ' + i + ' was added.');
+				reduxSettingsJSON[i] = defParsed[i];
+				localStorage.setItem("reduxSettings", JSON.stringify(reduxSettingsJSON));
+			}
+		}
+		reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings")); //reassign in case missing settings were added
+		playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
+		playerSize.height = Math.ceil(playerSize.width / aspectRatio);
+	}
 }
 
-function addCustomStyles(){
-    var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"]:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}` : '';
-    var conditionalAutoplay = reduxSettingsJSON.hideAutoplayButton ? `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {display:none !important;}` : '';
-    var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
+function addCustomStyles() {
+	var conditionalCast = reduxSettingsJSON.hideCastButton ? `/*PLAY ON TV BUTTON*/[class="ytp-button"]:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}` : '';
+	var conditionalAutoplay = reduxSettingsJSON.hideAutoplayButton ? `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {display:none !important;}` : '';
+	var conditionalPlayerSize = reduxSettingsJSON.smallPlayer ? `
 /*SMALL PLAYER*/
 #primary.ytd-watch-flexy {
 max-width: calc((100vh - (var(--ytd-watch-flexy-masthead-height) + var(--ytd-margin-6x) + var(--ytd-watch-flexy-space-below-player))) * (${window.screen.width} / ${window.screen.height})) !important;
@@ -65,7 +65,7 @@ top: 0 !important;
 width: calc(100% - 12px) !important;
 }*/
 ` : '';
-    var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
+	var conditionalDarkPlaylist = reduxSettingsJSON.darkPlaylist ? `
 /*DARK PLAYLIST*/
 #playlist.ytd-watch-flexy {
 transform: translate(-12px, -1px) !important;
@@ -124,7 +124,7 @@ color: #B8B8B8 !important;
 margin-right: -12px !important;
 }
 ` : '';
-    var conditionalLogo = reduxSettingsJSON.classicLogo ? `
+	var conditionalLogo = reduxSettingsJSON.classicLogo ? `
     ytd-masthead #logo-icon-container, #contentContainer #logo-icon-container, ytd-topbar-logo-renderer > #logo {
         content: url('${browser.extension.getURL('/images/classicLogo.png')}') !important;
         width: 72px !important;
@@ -146,7 +146,7 @@ margin-right: -12px !important;
         height: auto !important;
     }
     ` : '';
-    var conditionalLikesColors = reduxSettingsJSON.classicLikesColors ? `
+	var conditionalLikesColors = reduxSettingsJSON.classicLikesColors ? `
     /*LIKES*/
     #container > #like-bar.ytd-sentiment-bar-renderer {
         background: rgb(0 136 29) !important;
@@ -155,12 +155,12 @@ margin-right: -12px !important;
         background-color: rgb(222 0 17) !important;
     }
     ` : '';
-    var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
+	var conditionalFilterMain = reduxSettingsJSON.filterMain ? `
     [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer {
         display: none !important;
     }
     ` : '';
-    var conditionalFilterVideo = reduxSettingsJSON.filterVideo ? `
+	var conditionalFilterVideo = reduxSettingsJSON.filterVideo ? `
     #items > yt-related-chip-cloud-renderer.ytd-watch-next-secondary-results-renderer {
         display: none !important;
     }
@@ -168,7 +168,7 @@ margin-right: -12px !important;
         padding-bottom: 0 !important;
     }
     ` : '';
-    var conditionalFilterMini = reduxSettingsJSON.filterMini ? `
+	var conditionalFilterMini = reduxSettingsJSON.filterMini ? `
     [page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer:not(:first-child):not(:nth-last-child(2)) {
         display: none !important;
     }
@@ -186,7 +186,7 @@ margin-right: -12px !important;
         display: none !important;
     }
     ` : '';
-    var conditionalExtraLayout = reduxSettingsJSON.extraLayout ? `
+	var conditionalExtraLayout = reduxSettingsJSON.extraLayout ? `
     /*EXTRA LAYOUT 1 - VIDEO*/
     ytd-app {
         background-color: #f1f1f1 !important;
@@ -552,7 +552,7 @@ margin-right: -12px !important;
         margin-right: 5px !important;
     }
     ` : '';
-    var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
+	var conditionalDarkerRed = reduxSettingsJSON.darkerRed ? `
     /*DARKER RED*/
     ytd-guide-entry-renderer[active] {
         background-color: #cc181e !important;
@@ -582,7 +582,7 @@ margin-right: -12px !important;
         fill: #cc181e !important;
     }
     ` : '';
-    var conditionalChannelListView = reduxSettingsJSON.channelListView ? `
+	var conditionalChannelListView = reduxSettingsJSON.channelListView ? `
     [page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items {
         counter-reset: video;
     }
@@ -621,34 +621,34 @@ margin-right: -12px !important;
         margin: 0px 0 1px 0 !important;
     }
     ` : '';
-    var conditionalSearchAlignLeft = reduxSettingsJSON.searchAlignLeft ? `
+	var conditionalSearchAlignLeft = reduxSettingsJSON.searchAlignLeft ? `
     #center.ytd-masthead { 
         margin-right: auto !important;
     } 
     ` : '';
-    var conditionalSquareAvatar = reduxSettingsJSON.squareAvatar ? `
+	var conditionalSquareAvatar = reduxSettingsJSON.squareAvatar ? `
     #masthead #avatar-btn > yt-img-shadow,
     ytd-popup-container #header yt-img-shadow#avatar { 
         border-radius: 0 !important;
     } 
     ` : '';
-    var conditionalHideAvatars = reduxSettingsJSON.hideHomeAvatars ? `
+	var conditionalHideAvatars = reduxSettingsJSON.hideHomeAvatars ? `
     #avatar-link.ytd-rich-grid-media {
         display:none !important;
     }
     ` : '';
-    var conditionalNoHomeScaling = reduxSettingsJSON.noHomeScaling ? `
+	var conditionalNoHomeScaling = reduxSettingsJSON.noHomeScaling ? `
     #page-manager ytd-browse[page-subtype="home"]  {
         margin-left: 8vw !important;
         margin-right: 8vw !important;
     }
     ` : '';
-    var conditionalSquareSearch = reduxSettingsJSON.squareSearch ? `
+	var conditionalSquareSearch = reduxSettingsJSON.squareSearch ? `
     yt-img-shadow.ytd-video-renderer  {
         border-radius: 0 !important;
     }
     ` : '';
-    var conditionalExtraSidebarStyles = reduxSettingsJSON.extraSidebarStyles ? `
+	var conditionalExtraSidebarStyles = reduxSettingsJSON.extraSidebarStyles ? `
     ytd-guide-renderer #sections {
         padding: 1px 22px !important;
     }
@@ -683,7 +683,7 @@ margin-right: -12px !important;
         font-size: 11px !important;
     }
     ` : '';
-    var conditionalAltVideoLayout = reduxSettingsJSON.altVideoLayout ? `
+	var conditionalAltVideoLayout = reduxSettingsJSON.altVideoLayout ? `
     #info-contents ytd-video-primary-info-renderer > yt-icon-button  {
         transform: translateY(0px) !important;
     }
@@ -706,7 +706,7 @@ margin-right: -12px !important;
         margin-bottom: 6px !important;
     }
     ` : '';
-    var conditionalAltVideoLayoutExtra = reduxSettingsJSON.altVideoLayoutExtra ? `
+	var conditionalAltVideoLayoutExtra = reduxSettingsJSON.altVideoLayoutExtra ? `
     #info.ytd-video-primary-info-renderer > #menu-container  {
         transform: translateY(0px) !important;
     }
@@ -719,76 +719,76 @@ margin-right: -12px !important;
         display: none !important;
     }
     ` : '';
-    var conditionalTitleFont = reduxSettingsJSON.customTitleFont ? `
+	var conditionalTitleFont = reduxSettingsJSON.customTitleFont ? `
     .title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
         font-family: "${reduxSettingsJSON.titleFontValue}" !important;
     }
     ` : '';
-    var conditionalHideVoiceSearch = reduxSettingsJSON.hideVoiceSearch ? `
+	var conditionalHideVoiceSearch = reduxSettingsJSON.hideVoiceSearch ? `
     #voice-search-button {
         display: none !important;
     }
     ` : '';
-    function mergeOptions(){
-        var allStyleOptions = [
-            conditionalAutoplay, 
-            conditionalCast,
-            conditionalPlayerSize,
-            conditionalDarkPlaylist,
-            conditionalLogo,
-            conditionalLikesColors,
-            conditionalFilterMain,
-            conditionalFilterVideo,
-            conditionalFilterMini,
-            conditionalExtraLayout,
-            conditionalDarkerRed,
-            conditionalChannelListView,
-            conditionalSearchAlignLeft,
-            conditionalSquareAvatar,
-            conditionalHideAvatars,
-            conditionalNoHomeScaling,
-            conditionalSquareSearch,
-            conditionalExtraSidebarStyles,
-            conditionalAltVideoLayout,
-            conditionalAltVideoLayoutExtra,
-            conditionalTitleFont,
-            conditionalHideVoiceSearch
-        ];
-        var mergedOptions = '';
-        allStyleOptions.forEach(element => {
-            mergedOptions += element;
-        });
-        return mergedOptions;
-    }
-    var customStyle = document.createElement("style");
-    customStyle.id = 'redux-style';
-    var customStyleInner = mergeOptions();
-    customStyle.appendChild(document.createTextNode(customStyleInner));
-    document.documentElement.append(customStyle);
+	function mergeOptions() {
+		var allStyleOptions = [
+			conditionalAutoplay, 
+			conditionalCast,
+			conditionalPlayerSize,
+			conditionalDarkPlaylist,
+			conditionalLogo,
+			conditionalLikesColors,
+			conditionalFilterMain,
+			conditionalFilterVideo,
+			conditionalFilterMini,
+			conditionalExtraLayout,
+			conditionalDarkerRed,
+			conditionalChannelListView,
+			conditionalSearchAlignLeft,
+			conditionalSquareAvatar,
+			conditionalHideAvatars,
+			conditionalNoHomeScaling,
+			conditionalSquareSearch,
+			conditionalExtraSidebarStyles,
+			conditionalAltVideoLayout,
+			conditionalAltVideoLayoutExtra,
+			conditionalTitleFont,
+			conditionalHideVoiceSearch
+		];
+		var mergedOptions = '';
+		allStyleOptions.forEach(element => {
+			mergedOptions += element;
+		});
+		return mergedOptions;
+	}
+	var customStyle = document.createElement("style");
+	customStyle.id = 'redux-style';
+	var customStyleInner = mergeOptions();
+	customStyle.appendChild(document.createTextNode(customStyleInner));
+	document.documentElement.append(customStyle);
 
-    if (reduxSettingsJSON.favicon != "3") changeFavicon();
+	if (reduxSettingsJSON.favicon != "3") changeFavicon();
 
-    function changeFavicon(){
-        switch (reduxSettingsJSON.favicon) {
-            case "1":
-                if (document.querySelector('link[rel="shortcut icon"]') == null){
-                    setTimeout(changeFavicon, 250);
-                    return;
-                }
-                document.querySelector('link[rel="shortcut icon"]').href = chrome.extension.getURL('/images/favicon1.ico');
-                document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = chrome.extension.getURL('/images/favicon1.ico'));
-                break;
-            case "2":
-                if (document.querySelector('link[rel="shortcut icon"]') == null){
-                    setTimeout(changeFavicon, 250);
-                    return;
-                }
-                document.querySelector('link[rel="shortcut icon"]').href = chrome.extension.getURL('/images/favicon2.png');
-                document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = chrome.extension.getURL('/images/favicon2.png'));
-                break;
+	function changeFavicon() {
+		switch (reduxSettingsJSON.favicon) {
+		case "1":
+			if (document.querySelector('link[rel="shortcut icon"]') == null) {
+				setTimeout(changeFavicon, 250);
+				return;
+			}
+			document.querySelector('link[rel="shortcut icon"]').href = chrome.extension.getURL('/images/favicon1.ico');
+			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = chrome.extension.getURL('/images/favicon1.ico'));
+			break;
+		case "2":
+			if (document.querySelector('link[rel="shortcut icon"]') == null) {
+				setTimeout(changeFavicon, 250);
+				return;
+			}
+			document.querySelector('link[rel="shortcut icon"]').href = chrome.extension.getURL('/images/favicon2.png');
+			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = chrome.extension.getURL('/images/favicon2.png'));
+			break;
     
-            default:
-                break;
-        }
-    }
+		default:
+			break;
+		}
+	}
 }
