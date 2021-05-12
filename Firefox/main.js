@@ -1,6 +1,6 @@
 'use strict';
-var reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
-var flags = {
+const reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
+let flags = {
 	"likesChanged":false,
 	"stylesChanged":false,
 	"isRearranged":false,
@@ -8,24 +8,23 @@ var flags = {
 	"recalcListenersAdded":false,
 	"trueFullscreenListenersAdded":false
 };
-var likesInterval;
-var YTReduxURLPath;
-var YTReduxURLSearch;
-var confirmInterval;
-var aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-var playerSize = {};
+let YTReduxURLPath;
+let YTReduxURLSearch;
+let confirmInterval;
+const aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
+let playerSize = {};
 playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
 playerSize.height = Math.ceil(playerSize.width / aspectRatio);
-var observerComments;
-var observerRelated;
-var intervalsArray = [];
-var isCheckingRecalc = false;
+let observerComments;
+let observerRelated;
+let intervalsArray = [];
+let isCheckingRecalc = false;
 
 function confirmIt() {
-	var confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
-	var buttonStatus = document.querySelector('paper-dialog[aria-hidden="true"]') || document.querySelector('ytd-popup-container > tp-yt-paper-dialog[aria-hidden="true"]');
-	var popupElement = document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > yt-button-renderer');
-	var popupTypeCheck = popupElement == null ? false : popupElement.hasAttribute('hidden');
+	let confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
+	let buttonStatus = document.querySelector('paper-dialog[aria-hidden="true"]') || document.querySelector('ytd-popup-container > tp-yt-paper-dialog[aria-hidden="true"]');
+	let popupElement = document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > yt-button-renderer');
+	let popupTypeCheck = popupElement == null ? false : popupElement.hasAttribute('hidden');
 	if (confirmButton != null && !buttonStatus && popupTypeCheck) {
 		confirmButton.click();
 		document.querySelector('video').play();
@@ -42,15 +41,14 @@ function resumePlayback() {
 
 function changeGridWidth() {
 	if (location.pathname == "/") {
-		var retry = setInterval(function() {
-			var styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
-			var currentStyle = styleItem.style.cssText;
-			var currentStyleArray = currentStyle.split(";");
-			var currentSettings = currentStyle.match(/\d+/gm);
+		let retry = setInterval(function() {
+			let styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
+			let currentStyle = styleItem.style.cssText;
+			let currentStyleArray = currentStyle.split(";");
 
-			for (var i = 0; i < currentStyleArray.length-1; i++) { //split, replace and join settings on the fly
+			for (let i = 0; i < currentStyleArray.length-1; i++) { //split, replace and join settings on the fly
 				if (currentStyleArray[i].includes('--ytd-rich-grid-items-per-row')) {
-					var splitElement = currentStyleArray[i].split(":");
+					let splitElement = currentStyleArray[i].split(":");
 					splitElement[1] = reduxSettingsJSON.gridItems + " !important"; //to override different important from css
 					currentStyleArray[i] = splitElement.join(":");  
 				}
@@ -62,11 +60,11 @@ function changeGridWidth() {
 }
 
 function waitForElement(selector, interval, callback) {
-	var wait = setInterval(() => {
-		var element = document.querySelector(selector);
+	let wait = setInterval(() => {
+		let element = document.querySelector(selector);
 		if (element != null) {
 			clearInterval(wait);
-			var index = intervalsArray.indexOf(wait); //get index of and remove the previously added interval from array when it's cleared
+			let index = intervalsArray.indexOf(wait); //get index of and remove the previously added interval from array when it's cleared
 			intervalsArray.splice(index, 1);
 			callback();
 		}
@@ -75,16 +73,16 @@ function waitForElement(selector, interval, callback) {
 }
 
 function alignItems() {
-	var player = document.querySelector('ytd-watch-flexy .html5-video-container');
-	var content = document.querySelector('#columns > #primary > #primary-inner');
-	var videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
-	var calcPadding = Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
+	let player = document.querySelector('ytd-watch-flexy .html5-video-container');
+	let content = document.querySelector('#columns > #primary > #primary-inner');
+	let videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
+	let calcPadding = Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
 	if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null || videoInfoElement == null) {
 		waitForElement('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
 	} else {
-		var reduxAlignElement = document.querySelector('#redux-style-align');
-		var calcInner = `
+		let reduxAlignElement = document.querySelector('#redux-style-align');
+		let calcInner = `
             #columns > #primary > #primary-inner {
                 padding: 0 ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw 0 ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
                 /*padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;*/
@@ -104,9 +102,9 @@ function alignItems() {
                 `;
 		}
 		if (reduxAlignElement == null) {
-			var customStyle = document.createElement("style");
+			let customStyle = document.createElement("style");
 			customStyle.id = 'redux-style-align';
-			var customStyleInner = calcInner;
+			let customStyleInner = calcInner;
 			customStyle.appendChild(document.createTextNode(customStyleInner));
 			document.head.append(customStyle); 
 		} else {
@@ -119,14 +117,14 @@ function alignItems() {
 }
 
 function changeLikesCounter() {
-	var likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-	var dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
-	var observerConfig = {
+	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+	let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+	let observerConfig = {
 		attributes: true
 	};
-	var observerLikes = new MutationObserver(fixLikes);
+	let observerLikes = new MutationObserver(fixLikes);
 	observerLikes.observe(likes, observerConfig);
-	var observerDislikes = new MutationObserver(fixLikes);
+	let observerDislikes = new MutationObserver(fixLikes);
 	observerDislikes.observe(dislikes, observerConfig);
 	fixLikes();
 	flags.likesTracked = true;
@@ -135,12 +133,12 @@ function changeLikesCounter() {
 		observerLikes.disconnect();
 		observerDislikes.disconnect();
 
-		var likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		var dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
-		var rawLikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
-		var rawLikes = rawLikesElement.innerText.split("/")[0];
-		var rawDislikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
-		var rawDislikes = rawDislikesElement.innerText.split("/")[1];
+		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+		let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+		let rawLikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
+		let rawLikes = rawLikesElement.innerText.split("/")[0];
+		let rawDislikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
+		let rawDislikes = rawDislikesElement.innerText.split("/")[1];
 		if (rawDislikes == undefined) {
 			if (dislikes.children.length > 0) {
 				likes.innerText = likes.innerText.replace(String.fromCharCode(160), "").replace(/\d+/, "").trim(); //removes &nbsp and digits if they are inserted to vids with disabled comments
@@ -181,12 +179,12 @@ function isDarkTheme() {
 function recalculateVideoSize() {
 
 	function addListenersForRecalc() {
-		var buttons = [
+		let buttons = [
 			document.querySelector('.ytp-size-button')
 			//document.querySelector('.ytp-fullscreen-button')
 		];
 
-		for (var i = 0; i < buttons.length; i++) {
+		for (let i = 0; i < buttons.length; i++) {
 			buttons[i].addEventListener('click', function() {
 				startRecalc();
 				setTimeout(alignItems, 40); //TODO slow systems may struggle with this timeout when exiting fullscreen - properly detect mode change
@@ -197,9 +195,9 @@ function recalculateVideoSize() {
 			setTimeout(alignItems, 40);
 		});
 		window.addEventListener('resize', () => {
-			var repeatInsert = setInterval(() => { //insert in loop for X seconds to prevent YT from overriding
-				var specialWidth = document.querySelector('video').offsetWidth;
-				var specialHeight = document.querySelector('video').offsetHeight;
+			let repeatInsert = setInterval(() => { //insert in loop for X seconds to prevent YT from overriding
+				let specialWidth = document.querySelector('video').offsetWidth;
+				let specialHeight = document.querySelector('video').offsetHeight;
 				insertRecalcScript(specialWidth, specialHeight);
 			}, 500);
 			setTimeout(() => {
@@ -213,12 +211,12 @@ function recalculateVideoSize() {
 	function insertRecalcScript(width, height) {
 		if (width == undefined) {width = playerSize.width;}
 		if (height == undefined) {height = playerSize.height;}
-		var existingRecalc = document.querySelector('#redux-recalc');
+		let existingRecalc = document.querySelector('#redux-recalc');
 		if (existingRecalc) {existingRecalc.remove();}
-		var script = document.createElement('script');
+		let script = document.createElement('script');
 		script.id = 'redux-recalc';
-		var scriptInner = `
-            var player = document.querySelector('#movie_player');
+		let scriptInner = `
+            let player = document.querySelector('#movie_player');
             player.setInternalSize(${width},${height});
             `;
 		script.appendChild(document.createTextNode(scriptInner));
@@ -226,7 +224,7 @@ function recalculateVideoSize() {
 
 		if (!isCheckingRecalc) {
 			isCheckingRecalc = true;
-			var checkLoop = setInterval(() => {
+			let checkLoop = setInterval(() => {
 				checkIfProperlyRecalculated(width, height);
 			}, 100);
     
@@ -238,8 +236,8 @@ function recalculateVideoSize() {
 		}
         
 		function checkIfProperlyRecalculated(width, height) {
-			var videoPlayerElement = document.querySelector('ytd-watch-flexy .html5-video-container');
-			var bottomBarElement = document.querySelector('.ytp-chrome-bottom');
+			let videoPlayerElement = document.querySelector('ytd-watch-flexy .html5-video-container');
+			let bottomBarElement = document.querySelector('.ytp-chrome-bottom');
 			if (videoPlayerElement != null && bottomBarElement != null && (bottomBarElement.offsetWidth < videoPlayerElement.offsetWidth*0.9)) {
 				insertRecalcScript(width, height);
 			}
@@ -247,11 +245,11 @@ function recalculateVideoSize() {
 	}
 
 	function startRecalc() {
-		var checkingTimeout;
-		var checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
-			var progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
-			var leftEdgeDistancePlayer = document.querySelector('#player-container').getBoundingClientRect().x;
-			var leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner > #info').getBoundingClientRect().x;
+		let checkingTimeout;
+		let checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
+			let progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
+			let leftEdgeDistancePlayer = document.querySelector('#player-container').getBoundingClientRect().x;
+			let leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner > #info').getBoundingClientRect().x;
 			if (progressBar != null && (leftEdgeDistancePlayer > leftEdgeDistanceInfo+10 || progressBar.offsetWidth+12 >= playerSize.width) && !isTheater() && !isFullscreen()) { //TODO more precise condition
 				insertRecalcScript();
 				if (checkingTimeout != undefined) {
@@ -276,8 +274,8 @@ function recalculateVideoSize() {
 function startObservingComments() {
 
 	function disableInfiniteComments() {
-		var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
-		var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
+		let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
+		let commentsContinuation = document.querySelector('#comments > #sections > #continuations');
 		commentsContElement = commentsContinuation.querySelector('yt-next-continuation');
 		if (comments.length >= maxComments && commentsContElement != null) {
 			observerComments.disconnect();
@@ -300,16 +298,16 @@ function startObservingComments() {
 	}
 
 	function addCommentsButton() {
-		var showMoreComments = document.createElement('div');
-		var continueElement = commentsContElement;
-		var showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
+		let showMoreComments = document.createElement('div');
+		let continueElement = commentsContElement;
+		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
 		showMoreComments.id = 'show-more-comments';
 		showMoreComments.style = 'text-align:center; margin-bottom: 16px; margin-right: 15px;';
 		showMoreComments.innerHTML = '<input type="button" style="height:30px; width: 100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer; text-transform: uppercase;"></input>';
 		showMoreComments.querySelector('input').value = showMoreText;
 		contentsElement.append(showMoreComments);
 		document.querySelector('#show-more-comments').onclick = function() {
-			var commentsContinuation = document.querySelector('#comments > #sections > #continuations');
+			let commentsContinuation = document.querySelector('#comments > #sections > #continuations');
 			commentsContinuation.append(continueElement);
 			window.scrollBy({top: 50, left: 0, behavior: "smooth"});
 			this.remove();
@@ -319,9 +317,9 @@ function startObservingComments() {
 	}
 
 	function addRelatedButton() {
-		var showMoreRelated = document.createElement('div');
-		var continueElement = relatedContinuation;
-		var showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
+		let showMoreRelated = document.createElement('div');
+		let continueElement = relatedContinuation;
+		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
 		showMoreRelated.id = 'show-more-related';
 		showMoreRelated.style = 'text-align:center; margin-top: 4px;';
 		showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer; text-transform: uppercase;"></input>';
@@ -348,18 +346,18 @@ function startObservingComments() {
 		}
 	}
 
-	var maxComments = 20;
-	var commentsInterval = 20;
-	var maxRelated;
-	var relatedInterval = 20;
-	var commentsContElement;
-	var observerConfig = {
+	let maxComments = 20;
+	let commentsInterval = 20;
+	let maxRelated;
+	let relatedInterval = 20;
+	let commentsContElement;
+	let observerConfig = {
 		childList: true
 	};
-	var contentsElement = document.querySelector('#comments > #sections > #contents.style-scope.ytd-item-section-renderer');
-	var relatedElement;
-	var related;
-	var relatedContinuation;
+	let contentsElement = document.querySelector('#comments > #sections > #contents.style-scope.ytd-item-section-renderer');
+	let relatedElement;
+	let related;
+	let relatedContinuation;
 
 	if (!!document.querySelector('#show-more-comments')) {document.querySelector('#show-more-comments').remove();}
 	if (!!document.querySelector('#show-more-related')) {document.querySelector('#show-more-related').remove();}
@@ -375,13 +373,13 @@ function startObservingComments() {
 	observerRelated = new MutationObserver(disableInfiniteRelated);
 	observerRelated.observe(relatedElement, observerConfig);
 
-	var sortButtons = document.querySelectorAll('div[slot="dropdown-content"] > #menu > a');
+	let sortButtons = document.querySelectorAll('div[slot="dropdown-content"] > #menu > a');
 	sortButtons.forEach(element => {
 		element.onclick = resetCommentsObserver;
 	});
 
 	function resetCommentsObserver() {
-		var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
+		let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
 		comments.forEach(element => {
 			element.remove();
 		});
@@ -392,30 +390,26 @@ function startObservingComments() {
 }
 
 function rearrangeInfo() {
-	var infoTop = document.querySelector('#top-row.ytd-video-secondary-info-renderer');
-	var infoBar = document.querySelector('#info.ytd-video-primary-info-renderer');
-	var infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
-	var topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
-	var miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
+	let infoTop = document.querySelector('#top-row.ytd-video-secondary-info-renderer');
+	let infoBar = document.querySelector('#info.ytd-video-primary-info-renderer');
+	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
+	let miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
         document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
-	var dateElement = document.querySelector('#date > yt-formatted-string');
-	var dateOuter = document.querySelector('#info-text > #date');
-	var descriptionElement = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content');
-	var descriptionElementInner = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content > #description');
-	var descriptionMeta = document.querySelector('#primary-inner > #meta > #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander');
-	var views = document.querySelector('#info-text > #count');
-	var likesContainer = document.querySelector('#info > #menu-container');
-	var likesBar = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer');
-	var likesWithValues = document.querySelector('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer');
-	var subButton = document.querySelector('ytd-video-secondary-info-renderer > #container > #top-row > #subscribe-button');
-	var uploadInfo = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info');
-	var channelName = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #channel-name');
-	var subCount = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count');
-	var subscribeButton = document.querySelector('#meta #sponsor-button');
-	var analyticsButton = document.querySelector('#meta #analytics-button');
-	var reduxSubDiv = document.createElement('div');
-	var videoTitle = document.querySelector('#info-contents div#container > h1');
-	var primaryElement = document.querySelector('#columns > #primary > #primary-inner');
+	let dateElement = document.querySelector('#date > yt-formatted-string');
+	let dateOuter = document.querySelector('#info-text > #date');
+	let descriptionElement = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content');
+	let views = document.querySelector('#info-text > #count');
+	let likesContainer = document.querySelector('#info > #menu-container');
+	let likesBar = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer');
+	let subButton = document.querySelector('ytd-video-secondary-info-renderer > #container > #top-row > #subscribe-button');
+	let uploadInfo = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info');
+	let channelName = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #channel-name');
+	let subCount = document.querySelector('#top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count');
+	let subscribeButton = document.querySelector('#meta #sponsor-button');
+	let analyticsButton = document.querySelector('#meta #analytics-button');
+	let reduxSubDiv = document.createElement('div');
+	let videoTitle = document.querySelector('#info-contents div#container > h1');
+	let primaryElement = document.querySelector('#columns > #primary > #primary-inner');
 	reduxSubDiv.id = 'reduxSubDiv';
 	dateElement.classList.add('redux-moved-date');
 
@@ -434,7 +428,7 @@ function rearrangeInfo() {
 	uploadInfo.prepend(channelName);
 
 	if (reduxSettingsJSON.altVideoLayout) {
-		var reduxHeader = document.createElement('div');
+		let reduxHeader = document.createElement('div');
 		reduxHeader.id = 'redux-video-header';
 		primaryElement.prepend(reduxHeader);
 
@@ -446,9 +440,9 @@ function rearrangeInfo() {
 		reduxHeader.append(infoTop);
 	}
 
-	var style = document.createElement('style');
+	let style = document.createElement('style');
 	style.id = 'redux-style-rearrange';
-	var innerStyle = `
+	let innerStyle = `
         /*VID REARRANGE STYLES*/
         .ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer {
             display:none;
@@ -550,11 +544,11 @@ function rearrangeInfo() {
 }
 
 function moveTopLevelItems() {
-	var topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
-	var infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
-	var infoDiv = document.querySelector('#info-contents div#info');
-	var miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
-	var existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
+	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
+	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
+	let infoDiv = document.querySelector('#info-contents div#info');
+	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
+	let existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
         document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
         
 	if (reduxSettingsJSON.altVideoLayout) {
@@ -564,19 +558,19 @@ function moveTopLevelItems() {
 			miscButton.style = 'transform: translateY(0px)';
 		}
 
-		for (var i = 0; i < topLevelElements.length; i++) {
+		for (let i = 0; i < topLevelElements.length; i++) {
 			infoDiv.prepend(topLevelElements[i]);
 			topLevelElements[i].classList.add('redux-moved-info');
 			topLevelElements[i].style.display = 'inline-block';
 		}
             
 		if (reduxSettingsJSON.altVideoLayoutExtra) {
-			var remainingTopLevel = document.querySelector('#info #top-level-buttons');
-			var likesValues = [
+			let remainingTopLevel = document.querySelector('#info #top-level-buttons');
+			let likesValues = [
 				document.querySelectorAll('ytd-toggle-button-renderer #text.ytd-toggle-button-renderer')[0].getAttribute('aria-label'),
 				document.querySelectorAll('ytd-toggle-button-renderer #text.ytd-toggle-button-renderer')[1].getAttribute('aria-label')
 			];
-			var separator = ", ";
+			let separator = ", ";
 			if (likesValues[0] == null) {
 				likesValues[0] = "";
 				separator = "";
@@ -585,11 +579,11 @@ function moveTopLevelItems() {
 				likesValues[1] = "";
 				separator = "";
 			}
-			var menu = document.querySelector('#menu.ytd-video-primary-info-renderer');
-			var likesText = document.createTextNode(`${likesValues[0]}${separator}${likesValues[1]}`);
+			let menu = document.querySelector('#menu.ytd-video-primary-info-renderer');
+			let likesText = document.createTextNode(`${likesValues[0]}${separator}${likesValues[1]}`);
 
 			document.querySelector('#info.ytd-video-primary-info-renderer > #menu-container').style = 'transform: translateY(0px) !important;';
-			for (var i = 0; i < menu.childNodes.length; i++) { //remove existing text nodes
+			for (let i = 0; i < menu.childNodes.length; i++) { //remove existing text nodes
 				if (menu.childNodes[i].nodeType == 3) {
 					menu.childNodes[i].remove();
 				}
@@ -600,7 +594,7 @@ function moveTopLevelItems() {
 		}
             
 	} else {
-		for (var i = topLevelElements.length-1; i >= 0; i--) {
+		for (let i = topLevelElements.length-1; i >= 0; i--) {
 			infoContents.insertBefore(topLevelElements[i], existingMovedItem);
 			topLevelElements[i].classList.add('redux-moved-info');
 			topLevelElements[i].style.display = 'inline-block';
@@ -609,7 +603,7 @@ function moveTopLevelItems() {
 }
 
 function clearMovedInfo() {
-	var moveInfo = document.querySelectorAll('.redux-moved-info');
+	let moveInfo = document.querySelectorAll('.redux-moved-info');
 	moveInfo.forEach(element => element.remove());
 	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
 }
@@ -622,15 +616,15 @@ function clearStoredIntervals() {
 }
 
 function splitTrending() {
-	var elems = document.querySelectorAll('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
+	let elems = document.querySelectorAll('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
 	if (elems.length == 0) { //repeat because it can be emptied when navigating through different pages
 		setTimeout(() =>{splitTrending();}, 1000);
 		return;
 	}
-	for (var i = 0; i < elems.length; i++) {
+	for (let i = 0; i < elems.length; i++) {
 		if (i % 2 != 0) {elems[i].style.float = 'left';}
 		elems[i].style.width = '50%';
-		var description = elems[i].querySelector('yt-formatted-string#description-text');
+		let description = elems[i].querySelector('yt-formatted-string#description-text');
 		description.style.fontSize = '1.2rem';
 		description.style.paddingTop = '4px';
 		description.style.maxHeight = 'calc(2 * var(--yt-thumbnail-attribution-line-height, 3.5rem))';
@@ -638,7 +632,7 @@ function splitTrending() {
 }
 
 function splitTrendingLoop() {
-	var splitLoop = setInterval(splitTrending, 100);
+	let splitLoop = setInterval(splitTrending, 100);
 	setTimeout(() => {clearInterval(splitLoop);}, 5000);
 }
 
@@ -654,7 +648,7 @@ function preventScrolling() {
 		}
 	}
 
-	document.addEventListener('fullscreenchange', function(e) {
+	document.addEventListener('fullscreenchange', function() {
 		setTimeout(() => { //timeout accomodates for fullscreen transition animation
 			if (document.querySelector('ytd-watch-flexy[fullscreen]') != null) {
 				document.querySelector('.ytp-right-controls > button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
@@ -674,7 +668,6 @@ function sortPlaylists() {
 	if (!!document.querySelector('.redux-playlist')) return;
 	let baseTimeout = 250;
 	setTimeout(() => {
-		let retryCount = 0;
 		let playlistItems = document.querySelectorAll('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-item-renderer ytd-thumbnail-overlay-bottom-panel-renderer');
 		let itemsContainer = document.querySelector('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist)');
 		let allContainer = document.querySelector('ytd-rich-grid-renderer');
@@ -715,10 +708,10 @@ function sortPlaylists() {
             
 		if (reduxSettingsJSON.sortFoundPlaylists) {
 			setTimeout(() => {
-				var observerConfig = {
+				let observerConfig = {
 					childList: true
 				};
-				var observerLikes = new MutationObserver(hidePlaylists);
+				let observerLikes = new MutationObserver(hidePlaylists);
 				observerLikes.observe(itemsContainer, observerConfig);
 			}, baseTimeout*2);
 		}
@@ -761,7 +754,7 @@ function start() {
 	main();
 	YTReduxURLPath = location.pathname;
 	YTReduxURLSearch = location.search;
-	var checkURLChange = setInterval(function() {
+	setInterval(function() {
 		if (location.pathname != YTReduxURLPath || location.search != YTReduxURLSearch) {
 			YTReduxURLPath = location.pathname;
 			YTReduxURLSearch = location.search;
@@ -773,7 +766,7 @@ function start() {
 				if (observerRelated != undefined) {
 					observerRelated.disconnect();
 				}
-				var comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
+				let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
 				comments.forEach(element => { //remove comments because YT sometimes keeps old ones after url change which messes with comments observer checking their length; also applied when sorting
 					element.remove();
 				});

@@ -1,6 +1,6 @@
-var donateButton = document.querySelector('#donate');
-var globalURL;
-var currentSettings;
+let donateButton = document.querySelector('#donate');
+let globalURL;
+let currentSettings;
 
 donateButton.onclick = function() {
 	window.open("https://www.paypal.com/donate?hosted_button_id=MD9WRXSTLB49W");
@@ -8,20 +8,20 @@ donateButton.onclick = function() {
 
 browser.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
 	globalURL = tabs[0].url;
-	var fields = document.querySelectorAll('fieldset');
+	let fields = document.querySelectorAll('fieldset');
 	if (!globalURL.includes("www.youtube.com")) {
-		for (var i = 0; i < fields.length; i++) {
+		for (let i = 0; i < fields.length; i++) {
 			document.querySelectorAll('fieldset')[i].setAttribute("disabled", "");
 		}
 		document.querySelector('.outer-warning').style.display = "table";
 	}
 });
 
-var settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
-for (var i = 0; i < settingsElements.length; i++) {
+let settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
+for (let i = 0; i < settingsElements.length; i++) {
 	settingsElements[i].addEventListener('change', function() {
 		if (this.parentElement.nextElementSibling != null && this.parentElement.nextElementSibling.classList.contains('subsettings-container')) {
-			var subsettings = this.parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
+			let subsettings = this.parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
 			console.log(subsettings);
 			if (this.checked) {
 				subsettings.forEach(element => {
@@ -39,14 +39,14 @@ for (var i = 0; i < settingsElements.length; i++) {
 }
 
 document.querySelector('input[type="range"]').addEventListener('change', function() {
-	var inputControl = document.querySelector('.slider-control');
+	let inputControl = document.querySelector('.slider-control');
 	inputControl.value = this.value;
 	saveSettings();
 	changeGridWidth(this.value);
 });
 
 document.querySelector('.slider-control').addEventListener('change', function() {
-	var slider = document.querySelector('input[type="range"]');
+	let slider = document.querySelector('input[type="range"]');
 	slider.value = this.value;
 	saveSettings();
 	changeGridWidth(this.value);
@@ -90,32 +90,32 @@ document.querySelector('select[name="smallPlayerWidth"]').addEventListener('chan
 });
 
 function saveSettings() {
-	var newSettings = {};
+	let newSettings = {};
 	//save slider
 	newSettings[document.querySelector('input[type="range"]').name] = document.querySelector('input[type="range"]').value;
 
 	//save checkboxes
-	var itemsCheck = document.querySelectorAll('input[type="checkbox"]');
-	for (var i = 0; i < itemsCheck.length; i++) {
+	let itemsCheck = document.querySelectorAll('input[type="checkbox"]');
+	for (let i = 0; i < itemsCheck.length; i++) {
 		newSettings[itemsCheck[i].name] = itemsCheck[i].checked;
 	}
 
 	//save selects
-	var selects = document.querySelectorAll('select');
+	let selects = document.querySelectorAll('select');
 	selects.forEach(element => {
 		newSettings[element.name] = element.value;
 	});
 
 	//save favicon radio buttons
-	var radio = document.querySelectorAll('input[type="radio"][name="favicon"]');
-	for (var i = 0; i < radio.length; i++) {
+	let radio = document.querySelectorAll('input[type="radio"][name="favicon"]');
+	for (let i = 0; i < radio.length; i++) {
 		if (radio[i].checked) {
 			newSettings[radio[i].name] = radio[i].value;
 		}
 	}
   
 	browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		var storageSettings = JSON.stringify(newSettings);
+		let storageSettings = JSON.stringify(newSettings);
 		browser.tabs.executeScript(
 			tabs[0].id,
 			{code: `localStorage.setItem("reduxSettings", ${JSON.stringify(storageSettings)})`});
@@ -137,14 +137,14 @@ function changeGridWidth(numberOfItems) {
 
 function getSettings() {
 	if (currentSettings == null) {return;}
-	var itemsCheck = document.querySelectorAll('input[type="checkbox"]');
+	let itemsCheck = document.querySelectorAll('input[type="checkbox"]');
 
 	//set slider
 	document.querySelector('input[type="range"]').value = currentSettings.gridItems;
 	document.querySelector('.slider-control').value = currentSettings.gridItems;
 	//set checkboxes
-	for (var i = 0; i < itemsCheck.length; i++) {
-		for (var j = 0; j < Object.keys(currentSettings).length; j++) {
+	for (let i = 0; i < itemsCheck.length; i++) {
+		for (let j = 0; j < Object.keys(currentSettings).length; j++) {
 			if (itemsCheck[i].name == Object.keys(currentSettings)[j]) {
 				itemsCheck[i].checked = Object.values(currentSettings)[j];
 			}
@@ -157,10 +157,10 @@ function getSettings() {
 	//set radio buttons
 	document.querySelector(`input[type="radio"][value="${currentSettings.favicon}"]`).checked = true;
 	//uncheck subsettings
-	var settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
-	for (var i = 0; i < settingsElements.length; i++) {
+	let settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
+	for (let i = 0; i < settingsElements.length; i++) {
 		if (settingsElements[i].parentElement.nextElementSibling != null && settingsElements[i].parentElement.nextElementSibling.classList.contains('subsettings-container')) {
-			var subsettings = settingsElements[i].parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
+			let subsettings = settingsElements[i].parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
 			if (settingsElements[i].checked) {
 				subsettings.forEach(element => {
 					element.removeAttribute('disabled');
@@ -171,7 +171,7 @@ function getSettings() {
 }
 
 function calculateSizeOptions() {
-	var options = document.querySelectorAll('select[name="smallPlayerWidth"] option');
+	let options = document.querySelectorAll('select[name="smallPlayerWidth"] option');
 	options.forEach(element => {
 		if (element.value == 'Custom') {
 			element.innerText = `Custom...`; //fixed at 16:9
@@ -183,7 +183,7 @@ function calculateSizeOptions() {
 
 //main
 browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
-	var key = "reduxSettings";
+	let key = "reduxSettings";
 	browser.tabs.executeScript(
 		tabs[0].id,
 		{
