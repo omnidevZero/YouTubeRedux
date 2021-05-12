@@ -1,5 +1,5 @@
 'use strict';
-const reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
+reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
 let flags = {
 	"likesChanged":false,
 	"stylesChanged":false,
@@ -11,8 +11,8 @@ let flags = {
 let YTReduxURLPath;
 let YTReduxURLSearch;
 let confirmInterval;
-const aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-let playerSize = {};
+aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
+playerSize = {};
 playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
 playerSize.height = Math.ceil(playerSize.width / aspectRatio);
 let observerComments;
