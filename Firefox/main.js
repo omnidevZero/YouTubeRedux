@@ -32,13 +32,6 @@ function confirmIt() {
 	}
 }
 
-function resumePlayback() {
-	if (!document.querySelector('ytd-miniplayer[active]') && document.querySelector('.ytp-play-button > svg > path').getAttribute('d') == 'M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z') { //click play if it's the displayed button icon and there is no mini player
-		document.querySelector('.ytp-play-button').click();
-		//console.log('YouTube Redux Unpaused at: ' + new Date());
-	}
-}
-
 function changeGridWidth() {
 	if (location.pathname == "/") {
 		let retry = setInterval(function() {
@@ -166,12 +159,6 @@ function isTheater() {
 
 function isFullscreen() {
 	if (document.querySelector('ytd-watch-flexy[fullscreen]') != null) {
-		return true;
-	}
-}
-
-function isDarkTheme() {
-	if (document.querySelector('html[dark]') != null) {
 		return true;
 	}
 }
