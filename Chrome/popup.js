@@ -89,6 +89,22 @@ document.querySelector('select[name="smallPlayerWidth"]').addEventListener('chan
 	}
 });
 
+//logo preview
+document.querySelectorAll('label.logo-label').forEach(element => {
+	element.addEventListener('mouseenter', function() {
+		let preview = document.querySelector('.logo-preview');
+		let previewImg = preview.querySelector('img');
+		previewImg.src = `/images/${this.firstChild.value}logo.svg`;
+		preview.style.display = 'block';
+	});
+});
+document.querySelectorAll('label.logo-label').forEach(element => {
+	element.addEventListener('mouseleave', function() {
+		let preview = document.querySelector('.logo-preview');
+		preview.style.display = 'none';
+	});
+});
+
 function saveSettings() {
 	let newSettings = {};
 	//save slider
@@ -111,6 +127,14 @@ function saveSettings() {
 	for (let i = 0; i < radio.length; i++) {
 		if (radio[i].checked) {
 			newSettings[radio[i].name] = radio[i].value;
+		}
+	}
+
+	//save logo radio buttons
+	let logo = document.querySelectorAll('input[type="radio"][name="classicLogoChoice"]');
+	for (let i = 0; i < logo.length; i++) {
+		if (logo[i].checked) {
+			newSettings[logo[i].name] = logo[i].value;
 		}
 	}
 
@@ -157,6 +181,7 @@ function getSettings() {
 	if (document.querySelector('select[name="titleFontValue"]').value == "") document.querySelector('select[name="titleFontValue"]').value = "Custom";
 	//set radio buttons
 	document.querySelector(`input[type="radio"][value="${currentSettings.favicon}"]`).checked = true;
+	document.querySelector(`input[type="radio"][value="${currentSettings.classicLogoChoice}"]`).checked = true;
 	//uncheck subsettings
 	let settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
 	for (let i = 0; i < settingsElements.length; i++) {

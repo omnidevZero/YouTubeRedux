@@ -1,7 +1,7 @@
 let reduxSettingsJSON;
 let playerSize = {};
 let aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-const defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true, "smallPlayer": true, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogo": false, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false, "playlistsFirst": true, "sortFoundPlaylists": true, "customTitleFont": false, "titleFontValue": "Arial", "hideVoiceSearch": false}';
+const defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true, "smallPlayer": true, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogoChoice": 2017, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false, "playlistsFirst": true, "sortFoundPlaylists": true, "customTitleFont": false, "titleFontValue": "Arial", "hideVoiceSearch": false}';
 getSettings();
 addCustomStyles();
 
@@ -125,24 +125,23 @@ function addCustomStyles() {
 		margin-right: -12px !important;
 		}
 		`,
-		classicLogo: `
-		ytd-masthead #logo-icon-container, #contentContainer #logo-icon-container, ytd-topbar-logo-renderer > #logo {
-			content: url('${chrome.extension.getURL('/images/classicLogo.png')}') !important;
+		classicLogoChoice: `
+		ytd-masthead #logo-icon-container, 
+		#contentContainer #logo-icon-container, 
+		ytd-topbar-logo-renderer > #logo,
+		#start > #masthead-logo,
+		#masthead > #masthead-logo {
+			content: url('${chrome.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo.svg`)}') !important;
 			width: 72px !important;
 			height: auto !important;
 		}
-		ytd-masthead[dark] #logo-icon-container, html[dark] #contentContainer #logo-icon-container, ytd-masthead[dark] ytd-topbar-logo-renderer > #logo, html[dark] ytd-topbar-logo-renderer > #logo {
-			content: url('${chrome.extension.getURL('/images/classicLogoDark.png')}') !important;
-			width: 72px !important;
-			height: auto !important;
-		}
-		#start > #masthead-logo, #masthead > #masthead-logo {
-			content: url('${chrome.extension.getURL('/images/classicLogo.png')}') !important;
-			width: 72px !important;
-			height: auto !important;
-		}
-		html[dark] #start > #masthead-logo, html[dark] #masthead > #masthead-logo {
-			content: url('${chrome.extension.getURL('/images/classicLogoDark.png')}') !important;
+		ytd-masthead[dark] #logo-icon-container, 
+		html[dark] #contentContainer #logo-icon-container, 
+		ytd-masthead[dark] ytd-topbar-logo-renderer > #logo, 
+		html[dark] ytd-topbar-logo-renderer > #logo,
+		html[dark] #start > #masthead-logo,
+		html[dark] #masthead > #masthead-logo {
+			content: url('${chrome.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo-dark.svg`)}') !important;
 			width: 72px !important;
 			height: auto !important;
 		}
@@ -736,6 +735,7 @@ function addCustomStyles() {
 		let mergedOptions = '';
 		for (let i = 0; i < Object.keys(allStyles).length; i++) {
 			const currentKey = Object.keys(allStyles)[i];
+			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] === 2017) continue;
 			if (reduxSettingsJSON[currentKey]) {
 				mergedOptions += Object.values(allStyles)[i];
 			}

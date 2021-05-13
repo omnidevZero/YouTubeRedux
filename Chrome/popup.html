@@ -235,6 +235,20 @@
             cursor:pointer;
             font-size:12px;
         }
+        .logo-preview {
+            height: auto;
+            width: 72px;
+            position: absolute;
+            background-color: black;
+            top: 0;
+            left: 0;
+            transform: translate(-100%, -25%);
+            display: none;
+            background-color: white;
+            border-radius: 10px;
+            border: 1px solid grey;
+            padding: 10px;
+        }
       </style>
     </head>
     <body>
@@ -320,6 +334,15 @@
                             <label><input type="checkbox" name="rearrangeInfo" class="settings">Do NOT recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
                         </div>
                         <div style="flex: 0 0 50%;">
+                            <fieldset style="padding-top: 0; padding-bottom: 0; position: relative;"><legend>Logo</legend>
+                                <div class="logo-preview"><img src='' style="height: 100%; width: 100%;"></img></div>
+                                <div style="text-align: center; display:flex; justify-content: center;">
+                                    <label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2005 style="display:inline-block;">2005</label>
+									<label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2011 style="display:inline-block;">2011</label>
+									<label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2015 style="display:inline-block;">2015</label>
+									<label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2017 style="display:inline-block;">2017</label>
+                                </div>
+                            </fieldset>  
                             <fieldset style="padding-top: 0; padding-bottom: 0;">
                                 <legend>Favicon</legend>
                                 <div style="text-align:center;">

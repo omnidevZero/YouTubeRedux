@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "2.1.2",
+    "version": "2.1.3",
     "description": "Replicate old YouTube look and features within the modern layout!",
     "permissions": ["activeTab"],
     "browser_action": {
@@ -33,8 +33,13 @@
       }
     ],
     "web_accessible_resources": [
-      "images/classicLogo.png",
-      "images/classicLogoDark.png",
+      "images/2005logo.svg",
+      "images/2005logo-dark.svg",
+      "images/2011logo.svg",
+      "images/2011logo-dark.svg",
+      "images/2015logo.svg",
+      "images/2015logo-dark.svg",
+      "images/2017logo.svg",
       "images/sub-icon.png",
       "images/favicon1.ico",
       "images/favicon2.png",
