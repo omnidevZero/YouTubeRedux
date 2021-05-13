@@ -203,7 +203,7 @@ function recalculateVideoSize() {
 		let script = document.createElement('script');
 		script.id = 'redux-recalc';
 		let scriptInner = `
-            let player = document.querySelector('#movie_player');
+            var player = document.querySelector('#movie_player');
             player.setInternalSize(${width},${height});
             `;
 		script.appendChild(document.createTextNode(scriptInner));
