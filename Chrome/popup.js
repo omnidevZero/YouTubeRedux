@@ -94,8 +94,9 @@ document.querySelectorAll('label.logo-label').forEach(element => {
 	element.addEventListener('mouseenter', function() {
 		let preview = document.querySelector('.logo-preview');
 		let previewImg = preview.querySelector('img');
-		previewImg.src = `/images/${this.firstChild.value}logo.svg`;
-		preview.style.display = 'block';
+		let previewExtension = this.firstChild.value == 'XL' ? 'png' : 'svg';
+		previewImg.src = `/images/${this.firstChild.value}logo.${previewExtension}`;
+		preview.style.display = 'flex';
 	});
 });
 document.querySelectorAll('label.logo-label').forEach(element => {

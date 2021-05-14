@@ -70,7 +70,7 @@ document.querySelector('#left-arrow').addEventListener('click', function() {
 //font selection
 document.querySelector('select[name="titleFontValue"]').addEventListener('change', function() {
 	if (this.querySelector('option:last-child').selected) {
-		let fontChoice = prompt('Enter your custom font name:', 'E.g.: \'Webdings\' or \'Times New Roman\'');
+		let fontChoice = prompt('Enter your custom font name.\nTo reset it change to another value and then back to custom.', '\'Times New Roman\'');
 		if (fontChoice != null) {
 			this.querySelector('option:last-child').value = fontChoice;
 			saveSettings();
@@ -94,8 +94,9 @@ document.querySelectorAll('label.logo-label').forEach(element => {
 	element.addEventListener('mouseenter', function() {
 		let preview = document.querySelector('.logo-preview');
 		let previewImg = preview.querySelector('img');
-		previewImg.src = `/images/${this.firstChild.value}logo.svg`;
-		preview.style.display = 'block';
+		let previewExtension = this.firstChild.value == 'XL' ? 'png' : 'svg';
+		previewImg.src = `/images/${this.firstChild.value}logo.${previewExtension}`;
+		preview.style.display = 'flex';
 	});
 });
 document.querySelectorAll('label.logo-label').forEach(element => {

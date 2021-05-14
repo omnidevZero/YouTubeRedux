@@ -2,7 +2,9 @@ let reduxSettingsJSON;
 let playerSize = {};
 let aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
 const defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true, "smallPlayer": true, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogoChoice": 2017, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false, "playlistsFirst": true, "sortFoundPlaylists": true, "customTitleFont": false, "titleFontValue": "Arial", "hideVoiceSearch": false}';
+
 getSettings();
+let logoExtension = reduxSettingsJSON.classicLogoChoice === 'XL' ? 'png' : 'svg';
 addCustomStyles();
 
 function getSettings() {
@@ -735,7 +737,7 @@ function addCustomStyles() {
 		let mergedOptions = '';
 		for (let i = 0; i < Object.keys(allStyles).length; i++) {
 			const currentKey = Object.keys(allStyles)[i];
-			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] === 2017) continue;
+			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] === '2017') continue;
 			if (reduxSettingsJSON[currentKey]) {
 				mergedOptions += Object.values(allStyles)[i];
 			}
