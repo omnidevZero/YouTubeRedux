@@ -554,6 +554,7 @@ function moveTopLevelItems() {
 		for (let i = 0; i < topLevelElements.length; i++) {
 			infoDiv.prepend(topLevelElements[i]);
 			topLevelElements[i].classList.add('redux-moved-info');
+			topLevelElements[i].setAttribute('redux-url-check', window.location.search);
 			topLevelElements[i].style.display = 'inline-block';
 		}
             
@@ -590,6 +591,7 @@ function moveTopLevelItems() {
 		for (let i = topLevelElements.length-1; i >= 0; i--) {
 			infoContents.insertBefore(topLevelElements[i], existingMovedItem);
 			topLevelElements[i].classList.add('redux-moved-info');
+			topLevelElements[i].setAttribute('redux-url-check', window.location.search);
 			topLevelElements[i].style.display = 'inline-block';
 		}
 	}
@@ -765,7 +767,9 @@ function start() {
 				});
 			}
 			clearStoredIntervals();
-			if (!!document.querySelector('.redux-moved-info') && window.location.href.includes('/watch?')) {
+			if (!!document.querySelector('.redux-moved-info') 
+			&& window.location.href.includes('/watch?')
+			&& document.querySelector('.redux-moved-info').getAttribute('redux-url-check') != window.location.search) {
 				clearMovedInfo(); //contains an interval
 			}
 			main();
