@@ -770,7 +770,7 @@ function addCustomStyles() {
 		let mergedOptions = '';
 		for (let i = 0; i < Object.keys(allStyles).length; i++) {
 			const currentKey = Object.keys(allStyles)[i];
-			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] === '2017') continue;
+			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] == '2017') continue;
 			if (reduxSettingsJSON[currentKey]) {
 				mergedOptions += Object.values(allStyles)[i];
 			}
