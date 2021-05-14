@@ -753,6 +753,11 @@ function addCustomStyles() {
 			border-top-right-radius: 0px !important;
 			border-bottom-right-radius: 0px !important;
 		}
+		`,
+		blackBars: `
+		.html5-video-container video {
+			background-color: black;
+		}
 		`
 	};
 

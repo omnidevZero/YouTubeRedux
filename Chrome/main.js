@@ -87,13 +87,6 @@ function alignItems() {
                 max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
             }
             `;
-		if (reduxSettingsJSON.blackBars) {
-			calcInner += `
-                .html5-video-container video {
-                    background-color: black;
-                }
-                `;
-		}
 		if (reduxAlignElement == null) {
 			let customStyle = document.createElement("style");
 			customStyle.id = 'redux-style-align';
@@ -237,7 +230,20 @@ function recalculateVideoSize() {
 			let progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
 			let leftEdgeDistancePlayer = document.querySelector('#player-container').getBoundingClientRect().x;
 			let leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner > #info').getBoundingClientRect().x;
-			if (progressBar != null && (leftEdgeDistancePlayer > leftEdgeDistanceInfo+10 || progressBar.offsetWidth+12 >= playerSize.width) && !isTheater() && !isFullscreen()) { //TODO more precise condition
+			let videoElement = document.querySelector('video');
+			let widthCtrlElement = document.querySelector('#columns > #primary > #primary-inner > #info');
+
+			if ((widthCtrlElement.offsetWidth) < (playerSize.width-1)) { //condition for starting page in small window
+				let specialWidth = document.querySelector('video').offsetWidth;
+				let specialHeight = document.querySelector('video').offsetHeight;
+				insertRecalcScript(specialWidth, specialHeight);
+			}
+
+			if (progressBar != null && (leftEdgeDistancePlayer > leftEdgeDistanceInfo+10 
+				//|| (progressBar.offsetWidth+24) <= playerSize.width*0.95 
+				//|| (progressBar.offsetWidth+24) >= playerSize.width*1.05
+				|| (progressBar.offsetWidth+24) <= videoElement.offsetWidth*0.95 
+				|| (progressBar.offsetWidth+24) >= videoElement.offsetWidth*1.05) && !isTheater() && !isFullscreen()) { //TODO more precise condition
 				insertRecalcScript();
 				if (checkingTimeout != undefined) {
 					clearTimeout(checkingTimeout);
@@ -247,7 +253,7 @@ function recalculateVideoSize() {
 				if (checkingTimeout == undefined) {
 					checkingTimeout = setTimeout(() => {
 						clearInterval(checkingVideo);
-					}, 5000);
+					}, 2500);
 				}
 			}
 		}, 10);

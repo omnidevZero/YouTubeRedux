@@ -133,7 +133,7 @@ function addCustomStyles() {
 		ytd-topbar-logo-renderer > #logo,
 		#start > #masthead-logo,
 		#masthead > #masthead-logo {
-			content: url('${browser.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo.svg`)}') !important;
+			content: url('${browser.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo.${logoExtension}`)}') !important;
 			width: 72px !important;
 			height: auto !important;
 		}
@@ -143,7 +143,7 @@ function addCustomStyles() {
 		html[dark] ytd-topbar-logo-renderer > #logo,
 		html[dark] #start > #masthead-logo,
 		html[dark] #masthead > #masthead-logo {
-			content: url('${browser.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo-dark.svg`)}') !important;
+			content: url('${browser.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
 			width: 72px !important;
 			height: auto !important;
 		}
@@ -752,6 +752,11 @@ function addCustomStyles() {
 		#reduxSubDiv tp-yt-paper-button {
 			border-top-right-radius: 0px !important;
 			border-bottom-right-radius: 0px !important;
+		}
+		`,
+		blackBars: `
+		.html5-video-container video {
+			background-color: black;
 		}
 		`
 	};
