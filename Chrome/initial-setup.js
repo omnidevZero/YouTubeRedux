@@ -1,7 +1,7 @@
 let reduxSettingsJSON;
 let playerSize = {};
 let aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-const defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true, "smallPlayer": true, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogoChoice": 2017, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false, "playlistsFirst": true, "sortFoundPlaylists": true, "customTitleFont": false, "titleFontValue": "Arial", "hideVoiceSearch": false}';
+const defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true, "smallPlayer": true, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogoChoice": 2017, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false, "playlistsFirst": true, "sortFoundPlaylists": true, "customTitleFont": false, "titleFontValue": "Arial", "hideVoiceSearch": false, "subBorder": true}';
 
 getSettings();
 let logoExtension = reduxSettingsJSON.classicLogoChoice === 'XL' ? 'png' : 'svg';
@@ -729,6 +729,29 @@ function addCustomStyles() {
 		hideVoiceSearch: `
 		#voice-search-button {
 			display: none !important;
+		}
+		`,
+		subBorder: `
+		#reduxSubDiv > yt-formatted-string {
+			border-left: 0px !important;
+			border-radius: 0 2px 2px 0;
+			padding-left: 7px;
+			padding-right: 7px;
+			padding-bottom: 1px;
+			padding-top: 3px !important;
+			margin-left: 0px !important;
+		}
+		#reduxSubDiv > yt-formatted-string {
+			border: 1px solid #ccc;
+			background-color: #fafafa;
+		}
+		html[dark] #reduxSubDiv > yt-formatted-string {
+			border: 1px solid var(--yt-spec-10-percent-layer);
+			background: none;
+		}
+		#reduxSubDiv tp-yt-paper-button {
+			border-top-right-radius: 0px !important;
+			border-bottom-right-radius: 0px !important;
 		}
 		`
 	};

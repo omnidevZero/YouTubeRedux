@@ -467,8 +467,8 @@ function rearrangeInfo() {
             margin-left: 0 !important;
         }
         #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
-            padding-top: 4px !important;
-            margin-left: 4px !important;
+            padding-top: 4px;
+            margin-left: 4px;
         }
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, 
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button, 
