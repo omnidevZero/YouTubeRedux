@@ -286,12 +286,14 @@ function addCustomStyles() {
 			border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
 		}
 		@media (max-width: 2000px) {
-			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer {
+			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer,
+			#page-manager ytd-browse[page-subtype="subscriptions"] ytd-two-column-browse-results-renderer {
 				max-width: 1356.81px !important;  
 			}
 		}
 		@media (min-width: 2001px) {
-			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer {
+			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer,
+			#page-manager ytd-browse[page-subtype="subscriptions"] ytd-two-column-browse-results-renderer {
 			  max-width: 2713.62px !important;
 			} 
 		}
@@ -320,12 +322,15 @@ function addCustomStyles() {
 		[page-subtype="subscriptions"] ytd-item-section-renderer:first-child .grid-subheader.ytd-shelf-renderer {
 			margin-top: 0px !important;
 		}
-		ytd-two-column-browse-results-renderer ytd-thumbnail.ytd-grid-video-renderer, 
-		ytd-two-column-browse-results-renderer ytd-grid-video-renderer {
+		ytd-two-column-browse-results-renderer:not([page-subtype="subscriptions"]) ytd-thumbnail.ytd-grid-video-renderer, 
+		ytd-two-column-browse-results-renderer:not([page-subtype="subscriptions"]) ytd-grid-video-renderer {
 			width: 10.83vw !important;
 		}
 		#contents.ytd-section-list-renderer {
 			padding-left: 10px !important;
+		}
+		[page-subtype="subscriptions"] #contents.ytd-section-list-renderer {
+			margin-right: -16px !important;
 		}
 		[page-subtype="home"] #contents.ytd-rich-grid-renderer,
 		[page-subtype="subscriptions"] #contents.ytd-section-list-renderer,
