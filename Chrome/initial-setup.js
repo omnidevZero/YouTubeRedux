@@ -746,11 +746,20 @@ function addCustomStyles() {
 			padding-top: 3px !important;
 			margin-left: 0px !important;
 		}
-		#reduxSubDiv > yt-formatted-string {
+		#reduxSubDiv > yt-formatted-string,
+		#reduxSubDiv #notification-preference-button {
 			border: 1px solid #ccc;
 			background-color: #fafafa;
 		}
-		html[dark] #reduxSubDiv > yt-formatted-string {
+		#reduxSubDiv #notification-preference-button {
+			border-right: none;
+			border-left: none;
+		}
+		#reduxSubDiv #notification-preference-button yt-icon-button {
+			margin-right: -7px !important;
+		}
+		html[dark] #reduxSubDiv > yt-formatted-string,
+		html[dark] #reduxSubDiv #notification-preference-button {
 			border: 1px solid var(--yt-spec-10-percent-layer);
 			background: none;
 		}
@@ -773,6 +782,15 @@ function addCustomStyles() {
 			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] == '2017') continue;
 			if (reduxSettingsJSON[currentKey]) {
 				mergedOptions += Object.values(allStyles)[i];
+			}
+			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] == '2005alt') {
+				mergedOptions += `ytd-masthead #logo-icon-container, 
+				#contentContainer #logo-icon-container, 
+				ytd-topbar-logo-renderer > #logo,
+				#start > #masthead-logo, 
+				#masthead > #masthead-logo { 
+					height: 40px !important; 
+				}`;
 			}
 		}
 		return mergedOptions;

@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "Replicate old YouTube look and features within the modern layout!",
     "permissions": ["activeTab"],
     "browser_action": {
@@ -35,6 +35,8 @@
     "web_accessible_resources": [
       "images/2005logo.svg",
       "images/2005logo-dark.svg",
+      "images/2005altlogo.svg",
+      "images/2005altlogo-dark.svg",
       "images/2011logo.svg",
       "images/2011logo-dark.svg",
       "images/2015logo.svg",
