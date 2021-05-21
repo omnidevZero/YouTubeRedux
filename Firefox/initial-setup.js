@@ -42,7 +42,6 @@ const defaultSettings = {
 
 initiate();
 
-
 function initiate() {
 	browser.storage.sync.get(['reduxSettings'], function(result) {
 		if (Object.keys(result).length == 0) {
