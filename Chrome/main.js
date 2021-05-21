@@ -104,8 +104,8 @@ function alignItems() {
 }
 
 function changeLikesCounter() {
-	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-	let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+	let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
 	let observerConfig = {
 		attributes: true
 	};
@@ -120,8 +120,8 @@ function changeLikesCounter() {
 		observerLikes.disconnect();
 		observerDislikes.disconnect();
 
-		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+		let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
 		let rawLikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
 		let rawLikes = rawLikesElement.innerText.split("/")[0];
 		let rawDislikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
@@ -438,7 +438,7 @@ function rearrangeInfo() {
 	style.id = 'redux-style-rearrange';
 	let innerStyle = `
         /*VID REARRANGE STYLES*/
-        .ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer {
+        .ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer {
             display:none;
         }
         #reduxSubDiv {
@@ -527,7 +527,7 @@ function rearrangeInfo() {
         ytd-expander[collapsed] > #content.ytd-expander {
             max-height: max(var(--ytd-expander-collapsed-height), 65px) !important;
         }
-        #top-level-buttons > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
+        #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
             height: 20px !important;
             width: 20px !important;
         }
@@ -538,7 +538,7 @@ function rearrangeInfo() {
 }
 
 function moveTopLevelItems() {
-	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer');
+	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
@@ -560,7 +560,7 @@ function moveTopLevelItems() {
 		}
             
 		if (reduxSettings.altVideoLayoutExtra) {
-			let remainingTopLevel = document.querySelector('#info #top-level-buttons');
+			let remainingTopLevel = document.querySelector('#info #top-level-buttons-computed');
 			let likesValues = [
 				document.querySelectorAll('ytd-toggle-button-renderer #text.ytd-toggle-button-renderer')[0].getAttribute('aria-label'),
 				document.querySelectorAll('ytd-toggle-button-renderer #text.ytd-toggle-button-renderer')[1].getAttribute('aria-label')
@@ -601,7 +601,7 @@ function moveTopLevelItems() {
 function clearMovedInfo() {
 	let moveInfo = document.querySelectorAll('.redux-moved-info');
 	moveInfo.forEach(element => element.remove());
-	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
+	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
 }
 
 function clearStoredIntervals() {
@@ -749,7 +749,7 @@ function main() {
 		}
 	}
 	if (!reduxSettings.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged) {
-		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
+		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
 	}
 	if (reduxSettings.smallPlayer && window.location.href.includes('/watch?')) {
 		waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);
@@ -759,7 +759,7 @@ function main() {
 		waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, startObservingComments); // additional element in selector for videos with disabled comments
 	}
 	if (reduxSettings.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked) {
-		waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
+		waitForElement('#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
 	if (window.location.href.includes('/feed/trending') || window.location.href.includes('/feed/explore')) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);
