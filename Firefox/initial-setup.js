@@ -1,39 +1,77 @@
-let reduxSettingsJSON;
+let reduxSettings;
 let playerSize = {};
 let aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
-const defaultSettings = '{"gridItems": 6, "hideAutoplayButton": false, "hideCastButton": false,"darkPlaylist": true, "smallPlayer": true, "smallPlayerWidth": 853, "showRawValues": true, "classicLikesColors": false, "autoConfirm": true, "disableInfiniteScrolling": false, "blackBars": false, "rearrangeInfo": false, "classicLogoChoice": 2017, "filterMain": false, "filterVideo": false, "filterMini": false, "extraLayout": true, "darkerRed": false, "trueFullscreen": false, "favicon": 3, "channelListView": false, "searchAlignLeft": true, "squareAvatar": true, "hideHomeAvatars": false, "noHomeScaling": false, "squareSearch": false, "extraSidebarStyles": true, "altVideoLayout": false, "altVideoLayoutExtra": false, "playlistsFirst": true, "sortFoundPlaylists": true, "customTitleFont": false, "titleFontValue": "Arial", "hideVoiceSearch": false, "subBorder": true}';
+let logoExtension;
+const defaultSettings = {
+	"gridItems": 6, 
+	"hideAutoplayButton": false, 
+	"hideCastButton": false,
+	"darkPlaylist": true, 
+	"smallPlayer": true, 
+	"smallPlayerWidth": 853, 
+	"showRawValues": true, 
+	"classicLikesColors": false, 
+	"autoConfirm": true, 
+	"disableInfiniteScrolling": false, 
+	"blackBars": false, 
+	"rearrangeInfo": false, 
+	"classicLogoChoice": 2017, 
+	"filterMain": false, 
+	"filterVideo": false, 
+	"filterMini": false, 
+	"extraLayout": true, 
+	"darkerRed": false, 
+	"trueFullscreen": false, 
+	"favicon": 3, 
+	"channelListView": false, 
+	"searchAlignLeft": true, 
+	"squareAvatar": true, 
+	"hideHomeAvatars": false, 
+	"noHomeScaling": false, 
+	"squareSearch": false, 
+	"extraSidebarStyles": true, 
+	"altVideoLayout": false, 
+	"altVideoLayoutExtra": false, 
+	"playlistsFirst": true, 
+	"sortFoundPlaylists": true, 
+	"customTitleFont": false, 
+	"titleFontValue": "Arial", 
+	"hideVoiceSearch": false, 
+	"subBorder": true
+};
 
-getSettings();
-let logoExtension = reduxSettingsJSON.classicLogoChoice === 'XL' ? 'png' : 'svg';
-addCustomStyles();
+initiate();
 
-function getSettings() {
-	if (localStorage.getItem("reduxSettings") === null) {
-		localStorage.setItem("reduxSettings", defaultSettings);
-		reduxSettingsJSON = JSON.parse(defaultSettings);
-	} else {
-		reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
-		const defParsed = JSON.parse(defaultSettings);
 
-		//check which default settings are missing (e.g. due to updates) and add them
-		for (let i in defParsed) { //loop through default settings
-			let settingFound = false;
-			for (let j in reduxSettingsJSON) { //loop through current settings
-				if (i == j) {
-					settingFound = true;
-					break;
+function initiate() {
+	browser.storage.sync.get(['reduxSettings'], function(result) {
+		if (Object.keys(result).length == 0) {
+			browser.storage.sync.set({reduxSettings: defaultSettings});
+			reduxSettings = defaultSettings;
+		} else {
+			//check which default settings are missing (e.g. due to updates) and add them
+			for (let i in defaultSettings) { //loop through default settings
+				let settingFound = false;
+				for (let j in result.reduxSettings) { //loop through current settings
+					if (i == j) {
+						settingFound = true;
+						break;
+					}
+				}
+				if (!settingFound) {
+					console.log('Missing setting ' + i + ' was added.');
+					result.reduxSettings[i] = defaultSettings[i];
+					browser.storage.sync.set({reduxSettings: result.reduxSettings});
 				}
 			}
-			if (!settingFound) {
-				console.log('Missing setting ' + i + ' was added.');
-				reduxSettingsJSON[i] = defParsed[i];
-				localStorage.setItem("reduxSettings", JSON.stringify(reduxSettingsJSON));
-			}
+			reduxSettings = result.reduxSettings; //reassign in case missing settings were added
+			playerSize.width = reduxSettings.smallPlayerWidth == undefined ? 853 : reduxSettings.smallPlayerWidth;
+			playerSize.height = Math.ceil(playerSize.width / aspectRatio);
 		}
-		reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings")); //reassign in case missing settings were added
-		playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
-		playerSize.height = Math.ceil(playerSize.width / aspectRatio);
-	}
+
+		logoExtension = reduxSettings.classicLogoChoice === 'XL' ? 'png' : 'svg';
+		addCustomStyles();
+	});
 }
 
 function addCustomStyles() {
@@ -133,9 +171,10 @@ function addCustomStyles() {
 		ytd-topbar-logo-renderer > #logo,
 		#start > #masthead-logo,
 		#masthead > #masthead-logo {
-			content: url('${browser.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo.${logoExtension}`)}') !important;
+			content: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
 			width: 72px !important;
 			height: auto !important;
+			padding: 18px 14px 18px 16px !important;
 		}
 		ytd-masthead[dark] #logo-icon-container, 
 		html[dark] #contentContainer #logo-icon-container, 
@@ -143,9 +182,10 @@ function addCustomStyles() {
 		html[dark] ytd-topbar-logo-renderer > #logo,
 		html[dark] #start > #masthead-logo,
 		html[dark] #masthead > #masthead-logo {
-			content: url('${browser.extension.getURL(`/images/${reduxSettingsJSON.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
+			content: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
 			width: 72px !important;
 			height: auto !important;
+			padding: 18px 14px 18px 16px !important;
 		}
 		`,
 		classicLikesColors: `
@@ -728,7 +768,7 @@ function addCustomStyles() {
 		`,
 		customTitleFont: `
 		.title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
-			font-family: "${reduxSettingsJSON.titleFontValue}" !important;
+			font-family: "${reduxSettings.titleFontValue}" !important;
 		}
 		`,
 		hideVoiceSearch: `
@@ -752,8 +792,8 @@ function addCustomStyles() {
 			background-color: #fafafa;
 		}
 		#reduxSubDiv #notification-preference-button {
-			border-right: none;
-			border-left: none;
+			border-right: none !important;
+			border-left: none !important;
 		}
 		#reduxSubDiv #notification-preference-button yt-icon-button {
 			margin-right: -7px !important;
@@ -767,6 +807,12 @@ function addCustomStyles() {
 			border-top-right-radius: 0px !important;
 			border-bottom-right-radius: 0px !important;
 		}
+		#reduxSubDiv tp-yt-paper-button[subscribed] {
+			border: 1px solid #ccc;
+		}
+		html[dark] #reduxSubDiv tp-yt-paper-button[subscribed] {
+			border: none;
+		}
 		`,
 		blackBars: `
 		.html5-video-container video {
@@ -779,11 +825,11 @@ function addCustomStyles() {
 		let mergedOptions = '';
 		for (let i = 0; i < Object.keys(allStyles).length; i++) {
 			const currentKey = Object.keys(allStyles)[i];
-			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] == '2017') continue;
-			if (reduxSettingsJSON[currentKey]) {
+			if (currentKey === 'classicLogoChoice' && reduxSettings[currentKey] == '2017') continue;
+			if (reduxSettings[currentKey]) {
 				mergedOptions += Object.values(allStyles)[i];
 			}
-			if (currentKey === 'classicLogoChoice' && reduxSettingsJSON[currentKey] == '2005alt') {
+			if (currentKey === 'classicLogoChoice' && reduxSettings[currentKey] == '2005alt') {
 				mergedOptions += `ytd-masthead #logo-icon-container, 
 				#contentContainer #logo-icon-container, 
 				ytd-topbar-logo-renderer > #logo,
@@ -801,10 +847,10 @@ function addCustomStyles() {
 	customStyle.appendChild(document.createTextNode(customStyleInner));
 	document.documentElement.append(customStyle);
 
-	if (reduxSettingsJSON.favicon != "3") changeFavicon();
+	if (reduxSettings.favicon != "3") changeFavicon();
 
 	function changeFavicon() {
-		switch (reduxSettingsJSON.favicon) {
+		switch (reduxSettings.favicon) {
 		case "1":
 			if (document.querySelector('link[rel="shortcut icon"]') == null) {
 				setTimeout(changeFavicon, 250);

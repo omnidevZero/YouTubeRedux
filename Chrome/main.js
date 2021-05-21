@@ -1,5 +1,4 @@
 'use strict';
-reduxSettingsJSON = JSON.parse(localStorage.getItem("reduxSettings"));
 let flags = {
 	"likesChanged":false,
 	"stylesChanged":false,
@@ -13,7 +12,7 @@ let YTReduxURLSearch;
 let confirmInterval; 
 aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
 playerSize = {};
-playerSize.width = reduxSettingsJSON.smallPlayerWidth == undefined ? 853 : reduxSettingsJSON.smallPlayerWidth;
+playerSize.width = reduxSettings.smallPlayerWidth == undefined ? 853 : reduxSettings.smallPlayerWidth;
 playerSize.height = Math.ceil(playerSize.width / aspectRatio);
 let observerComments;
 let observerRelated;
@@ -22,10 +21,12 @@ let isCheckingRecalc = false;
 
 function confirmIt() {
 	let confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
-	let buttonStatus = document.querySelector('paper-dialog[aria-hidden="true"]') || document.querySelector('ytd-popup-container > tp-yt-paper-dialog[aria-hidden="true"]');
-	let popupElement = document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > yt-button-renderer');
+	let buttonParent = confirmButton.closest('tp-yt-paper-dialog');
+	let buttonParentVisible = buttonParent.style.display !== 'none';
+	let buttonVisible = document.querySelector('ytd-popup-container tp-yt-paper-dialog:not([aria-hidden="true"])');
+	let popupElement = document.querySelector('ytd-popup-container yt-confirm-dialog-renderer > #main > div.buttons > yt-button-renderer');
 	let popupTypeCheck = popupElement == null ? false : popupElement.hasAttribute('hidden');
-	if (confirmButton != null && !buttonStatus && popupTypeCheck) {
+	if (confirmButton != null && !!buttonVisible && popupTypeCheck && buttonParentVisible) {
 		confirmButton.click();
 		document.querySelector('video').play();
 		//console.log('Clicked at: ' + new Date());
@@ -42,12 +43,12 @@ function changeGridWidth() {
 			for (let i = 0; i < currentStyleArray.length-1; i++) { //split, replace and join settings on the fly
 				if (currentStyleArray[i].includes('--ytd-rich-grid-items-per-row')) {
 					let splitElement = currentStyleArray[i].split(":");
-					splitElement[1] = reduxSettingsJSON.gridItems + " !important"; //to override different important from css
+					splitElement[1] = reduxSettings.gridItems + " !important"; //to override different important from css
 					currentStyleArray[i] = splitElement.join(":");  
 				}
 			}
 			styleItem.style.cssText = currentStyleArray.join(";");
-			if (currentStyle != "" && currentStyle.includes('--ytd-rich-grid-items-per-row:' + reduxSettingsJSON.gridItems)) {clearInterval(retry);}
+			if (currentStyle != "" && currentStyle.includes('--ytd-rich-grid-items-per-row:' + reduxSettings.gridItems)) {clearInterval(retry);}
 		},100);
 	}
 }
@@ -420,12 +421,12 @@ function rearrangeInfo() {
 	reduxSubDiv.prepend(subscribeButton);
 	uploadInfo.prepend(channelName);
 
-	if (reduxSettingsJSON.altVideoLayout) {
+	if (reduxSettings.altVideoLayout) {
 		let reduxHeader = document.createElement('div');
 		reduxHeader.id = 'redux-video-header';
 		primaryElement.prepend(reduxHeader);
 
-		if (!reduxSettingsJSON.extraLayout) {
+		if (!reduxSettings.extraLayout) {
 			reduxHeader.style = 'background-color: transparent; box-shadow: none !important;';
 		}
 
@@ -544,7 +545,7 @@ function moveTopLevelItems() {
 	let existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
         document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
 
-	if (reduxSettingsJSON.altVideoLayout) {
+	if (reduxSettings.altVideoLayout) {
 		document.querySelector('ytd-video-primary-info-renderer').style = 'padding-left: 15px !important; padding-top: 15px !important';
 		if (miscButton != null) {
 			infoDiv.prepend(miscButton);
@@ -558,7 +559,7 @@ function moveTopLevelItems() {
 			topLevelElements[i].style.display = 'inline-block';
 		}
             
-		if (reduxSettingsJSON.altVideoLayoutExtra) {
+		if (reduxSettings.altVideoLayoutExtra) {
 			let remainingTopLevel = document.querySelector('#info #top-level-buttons');
 			let likesValues = [
 				document.querySelectorAll('ytd-toggle-button-renderer #text.ytd-toggle-button-renderer')[0].getAttribute('aria-label'),
@@ -701,7 +702,7 @@ function sortPlaylists() {
 			}
 		}
             
-		if (reduxSettingsJSON.sortFoundPlaylists) {
+		if (reduxSettings.sortFoundPlaylists) {
 			setTimeout(() => {
 				let observerConfig = {
 					childList: true
@@ -714,34 +715,64 @@ function sortPlaylists() {
 	}, baseTimeout);
 }
 
+function changeChannelPage() {
+	let channelHeader = document.querySelector('#wrapper.tp-yt-app-header-layout > [slot=header]');
+	let contentElement = document.querySelector('[page-subtype="channels"] #contents.ytd-section-list-renderer');
+	let channelContainer = document.querySelector('[page-subtype="channels"] #channel-container');
+
+
+	function modify() {
+		channelContainer.style.marginTop = '-56px';
+		channelHeader.style.left = contentElement.getBoundingClientRect().left -1 + 'px';
+		channelHeader.style.right = innerWidth - contentElement.getBoundingClientRect().right -9 + 'px';
+	}
+
+	function correct() {
+		if (channelHeader.getBoundingClientRect().left != (contentElement.getBoundingClientRect().left - 1)) {
+			console.log('not even');
+			modify();
+		}
+	}
+
+	modify();
+	//window.dispatchEvent(new Event('resize'));
+	window.addEventListener('resize', () => {
+		modify();
+	});
+	setTimeout(correct, 500);
+}
+
 function main() {
-	if (reduxSettingsJSON.autoConfirm) {
+	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
 			confirmInterval = setInterval(confirmIt, 500);
 		}
 	}
-	if (!reduxSettingsJSON.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged) {
+	if (!reduxSettings.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged) {
 		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
 	}
-	if (reduxSettingsJSON.smallPlayer && window.location.href.includes('/watch?')) {
+	if (reduxSettings.smallPlayer && window.location.href.includes('/watch?')) {
 		waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);
 		waitForElement('#redux-recalc', 10, alignItems);
 	}
-	if (reduxSettingsJSON.disableInfiniteScrolling && window.location.href.includes('/watch?')) {
+	if (reduxSettings.disableInfiniteScrolling && window.location.href.includes('/watch?')) {
 		waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, startObservingComments); // additional element in selector for videos with disabled comments
 	}
-	if (reduxSettingsJSON.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked) {
+	if (reduxSettings.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked) {
 		waitForElement('#top-level-buttons > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
 	if (window.location.href.includes('/feed/trending') || window.location.href.includes('/feed/explore')) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);
 	}
-	if (reduxSettingsJSON.trueFullscreen && window.location.href.includes('/watch?') && !flags.trueFullscreenListenersAdded) {
+	if (reduxSettings.trueFullscreen && window.location.href.includes('/watch?') && !flags.trueFullscreenListenersAdded) {
 		preventScrolling();
 	}
-	if (reduxSettingsJSON.playlistsFirst && window.location.pathname === '/') {
+	if (reduxSettings.playlistsFirst && window.location.pathname === '/') {
 		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-thumbnail-overlay-bottom-panel-renderer', 10, sortPlaylists);
 	}
+	// if (true && (window.location.pathname.includes('/channel/') || window.location.pathname.includes('/user/') || window.location.pathname.includes('/c/'))) {
+	// 	waitForElement('[page-subtype="channels"] #contents.ytd-section-list-renderer', 10, changeChannelPage);
+	// }
 	changeGridWidth();
 }
 
@@ -754,7 +785,7 @@ function start() {
 			YTReduxURLPath = location.pathname;
 			YTReduxURLSearch = location.search;
 			flags.likesChanged = false;
-			if (reduxSettingsJSON.disableInfiniteScrolling) {
+			if (reduxSettings.disableInfiniteScrolling) {
 				if (observerComments != undefined) {
 					observerComments.disconnect();
 				}

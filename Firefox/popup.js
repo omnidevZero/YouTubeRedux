@@ -139,12 +139,7 @@ function saveSettings() {
 		}
 	}
   
-	browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
-		let storageSettings = JSON.stringify(newSettings);
-		browser.tabs.executeScript(
-			tabs[0].id,
-			{code: `localStorage.setItem("reduxSettings", ${JSON.stringify(storageSettings)})`});
-	});
+	browser.storage.sync.set({reduxSettings: newSettings});
 }
 
 function changeGridWidth(numberOfItems) {
@@ -209,17 +204,10 @@ function calculateSizeOptions() {
 }
 
 //main
-browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
-	let key = "reduxSettings";
-	browser.tabs.executeScript(
-		tabs[0].id,
-		{
-			code:`localStorage["${key}"];`
-		}, function(result) {
-			if (result == null || result == undefined) {return;}
-			currentSettings = JSON.parse(result[0]);
-			calculateSizeOptions();
-			getSettings();
-		}
-	);
+browser.storage.sync.get(['reduxSettings'], function(result) {
+	if (result) {
+		currentSettings = result.reduxSettings;
+		calculateSizeOptions();
+		getSettings();
+	}
 });
