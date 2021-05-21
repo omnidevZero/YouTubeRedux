@@ -22,7 +22,6 @@ for (let i = 0; i < settingsElements.length; i++) {
 	settingsElements[i].addEventListener('change', function() {
 		if (this.parentElement.nextElementSibling != null && this.parentElement.nextElementSibling.classList.contains('subsettings-container')) {
 			let subsettings = this.parentElement.nextElementSibling.querySelectorAll('.subsetting input[type="checkbox"]');
-			console.log(subsettings);
 			if (this.checked) {
 				subsettings.forEach(element => {
 					element.removeAttribute('disabled');
