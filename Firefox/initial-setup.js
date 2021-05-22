@@ -1,3 +1,14 @@
+let minVersion = 53;
+let storage;
+if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
+	if (parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]) >= minVersion) {
+		storage = browser.storage.sync;
+	} else {
+		storage = browser.storage.local;
+	}
+} else {
+	storage = browser.storage.local;
+}
 let reduxSettings;
 let playerSize = {};
 let aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
@@ -43,9 +54,9 @@ const defaultSettings = {
 initiate();
 
 function initiate() {
-	browser.storage.sync.get(['reduxSettings'], function(result) {
+	storage.get(['reduxSettings'], function(result) {
 		if (Object.keys(result).length == 0) {
-			browser.storage.sync.set({reduxSettings: defaultSettings});
+			storage.set({reduxSettings: defaultSettings});
 			reduxSettings = defaultSettings;
 		} else {
 			//check which default settings are missing (e.g. due to updates) and add them
@@ -60,7 +71,7 @@ function initiate() {
 				if (!settingFound) {
 					console.log('Missing setting ' + i + ' was added.');
 					result.reduxSettings[i] = defaultSettings[i];
-					browser.storage.sync.set({reduxSettings: result.reduxSettings});
+					storage.set({reduxSettings: result.reduxSettings});
 				}
 			}
 			reduxSettings = result.reduxSettings; //reassign in case missing settings were added

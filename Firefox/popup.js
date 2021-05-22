@@ -1,3 +1,14 @@
+let minVersion = 53;
+let storage;
+if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
+	if (parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]) >= minVersion) {
+		storage = browser.storage.sync;
+	} else {
+		storage = browser.storage.local;
+	}
+} else {
+	storage = browser.storage.local;
+}
 let donateButton = document.querySelector('#donate');
 let globalURL;
 let currentSettings;
@@ -138,7 +149,7 @@ function saveSettings() {
 		}
 	}
   
-	browser.storage.sync.set({reduxSettings: newSettings});
+	storage.set({reduxSettings: newSettings});
 }
 
 function changeGridWidth(numberOfItems) {
@@ -203,7 +214,7 @@ function calculateSizeOptions() {
 }
 
 //main
-browser.storage.sync.get(['reduxSettings'], function(result) {
+storage.get(['reduxSettings'], function(result) {
 	if (result) {
 		currentSettings = result.reduxSettings;
 		calculateSizeOptions();
