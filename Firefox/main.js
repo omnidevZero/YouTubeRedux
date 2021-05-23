@@ -21,6 +21,7 @@ let isCheckingRecalc = false;
 
 function confirmIt() {
 	let confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
+	if (!confirmButton) return;
 	let buttonParent = confirmButton.closest('tp-yt-paper-dialog');
 	let buttonParentVisible = buttonParent.style.display !== 'none';
 	let buttonVisible = document.querySelector('ytd-popup-container tp-yt-paper-dialog:not([aria-hidden="true"])');
@@ -719,6 +720,25 @@ function main() {
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
 			confirmInterval = setInterval(confirmIt, 500);
+			setInterval(() => {
+				let keyboardEvent = document.createEvent('KeyboardEvent');
+				let initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? 'initKeyboardEvent' : 'initKeyEvent';
+
+				keyboardEvent[initMethod](
+					'keydown', // event type: keydown, keyup, keypress
+					true, // bubbles
+					true, // cancelable
+					window, // view: should be window
+					false, // ctrlKey
+					false, // altKey
+					false, // shiftKey
+					false, // metaKey
+					113, // keyCode: unsigned long - the virtual key code, else 0
+					0, // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
+				);
+				document.dispatchEvent(keyboardEvent);
+				console.log('pressed');
+			}, 60000*10);
 		}
 	}
 	if (!reduxSettings.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged) {
