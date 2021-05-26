@@ -33,26 +33,7 @@
       }
     ],
     "web_accessible_resources": [
-      "images/2005logo.svg",
-      "images/2005logo-dark.svg",
-      "images/2005altlogo.svg",
-      "images/2005altlogo-dark.svg",
-      "images/2011logo.svg",
-      "images/2011logo-dark.svg",
-      "images/2015logo.svg",
-      "images/2015logo-dark.svg",
-      "images/2015altlogo.svg",
-      "images/2015altlogo-dark.svg",
-      "images/2017logo.svg",
-      "images/XLlogo.png",
-      "images/XLlogo-dark.png",
-      "images/sub-icon.png",
-      "images/favicon1.ico",
-      "images/favicon2.png",
-      "images/favicon3.ico",
-      "images/verified1.png",
-      "images/verified2.png",
-      "images/plus.svg"
+      "images/*"
     ],
     "manifest_version": 2
   }

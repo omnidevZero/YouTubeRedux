@@ -5,6 +5,10 @@ if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
 		storage = browser.storage.sync;
 	} else {
 		storage = browser.storage.local;
+		let warnings = document.querySelectorAll('.browser-warning');
+		warnings.forEach(element => {
+			element.style.display = 'inline';
+		});
 	}
 } else {
 	storage = browser.storage.local;

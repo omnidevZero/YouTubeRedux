@@ -254,9 +254,47 @@
             min-height: 35px;
             height: auto;
         }
+        .browser-warning {
+            display: none;
+        }
+        .browser-warning-text::before {
+            content: "!";
+            color:red;
+            border: 1px solid grey;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            font-weight: 800;
+            align-items: center;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .browser-warning-text {
+            color: white;
+            position: absolute;
+            border-radius: 4px;
+            max-width: 200px;
+        }
+        .browser-warning-text::after {
+            content: "Current version of your browser is no longer supported. Some features (like changing logo or certain styles) may not work correctly.";
+            font-size: 10px;
+            display: none;
+            padding: 4px;
+            z-index:1;
+            position: absolute;
+            width:200px;
+            border-radius: 4px;
+            background-image: linear-gradient(135deg, rgb(112, 111, 111), black);
+        }
+        .browser-warning:hover > .browser-warning-text::after {
+            display: inline-block;
+        }
       </style>
     </head>
     <body>
+        <div class="browser-warning"><div class="browser-warning-text"></div></div>
         <div id="header">YouTube Redux</div>
         <fieldset style="position:relative;">
             <legend>Settings</legend>
@@ -346,6 +384,7 @@
                                     <label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2005 style="display:inline-block;">2005</label>
                                     <label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2005alt style="display:inline-block;">2005 (alt)</label>
                                     <label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2011 style="display:inline-block;">2011</label>
+                                    <label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2013 style="display:inline-block;">2013</label>
                                     <br>
 									<label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2015 style="display:inline-block;">2015</label>
                                     <label class="logo-label"><input type="radio" name="classicLogoChoice" class="settings" value=2015alt style="display:inline-block;">2015 (alt)</label>

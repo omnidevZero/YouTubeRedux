@@ -172,7 +172,6 @@ function addCustomStyles() {
 		#masthead > #masthead-logo {
 			content: url('${chrome.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
 			width: 72px !important;
-			height: auto !important;
 			padding: 18px 14px 18px 16px !important;
 		}
 		ytd-masthead[dark] #logo-icon-container, 
@@ -183,7 +182,6 @@ function addCustomStyles() {
 		html[dark] #masthead > #masthead-logo {
 			content: url('${chrome.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
 			width: 72px !important;
-			height: auto !important;
 			padding: 18px 14px 18px 16px !important;
 		}
 		`,

@@ -764,7 +764,6 @@ function main() {
 					0, // charCode: unsigned long - the Unicode character associated with the depressed key, else 0
 				);
 				document.dispatchEvent(keyboardEvent);
-				console.log('pressed');
 			}, 60000*10);
 		}
 	}
