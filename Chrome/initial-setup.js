@@ -37,7 +37,8 @@ const defaultSettings = {
 	"customTitleFont": false, 
 	"titleFontValue": "Arial", 
 	"hideVoiceSearch": false, 
-	"subBorder": true
+	"subBorder": true,
+	"classicLikesStyle": true
 };
 
 initiate();
@@ -308,6 +309,39 @@ function addCustomStyles() {
 		}
 		#secondary-inner.ytd-watch-flexy ytd-playlist-panel-renderer:not([hidden="true"]) + #related #items > ytd-compact-video-renderer:first-child {
 			padding-top: 8px !important;
+		}
+		yt-chip-cloud-renderer,
+		#left-arrow-button.yt-chip-cloud-renderer, 
+		#right-arrow-button.yt-chip-cloud-renderer {
+			background-color: white !important;
+		}
+		html[dark] yt-chip-cloud-renderer,
+		html[dark] #left-arrow-button.yt-chip-cloud-renderer, 
+		html[dark] #right-arrow-button.yt-chip-cloud-renderer {
+			background-color: #222222 !important;
+		}
+		#right-arrow.yt-chip-cloud-renderer:before {
+			background: -webkit-gradient(linear, right top, left top, color-stop(10%, white), color-stop(90%, rgba(249, 249, 249, 0)));
+			background: -webkit-linear-gradient(right, white 10%, rgba(249, 249, 249, 0) 90%);
+			background: linear-gradient(to left, white 10%, rgb(249 249 249 / 0%) 90%);
+		}
+		#left-arrow.yt-chip-cloud-renderer:after {
+			background: -webkit-gradient(linear, left top, right top, color-stop(10%, white), color-stop(90%, rgba(249, 249, 249, 0)));
+			background: -webkit-linear-gradient(left, white 10%, rgba(249, 249, 249, 0) 90%);
+			background: linear-gradient(to right, white 10%, rgba(249, 249, 249, 0) 90%);
+		}
+		yt-chip-cloud-renderer[is-dark-theme] #right-arrow.yt-chip-cloud-renderer:before {
+			background: -webkit-gradient(linear, right top, left top, color-stop(10%, #222222), color-stop(90%, rgba(24, 24, 24, 0)));
+    		background: -webkit-linear-gradient(right, #222222 10%, rgba(24, 24, 24, 0) 90%);
+    		background: linear-gradient(to left, #222222 10%, rgba(24, 24, 24, 0) 90%);
+		}
+		yt-chip-cloud-renderer[is-dark-theme] #left-arrow.yt-chip-cloud-renderer:after {
+			background: -webkit-gradient(linear, left top, right top, color-stop(10%, #222222), color-stop(90%, rgba(24, 24, 24, 0)));
+    		background: -webkit-linear-gradient(left, #222222 10%, rgba(24, 24, 24, 0) 90%);
+    		background: linear-gradient(to right, #222222 10%, rgba(24, 24, 24, 0) 90%);
+		}
+		ytd-watch-flexy #info.ytd-watch-flexy {
+			margin-top: 10px;
 		}
 		/*EXTRA LAYOUT 2 - HOME*/
 		app-drawer#guide[position="left"] {
@@ -814,6 +848,51 @@ function addCustomStyles() {
 		blackBars: `
 		.html5-video-container video {
 			background-color: black;
+		}
+		`,
+		classicLikesStyle: `
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button > yt-icon {
+			content: url('${chrome.extension.getURL('/images/like.png')}') !important;
+			filter: contrast(0);
+			height: 17px !important;
+			width: 17px !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button > yt-icon:hover,
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button > yt-icon:hover,
+		ytd-comment-action-buttons-renderer #like-button yt-icon:hover,
+		ytd-comment-action-buttons-renderer #dislike-button yt-icon:hover {
+			filter: contrast(0.25);
+		}
+		ytd-comment-action-buttons-renderer #like-button yt-icon {
+			content: url('${chrome.extension.getURL('/images/like.png')}') !important;
+			filter: contrast(0);
+			height: 17px !important;
+			width: 17px !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
+			content: url('${chrome.extension.getURL('/images/like-pressed.png')}') !important;
+			filter: contrast(1);
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button > yt-icon {
+			content: url('${chrome.extension.getURL('/images/dislike.png')}') !important;
+			filter: contrast(0);
+			height: 17px !important;
+			width: 17px !important;
+		}
+		ytd-comment-action-buttons-renderer #dislike-button yt-icon {
+			content: url('${chrome.extension.getURL('/images/dislike.png')}') !important;
+			filter: contrast(0);
+			height: 17px !important;
+			width: 17px !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
+			content: url('${chrome.extension.getURL('/images/dislike-pressed.png')}') !important;
+			filter: contrast(1);
+		}
+		#vote-count-middle.ytd-comment-action-buttons-renderer {
+			margin-top: 2px;
 		}
 		`
 	};
