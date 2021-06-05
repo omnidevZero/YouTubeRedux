@@ -3,4 +3,4 @@ Browser extension that focuses on replicating old YouTube layout within Polymer 
 ### Chrome
 https://chrome.google.com/webstore/detail/youtube-redux/mdgdgieddpndgjlmeblhjgljejejkikf
 ### Firefox
-https://addons.mozilla.org/pl/firefox/addon/youtube-redux/
+https://addons.mozilla.org/en-US/firefox/addon/youtube-redux/
