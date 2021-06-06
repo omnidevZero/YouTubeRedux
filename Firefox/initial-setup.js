@@ -1,13 +1,11 @@
 let minVersion = 53;
-let storage;
+let browserVersion;
+let storage = browser.storage.local;
 if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
-	if (parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]) >= minVersion) {
+	browserVersion = parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]);
+	if (browserVersion >= minVersion) {
 		storage = browser.storage.sync;
-	} else {
-		storage = browser.storage.local;
 	}
-} else {
-	storage = browser.storage.local;
 }
 let reduxSettings;
 let playerSize = {};
@@ -907,6 +905,48 @@ function addCustomStyles() {
 		`
 	};
 
+	let compatStyles = `
+	#video-title.ytd-rich-grid-media {
+		font-size: 14px !important;
+	}
+	#text-container.ytd-channel-name {
+		font-size: 11px !important;
+	}
+	#metadata-line.ytd-video-meta-block {
+		font-size: 11px !important;
+	}
+	ytd-expander[collapsed] > #content.ytd-expander {
+		max-height: 65px !important;
+	}
+	`;
+	let compatLogo = `
+	ytd-masthead #logo-icon-container, 
+	#contentContainer #logo-icon-container, 
+	ytd-topbar-logo-renderer > #logo #logo-icon,
+	#start > #masthead-logo,
+	#masthead > #masthead-logo {
+		background: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
+		height: 0px !important;
+		width: 0px !important;
+		background-size: contain !important;
+		background-repeat: no-repeat !important;
+		padding: 31px 72px 0px 0px !important;
+	}
+	ytd-masthead[dark] #logo-icon-container, 
+	html[dark] #contentContainer #logo-icon-container, 
+	ytd-masthead[dark] ytd-topbar-logo-renderer > #logo, 
+	html[dark] ytd-topbar-logo-renderer > #logo #logo-icon,
+	html[dark] #start > #masthead-logo,
+	html[dark] #masthead > #masthead-logo {
+		background: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
+		height: 0px !important;
+		width: 0px !important;
+		background-size: contain !important;
+		background-repeat: no-repeat !important;
+		padding: 31px 72px 0px 0px !important;
+	}
+	`;
+
 	function mergeOptions() {
 		let mergedOptions = '';
 		for (let i = 0; i < Object.keys(allStyles).length; i++) {
@@ -923,6 +963,12 @@ function addCustomStyles() {
 				#masthead > #masthead-logo { 
 					height: 40px !important; 
 				}`;
+			}
+			if (browserVersion < 75) {
+				mergedOptions += compatStyles;
+				if (reduxSettings['classicLogoChoice'] != '2017') {
+					mergedOptions += compatLogo;
+				}
 			}
 		}
 		return mergedOptions;
