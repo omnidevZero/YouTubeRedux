@@ -38,7 +38,10 @@ const defaultSettings = {
 	"titleFontValue": "Arial", 
 	"hideVoiceSearch": false, 
 	"subBorder": true,
-	"classicLikesStyle": true
+	"classicLikesStyle": true,
+	"hideApps": false,
+	"classicLikesIconColors": false,
+	"hideJoinButton": false
 };
 
 initiate();
@@ -894,6 +897,42 @@ function addCustomStyles() {
 		#vote-count-middle.ytd-comment-action-buttons-renderer {
 			margin-top: 2px;
 		}
+		`,
+		hideApps: `
+		ytd-masthead #buttons > ytd-topbar-menu-button-renderer:nth-child(2) {
+			display: none !important;
+		}
+		`,
+		classicLikesIconColors: `
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg {
+			fill: rgb(0 136 29) !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:first-child > a yt-formatted-string {
+			color: rgb(0 136 29) !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
+		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon > svg {
+			fill: rgb(222 0 17) !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:last-child > a yt-formatted-string {
+			color: rgb(222 0 17) !important;
+		}
+		`,
+		classicLikesIconColorsExtra: `
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
+			content: url('${chrome.extension.getURL('/images/like-pressed-old.png')}') !important;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
+			content: url('${chrome.extension.getURL('/images/dislike-pressed-old.png')}') !important;
+		}
+		`,
+		hideJoinButton: `
+		#sponsor-button.ytd-video-owner-renderer {
+			display: none !important;
+		}
 		`
 	};
 
@@ -914,6 +953,9 @@ function addCustomStyles() {
 					height: 40px !important; 
 				}`;
 			}
+		}
+		if (reduxSettings.classicLikesStyle && reduxSettings.classicLikesIconColors) {
+			mergedOptions += allStyles.classicLikesIconColorsExtra;
 		}
 		return mergedOptions;
 	}
