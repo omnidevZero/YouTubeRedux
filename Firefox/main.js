@@ -390,7 +390,7 @@ function rearrangeInfo() {
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
         document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
-	let dateElement = document.querySelector('#date > yt-formatted-string');
+	let dateElement = document.querySelector('#info-strings > yt-formatted-string');
 	let dateOuter = document.querySelector('#info-text > #date');
 	let descriptionElement = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content');
 	let views = document.querySelector('#info-text > #count');
@@ -532,6 +532,9 @@ function rearrangeInfo() {
             height: 20px !important;
             width: 20px !important;
         }
+		#info-strings > #dot {
+			display: none !important;
+		}
         `;
 	style.appendChild(document.createTextNode(innerStyle));
 	document.querySelector('head').append(style);
