@@ -9,7 +9,7 @@ donateButton.onclick = function() {
 chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
 	globalURL = tabs[0].url;
 	let fields = document.querySelectorAll('fieldset');
-	if (!globalURL.includes("www.youtube.com")) {
+	if (globalURL && !globalURL.includes("www.youtube.com")) {
 		for (let i = 0; i < fields.length; i++) {
 			document.querySelectorAll('fieldset')[i].setAttribute("disabled", "");
 		}

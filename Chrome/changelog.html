@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+    <meta charset="UTF-8">
+      <style>
+        html {
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            min-width: 565px;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background-image: linear-gradient(-45deg, #748de6a6, transparent);
+            font-size: 12px;
+            overflow-x: hidden;
+        }
+        #youtube-redux-header {
+            text-align: center;
+            font-size:20px;
+            font-weight: bold;
+            text-shadow: 0px 0.25px black;
+            color: red;
+            transform: scale(1.3, 1.3);
+            pointer-events: none;
+        }
+        #main {
+            display:flex;
+            justify-content: center;
+            font-size:20px;
+            font-weight: bold;
+            text-shadow: 0px 0.25px black;
+            color: black;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        #changes {
+            font-size: 18px;
+            font-weight: normal;
+        }
+      </style>
+      <script src="./initial-setup.js"></script>
+    </head>
+    <body>
+        <div id="youtube-redux-header">YouTube Redux has just been updated!</div>
+        <div id="main">
+            <div class="header-main" style="margin-top:20px;">What's new?</div> 
+            <div id="changes">
+                <ul>
+                    <li>this page!</li>
+                    <li>added an option for extra channel page changes (enabled by default)</li>
+                    <li>added an option to use old upload icon</li>
+                    <li>added an option to trim subscribers count (e.g. changes '420k subscribers' to '420k')</li>
+                    <li>added an option to use alternative strings while on the video page (e.g. changes the 'Save' button to 'Add to', adds 'Published on' to the upload date)</li>
+                    <li>fixed search bar alignment option</li>
+                </ul>
+            </div>
+            <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 486px;" frameborder=0 height="100%"></iframe>
+            <div class="header-main" style="margin-top:20px;">You can access these settings via the extension's icon next to the address bar</div> 
+        </div>
+    </body>
+  </html>
