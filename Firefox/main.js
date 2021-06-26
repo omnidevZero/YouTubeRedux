@@ -765,6 +765,12 @@ function main() {
 	if (reduxSettings.playlistsFirst && window.location.pathname === '/') {
 		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-thumbnail-overlay-bottom-panel-renderer', 10, sortPlaylists);
 	}
+	if (reduxSettings.trimSubs && window.location.href.includes('/watch?')) {
+		waitForElement('#reduxSubDiv > #owner-sub-count', 10, trimStrings);
+	}
+	if (reduxSettings.altStrings && window.location.href.includes('/watch?')) {
+		waitForElement('ytd-watch-flexy #info-contents ytd-video-primary-info-renderer > ytd-button-renderer:first-of-type yt-formatted-string', 10, alternativeStrings);
+	}
 	changeGridWidth();
 }
 

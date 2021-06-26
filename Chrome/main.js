@@ -746,6 +746,41 @@ function changeChannelPage() {
 	setTimeout(correct, 500);
 }
 
+function trimStrings() {
+	let subString = document.querySelector('#reduxSubDiv > #owner-sub-count');
+	let checkForSpan = setInterval(() => {
+		let addedSpan = document.querySelector('#reduxSubDiv > #owner-sub-count > span');
+		if (addedSpan) {
+			subString.childNodes.forEach((element) => {
+				if (element.nodeType === 3) {
+					element.remove();
+				}
+			});
+			trimSubs();
+			clearInterval(checkForSpan);
+		}
+	}, 10);
+	intervalsArray.push(checkForSpan);
+	setTimeout(() => {
+		if (checkForSpan) {
+			clearInterval(checkForSpan);
+		}
+	}, 10000);
+	trimSubs();
+
+	function trimSubs() {
+		if (subString.innerText !== subString.getAttribute('redux-sub-check')) {
+			subString.innerText = subString.innerText.replace(/\s+\S*$/, '');
+			subString.setAttribute('redux-sub-check', subString.innerText);
+		}
+	}
+}
+
+function alternativeStrings() {
+	let saveButton = document.querySelector('ytd-watch-flexy #info-contents ytd-video-primary-info-renderer > ytd-button-renderer:first-of-type yt-formatted-string');
+	saveButton.innerText = 'Add to';
+}
+
 function main() {
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
@@ -795,6 +830,12 @@ function main() {
 	// if (true && (window.location.pathname.includes('/channel/') || window.location.pathname.includes('/user/') || window.location.pathname.includes('/c/'))) {
 	// 	waitForElement('[page-subtype="channels"] #contents.ytd-section-list-renderer', 10, changeChannelPage);
 	// }
+	if (reduxSettings.trimSubs && window.location.href.includes('/watch?')) {
+		waitForElement('#reduxSubDiv > #owner-sub-count', 10, trimStrings);
+	}
+	if (reduxSettings.altStrings && window.location.href.includes('/watch?')) {
+		waitForElement('ytd-watch-flexy #info-contents ytd-video-primary-info-renderer > ytd-button-renderer:first-of-type yt-formatted-string', 10, alternativeStrings);
+	}
 	changeGridWidth();
 }
 

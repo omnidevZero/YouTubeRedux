@@ -41,7 +41,9 @@ const defaultSettings = {
 	"classicLikesStyle": true,
 	"hideApps": false,
 	"classicLikesIconColors": false,
-	"hideJoinButton": false
+	"hideJoinButton": false,
+	"trimSubs": false,
+	"altStrings": false
 };
 
 initiate();
@@ -705,6 +707,9 @@ function addCustomStyles() {
 		searchAlignLeft: `
 		#center.ytd-masthead { 
 			margin-right: auto !important;
+		}
+		ytd-searchbox.ytd-masthead {
+			margin: 0 0 0 51px !important;
 		} 
 		`,
 		squareAvatar: `
@@ -932,6 +937,26 @@ function addCustomStyles() {
 		hideJoinButton: `
 		#sponsor-button.ytd-video-owner-renderer {
 			display: none !important;
+		}
+		`,
+		altStrings: `
+		#date > yt-formatted-string::before, 
+		.redux-moved-date::before {
+			content: 'Published on ';
+		}
+		`,
+		altUploadIcon: `
+		ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
+			content: url('${chrome.extension.getURL('/images/old-upload.svg')}') !important;
+			filter: contrast(0.25);
+			height: 20px;
+			width: 17px;
+		}
+		ytd-masthead[dark] ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
+			content: url('${chrome.extension.getURL('/images/old-upload-dark.svg')}') !important;
+			filter: contrast(1);
+			height: 20px;
+			width: 17px;
 		}
 		`
 	};
