@@ -719,33 +719,6 @@ function sortPlaylists() {
 	}, baseTimeout);
 }
 
-function changeChannelPage() {
-	let channelHeader = document.querySelector('#wrapper.tp-yt-app-header-layout > [slot=header]');
-	let contentElement = document.querySelector('[page-subtype="channels"] #contents.ytd-section-list-renderer');
-	let channelContainer = document.querySelector('[page-subtype="channels"] #channel-container');
-
-
-	function modify() {
-		channelContainer.style.marginTop = '-56px';
-		channelHeader.style.left = contentElement.getBoundingClientRect().left -1 + 'px';
-		channelHeader.style.right = innerWidth - contentElement.getBoundingClientRect().right -9 + 'px';
-	}
-
-	function correct() {
-		if (channelHeader.getBoundingClientRect().left != (contentElement.getBoundingClientRect().left - 1)) {
-			console.log('not even');
-			modify();
-		}
-	}
-
-	modify();
-	//window.dispatchEvent(new Event('resize'));
-	window.addEventListener('resize', () => {
-		modify();
-	});
-	setTimeout(correct, 500);
-}
-
 function trimStrings() {
 	let subString = document.querySelector('#reduxSubDiv > #owner-sub-count');
 	let checkForSpan = setInterval(() => {
@@ -827,9 +800,6 @@ function main() {
 	if (reduxSettings.playlistsFirst && window.location.pathname === '/') {
 		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-thumbnail-overlay-bottom-panel-renderer', 10, sortPlaylists);
 	}
-	// if (true && (window.location.pathname.includes('/channel/') || window.location.pathname.includes('/user/') || window.location.pathname.includes('/c/'))) {
-	// 	waitForElement('[page-subtype="channels"] #contents.ytd-section-list-renderer', 10, changeChannelPage);
-	// }
 	if (reduxSettings.trimSubs && window.location.href.includes('/watch?')) {
 		waitForElement('#reduxSubDiv > #owner-sub-count', 10, trimStrings);
 	}

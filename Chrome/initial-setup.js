@@ -43,7 +43,8 @@ const defaultSettings = {
 	"classicLikesIconColors": false,
 	"hideJoinButton": false,
 	"trimSubs": false,
-	"altStrings": false
+	"altStrings": false,
+	"extraChannel": true
 };
 
 initiate();
@@ -957,6 +958,31 @@ function addCustomStyles() {
 			filter: contrast(1);
 			height: 20px;
 			width: 17px;
+		}
+		`,
+		extraChannel: `
+		[page-subtype="channels"] #header.ytd-browse {
+			max-width: var(--ytd-grid-max-width) !important;
+		}
+		ytd-c4-tabbed-header-renderer[has-channel-art][guide-persistent-and-visible] .banner-visible-area.ytd-c4-tabbed-header-renderer {
+			max-height: 212px;
+		}
+		ytd-two-column-browse-results-renderer[page-subtype="channels"] {
+			margin-top: 10px;
+		}
+		[page-subtype="channels"] #channel-header,
+		[page-subtype="channels"] #tabsContainer,
+		[page-subtype="channels"] #tabs-inner-container {
+			background: white !important;
+		}
+		html[dark] [page-subtype="channels"] #channel-header,
+		html[dark] [page-subtype="channels"] #tabsContainer,
+		html[dark] [page-subtype="channels"] #tabs-inner-container {
+			background: #222222 !important;
+		}
+		[page-subtype="channels"] #channel-header-container {
+			padding-left: 10px;
+    		padding-right: 10px;
 		}
 		`
 	};
