@@ -1,7 +1,9 @@
-function handleInstalled() {
+function handleInstalled(reason) {
 	browser.tabs.create({
-		url: "./changelog.html"
+		url: `./changelog.html#${reason}`
 	});
 }
   
-browser.runtime.onInstalled.addListener(handleInstalled);
+browser.runtime.onInstalled.addListener(reason => {
+	handleInstalled(reason.reason);
+});
