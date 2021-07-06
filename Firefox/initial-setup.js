@@ -610,7 +610,8 @@ function addCustomStyles() {
 		/* SUB + MISC BUTTONS */
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
-		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
+		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
+		[page-subtype="channels"] #edit-buttons tp-yt-paper-button {
 			margin: 0 !important; 
 			padding: 2px 8px 2px 8px !important; 
 			text-transform: none !important; 
@@ -625,7 +626,7 @@ function addCustomStyles() {
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button > yt-formatted-string {
 			padding-top: 1px !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([subscribed])::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before {
 				content: url('${browser.extension.getURL('/images/sub-icon.png')}') !important;
 				background-size: auto !important;
 				width: 16px !important;
@@ -636,6 +637,9 @@ function addCustomStyles() {
 			margin-right: 0px !important;
 		}
 		#sponsor-button.ytd-video-owner-renderer > ytd-button-renderer, #analytics-button.ytd-video-owner-renderer > ytd-button-renderer {
+			margin-right: 4px !important;
+		}
+		[page-subtype="channels"] #edit-buttons ytd-button-renderer:first-child {
 			margin-right: 4px !important;
 		}
 		#notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
@@ -869,44 +873,44 @@ function addCustomStyles() {
 		}
 		`,
 		classicLikesStyle: `
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button > yt-icon {
-			content: url('${chrome.extension.getURL('/images/like.png')}') !important;
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon {
+			content: url('${browser.extension.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button > yt-icon:hover,
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button > yt-icon:hover,
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon:hover,
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon:hover,
 		ytd-comment-action-buttons-renderer #like-button yt-icon:hover,
 		ytd-comment-action-buttons-renderer #dislike-button yt-icon:hover {
 			filter: contrast(0.25);
 		}
 		ytd-comment-action-buttons-renderer #like-button yt-icon {
-			content: url('${chrome.extension.getURL('/images/like.png')}') !important;
+			content: url('${browser.extension.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
-			content: url('${chrome.extension.getURL('/images/like-pressed.png')}') !important;
+			content: url('${browser.extension.getURL('/images/like-pressed.png')}') !important;
 			filter: contrast(1);
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button > yt-icon {
-			content: url('${chrome.extension.getURL('/images/dislike.png')}') !important;
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon {
+			content: url('${browser.extension.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
 		ytd-comment-action-buttons-renderer #dislike-button yt-icon {
-			content: url('${chrome.extension.getURL('/images/dislike.png')}') !important;
+			content: url('${browser.extension.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
-			content: url('${chrome.extension.getURL('/images/dislike-pressed.png')}') !important;
+			content: url('${browser.extension.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
 		}
 		#vote-count-middle.ytd-comment-action-buttons-renderer {
@@ -919,29 +923,29 @@ function addCustomStyles() {
 		}
 		`,
 		classicLikesIconColors: `
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg {
 			fill: rgb(0 136 29) !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:first-child > a yt-formatted-string {
+		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:first-of-type > a yt-formatted-string {
 			color: rgb(0 136 29) !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon > svg {
 			fill: rgb(222 0 17) !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:last-child > a yt-formatted-string {
+		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:last-of-type > a yt-formatted-string {
 			color: rgb(222 0 17) !important;
 		}
 		`,
 		classicLikesIconColorsExtra: `
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
-			content: url('${chrome.extension.getURL('/images/like-pressed-old.png')}') !important;
+			content: url('${browser.extension.getURL('/images/like-pressed-old.png')}') !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
-			content: url('${chrome.extension.getURL('/images/dislike-pressed-old.png')}') !important;
+			content: url('${browser.extension.getURL('/images/dislike-pressed-old.png')}') !important;
 		}
 		`,
 		hideJoinButton: `
@@ -957,13 +961,13 @@ function addCustomStyles() {
 		`,
 		altUploadIcon: `
 		ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
-			content: url('${chrome.extension.getURL('/images/old-upload.svg')}') !important;
+			content: url('${browser.extension.getURL('/images/old-upload.svg')}') !important;
 			filter: contrast(0.25);
 			height: 20px;
 			width: 17px;
 		}
 		ytd-masthead[dark] ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
-			content: url('${chrome.extension.getURL('/images/old-upload-dark.svg')}') !important;
+			content: url('${browser.extension.getURL('/images/old-upload-dark.svg')}') !important;
 			filter: contrast(1);
 			height: 20px;
 			width: 17px;

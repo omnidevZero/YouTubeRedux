@@ -500,10 +500,10 @@ function rearrangeInfo() {
         #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
             padding-top: 1px !important;
         }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button:not([subscribed])::before,
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([subscribed])::before, 
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button:not([subscribed])::before,
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button:not([subscribed])::before {
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > paper-button:not([subscribed])::before,
+        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before, 
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer:not(.style-primary) > a > paper-button:not([subscribed])::before,
+        #reduxSubDiv > #subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed])::before {
             content: url('${browser.extension.getURL('/images/sub-icon.png')}') !important;
             background-size: auto !important;
             width: 16px !important;
@@ -548,7 +548,7 @@ function moveTopLevelItems() {
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
 	let existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
         document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
-        
+
 	if (reduxSettings.altVideoLayout) {
 		document.querySelector('ytd-video-primary-info-renderer').style = 'padding-left: 15px !important; padding-top: 15px !important';
 		if (miscButton != null) {
