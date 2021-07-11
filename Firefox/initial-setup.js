@@ -53,7 +53,8 @@ const defaultSettings = {
 	"hideJoinButton": false,
 	"trimSubs": false,
 	"altStrings": false,
-	"extraChannel": true
+	"extraChannel": true,
+	"noPlayerActionAnimations": false
 };
 
 initiate();
@@ -186,7 +187,7 @@ function addCustomStyles() {
 		ytd-topbar-logo-renderer > #logo,
 		#start > #masthead-logo,
 		#masthead > #masthead-logo {
-			content: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
+			content: url('${browser.runtime.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
 			width: 72px !important;
 			padding: 18px 14px 18px 16px !important;
 		}
@@ -196,7 +197,7 @@ function addCustomStyles() {
 		html[dark] ytd-topbar-logo-renderer > #logo,
 		html[dark] #start > #masthead-logo,
 		html[dark] #masthead > #masthead-logo {
-			content: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
+			content: url('${browser.runtime.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
 			width: 72px !important;
 			padding: 18px 14px 18px 16px !important;
 		}
@@ -487,13 +488,13 @@ function addCustomStyles() {
 		}
 		/*MISC*/
 		.badge-style-type-verified > yt-icon {
-			content: url(${browser.extension.getURL('/images/verified1.png')});
+			content: url(${browser.runtime.getURL('/images/verified1.png')});
 			width: 12px !important;
 			height: 9px !important;
 			margin-bottom: 1px !important;
 		}
 		.badge-style-type-verified > yt-icon:hover {
-			content: url(${browser.extension.getURL('/images/verified2.png')});
+			content: url(${browser.runtime.getURL('/images/verified2.png')});
 			width: 12px !important;
 			height: 9px !important;
 			margin-bottom: 1px !important;
@@ -627,7 +628,7 @@ function addCustomStyles() {
 			padding-top: 1px !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before {
-				content: url('${browser.extension.getURL('/images/sub-icon.png')}') !important;
+				content: url('${browser.runtime.getURL('/images/sub-icon.png')}') !important;
 				background-size: auto !important;
 				width: 16px !important;
 				height: 12px !important;
@@ -652,11 +653,11 @@ function addCustomStyles() {
 		darkerRed: `
 		/*DARKER RED*/
         ytd-guide-entry-renderer[active] {
-            background-color: #cc181e !important;
+        	background-color: #cc181e !important;
         }
         yt-formatted-string#guide-section-title.ytd-guide-section-renderer,
         yt-formatted-string#guide-section-title.ytd-guide-section-renderer a {
-            color: #cc181e !important;
+        	color: #cc181e !important;
         }
 		ytd-mini-guide-entry-renderer[active] .guide-icon.ytd-mini-guide-entry-renderer, ytd-mini-guide-entry-renderer[active] .title.ytd-mini-guide-entry-renderer {
 			color: #cc181e !important;
@@ -721,7 +722,7 @@ function addCustomStyles() {
 		searchAlignLeft: `
 		#center.ytd-masthead { 
 			margin-right: auto !important;
-		} 
+		}
 		ytd-searchbox.ytd-masthead {
 			margin: 0 0 0 51px !important;
 		}
@@ -874,7 +875,7 @@ function addCustomStyles() {
 		`,
 		classicLikesStyle: `
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon {
-			content: url('${browser.extension.getURL('/images/like.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
@@ -886,31 +887,31 @@ function addCustomStyles() {
 			filter: contrast(0.25);
 		}
 		ytd-comment-action-buttons-renderer #like-button yt-icon {
-			content: url('${browser.extension.getURL('/images/like.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
-			content: url('${browser.extension.getURL('/images/like-pressed.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
 			filter: contrast(1);
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon {
-			content: url('${browser.extension.getURL('/images/dislike.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
 		ytd-comment-action-buttons-renderer #dislike-button yt-icon {
-			content: url('${browser.extension.getURL('/images/dislike.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
-			content: url('${browser.extension.getURL('/images/dislike-pressed.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
 		}
 		#vote-count-middle.ytd-comment-action-buttons-renderer {
@@ -941,11 +942,11 @@ function addCustomStyles() {
 		classicLikesIconColorsExtra: `
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
-			content: url('${browser.extension.getURL('/images/like-pressed-old.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/like-pressed-old.png')}') !important;
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
-			content: url('${browser.extension.getURL('/images/dislike-pressed-old.png')}') !important;
+			content: url('${browser.runtime.getURL('/images/dislike-pressed-old.png')}') !important;
 		}
 		`,
 		hideJoinButton: `
@@ -961,13 +962,13 @@ function addCustomStyles() {
 		`,
 		altUploadIcon: `
 		ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
-			content: url('${browser.extension.getURL('/images/old-upload.svg')}') !important;
+			content: url('${browser.runtime.getURL('/images/old-upload.svg')}') !important;
 			filter: contrast(0.25);
 			height: 20px;
 			width: 17px;
 		}
 		ytd-masthead[dark] ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
-			content: url('${browser.extension.getURL('/images/old-upload-dark.svg')}') !important;
+			content: url('${browser.runtime.getURL('/images/old-upload-dark.svg')}') !important;
 			filter: contrast(1);
 			height: 20px;
 			width: 17px;
@@ -997,6 +998,11 @@ function addCustomStyles() {
 			padding-left: 10px;
     		padding-right: 10px;
 		}
+		`,
+		noPlayerActionAnimations: `
+		#ytd-player .ytp-bezel {
+			display: none !important;
+		}
 		`
 	};
 
@@ -1021,7 +1027,7 @@ function addCustomStyles() {
 	ytd-topbar-logo-renderer > #logo #logo-icon,
 	#start > #masthead-logo,
 	#masthead > #masthead-logo {
-		background: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
+		background: url('${browser.runtime.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
 		height: 0px !important;
 		width: 0px !important;
 		background-size: contain !important;
@@ -1034,7 +1040,7 @@ function addCustomStyles() {
 	html[dark] ytd-topbar-logo-renderer > #logo #logo-icon,
 	html[dark] #start > #masthead-logo,
 	html[dark] #masthead > #masthead-logo {
-		background: url('${browser.extension.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
+		background: url('${browser.runtime.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
 		height: 0px !important;
 		width: 0px !important;
 		background-size: contain !important;
@@ -1087,16 +1093,16 @@ function addCustomStyles() {
 				setTimeout(changeFavicon, 250);
 				return;
 			}
-			document.querySelector('link[rel="shortcut icon"]').href = browser.extension.getURL('/images/favicon1.ico');
-			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = browser.extension.getURL('/images/favicon1.ico'));
+			document.querySelector('link[rel="shortcut icon"]').href = browser.runtime.getURL('/images/favicon1.ico');
+			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = browser.runtime.getURL('/images/favicon1.ico'));
 			break;
 		case "2":
 			if (document.querySelector('link[rel="shortcut icon"]') == null) {
 				setTimeout(changeFavicon, 250);
 				return;
 			}
-			document.querySelector('link[rel="shortcut icon"]').href = browser.extension.getURL('/images/favicon2.png');
-			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = browser.extension.getURL('/images/favicon2.png'));
+			document.querySelector('link[rel="shortcut icon"]').href = browser.runtime.getURL('/images/favicon2.png');
+			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = browser.runtime.getURL('/images/favicon2.png'));
 			break;
     
 		default:

@@ -152,7 +152,7 @@ function saveSettings() {
 			newSettings[logo[i].name] = logo[i].value;
 		}
 	}
-  
+
 	storage.set({reduxSettings: newSettings});
 }
 

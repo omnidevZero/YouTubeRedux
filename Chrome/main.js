@@ -9,7 +9,7 @@ let flags = {
 };
 let YTReduxURLPath;
 let YTReduxURLSearch;
-let confirmInterval; 
+let confirmInterval;
 aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
 playerSize = {};
 playerSize.width = reduxSettings.smallPlayerWidth == undefined ? 853 : reduxSettings.smallPlayerWidth;
@@ -216,7 +216,7 @@ function recalculateVideoSize() {
 			}, 2000);
 
 		}
-        
+
 		function checkIfProperlyRecalculated(width, height) {
 			let videoPlayerElement = document.querySelector('ytd-watch-flexy .html5-video-container');
 			let bottomBarElement = document.querySelector('.ytp-chrome-bottom');
@@ -504,7 +504,7 @@ function rearrangeInfo() {
         #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before, 
         #reduxSubDiv > #subscribe-button > ytd-button-renderer:not(.style-primary) > a > paper-button:not([subscribed])::before,
         #reduxSubDiv > #subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed])::before {
-            content: url('${browser.extension.getURL('/images/sub-icon.png')}') !important;
+            content: url('${browser.runtime.getURL('/images/sub-icon.png')}') !important;
             background-size: auto !important;
             width: 16px !important;
             height: 12px !important;
