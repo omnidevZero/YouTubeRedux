@@ -216,7 +216,7 @@ function recalculateVideoSize() {
 			}, 2000);
 
 		}
-        
+
 		function checkIfProperlyRecalculated(width, height) {
 			let videoPlayerElement = document.querySelector('ytd-watch-flexy .html5-video-container');
 			let bottomBarElement = document.querySelector('.ytp-chrome-bottom');
@@ -270,8 +270,7 @@ function startObservingComments() {
 
 	function disableInfiniteComments() {
 		let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
-		let commentsContinuation = document.querySelector('#comments > #sections > #continuations');
-		commentsContElement = commentsContinuation.querySelector('yt-next-continuation');
+		commentsContElement = document.querySelector('ytd-comments#comments ytd-item-section-renderer > #contents > ytd-comment-thread-renderer + ytd-continuation-item-renderer');
 		if (comments.length >= maxComments && commentsContElement != null) {
 			observerComments.disconnect();
 			commentsContElement.remove();
@@ -302,8 +301,8 @@ function startObservingComments() {
 		showMoreComments.querySelector('input').value = showMoreText;
 		contentsElement.append(showMoreComments);
 		document.querySelector('#show-more-comments').onclick = function() {
-			let commentsContinuation = document.querySelector('#comments > #sections > #continuations');
-			commentsContinuation.append(continueElement);
+			let comments = document.querySelector('ytd-comments#comments ytd-item-section-renderer > #contents');
+			comments.append(continueElement);
 			window.scrollBy({top: 50, left: 0, behavior: "smooth"});
 			this.remove();
 			maxComments += commentsInterval;
