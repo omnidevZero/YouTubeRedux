@@ -1000,7 +1000,8 @@ function addCustomStyles() {
 		}
 		`,
 		noPlayerActionAnimations: `
-		#ytd-player .ytp-bezel {
+		#ytd-player .ytp-bezel,
+		.ytp-doubletap-ui {
 			display: none !important;
 		}
 		`
