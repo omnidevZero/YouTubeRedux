@@ -59,7 +59,7 @@ ytd-mini-guide-renderer.ytd-app {
 #container.ytd-searchbox {
     padding: 1px 0px !important;
 } */
-    
+
 /*VIDEO STYLES*/
 .title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
     font-size: 20px;
@@ -122,7 +122,7 @@ ytd-metadata-row-renderer {
     font-weight:normal !important;
 }
 html:not([dark]) ytd-author-comment-badge-renderer[creator] {
-    background-color: silver !important;
+    background-color: #c0c0c080 !important;
 }
 #primary-inner.ytd-watch-flexy #title.ytd-rich-metadata-renderer, #primary-inner.ytd-watch-flexy #subtitle.ytd-rich-metadata-renderer, #primary-inner.ytd-watch-flexy #call-to-action.ytd-rich-metadata-renderer {
     font-size: 11px !important;
