@@ -867,6 +867,13 @@ function addCustomStyles() {
 		}
 		`,
 		classicLikesStyle: `
+		#endpoint[href="/playlist?list=LL"] yt-icon:first-of-type {
+			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
+			filter: contrast(0);
+			height: 17px !important;
+			width: 17px !important;
+			padding-left: 3px !important;
+		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
@@ -999,14 +1006,20 @@ function addCustomStyles() {
 		}
 		`,
 		altLoader: `
+		html {
+			--redux-spinner-margin: max(-1.71875vw, -33px);
+			--redux-spinner-font: min(1.71875vw, 33px);
+		}
 		.ytp-spinner-container {
 			display: none !important;
 		}
 		.ytp-spinner {
-			margin-top: -33px;
-			font-size: 33px;
-			width: 60px !important;
-			height: 60px !important;
+			margin-top: var(--redux-spinner-margin, -33px);
+    		font-size: var(--redux-spinner-font, 33px);
+			width: 3.125vw !important;
+			height: 3.125vw !important;
+			max-width: 60px !important;
+    		max-height: 60px !important;
 			border-radius: 50%;
 			-webkit-animation: load5 0.7s infinite ease;
 			animation: load5 0.7s infinite ease;
