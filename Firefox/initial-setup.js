@@ -1009,7 +1009,8 @@ function addCustomStyles() {
 		`,
 		noPlayerActionAnimations: `
 		#ytd-player .ytp-bezel,
-		.ytp-doubletap-ui {
+		.ytp-doubletap-ui,
+		.ytp-doubletap-ui-legacy {
 			display: none !important;
 		}
 		`,
