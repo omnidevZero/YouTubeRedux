@@ -93,7 +93,7 @@ function initiate() {
 
 function addCustomStyles() {
 	let allStyles = {
-		hideCastButton: `/*PLAY ON TV BUTTON*/[class="ytp-button"]:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}`,
+		hideCastButton: `/*PLAY ON TV BUTTON*/.ytp-remote-button:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}`,
 		hideAutoplayButton: `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {display:none !important;}`,
 		smallPlayer: `
 		/*SMALL PLAYER*/
@@ -119,9 +119,6 @@ function addCustomStyles() {
 		left:0 !important;
 		top: 0 !important;
 		}
-		/*[class="ytp-chrome-bottom"] {
-		width: calc(100% - 12px) !important;
-		}*/
 		`,
 		darkPlaylist: `
 		/*DARK PLAYLIST*/
@@ -1016,19 +1013,19 @@ function addCustomStyles() {
 		`,
 		altLoader: `
 		html {
-			--redux-spinner-margin: max(-1.71875vw, -33px);
-			--redux-spinner-font: min(1.71875vw, 33px);
+			--redux-spinner-margin: max(-1.458vw, -28px);
+			--redux-spinner-font: min(1.458vw, 28px);
 		}
 		.ytp-spinner-container {
 			display: none !important;
 		}
 		.ytp-spinner {
-			margin-top: var(--redux-spinner-margin, -33px);
-    		font-size: var(--redux-spinner-font, 33px);
-			width: 3.125vw !important;
-			height: 3.125vw !important;
-			max-width: 60px !important;
-    		max-height: 60px !important;
+			margin-top: var(--redux-spinner-margin, -28px);
+    		font-size: var(--redux-spinner-font, 28px);
+			width: 2.604vw !important;
+			height: 2.604vw !important;
+			max-width: 50px !important;
+    		max-height: 50px !important;
 			border-radius: 50%;
 			-webkit-animation: load5 0.7s infinite ease;
 			animation: load5 0.7s infinite ease;

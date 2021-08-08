@@ -68,27 +68,27 @@ function waitForElement(selector, interval, callback) {
 }
 
 function alignItems() {
-	let player = document.querySelector('ytd-watch-flexy .html5-video-container');
+	let player = document.querySelector('#player-container-outer');
 	let content = document.querySelector('#columns > #primary > #primary-inner');
 	let videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
 	let calcPadding = Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
+
 	if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null || videoInfoElement == null) {
 		waitForElement('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
 	} else {
 		let reduxAlignElement = document.querySelector('#redux-style-align');
 		let calcInner = `
-            #columns > #primary > #primary-inner {
-                padding: 0 ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw 0 ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
-                /*padding: 0 ${calcPadding}px 0 ${calcPadding}px !important;*/
-            }
-            #secondary.ytd-watch-flexy {
-                transform: translateX(-${calcPadding}px);
-            }
-            #playlist > #container {
-                max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
-            }
-            `;
+		#playlist > #container {
+			max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
+		}
+		#primary.ytd-watch-flexy > #primary-inner {
+			padding-left: ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
+		}
+		#secondary.ytd-watch-flexy {
+			margin-right: ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
+		}
+        `;
 		if (reduxAlignElement == null) {
 			let customStyle = document.createElement("style");
 			customStyle.id = 'redux-style-align';
@@ -387,8 +387,8 @@ function rearrangeInfo() {
 	let infoTop = document.querySelector('#top-row.ytd-video-secondary-info-renderer');
 	let infoBar = document.querySelector('#info.ytd-video-primary-info-renderer');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
-	let miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
-        document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
+	let miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button:not([hidden])') 
+	|| document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer:not([hidden])');
 	let dateElement = document.querySelector('#info-strings > yt-formatted-string');
 	let dateOuter = document.querySelector('#info-text > #date');
 	let descriptionElement = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content');
@@ -408,7 +408,22 @@ function rearrangeInfo() {
 	dateElement.classList.add('redux-moved-date');
 
 	infoBar.prepend(infoTop);
-	infoContents.append(miscButton);
+	if (miscButton) {
+		miscButton.setAttribute('redux-last-top', '');
+		infoContents.append(miscButton);
+	} else {
+		//condition for streams which have a different last button
+		let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer');
+		let lastTopLevelElement = topLevelElements[topLevelElements.length-1];
+		lastTopLevelElement.setAttribute('redux-last-top-stream', '');
+		lastTopLevelElement.classList.add('redux-moved-info');
+		infoContents.append(lastTopLevelElement);
+
+		let hiddenMiscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button[hidden]') || 
+        document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer[hidden]');
+		hiddenMiscButton.setAttribute('redux-last-top', '');
+		infoContents.append(hiddenMiscButton);
+	}
 	moveTopLevelItems();
 	descriptionElement.prepend(dateElement);
 	if (dateOuter != null) {dateOuter.remove();}
@@ -545,8 +560,9 @@ function moveTopLevelItems() {
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
-	let existingMovedItem = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button') || 
-        document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer');
+	let existingMovedItem = document.querySelector('[redux-last-top-stream]')
+		|| document.querySelector('yt-icon-button[redux-last-top]') 
+        || document.querySelector('ytd-button-renderer[redux-last-top]');
 
 	if (reduxSettings.altVideoLayout) {
 		document.querySelector('ytd-video-primary-info-renderer').style = 'padding-left: 15px !important; padding-top: 15px !important';
