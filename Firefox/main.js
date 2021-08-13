@@ -79,7 +79,8 @@ function alignItems() {
 	} else {
 		let reduxAlignElement = document.querySelector('#redux-style-align');
 		let calcInner = `
-		#playlist > #container {
+		#playlist > #container,
+		ytd-playlist-panel-renderer#playlist {
 			max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
 		}
 		#primary.ytd-watch-flexy > #primary-inner {
