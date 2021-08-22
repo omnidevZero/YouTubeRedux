@@ -160,7 +160,13 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
 ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
     border-radius: 0% !important;
 }
-    
+#info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
+    color: #606060;
+}
+html[dark] #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
+    color: #AAAAAA;
+}
+
 /*PLAYLIST STYLES*/
 #text.ytd-alert-with-button-renderer {
     color:#0066ff !important;

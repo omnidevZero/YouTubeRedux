@@ -100,6 +100,8 @@
             height: 14px;
             width: 14px;
             text-align: center;
+            float: right;
+            right: 20px;
         }
         .tooltip::before {
             content: "?";
@@ -230,7 +232,7 @@
         select {
             border-top: none;
             border-right: none;
-            border-bottom: 1px solid grey;
+            border-bottom: none;
             border-left: none;
             background: none;
             outline: none;
@@ -328,7 +330,7 @@
                                     <option value=1066></option>
                                     <option value=Custom>Custom...</option>
                                     </select>
-                                    <div class="tooltip"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
+                                    <div class="tooltip" style="right: 1px;"><span class="tooltip-text">Player height displayed here is calculated for 16:9 aspect ratio and is based on width value. Actual height may differ based on your display.</span></div>
                                 </label>
                             </label>
                             <div class="subsettings-container">
@@ -369,6 +371,9 @@
                             <label><input type="checkbox" name="squareSearch" class="settings">Use square avatars in search results</label>
                             <label><input type="checkbox" name="altUploadIcon" class="settings">Use old upload icon</label>
                             <label><input type="checkbox" name="altLoader" class="settings">Use alternative video loader</label>
+                            <div class="subsettings-container">
+                                <label class="subsetting"><input type="checkbox" name="altLoaderSmaller" class="settings" disabled>Smaller!</label>
+                            </div>
                             <label style="display:inline-block">
                                 <input type="checkbox" name="customTitleFont" class="settings">Custom video title font
                                 <label style="display:inline-block">
@@ -384,6 +389,9 @@
                                     </select>
                                 </label>
                             </label>
+                            <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons.</span></div></label>
+                            <redux style="margin: 5px 0 5px 0;"></redux>
+                            <label><input type="checkbox" name="showChangelog" class="settings">Show changelog on updates</label>
                             <label><input type="checkbox" name="rearrangeInfo" class="settings">Do NOT recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
                         </div>
                         <div style="flex: 0 0 50%;">
@@ -409,7 +417,7 @@
                                     <input type="radio" name="favicon" class="settings" value="3" style="display:inline-block;"><img src='/images/favicon3.ico' style="height:16px; width:16px"></img></input>
                                 </div>
                             </fieldset>
-                            <fieldset style="padding-top: 0; padding-bottom: 0;"><legend>Video filter settings<div class="tooltip"><span class="tooltip-text-small">Hidden by 'Extra layout changes' setting.<br><p>Mini: Leaves only All and Mixes options on home page; scales them down.<br>No home: hides video filters on home page<br>No video: hides video filters on video page<p>Note: filters are only displayed if your YT language is set to English.</span></div></legend>
+                            <fieldset style="padding-top: 0; padding-bottom: 0;"><legend>Video filter settings<div class="tooltip" style="right: 1px;"><span class="tooltip-text-small">Hidden by 'Extra layout changes' setting.<br><p>Mini: Leaves only All and Mixes options on home page; scales them down.<br>No home: hides video filters on home page<br>No video: hides video filters on video page<p>Note: filters are only displayed if your YT language is set to English.</span></div></legend>
                                 <div style="text-align: center">
                                     <label style="display:inline-block"><input type="checkbox" name="filterMini" class="settings">Mini</label>
                                     <label style="display:inline-block"><input type="checkbox" name="filterMain" class="settings">No home</label>
