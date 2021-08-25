@@ -1366,6 +1366,35 @@ function addCustomStyles() {
 			d: path("M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64zM6 8c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm0 12c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm6-7.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5.5.22.5.5-.22.5-.5.5zM19 3l-6 6 2 2 7-7V3z") !important;
 			fill: #909090;
 		}
+		/* List icon */
+		path[d="M20,9H9V7h11V9z M20,11H9v2h11V11z M20,15H9v2h11V15z M7,7H4v2h3V7z M7,11H4v2h3V11z M7,15H4v2h3V15z"] {
+			d: path("M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z") !important;
+			fill: var(--yt-spec-call-to-action);
+		}
+		path[d="M20,8H9V7h11V8z M20,11H9v1h11V11z M20,15H9v1h11V15z M7,7H4v1h3V7z M7,11H4v1h3V11z M7,15H4v1h3V15z"] {
+			d: path("M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z") !important;
+			fill: #909090;
+		}
+		/* Grid icon */
+		path[d="M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z"] {
+			d: path("M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z") !important;
+			fill: var(--yt-spec-call-to-action);
+		}
+		path[d="M8,11H2V4h6V11z M3,10h4V5H3V10z M8,20H2v-7h6V20z M3,19h4v-5H3V19z M15,11H9V4h6V11z M10,10h4V5h-4V10z M15,20H9v-7h6V20z M10,19h4v-5h-4V19z M22,11h-6V4h6V11z M17,10h4V5h-4V10z M22,20h-6v-7h6V20z M17,19h4v-5h-4V19z"] {
+			d: path("M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z") !important;
+			fill: #909090;
+		}
+		/* FF additional color restoration */
+		ytd-watch-flexy #info.ytd-watch-flexy yt-icon.ytd-button-renderer,
+		#masthead:not([dark]) #button yt-icon-button yt-icon,
+		tp-yt-paper-item #content-icon > yt-icon,
+		yt-icon.ytd-toggle-theme-compact-link-renderer,
+		#secondary-text.ytd-compact-link-renderer, 
+		#right-icon.ytd-compact-link-renderer,
+		.ytd-menu-renderer[button-renderer].ytd-menu-renderer:hover yt-icon.ytd-menu-renderer, 
+		#button.ytd-menu-renderer:hover yt-icon.ytd-menu-renderer {
+			fill: #909090;
+		}
 		`,
 		squareSubs: `
 		yt-img-shadow.ytd-guide-entry-renderer {
@@ -1453,6 +1482,24 @@ function addCustomStyles() {
 	document.documentElement.append(customStyle);
 
 	if (reduxSettings.favicon != "3") changeFavicon();
+	if (reduxSettings.oldIcons) changeIcons();
+
+	function changeIcons() {
+
+		function doStuff() {
+			let changeFlags = setInterval(() => {
+				if (yt) {
+					yt.config_.EXPERIMENT_FLAGS.kevlar_system_icons = false;
+					clearInterval(changeFlags);
+				}
+			}, 1000);
+		}
+
+		const script = document.createElement("script");
+		script.id = 'redux-old-icons';
+		script.text = `(${doStuff.toString()})();`;
+		document.documentElement.appendChild(script);
+	}
 
 	function changeFavicon() {
 		switch (reduxSettings.favicon) {
