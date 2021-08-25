@@ -1414,24 +1414,24 @@ function addCustomStyles() {
 	document.documentElement.append(customStyle);
 
 	if (reduxSettings.favicon != "3") changeFavicon();
-	if (reduxSettings.oldIcons) changeIcons();
+	// if (reduxSettings.oldIcons) changeIcons();
 
-	function changeIcons() {
+	// function changeIcons() {
 
-		function doStuff() {
-			let changeFlags = setInterval(() => {
-				if (yt) {
-					yt.config_.EXPERIMENT_FLAGS.kevlar_system_icons = false;
-					clearInterval(changeFlags);
-				}
-			}, 1000);
-		}
+	// 	function doStuff() {
+	// 		let changeFlags = setInterval(() => {
+	// 			if (yt) {
+	// 				yt.config_.EXPERIMENT_FLAGS.kevlar_system_icons = false;
+	// 				clearInterval(changeFlags);
+	// 			}
+	// 		}, 1000);
+	// 	}
 
-		const script = document.createElement("script");
-		script.id = 'redux-old-icons';
-		script.text = `(${doStuff.toString()})();`;
-		document.documentElement.appendChild(script);
-	}
+	// 	const script = document.createElement("script");
+	// 	script.id = 'redux-old-icons';
+	// 	script.text = `(${doStuff.toString()})();`;
+	// 	document.documentElement.appendChild(script);
+	// }
 
 	function changeFavicon() {
 		switch (reduxSettings.favicon) {
