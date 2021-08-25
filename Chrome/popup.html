@@ -353,6 +353,7 @@
                             <label><input type="checkbox" name="hideJoinButton" class="settings">Hide the 'Join' button</label>
                             <label><input type="checkbox" name="subBorder" class="settings">Add border around subscribers count</label>
                             <label><input type="checkbox" name="trimSubs" class="settings">Trim subscribers count<div class="tooltip"><span class="tooltip-text-small">Trims the subscribers count text so that it only contains the number. May not be compatible with all languages.</span></div></label>
+                            <label><input type="checkbox" name="trimViews" class="settings">Trim view count</label>
                             <label><input type="checkbox" name="altStrings" class="settings">Use alternative video page strings<div class="tooltip"><span class="tooltip-text-small">Changes 'Save' button to 'Add to', adds 'Published on' to the upload date (will conflict with stream start date). Modified strings will be in English.</span></div></label>
                             <label><input type="checkbox" name="noPlayerActionAnimations" class="settings">Disable video player action animations<div class="tooltip"><span class="tooltip-text-small">Hide animations when pausing, resuming and skipping forward/backward (displayed in the center of the player).</span></div></label>    
                         </div>
@@ -366,6 +367,7 @@
                             <label><input type="checkbox" name="hideHomeAvatars" class="settings">Hide channel avatars on home page<div class="tooltip"><span class="tooltip-text-small">No effect when 'Extra layout changes' setting is enabled, which already hides channel avatars.</span></div></label>
                             <label><input type="checkbox" name="hideApps" class="settings">Hide 'YouTube apps'</label>
                             <label><input type="checkbox" name="squareAvatar" class="settings">Make own avatar square shaped</label>
+                            <label><input type="checkbox" name="squareSubs" class="settings">Make subs avatars square shaped</label>
                             <label><input type="checkbox" name="squareSearch" class="settings">Use square avatars in search results</label>
                             <label><input type="checkbox" name="altUploadIcon" class="settings">Use old upload icon</label>
                             <label><input type="checkbox" name="altLoader" class="settings">Use alternative video loader</label>
@@ -387,12 +389,13 @@
                                     </select>
                                 </label>
                             </label>
-                            <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons.</span></div></label>
+                            <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
+                            <label><input type="checkbox" name="myChannel" class="settings">Add 'My channel' button to sidebar menu</label>    
+                        </div>
+                        <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>
                             <label><input type="checkbox" name="showChangelog" class="settings">Show changelog on updates</label>
                             <label><input type="checkbox" name="rearrangeInfo" class="settings">Do NOT recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
-                        </div>
-                        <div style="flex: 0 0 50%;">
                             <fieldset style="padding-top: 0; padding-bottom: 0; position: relative;"><legend>Logo</legend>
                                 <div class="logo-preview"><img src='' style="height: 100%; width: 100%;"></img></div>
                                 <div style="text-align: center; display:flex; justify-content: center; align-items: center; flex-wrap: wrap;">

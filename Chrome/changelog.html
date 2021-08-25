@@ -38,19 +38,22 @@
             font-size: 18px;
             font-weight: normal;
         }
+        note {
+            font-style: italic;
+            font-size: 14px;
+        }
       </style>
       <script src="./initial-setup.js"></script>
     </head>
     <body>
-        <div id="youtube-redux-header">YouTube Redux has just been updated!</div>
+        <div id="youtube-redux-header">YouTube Redux has just been updated<span id="version"></span>!</div>
         <div id="main">
             <div class="header-main" style="margin-top:20px;">What's new?</div> 
             <div id="changes">
                 <ul>
-                    <li>added an option to disable showing changelog page on extension updates</li>
-                    <li>added an option to restore old icons across the site (on by default)</li>
-                    <li>added an option to make the alternative loader even smaller</li>
-                    <li>fixed an issue that caused the old like icon not to change color when its sidebar button was active</li>
+                    <li>added an option to add 'My channel' button to sidebar menu</li>
+                    <li>added an option to make subs avatars square shaped <note>(this was already a default setting but can now be changed by user)</note></li>
+                    <li>added an option to trim video view count</li>
                 </ul>
             </div>
             <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 486px;" frameborder=0 height="100%"></iframe>
