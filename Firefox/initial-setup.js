@@ -787,6 +787,9 @@ function addCustomStyles() {
 			text-transform: none !important;
 			font-size: 11px !important;
 		}
+		#redux-mychannel div {
+			padding: 0 10px !important;
+		}
 		`,
 		altVideoLayout: `
 		#info-contents ytd-video-primary-info-renderer > yt-icon-button  {
@@ -1184,9 +1187,52 @@ function addCustomStyles() {
 		path[d="M14.97,16.95L10,13.87V7h2v5.76l4.03,2.49L14.97,16.95z M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9s9-4.04,9-9S16.96,3,12,3 M12,2c5.52,0,10,4.48,10,10s-4.48,10-10,10S2,17.52,2,12S6.48,2,12,2L12,2z"]:not(#hover-overlays path[d="M14.97,16.95L10,13.87V7h2v5.76l4.03,2.49L14.97,16.95z M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9s9-4.04,9-9S16.96,3,12,3 M12,2c5.52,0,10,4.48,10,10s-4.48,10-10,10S2,17.52,2,12S6.48,2,12,2L12,2z"]) {
 			fill: #909090;
 		}
-		/* Liked videos */
+		/* Like not pressed */
 		path[d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z M7,20H4v-8h3V20z M19.98,13.17l-1.34,6 C18.54,19.65,18.03,20,17.43,20H8v-8.61l5.6-6.06C13.79,5.12,14.08,5,14.38,5c0.26,0,0.5,0.11,0.63,0.3 c0.07,0.1,0.15,0.26,0.09,0.47l-1.52,4.94L13.18,12h1.35h4.23c0.41,0,0.8,0.17,1.03,0.46C19.92,12.61,20.05,12.86,19.98,13.17z"] {
-			d: path("M3.75 18.75h3v-9h-3v9zm16.5-8.25c0-.83-.68-1.5-1.5-1.5h-4.73l.7-3.43.03-.24c0-.3-.13-.6-.33-.8l-.8-.78L8.7 8.7c-.3.26-.45.64-.45 1.05v7.5c0 .82.67 1.5 1.5 1.5h6.75c.62 0 1.15-.38 1.38-.9l2.27-5.3c.06-.18.1-.36.1-.55v-1.5z") !important;
+			d: path("M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z") !important;
+			fill: #909090;
+		}
+		/* Like pressed */
+		path[d="M3,11h3v10H3V11z M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11v10h10.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z"] {
+			d: path("M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z") !important;
+		}
+		/* Like comment not pressed */
+		path[d="M12.42,14A1.54,1.54,0,0,0,14,12.87l1-4.24C15.12,7.76,15,7,14,7H10l1.48-3.54A1.17,1.17,0,0,0,10.24,2a1.49,1.49,0,0,0-1.08.46L5,7H1v7ZM9.89,3.14A.48.48,0,0,1,10.24,3a.29.29,0,0,1,.23.09S9,6.61,9,6.61L8.46,8H14c0,.08-1,4.65-1,4.65a.58.58,0,0,1-.58.35H6V7.39ZM2,8H5v5H2Z"] {
+			d: path("M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z") !important;
+			/* transform: scale(0.4449484) translate(4px, 6px); */
+		}
+		html:not([dark]) path[d="M12.42,14A1.54,1.54,0,0,0,14,12.87l1-4.24C15.12,7.76,15,7,14,7H10l1.48-3.54A1.17,1.17,0,0,0,10.24,2a1.49,1.49,0,0,0-1.08.46L5,7H1v7ZM9.89,3.14A.48.48,0,0,1,10.24,3a.29.29,0,0,1,.23.09S9,6.61,9,6.61L8.46,8H14c0,.08-1,4.65-1,4.65a.58.58,0,0,1-.58.35H6V7.39ZM2,8H5v5H2Z"] {
+			fill: #909090;
+		}
+		#like-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg {
+			/* transform: scale(1.5); */
+		}
+		/* Like comment pressed */
+		#like-button.ytd-comment-action-buttons-renderer button[aria-pressed="true"] svg {
+			/* transform: scale(1) translateX(-1.5px); */
+		}
+		/* Dislike not pressed */
+		path[d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z"] {
+			d: path("M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z") !important;
+		}
+		/* Dislike pressed */
+		path[d="M18,4h3v10h-3V4z M5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21c0.58,0,1.14-0.24,1.52-0.65L17,14V4H6.57 C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14z"] {
+			d: path("M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z") !important;
+		}
+		/* Dislike comment not pressed */
+		path[d="M3.54,2A1.55,1.55,0,0,0,2,3.13L1,7.37C.83,8.24,1,9,2,9H6L4.52,12.54A1.17,1.17,0,0,0,5.71,14a1.49,1.49,0,0,0,1.09-.46L11,9h4V2ZM6.07,12.86a.51.51,0,0,1-.36.14.28.28,0,0,1-.22-.09l0-.05L6.92,9.39,7.5,8H2a1.5,1.5,0,0,1,0-.41L3,3.35A.58.58,0,0,1,3.54,3H10V8.61ZM14,8H11l0-5h3Z"] {
+			d: path("M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z") !important;
+			/* transform: scale(0.4449484) translate(4px, 6px); */
+		}
+		html:not([dark]) path[d="M3.54,2A1.55,1.55,0,0,0,2,3.13L1,7.37C.83,8.24,1,9,2,9H6L4.52,12.54A1.17,1.17,0,0,0,5.71,14a1.49,1.49,0,0,0,1.09-.46L11,9h4V2ZM6.07,12.86a.51.51,0,0,1-.36.14.28.28,0,0,1-.22-.09l0-.05L6.92,9.39,7.5,8H2a1.5,1.5,0,0,1,0-.41L3,3.35A.58.58,0,0,1,3.54,3H10V8.61ZM14,8H11l0-5h3Z"] {
+			fill: #909090
+		}
+		#dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg {
+			/* transform: scale(1.5); */
+		}
+		/* Dislike comment pressed */
+		#dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="true"] svg {
+			/* transform: scale(1) translateX(-1.5px); */
 		}
 		/* Browse plus */
 		path[d="M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9c4.96,0,9-4.04,9-9S16.96,3,12,3 M12,2 c5.52,0,10,4.48,10,10s-4.48,10-10,10C6.48,22,2,17.52,2,12S6.48,2,12,2L12,2z"] {
@@ -1384,6 +1430,16 @@ function addCustomStyles() {
 			d: path("M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z") !important;
 			fill: #909090;
 		}
+		/* Likes colors */
+		#top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button[aria-pressed="false"] > yt-icon {
+			fill: #909090;
+		}
+		#top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon {
+			fill: var(--yt-spec-call-to-action);
+		}
+		ytd-toggle-button-renderer.style-default-active[is-icon-button] {
+			color: #065FD4 !important;
+		}
 		/* FF additional color restoration */
 		ytd-watch-flexy #info.ytd-watch-flexy yt-icon.ytd-button-renderer,
 		#masthead:not([dark]) #button yt-icon-button yt-icon,
@@ -1392,7 +1448,9 @@ function addCustomStyles() {
 		#secondary-text.ytd-compact-link-renderer, 
 		#right-icon.ytd-compact-link-renderer,
 		.ytd-menu-renderer[button-renderer].ytd-menu-renderer:hover yt-icon.ytd-menu-renderer, 
-		#button.ytd-menu-renderer:hover yt-icon.ytd-menu-renderer {
+		#button.ytd-menu-renderer:hover yt-icon.ytd-menu-renderer,
+		html:not([dark]) #like-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg,
+		html:not([dark]) #dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg {
 			fill: #909090;
 		}
 		`,
@@ -1445,6 +1503,95 @@ function addCustomStyles() {
 		padding: 31px 72px 0px 0px !important;
 	}
 	`;
+	let compatAltUploadIcon = `
+	ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
+		background: url('${browser.runtime.getURL('/images/old-upload.svg')}') !important;
+		filter: contrast(0);
+		height: 0px !important;
+		width: 0px !important;
+		background-size: contain !important;
+		background-repeat: no-repeat !important;
+		padding: 20px 17px 0px 0px !important;
+
+	}
+	ytd-masthead[dark] ytd-topbar-menu-button-renderer:first-of-type yt-icon-button yt-icon {
+		background: url('${browser.runtime.getURL('/images/old-upload-dark.svg')}') !important;
+		filter: contrast(1);
+		height: 0px !important;
+		width: 0px !important;
+		background-size: contain !important;
+		background-repeat: no-repeat !important;
+		padding: 20px 17px 0px 0px !important;
+	}
+	`;
+	let compatClassicLikesStyle = `
+	#endpoint[href="/playlist?list=LL"] yt-icon:first-of-type {
+		background: url('${browser.runtime.getURL('/images/like.png')}') !important;
+		filter: contrast(0);
+		height: 0px !important;
+		width: 0px !important;
+		background-repeat: no-repeat !important;
+		margin-top: 28px !important;
+	}
+	ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon {
+		background: url('${browser.runtime.getURL('/images/like.png')}') !important;
+		filter: contrast(0);
+		height: 0px !important;
+		width: 0px !important;
+		margin: 3px 0px 0px 3px !important;
+		background-repeat: no-repeat !important;
+		padding: 17px 17px !important;
+	}
+	ytd-comment-action-buttons-renderer #like-button yt-icon {
+		background: url('${browser.runtime.getURL('/images/like.png')}') !important;
+		filter: contrast(0);
+		height: 0px !important;
+		width: 0px !important;
+		background-repeat: no-repeat !important;
+		padding: 17px 17px !important;
+	}
+	ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+	ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
+		background: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
+		background-repeat: no-repeat !important;
+		filter: contrast(1);
+	}
+	ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon {
+		background: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
+		filter: contrast(0);
+		height: 0px !important;
+		width: 0px !important;
+		margin: 3px 0px 0px 3px !important;
+		background-repeat: no-repeat !important;
+		padding: 17px 17px !important;
+	}
+	ytd-comment-action-buttons-renderer #dislike-button yt-icon {
+		background: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
+		filter: contrast(0);
+		height: 0px !important;
+		width: 0px !important;
+		background-repeat: no-repeat !important;
+		padding: 17px 17px !important;
+	}
+	ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+	ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
+		background: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
+		background-repeat: no-repeat !important;
+		filter: contrast(1);
+	}
+	`;
+	let compatClassicLikesIconColorsExtra = `
+	ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+	ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
+		background: url('${browser.runtime.getURL('/images/like-pressed-old.png')}') !important;
+		background-repeat: no-repeat !important;
+	}
+	ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+	ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
+		background: url('${browser.runtime.getURL('/images/dislike-pressed-old.png')}') !important;
+		background-repeat: no-repeat !important;
+	}
+	`;
 
 	function mergeOptions() {
 		let mergedOptions = '';
@@ -1468,10 +1615,19 @@ function addCustomStyles() {
 				if (reduxSettings['classicLogoChoice'] != '2017') {
 					mergedOptions += compatLogo;
 				}
+				if (reduxSettings['altUploadIcon']) {
+					mergedOptions += compatAltUploadIcon;
+				}
+				if (reduxSettings['classicLikesStyle']) {
+					mergedOptions += compatClassicLikesStyle;
+				}
 			}
 		}
 		if (reduxSettings.classicLikesStyle && reduxSettings.classicLikesIconColors) {
 			mergedOptions += allStyles.classicLikesIconColorsExtra;
+			if (browserVersion < 75) {
+				mergedOptions += compatClassicLikesIconColorsExtra;
+			}
 		}
 		return mergedOptions;
 	}
@@ -1492,7 +1648,7 @@ function addCustomStyles() {
 					yt.config_.EXPERIMENT_FLAGS.kevlar_system_icons = false;
 					clearInterval(changeFlags);
 				}
-			}, 1000);
+			}, 10);
 		}
 
 		const script = document.createElement("script");

@@ -165,6 +165,12 @@ ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
 html[dark] #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
     color: #AAAAAA;
 }
+html:not([dark]) ytd-toggle-button-renderer.style-text[is-icon-button] #text.ytd-toggle-button-renderer {
+    color: #606060 !important;
+}
+html:not([dark]) #container.ytd-sentiment-bar-renderer {
+    background-color: #ccc !important;
+}
 
 /*PLAYLIST STYLES*/
 #text.ytd-alert-with-button-renderer {
