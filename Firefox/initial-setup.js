@@ -1450,7 +1450,8 @@ function addCustomStyles() {
 		.ytd-menu-renderer[button-renderer].ytd-menu-renderer:hover yt-icon.ytd-menu-renderer, 
 		#button.ytd-menu-renderer:hover yt-icon.ytd-menu-renderer,
 		html:not([dark]) #like-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg,
-		html:not([dark]) #dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg {
+		html:not([dark]) #dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg,
+		#info ytd-subscription-notification-toggle-button-renderer yt-icon {
 			fill: #909090;
 		}
 		`,

@@ -819,7 +819,7 @@ function insertMyChannel() {
 	</div>
 	</a>
 `;
-	myChannelElement.querySelector('#endpoint').href = myChannelUrl;
+	myChannelElement.querySelector('#endpoint').href = `/channel/${myChannelUrl}`;
 	container.insertBefore(myChannelElement, container.children[0].nextSibling);
 	setTimeout(() => {
 		myChannelElement.style.maxHeight = '30px';
