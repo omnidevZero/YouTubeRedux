@@ -169,7 +169,7 @@ html:not([dark]) ytd-toggle-button-renderer.style-text[is-icon-button] #text.ytd
     color: #606060 !important;
 }
 html:not([dark]) #container.ytd-sentiment-bar-renderer {
-    background-color: #ccc !important;
+    background-color: #ccc;
 }
 
 /*PLAYLIST STYLES*/

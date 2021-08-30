@@ -632,7 +632,7 @@ function clearStoredIntervals() {
 }
 
 function splitTrending() {
-	let elems = document.querySelectorAll('#contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
+	let elems = document.querySelectorAll('ytd-two-column-browse-results-renderer:not([page-subtype="subscriptions"]) #contents > ytd-expanded-shelf-contents-renderer > #grid-container > ytd-video-renderer');
 	if (elems.length == 0) { //repeat because it can be emptied when navigating through different pages
 		setTimeout(() =>{splitTrending();}, 1000);
 		return;
@@ -794,9 +794,12 @@ function alternativeStrings() {
 }
 
 function insertMyChannel() {
-	if (document.querySelector('#redux-mychannel')) return;
 	let container = document.querySelector('#guide ytd-guide-section-renderer:first-child #items');
-	let myChannel = document.querySelector('ytd-guide-entry-renderer a[href*="studio.youtube.com"]').href;
+	let channelElement = document.querySelector('ytd-guide-entry-renderer a[href*="studio.youtube.com"]');
+
+	if (document.querySelector('#redux-mychannel') || !channelElement) return;
+
+	let myChannel = channelElement.href;
 	let myChannelUrl = myChannel.substring(myChannel.indexOf('/channel/')+9, myChannel.length);
 	let myChannelElement = document.createElement('div');
 	myChannelElement.id = 'redux-mychannel';
@@ -805,12 +808,12 @@ function insertMyChannel() {
 	myChannelElement.setAttribute('line-end-style', 'none');
 	myChannelElement.style = 'transition: 0.5s ease-out; max-height: 0; overflow: hidden;';
 	myChannelElement.innerHTML = `
-	<a id="endpoint" class="yt-simple-endpoint style-scope ytd-guide-entry-renderer" tabindex="-1" role="tablist" title="My Channel" href="/channel/">
+	<a id="endpoint" class="yt-simple-endpoint style-scope ytd-guide-entry-renderer" tabindex="-1" role="tablist" title="My channel" href="/channel/">
 	<div style="padding: 0 24px; min-width:0; height: var(--paper-item-min-height, 48px); width: 100%; display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-direction: row; -webkit-flex-direction: row; flex-direction: row; -ms-flex-align: center; -webkit-align-items: center; align-items: center; font-family: var(--paper-font-subhead_-_font-family); -webkit-font-smoothing: var(--paper-font-subhead_-_-webkit-font-smoothing); font-size: var(--paper-font-subhead_-_font-size); font-weight: var(--paper-font-subhead_-_font-weight); line-height: var(--paper-font-subhead_-_line-height); white-space: var(--paper-item_-_white-space); font-size: var(--paper-item_-_font-size, var(--paper-font-subhead_-_font-size)); font-weight: var(--paper-item_-_font-weight, var(--paper-font-subhead_-_font-weight)); line-height: var(--paper-item_-_line-height, var(--paper-font-subhead_-_line-height)); letter-spacing: var(--paper-item_-_letter-spacing); font-family: var(--paper-item_-_font-family, var(--paper-font-subhead_-_font-family)); color: var(--paper-item_-_color); min-height: var(--paper-item-min-height, 48px);" role="tab" class="style-scope ytd-guide-entry-renderer" tabindex="0" aria-disabled="false" aria-selected="false">
 		<icon style="height: 20px ; width: 20px; margin-right: 15px; fill: rgb(135, 135, 135);" class="guide-icon style-scope ytd-guide-entry-renderer"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block;"><g class="style-scope yt-icon"><path d="M12,2 C6.477,2 2,6.477 2,12 C2,17.523 6.477,22 12,22 C17.523,22 22,17.523 22,12 C22,6.477 17.523,2 12,2 L12,2 Z M12,5 C13.656,5 15,6.344 15,8 C15,9.658 13.656,11 12,11 C10.344,11 9,9.658 9,8 C9,6.344 10.344,5 12,5 L12,5 Z M12,19.2 C9.496,19.2 7.293,17.921 6.002,15.98 C6.028,13.993 10.006,12.9 12,12.9 C13.994,12.9 17.972,13.993 17.998,15.98 C16.707,17.921 14.504,19.2 12,19.2 L12,19.2 Z" class="style-scope yt-icon"></path></g></svg></icon>
 		<img-shadow height="24" width="24" class="style-scope ytd-guide-entry-renderer" disable-upgrade="" hidden="">
 		</img-shadow>
-		<span class="title style-scope ytd-guide-entry-renderer">My channel</span>
+		<span id="redux-channel-text" class="title style-scope ytd-guide-entry-renderer">My channel</span>
 		<span class="guide-entry-count style-scope ytd-guide-entry-renderer">
 		</span>
 		<icon class="guide-entry-badge style-scope ytd-guide-entry-renderer" disable-upgrade="">
@@ -820,6 +823,7 @@ function insertMyChannel() {
 	</a>
 `;
 	myChannelElement.querySelector('#endpoint').href = `/channel/${myChannelUrl}`;
+	myChannelElement.querySelector('#redux-channel-text').innerText = reduxSettings.myChannelCustomText ? reduxSettings.myChannelCustomText : 'My channel';
 	container.insertBefore(myChannelElement, container.children[0].nextSibling);
 	setTimeout(() => {
 		myChannelElement.style.maxHeight = '30px';

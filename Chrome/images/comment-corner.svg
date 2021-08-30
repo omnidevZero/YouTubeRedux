@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="11" width="12" shape-rendering="geometricPrecision">
+  <g fill="white">
+    <path stroke="#1b7fcc" stroke-width="2" d="M12 0 L1 0" />
+	<path stroke="#1b7fcc" stroke-width="1" d="M1 0 L12 11" />
+	<path fill="white" stroke="white" stroke-width="0.2" d="M12 10 L3 1 L12 1 Z" />
+  </g>
+</svg>

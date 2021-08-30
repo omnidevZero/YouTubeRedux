@@ -53,7 +53,9 @@ const defaultSettings = {
 	"altLoaderSmaller": false,
 	"showChangelog": true,
 	"oldIcons": true,
-	"myChannel": false
+	"myChannel": false,
+	"myChannelCustomText": "My channel",
+	"extraComments": true
 };
 
 initiate();
@@ -1025,6 +1027,7 @@ function addCustomStyles() {
 		}
 		.ytp-spinner {
 			margin-top: var(--redux-spinner-margin, -28px);
+			margin-left: -22px;
     		font-size: var(--redux-spinner-font, 28px);
 			width: 2.604vw !important;
 			height: 2.604vw !important;
@@ -1096,6 +1099,7 @@ function addCustomStyles() {
 		altLoaderSmaller: `
 		.ytp-spinner {
 			margin-top: -10px;
+			margin-left: -8px;
     		font-size: 10px;
 			width: 1vw !important;
 			height: 1vw !important;
@@ -1125,16 +1129,11 @@ function addCustomStyles() {
 			fill: #606060;
 		}
 		/* Notifications */
-		path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
+		ytd-masthead path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
 			d: path("M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z") !important;
 		}
 		ytd-masthead#masthead:not([dark]) path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
 			fill: #606060;
-		}
-		/* Notifications as sub icon */
-		ytd-video-primary-info-renderer path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
-			d: path("M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z") !important;
-			fill: #909090;
 		}
 		/* Hamburger menu */
 		path[d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"] {
@@ -1359,16 +1358,19 @@ function addCustomStyles() {
 		path[d="M13,5c0-2.21-1.79-4-4-4C6.79,1,5,2.79,5,5v1H3v11h12V6h-2V5z M6,5c0-1.65,1.35-3,3-3c1.65,0,3,1.35,3,3v1H6V5z M14,7v9H4 V7H14z M7,11c0-1.1,0.9-2,2-2s2,0.9,2,2c0,1.1-0.9,2-2,2S7,12.1,7,11z"] {
 			d: path("M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z") !important;
 			transform: scale(0.75);
+			fill: #909090;
 		}
 		/* Unlisted */
 		path[d="M17.78,16H13v-1h4.78c1.8,0,3.26-1.57,3.26-3.5S19.58,8,17.78,8H13V7h4.78c2.35,0,4.26,2.02,4.26,4.5S20.13,16,17.78,16z M11,15H6.19c-1.8,0-3.26-1.57-3.26-3.5S4.39,8,6.19,8H11V7H6.19c-2.35,0-4.26,2.02-4.26,4.5S3.84,16,6.19,16H11V15z M16,11H8v1h8 V11z"] {
 			d: path("M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z") !important;
 			transform: scale(0.75) translate(4px);
+			fill: #909090;
 		}
 		/* Public */
 		path[d="M9,1C4.58,1,1,4.58,1,9s3.58,8,8,8s8-3.58,8-8S13.42,1,9,1z M16,9c0,1.31-0.37,2.54-1,3.59V11h-2c-0.55,0-1-0.45-1-1   c0-1.1-0.9-2-2-2H8.73C8.9,7.71,9,7.36,9,7V5h1c1.1,0,2-0.9,2-2V2.69C14.36,3.81,16,6.21,16,9z M2.02,9.45L7,12.77V13   c0,1.1,0.9,2,2,2v1C5.29,16,2.26,13.1,2.02,9.45z M10,15.92V14H9c-0.55,0-1-0.45-1-1v-0.77L2.04,8.26C2.41,4.75,5.39,2,9,2   c0.7,0,1.37,0.11,2,0.29V3c0,0.55-0.45,1-1,1H8v3c0,0.55-0.45,1-1,1H5.5v1H10c0.55,0,1,0.45,1,1c0,1.1,0.9,2,2,2h1v1.89   C12.95,14.96,11.56,15.7,10,15.92z"] {
 			d: path("M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z") !important;
 			transform: scale(0.75);
+			fill: #909090;
 		}
 		tp-yt-paper-dialog #checkboxLabel yt-icon {
 			height: 24px !important;
@@ -1432,10 +1434,253 @@ function addCustomStyles() {
 		ytd-toggle-button-renderer.style-default-active[is-icon-button] {
 			color: #065FD4 !important;
 		}
+		/* Add to queue */
+		path[d="M21,16h-7v-1h7V16z M21,11H9v1h12V11z M21,7H3v1h18V7z M10,15l-7-4v8L10,15z"] {
+			d: path("M9,10 L18,10 L18,12 L9,12 L9,10 Z M6,6 L18,6 L18,8 L6,8 L6,6 Z M12,14 L18,14 L18,16 L12,16 L12,14 Z M6,12 L6,18 L10,15 L6,12 Z") !important;
+		}
+		path[d="M21,16h-7v-1h7V16z M21,11H9v1h12V11z M21,7H3v1h18V7z M10,15l-7-4v8L10,15z"]:not(#hover-overlays path[d="M21,16h-7v-1h7V16z M21,11H9v1h12V11z M21,7H3v1h18V7z M10,15l-7-4v8L10,15z"]) {
+			fill: #909090;
+		}
+		/* Hide */
+		path[d="M7.21 18.21L5.8 16.8L16.8 5.8L18.21 7.21L7.21 18.21ZM12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 21C7.04 21 3 16.96 3 12C3 7.04 7.04 3 12 3C16.96 3 21 7.04 21 12C21 16.96 16.96 21 12 21Z"] {
+			d: path("M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z") !important;
+			fill: #909090;
+		}
+		/* Don't recommend */
+		path[d="M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9s9-4.04,9-9S16.96,3,12,3 M12,2c5.52,0,10,4.48,10,10s-4.48,10-10,10S2,17.52,2,12 S6.48,2,12,2L12,2z M19,13H5v-2h14V13z"] {
+			d: path("M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z") !important;
+			fill: #909090;
+		}
+		/* Thanks */
+		path[d="M16.5,3C19.02,3,21,5.19,21,7.99c0,3.7-3.28,6.94-8.25,11.86L12,20.59l-0.74-0.73l-0.04-0.04C6.27,14.92,3,11.69,3,7.99 C3,5.19,4.98,3,7.5,3c1.4,0,2.79,0.71,3.71,1.89L12,5.9l0.79-1.01C13.71,3.71,15.1,3,16.5,3 M16.5,2c-1.74,0-3.41,0.88-4.5,2.28 C10.91,2.88,9.24,2,7.5,2C4.42,2,2,4.64,2,7.99c0,4.12,3.4,7.48,8.55,12.58L12,22l1.45-1.44C18.6,15.47,22,12.11,22,7.99 C22,4.64,19.58,2,16.5,2L16.5,2z M11.33,10.86c0.2,0.14,0.53,0.26,1,0.36c0.47,0.1,0.86,0.22,1.18,0.35 c0.99,0.4,1.49,1.09,1.49,2.07c0,0.7-0.28,1.27-0.83,1.71c-0.33,0.26-0.73,0.43-1.17,0.54V17h-2v-1.16 c-0.18-0.05-0.37-0.1-0.53-0.19c-0.46-0.23-0.92-0.55-1.18-0.95C9.15,14.48,9.06,14.24,9,14h2c0.05,0.09,0.07,0.18,0.15,0.25 c0.23,0.19,0.54,0.29,0.92,0.29c0.36,0,0.63-0.07,0.82-0.22s0.28-0.35,0.28-0.59c0-0.25-0.11-0.45-0.34-0.6s-0.59-0.27-1.1-0.39 c-1.67-0.39-2.51-1.16-2.51-2.34c0-0.68,0.26-1.26,0.78-1.71c0.28-0.25,0.62-0.43,1-0.54V7h2v1.12c0.46,0.11,0.85,0.29,1.18,0.57 C14.59,9.05,14.9,9.48,15,10h-2c-0.04-0.09-0.1-0.17-0.16-0.24c-0.17-0.19-0.44-0.29-0.81-0.29c-0.32,0-0.56,0.08-0.74,0.24 c-0.17,0.16-0.26,0.36-0.26,0.6C11.03,10.53,11.13,10.72,11.33,10.86z"] {
+			d: path("M21.8,6.9c-0.2-0.7-0.5-1.4-1.1-2c-0.5-0.6-1.2-1.1-2-1.4C18,3.2,17.2,3,16.3,3c-0.8,0-1.7,0.2-2.4,0.6C13.2,3.9,12.5,4.4,12,5c-0.5-0.6-1.2-1.1-1.9-1.5C9.3,3.2,8.5,3,7.7,3C6.8,3,6,3.2,5.2,3.5c-0.8,0.3-1.4,0.8-2,1.4c-0.5,0.5-0.9,1.2-1.1,2C0.8,11.9,5.5,18,12,22C18.5,18,23.2,11.9,21.8,6.9z M15,10h-4.5v1.5H14c0.5,0,1,0.5,1,1V15c0,0.5-0.5,1-1,1h-1v1.5h-2V16h-1c-0.5,0-1-0.5-1-1v-0.5h4.5V13H10c-0.5,0-1-0.5-1-1V9.5c0-0.5,0.5-1,1-1h1V7h2v1.5h1c0.5,0,1,0.5,1,1V10z") !important;
+			fill: #909090;
+		}
+		/* Transcript */
+		path[d="M5,11h2v2H5V11z M15,15H5v2h10V15z M19,15h-2v2h2V15z M19,11H9v2h10V11z M22,6H2v14h20V6z M3,7h18v12H3V7z"] {
+			d: path("M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z") !important;
+			fill: #909090;
+		}
+		/* Sub alert all */
+		path[d="M21.5 8.99992H19.5V8.80992C19.5 6.89992 18.39 5.18991 16.6 4.32991L17.47 2.52991C19.96 3.71991 21.5 6.12992 21.5 8.80992V8.99992ZM4.5 8.80992C4.5 6.89992 5.61 5.18991 7.4 4.32991L6.53 2.52991C4.04 3.71991 2.5 6.12992 2.5 8.80992V8.99992H4.5V8.80992ZM12 21.9999C13.1 21.9999 14 21.0999 14 19.9999H10C10 21.0999 10.9 21.9999 12 21.9999ZM20 17.3499V18.9999H4V17.3499L6 15.4699V10.3199C6 7.39991 7.56 5.09992 10 4.33992V3.95991C10 2.53991 11.49 1.45991 12.99 2.19991C13.64 2.51991 14 3.22991 14 3.95991V4.34991C16.44 5.09991 18 7.40991 18 10.3299V15.4799L20 17.3499Z"] {
+			d: path("M7.58 4.08L6.15 2.65C3.75 4.48 2.17 7.3 2.03 10.5h2c.15-2.65 1.51-4.97 3.55-6.42zm12.39 6.42h2c-.15-3.2-1.73-6.02-4.12-7.85l-1.42 1.43c2.02 1.45 3.39 3.77 3.54 6.42zM18 11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2v-5zm-6 11c.14 0 .27-.01.4-.04.65-.14 1.18-.58 1.44-1.18.1-.24.15-.5.15-.78h-4c.01 1.1.9 2 2.01 2z") !important;
+			fill: #909090;
+		}
+		/* Sub personalized */
+		ytd-video-primary-info-renderer path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"],
+		ytd-menu-popup-renderer path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
+			d: path("M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z") !important;
+			fill: #909090;
+		}
+		/* Sub alert none */
+		path[d="M3.85,3.15L3.15,3.85l3.48,3.48C6.22,8.21,6,9.22,6,10.32v5.15l-2,1.88V19h14.29l1.85,1.85l0.71-0.71L3.85,3.15z M5,18 v-0.23l2-1.88v-5.47c0-0.85,0.15-1.62,0.41-2.3L17.29,18H5z M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M9.28,5.75l-0.7-0.7 c0.43-0.29,0.9-0.54,1.42-0.7V3.96c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96v0.39c2.44,0.75,4,3.06,4,5.98v4.14l-1-1 v-3.05c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C9.76,5.46,9.52,5.59,9.28,5.75z"] {
+			d: path("M12.1,21.5 C11,21.5 10.1,20.6 10.1,19.5 L14.1,19.5 C14.1,20.6 13.2,21.5 12.1,21.5 Z M17.8493827,18.5 L4.1,18.5 L4.1,17.5 L6.1,15.5 L6.1,10.5 C6.1,9.28787069 6.34383266,8.14803693 6.80191317,7.17284768 L4,4.3 L5.3,3 L8.39345122,6.17176644 C8.80987992,6.58774655 9.3,7.1 9.3,7.1 L21.1,19.2 L19.8,20.5 L17.8493827,18.5 Z M8.37723023,8.78804618 C8.20156515,9.32818052 8.1,9.91409026 8.1,10.5 L8.1,16.5 L15.8987654,16.5 L8.37723023,8.78804618 Z M18.1,13.7 L16.1,11.6 L16.1,10.5 C16.1,8 14.6,6 12.1,6 C11.6,6 11.2,6.1 10.8,6.2 L9.3,4.7 C9.7,4.5 10.1,4.3 10.6,4.2 L10.6,3.5 C10.6,2.7 11.3,2 12.1,2 C12.9,2 13.6,2.7 13.6,3.5 L13.6,4.2 C16.5,4.9 18.1,7.4 18.1,10.5 L18.1,13.7 Z") !important;
+			fill: #909090;
+		}
+		/* Love comment*/
+		path[d="M16.5,3C19.02,3,21,5.19,21,7.99c0,3.7-3.28,6.94-8.25,11.86L12,20.59l-0.74-0.73l-0.04-0.04C6.27,14.92,3,11.69,3,7.99 C3,5.19,4.98,3,7.5,3c1.4,0,2.79,0.71,3.71,1.89L12,5.9l0.79-1.01C13.71,3.71,15.1,3,16.5,3 M16.5,2c-1.74,0-3.41,0.88-4.5,2.28 C10.91,2.88,9.24,2,7.5,2C4.42,2,2,4.64,2,7.99c0,4.12,3.4,7.48,8.55,12.58L12,22l1.45-1.44C18.6,15.47,22,12.11,22,7.99 C22,4.64,19.58,2,16.5,2L16.5,2z"] {
+			d: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z") !important;
+			fill: #909090;
+		}
+		/* Pin comment */
+		path[d="M16,11V3h1V2H7v1h1v8l-2,2v2h5v6l1,1l1-1v-6h5v-2L16,11z M17,14h-4h-1h-1H7v-0.59l1.71-1.71L9,11.41V11V3h6v8v0.41 l0.29,0.29L17,13.41V14z"] {
+			d: path("M16 5h.99L17 3H7v2h1v7l-2 2v2h5v6l1 1 1-1v-6h5v-2l-2-2V5z") !important;
+			fill: #909090;
+		}
+		/* Edit comment */
+		path[d="M14.06,7.6l2.34,2.34L6.34,20H4v-2.34L14.06,7.6 M14.06,6.19L3,17.25V21h3.75L17.81,9.94L14.06,6.19L14.06,6.19z M17.61,4.05l2.37,2.37l-1.14,1.14l-2.37-2.37L17.61,4.05 M17.61,2.63l-2.55,2.55l3.79,3.79l2.55-2.55L17.61,2.63L17.61,2.63z"] {
+			d: path("M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z") !important;
+			fill: #909090;
+		}
+		/* Popup chechbox */
+		tp-yt-paper-checkbox #checkbox {
+			border-color: #909090 !important;
+		}
 		`,
 		squareSubs: `
 		yt-img-shadow.ytd-guide-entry-renderer {
 			border-radius: 0% !important;
+		}
+		`,
+		extraComments: `
+		#placeholder-area.ytd-comment-simplebox-renderer {
+			border: 1px solid #909090 !important;
+			min-height: 30px;
+		}
+		#placeholder-area.ytd-comment-simplebox-renderer,
+		#commentbox #creation-box {
+			margin-right: 40px;
+			border-radius: 0 4px 4px 4px;
+			padding: 10px 10px;
+			transform: translate(0);
+		}
+		#placeholder-area.ytd-comment-simplebox-renderer::before {
+			content: url('${browser.runtime.getURL('/images/comment-corner-placeholder.svg')}');
+			position: absolute;
+			left: -12px;
+			top: -1px;
+			z-index: 1;
+		}
+		#commentbox #creation-box::before {
+			content: url('${browser.runtime.getURL('/images/comment-corner.svg')}');
+			position: absolute;
+			left: -12px;
+			top: -1px;
+			z-index: 1;
+		}
+		html[dark] #placeholder-area.ytd-comment-simplebox-renderer::before {
+			content: url('${browser.runtime.getURL('/images/comment-corner-placeholder-dark.svg')}');
+			position: absolute;
+			left: -12px;
+			top: -1px;
+			z-index: 1;
+		}
+		html[dark] #commentbox #creation-box::before {
+			content: url('${browser.runtime.getURL('/images/comment-corner-dark.svg')}');
+			position: absolute;
+			left: -12px;
+			top: -1px;
+			z-index: 1;
+		}
+		#commentbox #creation-box {
+			min-height: 50px;
+			margin-bottom: 10px;
+			border: 1px solid #1b7fcc !important;
+		}
+		#commentbox #footer {
+			margin-right: 40px;
+		}
+		#commentbox .underline {
+			display: none;
+		}
+		#commentbox #cancel-button tp-yt-paper-button,
+		#commentbox #submit-button tp-yt-paper-button {
+			max-height: 30px;
+			padding: 10px 10px;
+			border-radius: 2px;
+			text-transform: capitalize;
+			font-size: 12px;
+		}
+		#commentbox #cancel-button tp-yt-paper-button {
+			background-color: #fafafa;
+			border: 1px solid #d3d3d3;
+		}
+		#commentbox #cancel-button tp-yt-paper-button:hover {
+			background-color: #eaeaea;
+		}
+		html[dark] #commentbox #cancel-button tp-yt-paper-button {
+			background-color: #909090;
+			border: 1px solid #909090;
+			color: white !important;
+		}
+		html[dark] #commentbox #cancel-button tp-yt-paper-button:hover {
+			background-color: #999999;
+			border: 1px solid #999999;
+		}
+		#commentbox #submit-button tp-yt-paper-button {
+			background-color: #88bce2;
+			border: 1px solid #97beda;
+			color: white !important;  
+		}
+		html[dark] #commentbox #submit-button tp-yt-paper-button {
+			background-color: #909090;
+			border: 1px solid #909090;
+			color: white !important;  
+		}
+		#commentbox #submit-button tp-yt-paper-button:hover {
+			background-color: #72a6cc;
+		}
+		html[dark] #commentbox #submit-button tp-yt-paper-button:hover {
+			background-color: #999999;
+		}
+		#count.ytd-comments-header-renderer yt-formatted-string {
+			display: flex;
+			flex-direction: row-reverse;
+			font-size: 14px;
+			text-transform: uppercase;
+		}
+		#count.ytd-comments-header-renderer yt-formatted-string span:last-child::after {
+			content: '•';
+			margin: 0 5px;
+		}
+		#vote-count-middle.ytd-comment-action-buttons-renderer {
+			order: 2;
+			z-index: 1;
+		}
+		#vote-count-left.ytd-comment-action-buttons-renderer[hidden] + #like-button.ytd-comment-action-buttons-renderer {
+			order: 3;
+		}
+		#dislike-button.ytd-comment-action-buttons-renderer {
+			order: 4;
+		}
+		#reply-button-end tp-yt-paper-button {
+			padding-left: 0;
+			justify-content: left;
+			margin-right: -17px;
+		}
+		html:not([dark]) #reply-button-end tp-yt-paper-button {
+			color: #909090;
+		}
+		#reply-button-end tp-yt-paper-button yt-formatted-string {
+			text-transform: capitalize;
+			font-weight: normal;
+		}
+		#reply-button-end tp-yt-paper-button yt-formatted-string::after {
+			content: '•';
+			margin: 0 5px;
+		}
+		#comments #sort-menu #label.yt-dropdown-menu {
+			box-sizing: border-box;
+			background: #f8f8f8;
+			color: #333;
+			height: 28px;
+			border: solid 1px transparent;
+			border-color: #d3d3d3;
+			padding: 0 10px;
+			outline: 0;
+			font-weight: 500;
+			font-size: 11px;
+			border-radius: 2px;
+			box-shadow: 0 1px 0 rgb(0 0 0 / 5%);
+			display: flex;
+   			align-items: center;
+		}
+		#comments #sort-menu #label.yt-dropdown-menu:hover {
+			background-color: #f0f0f0;
+		}
+		html[dark] #comments #sort-menu #label.yt-dropdown-menu {
+			border-color: #909090 !important;
+    		background: #222222 !important;
+    		color: white !important;
+		}
+		html[dark] #comments #sort-menu #label.yt-dropdown-menu:hover {
+			background-color: #505050 !important;
+		}
+		#comments #sort-menu yt-sort-filter-sub-menu-renderer #icon-label {
+			text-transform: capitalize;
+			font-weight: normal;
+			display: flex;
+			align-items: center;
+			font-size: 13px;
+		}
+		#comments #sort-menu yt-sort-filter-sub-menu-renderer #icon-label::after {
+			content: '';
+			margin-top: -3px;
+			margin-left: 5px;
+			border: 1px solid transparent;
+			border-top-color: #333;
+			border-width: 4px 4px 0;
+			width: 0;
+			height: 0;
+		}
+		html[dark] #comments #sort-menu yt-sort-filter-sub-menu-renderer #icon-label::after {
+			border-top-color: white;
+		}
+		#comments #sort-menu yt-sort-filter-sub-menu-renderer #label-icon {
+			display: none;
+		}
+		#comments #title #count {
+			margin: 0 16px 0 0 !important;
 		}
 		`
 	};

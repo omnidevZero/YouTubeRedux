@@ -105,6 +105,36 @@ document.querySelectorAll('label.logo-label').forEach(element => {
 	});
 });
 
+//changeChannel button
+document.querySelector('#changeChannel').addEventListener('click', function() {
+	if (document.querySelector('#changeChannelPopup')) return;
+	let popup = document.createElement('div');
+	popup.style = 'display:flex; align-content: center; position: fixed; top: 50%; transform: translate(10%, 100%); background: linear-gradient(0deg, black, grey); padding: 10px; border-radius: 4px; color: white; flex-direction: column; box-shadow: 0px 1px 3px black;';
+	popup.id = 'changeChannelPopup';
+	popup.innerHTML = `
+	<div>Current button text - <span style="color:yellow">${this.innerText}</span></div>
+	<div>Do you want to change it?</div>
+	<div style="display: flex; flex-direction: row;">
+	<div><button id="submit" style="color: white; border: 1px solid grey; border-radius: 4px; margin: 8px 4px">Change</button></div>
+	<div><button id="cancel" style="color: white; border: 1px solid grey; border-radius: 4px; margin: 8px 4px">Cancel</button></div>
+	</div>
+	`;
+	popup.querySelector('#submit').addEventListener('click', () => {
+		let textChoice = prompt('Enter your desired button label text', 'My channel');
+		if (textChoice) {
+			
+			this.value = textChoice;
+			this.innerText = this.value;
+			saveSettings();
+		}
+		popup.remove();
+	});
+	popup.querySelector('#cancel').addEventListener('click', () => {
+		popup.remove();
+	});
+	document.body.append(popup);
+});
+
 function saveSettings() {
 	let newSettings = {};
 	//save slider
@@ -136,6 +166,12 @@ function saveSettings() {
 		if (logo[i].checked) {
 			newSettings[logo[i].name] = logo[i].value;
 		}
+	}
+
+	//save buttons
+	let buttons = document.querySelectorAll('button');
+	for (let i = 0; i < buttons.length; i++) {
+		newSettings[buttons[i].name] = buttons[i].value;
 	}
 
 	chrome.storage.sync.set({reduxSettings: newSettings});
@@ -208,5 +244,6 @@ chrome.storage.sync.get(['reduxSettings'], function(result) {
 		currentSettings = result.reduxSettings;
 		calculateSizeOptions();
 		getSettings();
+		if (currentSettings.myChannelCustomText) document.querySelector('#changeChannel').innerText = currentSettings.myChannelCustomText;
 	}
 });

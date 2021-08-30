@@ -293,6 +293,17 @@
         .browser-warning:hover > .browser-warning-text::after {
             display: inline-block;
         }
+        #changeChannel {
+            font-size: 12px;
+            background: rgb(185, 185, 185);
+            border-radius: 4px;
+            background: rgb(195 206 244);
+            border: 1px solid #909090;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 95px;
+        }
       </style>
     </head>
     <body>
@@ -309,6 +320,7 @@
                             <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
                             <label><input type="checkbox" name="extraLayout" class="settings">Extra layout changes<div class="tooltip"><span class="tooltip-text-small">Adds more classic styles to multiple pages in order to match the old layout more closely.</span></div></label>
                             <div class="subsettings-container">
+                                <label class="subsetting"><input type="checkbox" name="extraComments" class="settings" disabled>Restore old comments styles</label>
                                 <label class="subsetting"><input type="checkbox" name="darkerRed" class="settings" disabled>Use darker red color</label>
                                 <label class="subsetting"><input type="checkbox" name="noHomeScaling" class="settings" disabled>No home page scaling<div class="tooltip"><span class="tooltip-text-small">When enabled it will prevent reducing empty space at the sides of the home page which scales down with window size - page will retain its left/right padding.</span></div></label>
                                 <label class="subsetting"><input type="checkbox" name="extraSidebarStyles" class="settings" disabled>Additional sidebar changes</label>
@@ -392,7 +404,7 @@
                                 </label>
                             </label>
                             <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
-                            <label><input type="checkbox" name="myChannel" class="settings">Add 'My channel' button to sidebar menu</label>    
+                            <label><input type="checkbox" name="myChannel" class="settings">Add <button id="changeChannel" name="myChannelCustomText">My channel</button> button to sidebar menu</label>    
                         </div>
                         <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>
