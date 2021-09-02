@@ -112,13 +112,14 @@ document.querySelector('#changeChannel').addEventListener('click', function() {
 	popup.style = 'display:flex; align-content: center; position: fixed; top: 50%; transform: translate(10%, 100%); background: linear-gradient(0deg, black, grey); padding: 10px; border-radius: 4px; color: white; flex-direction: column; box-shadow: 0px 1px 3px black;';
 	popup.id = 'changeChannelPopup';
 	popup.innerHTML = `
-	<div>Current button text - <span style="color:yellow">${this.innerText}</span></div>
+	<div>Current button text - <span style="color:yellow"></span></div>
 	<div>Do you want to change it?</div>
 	<div style="display: flex; flex-direction: row;">
 	<div><button id="submit" style="color: white; border: 1px solid grey; border-radius: 4px; margin: 8px 4px">Change</button></div>
 	<div><button id="cancel" style="color: white; border: 1px solid grey; border-radius: 4px; margin: 8px 4px">Cancel</button></div>
 	</div>
 	`;
+	popup.querySelector('span').innerText = this.innerText;
 	popup.querySelector('#submit').addEventListener('click', () => {
 		let textChoice = prompt('Enter your desired button label text', 'My channel');
 		if (textChoice) {
