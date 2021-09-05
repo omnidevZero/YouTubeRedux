@@ -7,6 +7,11 @@ let flags = {
 	"recalcListenersAdded":false,
 	"trueFullscreenListenersAdded":false
 };
+let alignRetry = {
+	startCount: 0,
+	maxCount: 5,
+	timeout: 20
+};
 let YTReduxURLPath;
 let YTReduxURLSearch;
 let confirmInterval;
@@ -69,12 +74,12 @@ function waitForElement(selector, interval, callback) {
 }
 
 function alignItems() {
-	let player = document.querySelector('#player-container-outer');
+	let playerElement = document.querySelector('#player-container-outer');
 	let content = document.querySelector('#columns > #primary > #primary-inner');
 	let videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
-	let calcPadding = Math.ceil(player.getBoundingClientRect().left - content.getBoundingClientRect().left);
+	let calcPadding = Math.ceil(playerElement.getBoundingClientRect().left - content.getBoundingClientRect().left);
 
-	if (calcPadding == 0 || calcPadding >= 1000 || player == null || content == null || videoInfoElement == null) {
+	if (calcPadding == 0 || calcPadding >= 1000 || playerElement == null || content == null || videoInfoElement == null) {
 		waitForElement('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
 	} else {
@@ -85,23 +90,30 @@ function alignItems() {
 			max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
 		}
 		#primary.ytd-watch-flexy > #primary-inner {
-			padding-left: ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
+			padding-left: ${Math.max((calcPadding / window.innerWidth * 100).toFixed(3), 0)}vw !important;
 		}
 		#secondary.ytd-watch-flexy {
-			margin-right: ${(calcPadding / window.innerWidth * 100).toFixed(3)}vw !important;
+			margin-right: ${Math.max((calcPadding / window.innerWidth * 100).toFixed(3), 0)}vw !important;
 		}
         `;
-		if (reduxAlignElement == null) {
+
+		if (!reduxAlignElement) {
 			let customStyle = document.createElement("style");
 			customStyle.id = 'redux-style-align';
 			let customStyleInner = calcInner;
 			customStyle.appendChild(document.createTextNode(customStyleInner));
 			document.head.append(customStyle); 
 		} else {
-			if (reduxAlignElement != null) {
-				reduxAlignElement.textContent = "";
-			}
+			reduxAlignElement.textContent = "";
 			reduxAlignElement.appendChild(document.createTextNode(calcInner));
+		}
+
+		alignRetry.startCount++;
+		if (alignRetry.startCount <= alignRetry.maxCount) {
+			setTimeout(alignItems, alignRetry.timeout);
+		} else {
+			alignRetry.startCount = 0;
+			return;
 		}
 	}
 }
@@ -737,32 +749,41 @@ function sortPlaylists() {
 }
 
 function trimStrings() {
-	let subString = document.querySelector('#reduxSubDiv > #owner-sub-count');
-	let checkForSpan = setInterval(() => {
-		let addedSpan = document.querySelector('#reduxSubDiv > #owner-sub-count > span');
-		if (addedSpan) {
-			subString.childNodes.forEach((element) => {
-				if (element.nodeType === 3) {
-					element.remove();
-				}
-			});
-			trimSubs();
-			clearInterval(checkForSpan);
-		}
-	}, 10);
-	intervalsArray.push(checkForSpan);
-	setTimeout(() => {
-		if (checkForSpan) {
-			clearInterval(checkForSpan);
-		}
-	}, 10000);
 	trimSubs();
 
-	function trimSubs() {
-		if (subString.innerText !== subString.getAttribute('redux-sub-check')) {
-			subString.innerText = subString.innerText.replace(/\s+\S*$/, '');
-			subString.setAttribute('redux-sub-check', subString.innerText);
+	let checkForChannelChange = setInterval(() => {
+		let subString = document.querySelector('#reduxSubDiv > #owner-sub-count') || document.querySelector('#info #owner-sub-count');
+		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]');
+		if (subString.getAttribute('redux-sub-check') !== channelElement.href) {
+			trimSubs();
+			clearInterval(checkForChannelChange);
 		}
+	}, 50);
+
+	setTimeout(() => {
+		if (checkForChannelChange) {
+			clearInterval(checkForChannelChange);
+		}
+	}, 10000);
+
+	function trimSubs() {
+		let subString = document.querySelector('#reduxSubDiv > #owner-sub-count') || document.querySelector('#info #owner-sub-count');
+		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]');
+		subString.setAttribute('redux-sub-check', channelElement.href);
+
+		let existingSpan = document.querySelector('#redux-trim-span');
+		if (existingSpan) {
+			existingSpan.innerText = subString.innerText.replace(/\s+\S*$/, '');
+			return;
+		}
+
+		let reduxTrimSpan = document.createElement('span');
+		reduxTrimSpan.id = 'redux-trim-span';
+		reduxTrimSpan.innerText = subString.innerText.replace(/\s+\S*$/, '');
+		reduxTrimSpan.classList.add('ytd-video-owner-renderer');
+
+		let container = document.querySelector('#reduxSubDiv');
+		container.insertBefore(reduxTrimSpan, subString);
 	}
 }
 
@@ -785,8 +806,8 @@ function trimViews() {
 
 	modifyViews();
 
-	let observer = new MutationObserver(modifyViews);
-	observer.observe(views, {characterData: true, subtree: true});
+	let viewsObserver = new MutationObserver(modifyViews);
+	viewsObserver.observe(views, {characterData: true, subtree: true});
 }
 
 function alternativeStrings() {

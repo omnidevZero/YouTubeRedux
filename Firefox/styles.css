@@ -285,3 +285,25 @@ ytd-rich-grid-renderer {
 html[dark] #show-more-related input, html[dark] #show-more-comments input {
     border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
+#redux-trim-span {
+    color: var(--yt-spec-text-secondary);
+    margin-right: 4px;
+    font-size: var(--ytd-thumbnail-attribution_-_font-size);
+    font-weight: var(--ytd-thumbnail-attribution_-_font-weight);
+    line-height: var(--ytd-thumbnail-attribution_-_line-height);
+    letter-spacing: var(--ytd-thumbnail-attribution_-_letter-spacing);
+    text-transform: var(--ytd-thumbnail-attribution_-_text-transform);
+    border: 1px solid #ccc;
+    background-color: #fafafa;
+    border-left: 0px;
+    border-radius: 0 2px 2px 0;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-bottom: 1px;
+    padding-top: 3px;
+    margin-left: 0px;
+}
+html[dark] #redux-trim-span {
+    border: 1px solid var(--yt-spec-10-percent-layer);
+    background: none;
+}

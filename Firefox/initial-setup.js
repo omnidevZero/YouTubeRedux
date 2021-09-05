@@ -662,6 +662,25 @@ function addCustomStyles() {
 			padding: 0 !important; 
 			margin-right: 5px !important;
 		}
+		/* Sign in masthead button */
+		#masthead #end ytd-button-renderer {
+			align-items: center;
+		}
+		#masthead #end ytd-button-renderer yt-icon {
+			display: none;
+		}
+		#masthead #end ytd-button-renderer yt-formatted-string {
+			margin-left: 0 !important;
+			text-transform: none !important;
+			color: var(--paper-dialog-background-color);
+			background-color: var(--yt-spec-call-to-action);
+			font-size: 11px;
+		}
+		#masthead #end ytd-button-renderer tp-yt-paper-button {
+			background-color: var(--yt-spec-call-to-action);
+			padding: 5px 10px !important;
+			max-height: 25px;
+		}
 		`,
 		darkerRed: `
 		/*DARKER RED*/
@@ -1145,7 +1164,7 @@ function addCustomStyles() {
 		}
 		/* Notifications */
 		ytd-masthead path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
-			d: path("M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z") !important;
+			d: path("M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z") !important;
 		}
 		ytd-masthead#masthead:not([dark]) path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
 			fill: #606060;
@@ -1639,9 +1658,11 @@ function addCustomStyles() {
 		#vote-count-middle.ytd-comment-action-buttons-renderer {
 			order: 2;
 			margin-top: 0px !important;
+			margin-right: 0px !important;
 		}
 		#vote-count-left.ytd-comment-action-buttons-renderer[hidden] + #like-button.ytd-comment-action-buttons-renderer {
 			order: 3;
+			margin-left: 0px !important;
 		}
 		#dislike-button.ytd-comment-action-buttons-renderer {
 			order: 4;
@@ -1715,6 +1736,11 @@ function addCustomStyles() {
 		}
 		#comments #title #count {
 			margin: 0 16px 0 0 !important;
+		}
+		`,
+		trimSubs: `
+		#info #owner-sub-count {
+			display: none !important;
 		}
 		`
 	};
