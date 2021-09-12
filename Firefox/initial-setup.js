@@ -25,9 +25,9 @@ const defaultSettings = {
 	"blackBars": false, 
 	"rearrangeInfo": false, 
 	"classicLogoChoice": 2017, 
-	"filterMain": true, 
+	"filterMainRe": false, 
 	"filterVideo": false, 
-	"filterMini": false, 
+	"filterMiniRe": true, 
 	"extraLayout": true, 
 	"darkerRed": false, 
 	"trueFullscreen": false, 
@@ -53,6 +53,7 @@ const defaultSettings = {
 	"classicLikesIconColors": false,
 	"hideJoinButton": false,
 	"hideClip": false,
+	"hidePeopleSearch": true,
 	"trimSubs": false,
 	"trimViews": false,
 	"altStrings": false,
@@ -64,7 +65,8 @@ const defaultSettings = {
 	"oldIcons": true,
 	"myChannel": false,
 	"myChannelCustomText": "My channel",
-	"extraComments": true
+	"extraComments": true,
+	"collapseSidebar": false
 };
 
 initiate();
@@ -218,7 +220,7 @@ function addCustomStyles() {
 			background-color: rgb(222 0 17) !important;
 		}
 		`,
-		filterMain: `
+		filterMainRe: `
 		[page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer {
 			display: none !important;
 		}
@@ -231,11 +233,8 @@ function addCustomStyles() {
 			padding-bottom: 0 !important;
 		}
 		`,
-		filterMini: `
-		[page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer:not(:first-child):not(:nth-child(2)) {
-			display: none !important;
-		}
-		[page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper #scroll-container #chips yt-chip-cloud-chip-renderer {
+		filterMiniRe: `
+		#chips yt-chip-cloud-chip-renderer {
 			height: 20px !important;
 		}
 		yt-chip-cloud-chip-renderer.ytd-feed-filter-chip-bar-renderer {
@@ -244,9 +243,6 @@ function addCustomStyles() {
 		}
 		ytd-feed-filter-chip-bar-renderer {
 			height: 30px !important;
-		}
-		[page-subtype="home"] > #primary > ytd-rich-grid-renderer > #header > ytd-feed-filter-chip-bar-renderer > #chips-wrapper > #right-arrow {
-			display: none !important;
 		}
 		`,
 		extraLayout: `
@@ -1741,6 +1737,19 @@ function addCustomStyles() {
 		trimSubs: `
 		#info #owner-sub-count {
 			display: none !important;
+		}
+		`,
+		hidePeopleSearch: `
+		ytd-search ytd-horizontal-card-list-renderer {
+			display: none !important;
+		}
+		`,
+		collapseSidebar: `
+		ytd-mini-guide-renderer[mini-guide-visible] {
+			display: none !important;
+		}
+		ytd-mini-guide-renderer[mini-guide-visible] + ytd-page-manager {
+			margin-left: 0 !important;
 		}
 		`
 	};
