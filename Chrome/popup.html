@@ -119,6 +119,16 @@
             transform: translateY(-50%);
             right: 105%;
             z-index:2;
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .tooltip-text::-webkit-scrollbar {
+            width: 5px;
+        }
+        .tooltip-text::-webkit-scrollbar-thumb {
+            background-color: white;
+            border-radius: 5px;
         }
         .tooltip-text-small {
             display: none;
@@ -330,6 +340,17 @@
         .hide label {
             position: relative;
         }
+        .scrollable::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollable::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+        }
+        fieldset > div.scrollable {
+            max-height: 70px;
+            overflow-y: auto;
+        }
       </style>
     </head>
     <body>
@@ -344,7 +365,7 @@
                         <div style="flex: 0 0 50%;">
                             <redux>General</redux>
                             <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
-                            <label><input type="checkbox" name="extraLayout" class="settings">Extra layout changes<div class="tooltip"><span class="tooltip-text-small">Adds more classic styles to multiple pages in order to match the old layout more closely.</span></div></label>
+                            <label><input type="checkbox" name="extraLayout" class="settings">Extra layout changes<div class="tooltip"><span class="tooltip-text-small">Adds more classic styles to multiple pages in order to match the old layout more closely.<br>Disabling this setting may cause incompatibility with other settings.</span></div></label>
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="extraComments" class="settings" disabled>Restore old comments styles</label>
                                 <label class="subsetting"><input type="checkbox" name="darkerRed" class="settings" disabled>Use darker red color</label>
@@ -373,12 +394,12 @@
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="blackBars" class="settings" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
                             </div>
-                        </div>
-                        <div style="flex: 0 0 50%;">
                             <label><input type="checkbox" name="altVideoLayout" class="settings">Use alternative video page layout<div class="tooltip"><span class="tooltip-text-small">Positions video title and channel info above the player and rearranges buttons below the player. Best used with 'Use dark theme for playlists' option disabled.</span></div></label>
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="altVideoLayoutExtra" class="settings" disabled>Also rearrange likes/dislikes</label>
                             </div>
+                        </div>
+                        <div style="flex: 0 0 50%;">
                             <label><input type="checkbox" name="disableInfiniteScrolling" class="settings">Disable infinite scrolling<div class="tooltip"><span class="tooltip-text-small">Limits displayed comments and related videos to 20 items. More will load upon clicking the 'SHOW MORE' button.</span></div></label>
                             <label><input type="checkbox" name="autoConfirm" class="settings">Auto confirm 'Video paused' popup</label>
                             <label><input type="checkbox" name="showRawValues" class="settings">Show precise values for likes/dislikes<div class="tooltip"><span class="tooltip-text-small">E.g.: changes the displayed value of likes from 6K to 6312.</span></div></label>
@@ -397,6 +418,7 @@
                     <div id="page-2" class="page">
                         <div style="flex: 0 0 50%;">
                             <redux>Misc</redux>
+                            <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
                             <label><input type="checkbox" name="extraChannel" class="settings">Extra channel page changes</label>
                             <label><input type="checkbox" name="channelListView" class="settings">Use list view for channel videos</label>
                             <label><input type="checkbox" name="searchAlignLeft" class="settings">Align search bar to the left</label>
@@ -424,13 +446,12 @@
                                 </label>
                             </label>
                             <label><input type="checkbox" name="collapseSidebar" class="settings">Fully collapse sidebar on home page</label>
-                            <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
                             <label><input type="checkbox" name="myChannel" class="settings">Add <button id="changeChannel" name="myChannelCustomText">My channel</button> button to sidebar menu</label>    
                         </div>
                         <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>
                             <label><input type="checkbox" name="showChangelog" class="settings">Show changelog on updates</label>
-                            <label><input type="checkbox" name="rearrangeInfo" class="settings">Do NOT recreate old video page layout<div class="tooltip"><span class="tooltip-text">Checking this option will DISABLE video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
+                            <label><input type="checkbox" name="rearrangeInfoRe" class="settings">Recreate old video page layout<div class="tooltip"><span class="tooltip-text">Unchecking this option will disable video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
                             <fieldset style="padding-top: 0; padding-bottom: 0; position: relative;"><legend>Logo</legend>
                                 <div class="logo-preview"><img src='' style="height: 100%; width: 100%;"></img></div>
                                 <div style="text-align: center; display:flex; justify-content: center; align-items: center; flex-wrap: wrap;">
@@ -469,8 +490,11 @@
                                 <br>• Channel avatars on home page - no effect when 'Extra layout changes' setting is enabled, which already hides channel avatars
                                 <br>• Search with your voice - removes the button to the right of the search bar
                                 <br>• People also search for - removes this section from search results
+                                <br>• Related videos age - removes this info (time since upload date) from related videos
+                                <br>• Video categories - removes this info from video description
+                                <br>• Video licensing - removes this info from video description
                             </span></div></legend>
-                                <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;">
+                                <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on home page"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideAutoplayButton" class="settings toggle"></input><span aria-label="Auto-play"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideVoiceSearch" class="settings toggle"></input><span aria-label="Search with your voice"></span></label>
@@ -479,6 +503,9 @@
                                     <label class="toggle-label"><input type="checkbox" name="hideClip" class="settings toggle"></input><span aria-label="Clip"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideApps" class="settings toggle"></input><span aria-label="YouTube apps"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hidePeopleSearch" class="settings toggle"></input><span aria-label="People also search for"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideRelatedVideoAge" class="settings toggle"></input><span aria-label="Related videos age"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideVideoCategory" class="settings toggle"></input><span aria-label="Video categories"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideLicensingInfo" class="settings toggle"></input><span aria-label="Video licensing"></span></label>
                                 </div>
                             </fieldset>
                         </div>

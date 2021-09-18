@@ -311,7 +311,7 @@ function startObservingComments() {
 		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
 		showMoreComments.id = 'show-more-comments';
 		showMoreComments.style = 'text-align:center; margin-bottom: 16px; margin-right: 15px;';
-		showMoreComments.innerHTML = '<input type="button" style="height:30px; width: 100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer; text-transform: uppercase;"></input>';
+		showMoreComments.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--yt-spec-text-secondary); letter-spacing: 0.007px; padding-bottom: 8px;"></input>';
 		showMoreComments.querySelector('input').value = showMoreText;
 		contentsElement.append(showMoreComments);
 		document.querySelector('#show-more-comments').onclick = function() {
@@ -329,8 +329,8 @@ function startObservingComments() {
 		let continueElement = relatedContinuation;
 		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
 		showMoreRelated.id = 'show-more-related';
-		showMoreRelated.style = 'text-align:center; margin-top: 4px;';
-		showMoreRelated.innerHTML = '<input type="button" style="height:30px; width:100%; transition-duration: 0.5s; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size:11px; outline: none; color: var(--yt-spec-text-primary); cursor:pointer; text-transform: uppercase;"></input>';
+		showMoreRelated.style = 'text-align:center; margin-top: 4px; margin-right: 15px';
+		showMoreRelated.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--yt-spec-text-secondary); letter-spacing: 0.007px;"></input>';
 		showMoreRelated.querySelector('input').value = showMoreText;
 		relatedElement.append(showMoreRelated);
 		document.querySelector('#show-more-related').onclick = function() {
@@ -463,109 +463,6 @@ function rearrangeInfo() {
 		reduxHeader.append(infoTop);
 	}
 
-	let style = document.createElement('style');
-	style.id = 'redux-style-rearrange';
-	let innerStyle = `
-        /*VID REARRANGE STYLES*/
-        .ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer {
-            display:none;
-        }
-        #reduxSubDiv {
-            display: flex !important;
-            margin-top: 5px !important;
-        }
-        #info.ytd-video-primary-info-renderer > #menu-container {
-            transform: translateY(5px) !important;
-            margin-right: 15px !important;
-        }
-        #count.ytd-video-primary-info-renderer {
-            width: 100% !important;
-            display: flex !important;
-            justify-content: flex-end !important;
-        }
-        #info > #menu-container > ytd-sentiment-bar-renderer {
-            display: block !important;
-            width:100% !important; 
-            padding:0 !important;
-        }
-        #date > yt-formatted-string, .redux-moved-date {
-            font-weight: 500 !important;
-            color: var(--yt-spec-text-primary) !important;
-        }
-        #container > ytd-expander.ytd-video-secondary-info-renderer > #content > #description {
-            margin-top: 5px !important;
-        }
-        #menu.ytd-video-primary-info-renderer {
-            display: flex !important;
-            justify-content: flex-end !important;
-        }
-        #primary-inner > #meta > #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander {
-            margin-left: 0 !important;
-        }
-        #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
-            padding-top: 4px;
-            margin-left: 4px;
-        }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button, 
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button, 
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button,
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
-        #sponsor-button > ytd-button-renderer > a > paper-button, 
-        #sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
-        #analytics-button > ytd-button-renderer > a > paper-button,
-        #analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
-            margin: 0 !important; 
-            padding: 2px 8px 2px 8px !important; 
-            text-transform: none !important; 
-            font-weight: normal !important; 
-            font-size: 12px !important;
-            max-height: 24px !important;
-            height: 24px !important;
-        }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > paper-button > yt-formatted-string, 
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button > yt-formatted-string,
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > paper-button > yt-formatted-string,
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
-            padding-top: 1px !important;
-        }
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > paper-button:not([subscribed])::before,
-        #reduxSubDiv > #subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before, 
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer:not(.style-primary) > a > paper-button:not([subscribed])::before,
-        #reduxSubDiv > #subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed])::before {
-            content: url('${browser.runtime.getURL('/images/sub-icon.png')}') !important;
-            background-size: auto !important;
-            width: 16px !important;
-            height: 12px !important;
-            margin-right: 6px !important;
-        }
-        #sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
-            margin-right: 0px !important;
-        }
-        #sponsor-button.ytd-video-owner-renderer > ytd-button-renderer, #analytics-button.ytd-video-owner-renderer > ytd-button-renderer {
-            margin-right: 4px !important;
-        }
-        #notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
-            max-height: 21px !important; 
-            max-width: 21px !important; 
-            padding: 0 !important; 
-            margin-right: 5px !important;
-        }
-        #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
-            margin-top: 5px !important;
-        }
-        ytd-expander[collapsed] > #content.ytd-expander {
-            max-height: max(var(--ytd-expander-collapsed-height), 65px) !important;
-        }
-        #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
-            height: 20px !important;
-            width: 20px !important;
-        }
-		#info-strings > #dot {
-			display: none !important;
-		}
-        `;
-	style.appendChild(document.createTextNode(innerStyle));
-	document.querySelector('head').append(style);
 	flags.isRearranged = true;
 }
 
@@ -884,7 +781,7 @@ function main() {
 			}, 60000*10);
 		}
 	}
-	if (!reduxSettings.rearrangeInfo && window.location.href.includes('/watch?') && !flags.isRearranged) {
+	if (reduxSettings.rearrangeInfoRe && window.location.href.includes('/watch?') && !flags.isRearranged) {
 		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
 	}
 	if (reduxSettings.smallPlayer && window.location.href.includes('/watch?')) {

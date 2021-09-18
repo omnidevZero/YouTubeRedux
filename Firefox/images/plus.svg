@@ -7,5 +7,5 @@
       }
     </style>
   </defs>
-  <path id="redux-plus" data-name="redux-plus" class="cls-1" d="M7,0h3V7h7v3H10v7H7V10H0V7H7V0Z"/>
+  <path id="redux-plus" data-name="redux-plus" class="cls-1" d="M7,0h3V7h7v3H10v7H7V10H0V7H7V0Z" shape-rendering="crispEdges" />
 </svg>

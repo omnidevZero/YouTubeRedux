@@ -293,9 +293,6 @@ html[dark] #show-more-related input, html[dark] #show-more-comments input {
     line-height: var(--ytd-thumbnail-attribution_-_line-height);
     letter-spacing: var(--ytd-thumbnail-attribution_-_letter-spacing);
     text-transform: var(--ytd-thumbnail-attribution_-_text-transform);
-    border: 1px solid #ccc;
-    background-color: #fafafa;
-    border-left: 0px;
     border-radius: 0 2px 2px 0;
     padding-left: 7px;
     padding-right: 7px;
