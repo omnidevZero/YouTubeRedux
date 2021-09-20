@@ -26,7 +26,7 @@ const defaultSettings = {
 	"rearrangeInfoRe": true, 
 	"classicLogoChoice": 2017, 
 	"filterMainRe": false, 
-	"filterVideo": false, 
+	"filterVideo": true, 
 	"filterMiniRe": true, 
 	"extraLayout": true, 
 	"darkerRed": false, 
@@ -69,7 +69,11 @@ const defaultSettings = {
 	"collapseSidebar": false,
 	"hideRelatedVideoAge": true,
 	"hideVideoCategory": true,
-	"hideLicensingInfo": true
+	"hideLicensingInfo": true,
+	"moveAutoplay": true,
+	"disableMiniplayer": false,
+	"hideCountryCode": false,
+	"hideCollapsedChat": false
 };
 
 initiate();
@@ -976,6 +980,13 @@ function addCustomStyles() {
 		#info-contents ytd-video-primary-info-renderer > yt-icon-button  {
 			transform: translateY(0px) !important;
 		}
+		#info.ytd-video-primary-info-renderer > #menu-container  {
+			transform: translateY(0px) !important;
+			margin-right: 15px !important;
+		}
+		ytd-video-primary-info-renderer > #container {
+			border-bottom: none !important;
+		}
 		#player.ytd-watch-flexy {
 			margin-bottom: 0px !important;
 		}
@@ -996,9 +1007,6 @@ function addCustomStyles() {
 		}
 		`,
 		altVideoLayoutExtra: `
-		#info.ytd-video-primary-info-renderer > #menu-container  {
-			transform: translateY(0px) !important;
-		}
 		#info.ytd-video-primary-info-renderer > #menu-container #menu {
 			color: var(--yt-spec-text-secondary); 
 			justify-content: normal !important; 
@@ -1216,7 +1224,7 @@ function addCustomStyles() {
 		}
 		.ytp-spinner {
 			margin-top: var(--redux-spinner-margin, -28px);
-			margin-left: -22px;
+			margin-left: -22px !important;
     		font-size: var(--redux-spinner-font, 28px);
 			width: 2.604vw !important;
 			height: 2.604vw !important;
@@ -1288,7 +1296,7 @@ function addCustomStyles() {
 		altLoaderSmaller: `
 		.ytp-spinner {
 			margin-top: -10px;
-			margin-left: -8px;
+			margin-left: -8px !important;
     		font-size: 10px;
 			width: 1vw !important;
 			height: 1vw !important;
@@ -1681,6 +1689,77 @@ function addCustomStyles() {
 			d: path("M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z") !important;
 			fill: #909090;
 		}
+		/* Audiotrack */
+		path[d="M12,4v9.38C11.27,12.54,10.2,12,9,12c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4s4-1.79,4-4V8h6V4H12z M9,19c-1.66,0-3-1.34-3-3 s1.34-3,3-3s3,1.34,3,3S10.66,19,9,19z M18,7h-5V5h5V7z"] {
+			d: path("M12,4v9.38C11.27,12.54,10.2,12,9,12c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4s4-1.79,4-4V8h6V4H12z") !important;
+		}
+		/* Chat - timestamps */
+		path[d="M14.97,16.95L10,13.87V7h2v5.76l4.03,2.49L14.97,16.95z M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9s9-4.04,9-9S16.96,3,12,3 M12,2c5.52,0,10,4.48,10,10s-4.48,10-10,10S2,17.52,2,12S6.48,2,12,2L12,2z"] {
+			d: path("M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z") !important;
+		}
+		/* Chat - send feedback */
+		path[d="M13,14h-2v-2h2V14z M13,5h-2v6h2V5z M19,3H5v16.59l3.29-3.29L8.59,16H9h10V3 M20,2v15H9l-5,5V2H20L20,2z"] {
+			d: path("M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z") !important;
+		}
+		/* Chat - report */
+		path[d="M13.18,4l0.24,1.2L13.58,6h0.82H19v7h-5.18l-0.24-1.2L13.42,11H12.6H6V4H13.18 M14,3H5v18h1v-9h6.6l0.4,2h7V5h-5.6L14,3 L14,3z"] {
+			d: path("M3,12a2,2 0 1,0 4,0a2,2 0 1,0 -4,0 M10,12a2,2 0 1,0 4,0a2,2 0 1,0 -4,0 M17,12a2,2 0 1,0 4,0a2,2 0 1,0 -4,0") !important;
+		}
+		/* Chat - block */
+		path[d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"] {
+			d: path("M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z") !important;
+		}
+		/* Playlist shuffle */
+		path[d="M18.15,13.65l3.85,3.85l-3.85,3.85l-0.71-0.71L20.09,18H19c-2.84,0-5.53-1.23-7.39-3.38l0.76-0.65 C14.03,15.89,16.45,17,19,17h1.09l-2.65-2.65L18.15,13.65z M19,7h1.09l-2.65,2.65l0.71,0.71l3.85-3.85l-3.85-3.85l-0.71,0.71 L20.09,6H19c-3.58,0-6.86,1.95-8.57,5.09l-0.73,1.34C8.16,15.25,5.21,17,2,17v1c3.58,0,6.86-1.95,8.57-5.09l0.73-1.34 C12.84,8.75,15.79,7,19,7z M8.59,9.98l0.75-0.66C7.49,7.21,4.81,6,2,6v1C4.52,7,6.92,8.09,8.59,9.98z"] {
+			d: path("M16.808 4.655l2.069 1.978h-.527c-1.656 0-3.312.68-4.458 1.814L12.797 9.75l1.179 1.246 1.317-1.527c.764-.794 1.91-1.247 3.057-1.247h.55l-2.07 2.014 1.178 1.179 4.005-3.993-4.026-3.945-1.178 1.179zm1.974 10.998l-1.974-1.888 1.18-1.179 4.024 3.945-4.004 3.993-1.178-1.179 1.954-1.901h-.434c-1.656 0-3.312-.625-4.458-1.667L8.242 9.8C7.35 9.071 6.204 8.55 4.93 8.55H2l.006-1.794 2.965.003c1.784 0 3.312.521 4.459 1.563l5.904 6.185c.765.73 1.911 1.146 3.058 1.146h.39zm-9.02-2.092l-1.52 1.394c-.892.793-2.038 1.36-3.312 1.36H2v1.588h2.93c1.783 0 3.312-.567 4.459-1.701l1.537-1.396-1.164-1.245z") !important;
+			fill: #909090;
+		}
+		/* Playlist shuffle in */
+		path[d="M18.51,13.29l4.21,4.21l-4.21,4.21l-1.41-1.41l1.8-1.8c-2.95-0.03-5.73-1.32-7.66-3.55l1.51-1.31 c1.54,1.79,3.77,2.82,6.13,2.85l-1.79-1.79L18.51,13.29z M18.88,7.51l-1.78,1.78l1.41,1.41l4.21-4.21l-4.21-4.21l-1.41,1.41l1.8,1.8 c-3.72,0.04-7.12,2.07-8.9,5.34l-0.73,1.34C7.81,14.85,5.03,17,2,17v2c3.76,0,7.21-2.55,9.01-5.85l0.73-1.34 C13.17,9.19,15.9,7.55,18.88,7.51z M8.21,10.31l1.5-1.32C7.77,6.77,4.95,5,2,5v2C4.38,7,6.64,8.53,8.21,10.31z"] {
+			d: path("M16.808 4.655l2.069 1.978h-.527c-1.656 0-3.312.68-4.458 1.814L12.797 9.75l1.179 1.246 1.317-1.527c.764-.794 1.91-1.247 3.057-1.247h.55l-2.07 2.014 1.178 1.179 4.005-3.993-4.026-3.945-1.178 1.179zm1.974 10.998l-1.974-1.888 1.18-1.179 4.024 3.945-4.004 3.993-1.178-1.179 1.954-1.901h-.434c-1.656 0-3.312-.625-4.458-1.667L8.242 9.8C7.35 9.071 6.204 8.55 4.93 8.55H2l.006-1.794 2.965.003c1.784 0 3.312.521 4.459 1.563l5.904 6.185c.765.73 1.911 1.146 3.058 1.146h.39zm-9.02-2.092l-1.52 1.394c-.892.793-2.038 1.36-3.312 1.36H2v1.588h2.93c1.783 0 3.312-.567 4.459-1.701l1.537-1.396-1.164-1.245z") !important;
+		}
+		/* Playlist repeat all */
+		path[d="M21,13h1v5L3.93,18.03l2.62,2.62l-0.71,0.71L1.99,17.5l3.85-3.85l0.71,0.71l-2.67,2.67L21,17V13z M3,7l17.12-0.03 l-2.67,2.67l0.71,0.71l3.85-3.85l-3.85-3.85l-0.71,0.71l2.62,2.62L2,6v5h1V7z"] {
+			d: path("M3 6.929c0-.75.643-1.393 1.393-1.393h14.286L16.32 3.179 17.5 2l4.393 4.393-4.393 4.393-1.179-1.179L18.68 7.25H4.714V11H3V6.929zM2.107 17.607L6.5 13.214l1.179 1.179L5.32 16.75l13.965-.071v-3.965H21V17c0 .75-.643 1.393-1.393 1.393l-14.286.071 2.358 2.357L6.5 22l-4.393-4.393z") !important;
+		}
+		/* Playlist repeat all active */
+		path[d="M20,14h2v5L5.84,19.02l1.77,1.77l-1.41,1.41L1.99,18l4.21-4.21l1.41,1.41l-1.82,1.82L20,17V14z M4,7l14.21-0.02l-1.82,1.82 l1.41,1.41L22.01,6l-4.21-4.21l-1.41,1.41l1.77,1.77L2,5v6h2V7z"] {
+			d: path("M3 6.929c0-.75.643-1.393 1.393-1.393h14.286L16.32 3.179 17.5 2l4.393 4.393-4.393 4.393-1.179-1.179L18.68 7.25H4.714V11H3V6.929zM2.107 17.607L6.5 13.214l1.179 1.179L5.32 16.75l13.965-.071v-3.965H21V17c0 .75-.643 1.393-1.393 1.393l-14.286.071 2.358 2.357L6.5 22l-4.393-4.393z") !important;
+		}
+		/* Playlist add vids */
+		path[d="M20,12h-8v8h-1v-8H3v-1h8V3h1v8h8V12z"] {
+			d: path("M7,0h3V7h7v3H10v7H7V10H0V7H7V0Z") !important;
+			fill: #909090;
+		}
+		/* Collab */
+		path[d="M14 20C14 17.79 15.79 16 18 16C20.21 16 22 17.79 22 20H14ZM18 16C16.9 16 16 15.1 16 14C16 12.9 16.9 12 18 12C19.1 12 20 12.9 20 14C20 15.1 19.1 16 18 16ZM15 8C15 5.79 13.21 4 11 4C8.79 4 7 5.79 7 8C7 9.96 8.42 11.59 10.28 11.93C4.77 12.21 2 15.76 2 20H12.02L12 19H3.06C3.44 15.89 5.67 12.9 11 12.9C11.62 12.9 12.19 12.95 12.73 13.03L13.57 12.19C12.99 12.06 12.38 11.96 11.72 11.93C13.58 11.59 15 9.96 15 8ZM11 11C9.35 11 8 9.65 8 8C8 6.35 9.35 5 11 5C12.65 5 14 6.35 14 8C14 9.65 12.65 11 11 11Z"] {
+			d: path("M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z") !important;
+			fill: #909090;
+		}
+		/* Show unavailable vids */
+		path[d="M12,8.91c1.7,0,3.09,1.39,3.09,3.09S13.7,15.09,12,15.09S8.91,13.7,8.91,12S10.3,8.91,12,8.91 M12,7.91 c-2.25,0-4.09,1.84-4.09,4.09s1.84,4.09,4.09,4.09s4.09-1.84,4.09-4.09S14.25,7.91,12,7.91L12,7.91z M12,6.18 c3.9,0,7.35,2.27,8.92,5.82c-1.56,3.55-5.02,5.82-8.92,5.82c-3.9,0-7.35-2.27-8.92-5.82C4.65,8.45,8.1,6.18,12,6.18 M12,5.18 C7.45,5.18,3.57,8.01,2,12c1.57,3.99,5.45,6.82,10,6.82s8.43-2.83,10-6.82C20.43,8.01,16.55,5.18,12,5.18L12,5.18z"] {
+			d: path("M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z") !important;
+			fill: #909090;
+		}
+		/* Playlist move top */
+		path[d="M7 5L7 4L18 4L18 5L7 5ZM7.5 11.6L8.2 12.3L12 8.6L12 19L13 19L13 8.6L16.8 12.4L17.5 11.7L12.5 6.7L7.5 11.6Z"] {
+			d: path("M8 11h3v10h2V11h3l-4-4-4 4zM4 3v2h16V3H4z") !important;
+			fill: #909090;
+		}
+		/* Playlist move bottom */
+		path[d="M17 18V19H6V18H17ZM16.5 11.4L15.8 10.7L12 14.4V4H11V14.4L7.2 10.6L6.5 11.3L11.5 16.3L16.5 11.4Z"] {
+			d: path("M16 13h-3V3h-2v10H8l4 4 4-4zM4 19v2h16v-2H4z") !important;
+			fill: #909090;
+		}
+		/* Playlist set as thumbnail */
+		path[d="M19.08,18H5.06l4.01-5.16l2.14,2.59l3.02-3.89L19.08,18z M11.26,17h5.82l-2.87-3.82L11.26,17z M7.1,17h4.11l-2.12-2.56 L7.1,17z M20,4v16H4V4H20 M21,3H3v18h18V3L21,3z"] {
+			d: path("M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z") !important;
+			fill: #909090;
+		}
+		/* Popup checkbox */
+		tp-yt-paper-checkbox #checkbox {
+			border-color: #909090 !important;
+		}
 		/* FF additional color restoration */
 		ytd-watch-flexy #info.ytd-watch-flexy yt-icon.ytd-button-renderer,
 		tp-yt-paper-item #content-icon > yt-icon,
@@ -1711,7 +1790,7 @@ function addCustomStyles() {
 		`,
 		extraComments: `
 		#content-text.ytd-comment-renderer {
-			line-height: 16px !important;
+			line-height: 17px !important;
 		}
 		#placeholder-area.ytd-comment-simplebox-renderer {
 			border: 1px solid #909090 !important;
@@ -1929,6 +2008,113 @@ function addCustomStyles() {
 		`,
 		hideLicensingInfo: `
 		#meta.ytd-watch-flexy ytd-metadata-row-container-renderer #collapsible {
+			display: none !important;
+		}
+		`,
+		moveAutoplay: `
+		.redux-autoplay-checkbox-toggle {
+			position: relative;
+			display: inline-block;
+			width: 35px;
+			height: 15px;
+			padding-right: 2px;
+			overflow: hidden;
+			vertical-align: middle;
+			cursor: pointer;
+		}
+		#redux-autoplay-checkbox {
+			position: absolute;
+			margin: 0;
+			width: 37px;
+			height: 15px;
+			opacity: 0;
+		}
+		#redux-autoplay-checkbox-label {
+			display: flex;
+			border: 1px solid transparent;
+			height: 13px;
+			width: 100%;
+			background: #b8b8b8;
+			border-radius: 20px;
+		}
+		#redux-autoplay-checkbox-label .toggle {
+			background: #fbfbfb;
+			width: 13px;
+			border-radius: 13px;
+		}
+		.redux-autoplay-checkbox-toggle label>* {
+			display: inline-flex;
+			height: 100%;
+			vertical-align: top;
+			transition: .1s;
+		}
+		#redux-autoplay-checkbox + label > .checked {
+			overflow: hidden;
+			justify-content: center;
+		}
+		#redux-autoplay-checkbox:not(:checked) + label > .checked {
+			width: 0px;
+		}
+		#redux-autoplay-checkbox:checked + label {
+			background-color: #167ac6;
+		}
+		#redux-autoplay-checkbox:checked + label > .checked {
+			width: 22px;
+		}
+		#redux-autoplay-checkbox + label > .checked::before {
+			content: '';
+			display: inline-block;
+			vertical-align: middle;
+			border-bottom: 1px solid white;
+			border-right: 1px solid white;
+			width: 3px;
+			height: 9px;
+			transform: rotate(45deg);
+		}
+		#redux-autoplay-checkbox:not(:checked) + label > .unchecked {
+			width: 22px;
+		}
+		#redux-autoplay-label {
+			font-family: Roboto, Arial, sans-serif;
+			font-size: 13px;
+			color: #767676;
+			margin-right: 5px;
+		}
+		#items > #redux-autoplay {
+			margin-bottom: 8px;
+		}
+		[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {
+			display: none !important;
+		} 
+		#redux-autoplay + ytd-compact-video-renderer {
+			margin-bottom: 32px;
+		} 
+		#redux-autoplay + ytd-compact-video-renderer::after {
+			content: '';
+			margin-bottom: 16px;
+			margin-top: 16px;
+			border-bottom: 1px solid #e2e2e2;
+			width: calc(100% - 25px);
+			height: 0px;
+			position: absolute;
+			bottom: -32px;
+		}
+		`,
+		disableMiniplayer: `
+		button.ytp-miniplayer-button {
+			display: none !important;
+		}
+		ytd-app > ytd-miniplayer {
+			display: none !important;
+		}
+		`,
+		hideCountryCode: `
+		#country-code.ytd-topbar-logo-renderer {
+			display: none !important;
+		}
+		`,
+		hideCollapsedChat: `
+		ytd-live-chat-frame[collapsed] {
 			display: none !important;
 		}
 		`

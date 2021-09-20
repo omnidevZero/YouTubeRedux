@@ -415,6 +415,8 @@
                             <label><input type="checkbox" name="trimViews" class="settings">Trim view count</label>
                             <label><input type="checkbox" name="altStrings" class="settings">Use alternative video page strings<div class="tooltip"><span class="tooltip-text-small">Changes 'Save' button to 'Add to', adds 'Published on' to the upload date (will conflict with stream start date). Modified strings will be in English.</span></div></label>
                             <label><input type="checkbox" name="noPlayerActionAnimations" class="settings">Disable video player action animations<div class="tooltip"><span class="tooltip-text-small">Hide animations when pausing, resuming and skipping forward/backward (displayed in the center of the player).</span></div></label>    
+                            <label><input type="checkbox" name="moveAutoplay" class="settings">Move Auto-play back to related videos</label>
+                            <label><input type="checkbox" name="disableMiniplayer" class="settings">Disable miniplayer</label>
                         </div>
                     </div>
                     <div id="page-2" class="page">
@@ -495,6 +497,8 @@
                                 <br>• Related videos age - removes this info (time since upload date) from related videos
                                 <br>• Video categories - removes this info from video description
                                 <br>• Video licensing - removes this info from video description
+                                <br>• Country code - removes this info from YouTube logo
+                                <br>• Collapsed chat - removes the button to expand chat once it's been collapsed
                             </span></div></legend>
                                 <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on home page"></span></label>
@@ -508,6 +512,8 @@
                                     <label class="toggle-label"><input type="checkbox" name="hideRelatedVideoAge" class="settings toggle"></input><span aria-label="Related videos age"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideVideoCategory" class="settings toggle"></input><span aria-label="Video categories"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideLicensingInfo" class="settings toggle"></input><span aria-label="Video licensing"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideCountryCode" class="settings toggle"></input><span aria-label="Country code"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideCollapsedChat" class="settings toggle"></input><span aria-label="Collapsed chat"></span></label>
                                 </div>
                             </fieldset>
                         </div>
