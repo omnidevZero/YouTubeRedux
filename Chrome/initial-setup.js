@@ -2069,6 +2069,18 @@ function addCustomStyles() {
 			position: absolute;
 			bottom: -32px;
 		}
+		#redux-autoplay-upnext {
+			font-family: Roboto, Arial, sans-serif;
+			color: #222222;
+			font-size: 13px;
+			font-weight: 500;
+		}
+		html[dark] #redux-autoplay-upnext {
+			color: white;
+		}
+		.redux-auto-left, .redux-auto-right {
+			display: flex;
+		}
 		`,
 		disableMiniplayer: `
 		button.ytp-miniplayer-button {

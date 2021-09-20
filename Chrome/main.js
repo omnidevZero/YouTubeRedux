@@ -769,24 +769,31 @@ function addOldAutoplay() {
 	let relatedElement = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents') || document.querySelector('#secondary-inner.ytd-watch-flexy #related #items');
 	let firstRelated = document.querySelector('#related #items ytd-item-section-renderer #contents ytd-compact-video-renderer:first-child') || document.querySelector('#related #items ytd-compact-video-renderer:first-child');
 	let originalAutoplay = document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]');
+	let upNext = document.querySelector('.ytp-autonav-endscreen-upnext-header');
 	let autoplayElement = document.createElement('div');
 	autoplayElement.id = 'redux-autoplay';
-	autoplayElement.style = 'display: flex; justify-content: end; padding-right: 24px; padding-bottom: 2px;';
+	autoplayElement.style = 'display: flex; justify-content: space-between; padding-right: 24px; padding-bottom: 2px;';
 	autoplayElement.innerHTML = `
-	<span id="redux-autoplay-label"></span>
-	<span class="redux-autoplay-checkbox-toggle">
-		<input id="redux-autoplay-checkbox" type="checkbox">
-		<label for="redux-autoplay-checkbox" id="redux-autoplay-checkbox-label">
-			<span class="checked"></span>
-			<span class="toggle"></span>
-			<span class="unchecked"></span>
-		</label>  
-	</span>
+	<div class="redux-auto-left">
+		<span id="redux-autoplay-upnext"></span>
+	</div>
+	<div class="redux-auto-right">
+		<span id="redux-autoplay-label"></span>
+		<span class="redux-autoplay-checkbox-toggle">
+			<input id="redux-autoplay-checkbox" type="checkbox">
+			<label for="redux-autoplay-checkbox" id="redux-autoplay-checkbox-label">
+				<span class="checked"></span>
+				<span class="toggle"></span>
+				<span class="unchecked"></span>
+			</label>  
+		</span>
+	</div>
 	`;
 
-	autoplayElement.querySelector('#redux-autoplay-label').innerHTML = originalAutoplay.getAttribute('aria-label');
+	if (upNext) autoplayElement.querySelector('#redux-autoplay-upnext').innerText = upNext.innerText;	
+	autoplayElement.querySelector('#redux-autoplay-label').innerText = originalAutoplay.getAttribute('aria-label');
 
-	if (originalAutoplay.querySelector('div[aria-checked]').getAttribute('aria-label') === 'true') {
+	if (originalAutoplay.querySelector('div[aria-checked]').getAttribute('aria-checked') === 'true') {
 		autoplayElement.querySelector('#redux-autoplay-checkbox').checked = true;
 	}
 	
