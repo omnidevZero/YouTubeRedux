@@ -2099,6 +2099,9 @@ function addCustomStyles() {
 			position: absolute;
 			bottom: -32px;
 		}
+		html[dark] #redux-autoplay + ytd-compact-video-renderer::after {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
 		#redux-autoplay-upnext {
 			font-family: Roboto, Arial, sans-serif;
 			color: #222222;
@@ -2148,11 +2151,7 @@ function addCustomStyles() {
 	}
 	`;
 	let compatLogo = `
-	ytd-masthead #logo-icon-container, 
-	#contentContainer #logo-icon-container, 
-	ytd-topbar-logo-renderer > #logo #logo-icon,
-	#start > #masthead-logo,
-	#masthead > #masthead-logo {
+	ytd-masthead ytd-topbar-logo-renderer > #logo #logo-icon {
 		background: url('${browser.runtime.getURL(`/images/${reduxSettings.classicLogoChoice}logo.${logoExtension}`)}') !important;
 		height: 0px !important;
 		width: 0px !important;
@@ -2160,12 +2159,7 @@ function addCustomStyles() {
 		background-repeat: no-repeat !important;
 		padding: 31px 72px 0px 0px !important;
 	}
-	ytd-masthead[dark] #logo-icon-container, 
-	html[dark] #contentContainer #logo-icon-container, 
-	ytd-masthead[dark] ytd-topbar-logo-renderer > #logo, 
-	html[dark] ytd-topbar-logo-renderer > #logo #logo-icon,
-	html[dark] #start > #masthead-logo,
-	html[dark] #masthead > #masthead-logo {
+	ytd-masthead[dark] ytd-topbar-logo-renderer > #logo #logo-icon {
 		background: url('${browser.runtime.getURL(`/images/${reduxSettings.classicLogoChoice}logo-dark.${logoExtension}`)}') !important;
 		height: 0px !important;
 		width: 0px !important;

@@ -2069,6 +2069,9 @@ function addCustomStyles() {
 			position: absolute;
 			bottom: -32px;
 		}
+		html[dark] #redux-autoplay + ytd-compact-video-renderer::after {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		}
 		#redux-autoplay-upnext {
 			font-family: Roboto, Arial, sans-serif;
 			color: #222222;
