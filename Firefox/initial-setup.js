@@ -112,7 +112,7 @@ function initiate() {
 function addCustomStyles() {
 	let allStyles = {
 		hideCastButton: `/*PLAY ON TV BUTTON*/.ytp-remote-button:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}`,
-		hideAutoplayButton: `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {display:none !important;}`,
+		hideAutoplayButton: `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"], #redux-autoplay {display:none !important;}`,
 		smallPlayer: `
 		/*SMALL PLAYER*/
 		#primary.ytd-watch-flexy {
@@ -669,8 +669,8 @@ function addCustomStyles() {
 			background-color: var(--yt-spec-icon-disabled) !important;
 		}
 		/* SUB + MISC BUTTONS */
-		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
-		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
+		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
+		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
 		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
 		[page-subtype="channels"] #edit-buttons tp-yt-paper-button {
@@ -689,16 +689,16 @@ function addCustomStyles() {
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
 			padding-top: 1px !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]) {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
 			background-color: #f00 !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):hover,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):hover {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover {
 			background-color: #d90a17 !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed])::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before {
 				content: url('${browser.runtime.getURL('/images/sub-icon.png')}') !important;
 				background-size: auto !important;
 				width: 16px !important;
@@ -815,7 +815,7 @@ function addCustomStyles() {
         #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
             margin-top: 5px !important;
         }
-        ytd-expander[collapsed] > #content.ytd-expander {
+        #meta ytd-expander[collapsed] > #content.ytd-expander {
             max-height: max(var(--ytd-expander-collapsed-height), 65px) !important;
         }
         #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
@@ -837,6 +837,18 @@ function addCustomStyles() {
 		}
 		#info ytd-button-renderer.style-default[is-icon-button] svg {
 			transform: scale(0.9);
+		}
+		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
+		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
+		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
+		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
+			margin: 0; 
+			padding: 2px 8px 2px 8px; 
+			text-transform: none; 
+			font-weight: normal; 
+			font-size: 12px;
+			max-height: 24px;
+			height: 24px;
 		}
 		`,
 		darkerRed: `
@@ -1703,7 +1715,7 @@ function addCustomStyles() {
 		}
 		/* Chat - report */
 		path[d="M13.18,4l0.24,1.2L13.58,6h0.82H19v7h-5.18l-0.24-1.2L13.42,11H12.6H6V4H13.18 M14,3H5v18h1v-9h6.6l0.4,2h7V5h-5.6L14,3 L14,3z"] {
-			d: path("M3,12a2,2 0 1,0 4,0a2,2 0 1,0 -4,0 M10,12a2,2 0 1,0 4,0a2,2 0 1,0 -4,0 M17,12a2,2 0 1,0 4,0a2,2 0 1,0 -4,0") !important;
+			d: path("M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z") !important;
 		}
 		/* Chat - block */
 		path[d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"] {
@@ -1731,6 +1743,19 @@ function addCustomStyles() {
 			d: path("M7,0h3V7h7v3H10v7H7V10H0V7H7V0Z") !important;
 			fill: #909090;
 		}
+		/* Playlist icon */
+		path[d="M22,7H2v1h20V7z M13,12H2v-1h11V12z M13,16H2v-1h11V16z M15,19v-8l7,4L15,19z"] {
+			d: path("M3.67 8.67h14V11h-14V8.67zm0-4.67h14v2.33h-14V4zm0 9.33H13v2.34H3.67v-2.34zm11.66 0v7l5.84-3.5-5.84-3.5z") !important;
+		}
+		/* Playlist icon active */
+		path[d="M15,19v-8l7,4L15,19z M22,7H2v2h20V7z M13,13H2v-2h11V13z M13,17H2v-2h11V17z"] {
+			d: path("M3.67 8.67h14V11h-14V8.67zm0-4.67h14v2.33h-14V4zm0 9.33H13v2.34H3.67v-2.34zm11.66 0v7l5.84-3.5-5.84-3.5z") !important;
+		}
+		/* Hide notifications */
+		path[d="M3.85,3.15L3.15,3.85L6.19,6.9C4.31,8.11,2.83,9.89,2,12c1.57,3.99,5.45,6.82,10,6.82c1.77,0,3.44-0.43,4.92-1.2l3.23,3.23 l0.71-0.71L3.85,3.15z M13.8,14.5c-0.51,0.37-1.13,0.59-1.8,0.59c-1.7,0-3.09-1.39-3.09-3.09c0-0.67,0.22-1.29,0.59-1.8L13.8,14.5z M12,17.82c-3.9,0-7.35-2.27-8.92-5.82c0.82-1.87,2.18-3.36,3.83-4.38L8.79,9.5c-0.54,0.69-0.88,1.56-0.88,2.5 c0,2.25,1.84,4.09,4.09,4.09c0.95,0,1.81-0.34,2.5-0.88l1.67,1.67C14.9,17.49,13.48,17.82,12,17.82z M11.49,7.95 c0.17-0.02,0.34-0.05,0.51-0.05c2.25,0,4.09,1.84,4.09,4.09c0,0.17-0.02,0.34-0.05,0.51l-1.01-1.01c-0.21-1.31-1.24-2.33-2.55-2.55 L11.49,7.95z M9.12,5.59C10.04,5.33,11,5.18,12,5.18c4.55,0,8.43,2.83,10,6.82c-0.58,1.47-1.48,2.78-2.61,3.85l-0.72-0.72 c0.93-0.87,1.71-1.92,2.25-3.13C19.35,8.45,15.9,6.18,12,6.18c-0.7,0-1.39,0.08-2.06,0.22L9.12,5.59z"] {
+			d: path("M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z") !important;
+			fill: #909090;
+		}
 		/* Collab */
 		path[d="M14 20C14 17.79 15.79 16 18 16C20.21 16 22 17.79 22 20H14ZM18 16C16.9 16 16 15.1 16 14C16 12.9 16.9 12 18 12C19.1 12 20 12.9 20 14C20 15.1 19.1 16 18 16ZM15 8C15 5.79 13.21 4 11 4C8.79 4 7 5.79 7 8C7 9.96 8.42 11.59 10.28 11.93C4.77 12.21 2 15.76 2 20H12.02L12 19H3.06C3.44 15.89 5.67 12.9 11 12.9C11.62 12.9 12.19 12.95 12.73 13.03L13.57 12.19C12.99 12.06 12.38 11.96 11.72 11.93C13.58 11.59 15 9.96 15 8ZM11 11C9.35 11 8 9.65 8 8C8 6.35 9.35 5 11 5C12.65 5 14 6.35 14 8C14 9.65 12.65 11 11 11Z"] {
 			d: path("M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z") !important;
@@ -1754,6 +1779,11 @@ function addCustomStyles() {
 		/* Playlist set as thumbnail */
 		path[d="M19.08,18H5.06l4.01-5.16l2.14,2.59l3.02-3.89L19.08,18z M11.26,17h5.82l-2.87-3.82L11.26,17z M7.1,17h4.11l-2.12-2.56 L7.1,17z M20,4v16H4V4H20 M21,3H3v18h18V3L21,3z"] {
 			d: path("M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z") !important;
+			fill: #909090;
+		}
+		/* Pause watch history */
+		path[d="M11,16H9V8h2V16z M15,8h-2v8h2V8z M12,3c4.96,0,9,4.04,9,9s-4.04,9-9,9s-9-4.04-9-9S7.04,3,12,3 M12,2C6.48,2,2,6.48,2,12 s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2L12,2z"] {
+			d: path("M9 16h2V8H9v8zm3-14C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-4h2V8h-2v8z") !important;
 			fill: #909090;
 		}
 		/* Popup checkbox */
@@ -2122,6 +2152,9 @@ function addCustomStyles() {
 		ytd-app > ytd-miniplayer {
 			display: none !important;
 		}
+		[page-subtype="home"] ytd-thumbnail #hover-overlays ytd-thumbnail-overlay-toggle-button-renderer:nth-of-type(2) {
+			display: none !important;
+		}
 		`,
 		hideCountryCode: `
 		#country-code.ytd-topbar-logo-renderer {
@@ -2146,8 +2179,12 @@ function addCustomStyles() {
 	#metadata-line.ytd-video-meta-block {
 		font-size: 11px !important;
 	}
-	ytd-expander[collapsed] > #content.ytd-expander {
+	#meta ytd-expander[collapsed] > #content.ytd-expander {
 		max-height: 65px !important;
+	}
+	#video-title.ytd-compact-video-renderer,
+	#video-title.ytd-rich-grid-media {
+		line-height: 20px !important;
 	}
 	`;
 	let compatLogo = `
@@ -2275,19 +2312,21 @@ function addCustomStyles() {
 					height: 40px !important; 
 				}`;
 			}
-			if (browserVersion < 75) {
-				mergedOptions += compatStyles;
-				if (reduxSettings['classicLogoChoice'] != '2017') {
-					mergedOptions += compatLogo;
-				}
-				if (reduxSettings['altUploadIcon']) {
-					mergedOptions += compatAltUploadIcon;
-				}
-				if (reduxSettings['classicLikesStyle']) {
-					mergedOptions += compatClassicLikesStyle;
-				}
+		}
+
+		if (browserVersion < 75) {
+			mergedOptions += compatStyles;
+			if (reduxSettings['classicLogoChoice'] != '2017') {
+				mergedOptions += compatLogo;
+			}
+			if (reduxSettings['altUploadIcon']) {
+				mergedOptions += compatAltUploadIcon;
+			}
+			if (reduxSettings['classicLikesStyle']) {
+				mergedOptions += compatClassicLikesStyle;
 			}
 		}
+
 		if (reduxSettings.classicLikesStyle && reduxSettings.classicLikesIconColors) {
 			mergedOptions += allStyles.classicLikesIconColorsExtra;
 			if (browserVersion < 75) {

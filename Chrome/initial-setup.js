@@ -661,8 +661,8 @@ function addCustomStyles() {
 			background-color: var(--yt-spec-icon-disabled) !important;
 		}
 		/* SUB + MISC BUTTONS */
-		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
-		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
+		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
+		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
 		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
 		[page-subtype="channels"] #edit-buttons tp-yt-paper-button {
@@ -681,16 +681,16 @@ function addCustomStyles() {
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
 			padding-top: 1px !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]) {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
 			background-color: #f00 !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):hover,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):hover {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover {
 			background-color: #d90a17 !important;
 		}
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed])::before,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed])::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before {
 				content: url('${browser.runtime.getURL('/images/sub-icon.png')}') !important;
 				background-size: auto !important;
 				width: 16px !important;
@@ -807,7 +807,7 @@ function addCustomStyles() {
         #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
             margin-top: 5px !important;
         }
-        ytd-expander[collapsed] > #content.ytd-expander {
+        #meta ytd-expander[collapsed] > #content.ytd-expander {
             max-height: max(var(--ytd-expander-collapsed-height), 65px) !important;
         }
         #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
@@ -829,6 +829,18 @@ function addCustomStyles() {
 		}
 		#info ytd-button-renderer.style-default[is-icon-button] svg {
 			transform: scale(0.9);
+		}
+		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
+		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
+		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
+		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
+			margin: 0; 
+			padding: 2px 8px 2px 8px; 
+			text-transform: none; 
+			font-weight: normal; 
+			font-size: 12px;
+			max-height: 24px;
+			height: 24px;
 		}
 		`,
 		darkerRed: `

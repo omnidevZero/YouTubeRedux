@@ -758,7 +758,7 @@ function hideClip() {
 }
 
 function autoplayInveral() {
-	let autoInterval = setInterval(addOldAutoplay, 500);
+	let autoInterval = setInterval(addOldAutoplay, 10);
 	setTimeout(() => {
 		clearInterval(autoInterval);
 	}, 10000);
