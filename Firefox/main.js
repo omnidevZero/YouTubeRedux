@@ -311,7 +311,7 @@ function startObservingComments() {
 		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
 		showMoreComments.id = 'show-more-comments';
 		showMoreComments.style = 'text-align:center; margin-bottom: 16px; margin-right: 15px;';
-		showMoreComments.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--yt-spec-text-secondary); letter-spacing: 0.007px; padding-bottom: 8px;"></input>';
+		showMoreComments.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--redux-spec-text-secondary); letter-spacing: 0.007px; padding-bottom: 8px;"></input>';
 		showMoreComments.querySelector('input').value = showMoreText;
 		contentsElement.append(showMoreComments);
 		document.querySelector('#show-more-comments').onclick = function() {
@@ -330,7 +330,7 @@ function startObservingComments() {
 		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
 		showMoreRelated.id = 'show-more-related';
 		showMoreRelated.style = 'text-align:center; margin-top: 4px; margin-right: 15px';
-		showMoreRelated.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--yt-spec-text-secondary); letter-spacing: 0.007px;"></input>';
+		showMoreRelated.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--redux-spec-text-secondary); letter-spacing: 0.007px;"></input>';
 		showMoreRelated.querySelector('input').value = showMoreText;
 		relatedElement.append(showMoreRelated);
 		document.querySelector('#show-more-related').onclick = function() {

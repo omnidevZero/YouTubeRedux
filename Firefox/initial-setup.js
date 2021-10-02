@@ -258,7 +258,7 @@ function addCustomStyles() {
 			background-color: #f1f1f1 !important;
 		}
 		html[dark] ytd-app {
-			background-color: var(--yt-spec-general-background-a) !important;
+			background-color: var(--redux-spec-general-background-a) !important;
 		}
 		ytd-video-primary-info-renderer, ytd-video-secondary-info-renderer {
 			background-color: white !important;
@@ -321,7 +321,7 @@ function addCustomStyles() {
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#more,
 		html[dark] #meta.ytd-watch-flexy paper-button#less,
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#less {
-			border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
+			border-top: 1px solid var(--redux-spec-10-percent-layer) !important;
 		}
 		html[dark] #meta.ytd-watch-flexy paper-button#more:hover > yt-formatted-string,
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#more:hover > yt-formatted-string,
@@ -418,13 +418,13 @@ function addCustomStyles() {
 			border-right: 1px solid #e8e8e8 !important;
 		}
 		html[dark] app-drawer#guide[position="left"] {
-			border-right: 1px solid var(--yt-spec-10-percent-layer) !important;
+			border-right: 1px solid var(--redux-spec-10-percent-layer) !important;
 		}
 		#masthead-container.ytd-app #masthead:not([dark]) {
 			border-bottom: 1px solid #e8e8e8 !important;
 		}
 		html[dark] #masthead-container.ytd-app {
-			border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
+			border-bottom: 1px solid var(--redux-spec-10-percent-layer) !important;
 		}
 		@media (max-width: 2000px) {
 			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer,
@@ -439,7 +439,7 @@ function addCustomStyles() {
 			} 
 		}
 		ytd-rich-shelf-renderer {
-			border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
+			border-top: 1px solid var(--redux-spec-10-percent-layer) !important;
 		}
 		#video-title.ytd-rich-grid-media, 
 		#video-title.yt-simple-endpoint.ytd-grid-video-renderer {
@@ -495,7 +495,7 @@ function addCustomStyles() {
 			line-height: 1.3em !important;
 		}
 		ytd-rich-shelf-renderer[is-show-more-hidden] #dismissable.ytd-rich-shelf-renderer {
-			border-bottom: 1px solid var(--yt-spec-10-percent-layer) !important;
+			border-bottom: 1px solid var(--redux-spec-10-percent-layer) !important;
 		}
 		#avatar-link.ytd-rich-grid-media {
 			display:none !important;
@@ -571,10 +571,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
 			width: 8px !important;
@@ -584,10 +584,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
 			width: 8px !important;
@@ -597,10 +597,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar {
 			width: 8px !important;
@@ -610,10 +610,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
 			width: 8px !important;
@@ -623,10 +623,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar {
 			width: 8px !important;
@@ -636,10 +636,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar {
 			width: 8px !important;
@@ -649,10 +649,10 @@ function addCustomStyles() {
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb:hover {
-			background-color: var(--yt-spec-icon-inactive) !important;
+			background-color: var(--redux-spec-icon-inactive) !important;
 		}
 		ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app::-webkit-scrollbar {
 			background: transparent;
@@ -666,7 +666,7 @@ function addCustomStyles() {
 			background-color: transparent;
 		}
 		ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app:hover::-webkit-scrollbar-thumb {
-			background-color: var(--yt-spec-icon-disabled) !important;
+			background-color: var(--redux-spec-icon-disabled) !important;
 		}
 		/* SUB + MISC BUTTONS */
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
@@ -742,12 +742,12 @@ function addCustomStyles() {
 		#masthead #end ytd-button-renderer yt-formatted-string {
 			margin-left: 0 !important;
 			text-transform: none !important;
-			color: var(--paper-dialog-background-color);
-			background-color: var(--yt-spec-call-to-action);
+			color: var(--redux-paper-dialog-background-color);
+			background-color: var(--redux-spec-call-to-action);
 			font-size: 11px;
 		}
 		#masthead #end ytd-button-renderer tp-yt-paper-button {
-			background-color: var(--yt-spec-call-to-action);
+			background-color: var(--redux-spec-call-to-action);
 			padding: 5px 10px !important;
 			max-height: 25px;
 		}
@@ -784,7 +784,7 @@ function addCustomStyles() {
         }
         #date > yt-formatted-string, .redux-moved-date {
             font-weight: 500 !important;
-            color: var(--yt-spec-text-primary) !important;
+            color: var(--redux-double-inverse) !important;
         }
         #container > ytd-expander.ytd-video-secondary-info-renderer > #content > #description {
             margin-top: 5px !important;
@@ -816,7 +816,7 @@ function addCustomStyles() {
             margin-top: 5px !important;
         }
         #meta ytd-expander[collapsed] > #content.ytd-expander {
-            max-height: max(var(--ytd-expander-collapsed-height), 65px) !important;
+            max-height: 65px !important;
         }
         #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
             height: 20px !important;
@@ -895,7 +895,7 @@ function addCustomStyles() {
 			top: -36px;
 			position: relative;
 			margin-right: 10px;
-			color: var(--yt-spec-text-secondary) !important;
+			color: var(--redux-spec-text-secondary) !important;
 			display: inline-block;
 			min-width: 3ch;
 			text-align: center;
@@ -970,8 +970,8 @@ function addCustomStyles() {
 			padding: 16px 16px !important;
 		}
 		ytd-guide-signin-promo-renderer #sign-in-button {
-			background-color: var(--yt-spec-call-to-action);
-			color: var(--yt-spec-text-primary-inverse);
+			background-color: var(--redux-spec-call-to-action);
+			color: var(--redux-spec-text-primary-inverse);
 		}
 		ytd-guide-signin-promo-renderer #sign-in-button #button {
 			padding: 5px 10px !important;
@@ -1020,7 +1020,7 @@ function addCustomStyles() {
 		`,
 		altVideoLayoutExtra: `
 		#info.ytd-video-primary-info-renderer > #menu-container #menu {
-			color: var(--yt-spec-text-secondary); 
+			color: var(--redux-spec-text-secondary); 
 			justify-content: normal !important; 
 			margin-top: 1px;
 		}
@@ -1064,7 +1064,7 @@ function addCustomStyles() {
 		}
 		html[dark] #reduxSubDiv > yt-formatted-string,
 		html[dark] #reduxSubDiv #notification-preference-button {
-			border: 1px solid var(--yt-spec-10-percent-layer);
+			border: 1px solid var(--redux-spec-10-percent-layer);
 			background: none;
 		}
 		#reduxSubDiv tp-yt-paper-button {
@@ -1618,7 +1618,7 @@ function addCustomStyles() {
 		/* List icon */
 		path[d="M20,9H9V7h11V9z M20,11H9v2h11V11z M20,15H9v2h11V15z M7,7H4v2h3V7z M7,11H4v2h3V11z M7,15H4v2h3V15z"] {
 			d: path("M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z") !important;
-			fill: var(--yt-spec-call-to-action);
+			fill: var(--redux-spec-call-to-action);
 		}
 		path[d="M20,8H9V7h11V8z M20,11H9v1h11V11z M20,15H9v1h11V15z M7,7H4v1h3V7z M7,11H4v1h3V11z M7,15H4v1h3V15z"] {
 			d: path("M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z") !important;
@@ -1627,7 +1627,7 @@ function addCustomStyles() {
 		/* Grid icon */
 		path[d="M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z"] {
 			d: path("M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z") !important;
-			fill: var(--yt-spec-call-to-action);
+			fill: var(--redux-spec-call-to-action);
 		}
 		path[d="M8,11H2V4h6V11z M3,10h4V5H3V10z M8,20H2v-7h6V20z M3,19h4v-5H3V19z M15,11H9V4h6V11z M10,10h4V5h-4V10z M15,20H9v-7h6V20z M10,19h4v-5h-4V19z M22,11h-6V4h6V11z M17,10h4V5h-4V10z M22,20h-6v-7h6V20z M17,19h4v-5h-4V19z"] {
 			d: path("M2,4h6v7H2V4z M2,20h6v-7H2V20z M9,11h6V4H9V11z M9,20h6v-7H9V20z M16,4v7h6V4H16z M16,20h6v-7h-6V20z") !important;
@@ -1638,7 +1638,7 @@ function addCustomStyles() {
 			fill: #909090;
 		}
 		#top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon {
-			fill: var(--yt-spec-call-to-action);
+			fill: var(--redux-spec-call-to-action);
 		}
 		ytd-toggle-button-renderer.style-default-active[is-icon-button] {
 			color: #065FD4 !important;
@@ -2171,6 +2171,7 @@ function addCustomStyles() {
 	let compatStyles = `
 	#video-title.ytd-rich-grid-media {
 		font-size: 14px !important;
+		line-height: 20px !important;
 	}
 	[page-subtype="home"] #text-container.ytd-channel-name,
 	[page-subtype="subscriptions"] #text-container.ytd-channel-name {
@@ -2179,11 +2180,8 @@ function addCustomStyles() {
 	#metadata-line.ytd-video-meta-block {
 		font-size: 11px !important;
 	}
-	#meta ytd-expander[collapsed] > #content.ytd-expander {
-		max-height: 65px !important;
-	}
 	#video-title.ytd-compact-video-renderer,
-	#video-title.ytd-rich-grid-media {
+	a > #video-title.ytd-rich-grid-media {
 		line-height: 20px !important;
 	}
 	`;

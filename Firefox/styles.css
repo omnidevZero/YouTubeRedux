@@ -1,6 +1,32 @@
+/* REDUX VARIABLES */
+html:not([dark]) {
+    --redux-spec-text-primary: #fff;
+    --redux-spec-text-primary-inverse: #fff;
+    --redux-double-inverse: #030303;
+    --redux-spec-text-secondary: #606060;
+    --redux-spec-call-to-action: #065fd4;
+    --redux-spec-general-background-a: #f9f9f9;
+    --redux-spec-icon-disabled: #909090;
+    --redux-spec-icon-inactive: #030303;
+    --redux-spec-brand-background-solid: #fff;
+}
+html[dark] {
+    --redux-spec-general-background-a: #181818;
+    --redux-spec-text-primary-inverse: #030303;
+    --redux-double-inverse: #fff;
+    --redux-spec-text-secondary: #aaa;
+    --redux-spec-call-to-action: #3ea6ff;
+    --redux-spec-icon-disabled: #717171;
+    --redux-spec-icon-inactive: #fff;
+    --redux-spec-brand-background-solid: #212121;
+}
+html {
+    --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
+    --redux-paper-dialog-background-color: --redux-spec-brand-background-solid;
+}
 /*GENERAL STYLES*/
 html:not([dark]) #video-title.ytd-rich-grid-media {
-    --yt-spec-text-primary: #167ac6 !important;
+    color: #167ac6 !important;
 }
 #video-title.ytd-rich-grid-media {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
@@ -286,7 +312,7 @@ html[dark] #show-more-related input, html[dark] #show-more-comments input {
     border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
 #redux-trim-span {
-    color: var(--yt-spec-text-secondary);
+    color: var(--redux-spec-text-secondary);
     margin-right: 4px;
     font-size: var(--ytd-thumbnail-attribution_-_font-size);
     font-weight: var(--ytd-thumbnail-attribution_-_font-weight);
@@ -301,6 +327,6 @@ html[dark] #show-more-related input, html[dark] #show-more-comments input {
     margin-left: 0px;
 }
 html[dark] #redux-trim-span {
-    border: 1px solid var(--yt-spec-10-percent-layer);
+    border: 1px solid var(--redux-spec-10-percent-layer);
     background: none;
 }
