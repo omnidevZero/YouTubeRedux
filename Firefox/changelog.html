@@ -66,6 +66,20 @@
 			background-clip: content-box;
 			background-color: rgba(128, 128, 128, 0.25);
 		}
+        .marquee {
+            animation: scroll 10s linear 0s infinite;
+            font-size: 10px;
+            font-weight: normal;
+            opacity: 0.25;
+        }
+        @keyframes scroll {
+            0% {
+                transform: translate(300px, 0);
+            }
+            100% {
+                transform: translate(-300px, 0);
+            }
+        }
       </style>
       <script src="./initial-setup.js"></script>
     </head>
@@ -76,6 +90,12 @@
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">2.11.0</b><span> - 16.10.2021</span>
+                        <li>added an option to disable video preview when hovering over thumbnails</li>
+                        <li>trimmed sub count now works properly with alternative video page layout</li>
+                        <li>fixed a potential performance issue when using small player</li>
+                        <li>improved quality of old upload icon</li>
+                        <li>CSS fixes for video player controls bars and darker red option</li>
                         <b class="update">2.10.3</b><span> - 02.10.2021</span>
                         <li>CSS fixes</li>
                         <b class="update">2.10.2</b><span> - 21.09.2021</span>
@@ -569,6 +589,9 @@
                     </ul>
                 </div>
                 <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 486px; margin-top: 10px;" frameborder=0 height="100%"></iframe>
+                <div style="overflow:hidden; width: 200px; white-space: nowrap;">
+                    <div class="marquee">This page can be disabled using settings above.</div>
+                </div>
                 <div class="header-main" style="margin-top:20px;">You can access these settings via the extension's icon next to the address bar</div> 
             </div>
         </div>

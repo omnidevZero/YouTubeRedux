@@ -242,9 +242,12 @@ function recalculateVideoSize() {
 
 	function startRecalc() {
 		let checkingTimeout;
+		let retryTimeout = 2500; 
+		let retryCount = 0;
+		let retryInterval = 10;
 		let checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
 			let progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
-			let leftEdgeDistancePlayer = document.querySelector('#player-container').getBoundingClientRect().x;
+			let leftEdgeDistancePlayer = document.querySelector('#player-container-outer').getBoundingClientRect().x;
 			let leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner > #info').getBoundingClientRect().x;
 			let videoElement = document.querySelector('video');
 			let widthCtrlElement = document.querySelector('#columns > #primary > #primary-inner > #info');
@@ -256,11 +259,15 @@ function recalculateVideoSize() {
 			}
 
 			if (progressBar != null && (leftEdgeDistancePlayer > leftEdgeDistanceInfo+10 
-				//|| (progressBar.offsetWidth+24) <= playerSize.width*0.95 
-				//|| (progressBar.offsetWidth+24) >= playerSize.width*1.05
 				|| (progressBar.offsetWidth+24) <= videoElement.offsetWidth*0.95 
 				|| (progressBar.offsetWidth+24) >= videoElement.offsetWidth*1.05) && !isTheater() && !isFullscreen()) { //TODO more precise condition
 				insertRecalcScript();
+				retryCount++;
+
+				if ((retryCount*retryInterval) >= retryTimeout) {
+					clearInterval(checkingVideo);
+				}
+
 				if (checkingTimeout != undefined) {
 					clearTimeout(checkingTimeout);
 					checkingTimeout = undefined;
@@ -269,10 +276,10 @@ function recalculateVideoSize() {
 				if (checkingTimeout == undefined) {
 					checkingTimeout = setTimeout(() => {
 						clearInterval(checkingVideo);
-					}, 2500);
+					}, retryTimeout);
 				}
 			}
-		}, 10);
+		}, retryInterval);
 	}
 	if (!flags.recalcListenersAdded) {
 		waitForElement('.ytp-size-button', 10, addListenersForRecalc);
@@ -650,7 +657,7 @@ function trimStrings() {
 
 	let checkForChannelChange = setInterval(() => {
 		let subString = document.querySelector('#reduxSubDiv > #owner-sub-count') || document.querySelector('#info #owner-sub-count');
-		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]');
+		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]') || document.querySelector('#top-row ytd-video-owner-renderer > a[href]');
 		if (subString.getAttribute('redux-sub-check') !== channelElement.href) {
 			trimSubs();
 			clearInterval(checkForChannelChange);
@@ -665,7 +672,7 @@ function trimStrings() {
 
 	function trimSubs() {
 		let subString = document.querySelector('#reduxSubDiv > #owner-sub-count') || document.querySelector('#info #owner-sub-count');
-		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]');
+		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]') || document.querySelector('#top-row ytd-video-owner-renderer > a[href]');
 		subString.setAttribute('redux-sub-check', channelElement.href);
 
 		let existingSpan = document.querySelector('#redux-trim-span');

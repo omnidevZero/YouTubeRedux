@@ -6,5 +6,5 @@
       }
     </style>
   </defs>
-  <path fill="#ffffff" class="cls-1" d="M0,15v2H14V15H0Zm4-2h6V7h4L13,6h0L12,5h0L11,4h0L10,3h0L9,2H9L8,1H8L7,0H7L6,1H6L5,2,4,3,3,4,2,5,1,6,0,7H4v6Z"/>
+  <path fill="#ffffff" class="cls-1" d="M0,15v2H14V15H0Zm4-2h6V7h4L13,6h0L12,5h0L11,4h0L10,3h0L9,2H9L8,1H8L7,0H7L6,1H6L5,2,4,3,3,4,2,5,1,6,0,7H4v6Z" shape-rendering="crispEdges"/>
 </svg>

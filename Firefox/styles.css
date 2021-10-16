@@ -22,7 +22,7 @@ html[dark] {
 }
 html {
     --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
-    --redux-paper-dialog-background-color: --redux-spec-brand-background-solid;
+    --redux-paper-dialog-background-color: var(--redux-spec-brand-background-solid);
 }
 /*GENERAL STYLES*/
 html:not([dark]) #video-title.ytd-rich-grid-media {
