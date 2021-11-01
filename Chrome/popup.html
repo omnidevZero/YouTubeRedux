@@ -6,9 +6,10 @@
         body {
             min-width: 565px;
             font-family: "Segoe UI", Tahoma, sans-serif;
-            background-image: linear-gradient(-45deg, #748de6a6, transparent);
+            background-image: linear-gradient(135deg, #e2e2e2 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
             font-size: 12px;
             overflow: hidden;
+            margin-top: 0;
         }
         button {
           max-width: 130px;
@@ -29,15 +30,22 @@
         fieldset {
             margin-bottom: 5px;
             padding: 0;
+            border-width: 1px;
+            border-color: rgb(0 0 0 / 10%);
+            border-radius: 4px;
         }
         #header {
             text-align: center;
             font-size:20px;
             font-weight: bold;
-            text-shadow: 0px 0.25px black;
-            color: red;
+            text-shadow: 1px 1px 2px black;
+            color: white;
             transform: scale(1.3, 1.3);
             pointer-events: none;
+        }
+        #header span::before,
+        #header span::after {
+            content: ' — ';
         }
         #donate-message {
             font-style: italic;
@@ -303,9 +311,8 @@
         }
         #changeChannel {
             font-size: 12px;
-            background: rgb(185, 185, 185);
+            background-color: white;
             border-radius: 4px;
-            background: rgb(195 206 244);
             border: 1px solid #909090;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -323,7 +330,7 @@
             height: 100%;
             opacity: 0.35;
             border: 1px solid #909090;
-            background-color: rgb(195 206 244);
+            background-color: white;
             cursor: pointer;
             padding: 0px 5px 0 5px;
             border-radius: 4px;
@@ -344,7 +351,7 @@
             width: 4px;
         }
         .scrollable::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(155, 155, 155, 0.5);
             border-radius: 4px;
         }
         fieldset > div.scrollable {
@@ -355,8 +362,8 @@
     </head>
     <body>
         <div class="browser-warning"><div class="browser-warning-text"></div></div>
-        <div id="header">YouTube Redux</div>
-        <fieldset style="position:relative;">
+        <div id="header"><span>YouTube Redux</span></div>
+        <fieldset style="position:relative; border: none;">
             <legend>Settings</legend>
             <div style="text-align:center; display:none; z-index:99" class="outer-warning"><div class="warning"><span style="color:red;"></span><span style="color:black;">PLEASE VISIT YOUTUBE IN ORDER TO CHANGE SETTINGS</div></div>
             <div id="pages-wrapper" style="overflow-x: clip;">
@@ -418,7 +425,7 @@
                         </div>
                     </div>
                     <div id="page-2" class="page">
-                        <div style="flex: 0 0 50%;">
+                        <div style="flex: 0 0 50%; overflow-y: auto; max-height: 290px;" class="scrollable">
                             <redux>Misc</redux>
                             <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
                             <label><input type="checkbox" name="extraChannel" class="settings">Extra channel page changes</label>
@@ -450,6 +457,8 @@
                             <label><input type="checkbox" name="collapseSidebar" class="settings">Fully collapse sidebar on home page</label>
                             <label><input type="checkbox" name="myChannel" class="settings">Add <button id="changeChannel" name="myChannelCustomText">My channel</button> button to sidebar menu</label>    
                             <label><input type="checkbox" name="disableVideoPreview" class="settings">Disable video preview<div class="tooltip"><span class="tooltip-text">Hovering over video thumbnails will no longer play a short preview.</span></div></label>
+                            <label><input type="checkbox" name="autoExpandPlaylists" class="settings">Auto expand sidebar playlists</label>
+                            <label><input type="checkbox" name="autoExpandSubs" class="settings">Auto expand sidebar subscriptions</label>
                         </div>
                         <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>

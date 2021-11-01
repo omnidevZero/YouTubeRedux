@@ -3,6 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <title>YouTube Redux</title>
       <style>
         html {
             min-height: 100vh;
@@ -11,7 +12,7 @@
             margin: 0;
             min-height: 100vh;
             font-family: "Segoe UI", Tahoma, sans-serif;
-            background-image: linear-gradient(-45deg, #748de6a6, transparent);
+            background-image: linear-gradient(-45deg, #909090, transparent);
             font-size: 12px;
             overflow-x: hidden;
         }
@@ -19,8 +20,8 @@
             text-align: center;
             font-size:20px;
             font-weight: bold;
-            text-shadow: 0px 0.25px black;
-            color: red;
+            text-shadow: 1px 1px 2px black;
+            color: white;
             transform: scale(1.3, 1.3);
             pointer-events: none;
         }
@@ -90,12 +91,16 @@
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">2.11.1</b><span> - 01.11.2021</span>
+                        <li>visual changes to settings page</li>
+                        <li>added options to automatically expand sidebar playlists and subscriptions</li>
+                        <li>CSS fixes for video player controls, sub count borders</li>
                         <b class="update">2.11.0</b><span> - 16.10.2021</span>
                         <li>added an option to disable video preview when hovering over thumbnails</li>
                         <li>trimmed sub count now works properly with alternative video page layout</li>
                         <li>fixed a potential performance issue when using small player</li>
                         <li>improved quality of old upload icon</li>
-                        <li>CSS fixes for video player controls bars and darker red option</li>
+                        <li>CSS fixes for video player controls and darker red option</li>
                         <b class="update">2.10.3</b><span> - 02.10.2021</span>
                         <li>CSS fixes</li>
                         <b class="update">2.10.2</b><span> - 21.09.2021</span>
@@ -588,7 +593,7 @@
                         - added important to grid css for smooth injection by default</li>
                     </ul>
                 </div>
-                <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 486px; margin-top: 10px;" frameborder=0 height="100%"></iframe>
+                <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 474px; margin-top: 10px; border: 1px solid black;" frameborder=0 height="100%"></iframe>
                 <div style="overflow:hidden; width: 200px; white-space: nowrap;">
                     <div class="marquee">This page can be disabled using settings above.</div>
                 </div>

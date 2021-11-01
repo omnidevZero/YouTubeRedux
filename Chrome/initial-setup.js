@@ -66,7 +66,9 @@ const defaultSettings = {
 	"disableMiniplayer": false,
 	"hideCountryCode": false,
 	"hideCollapsedChat": false,
-	"disableVideoPreview": false
+	"disableVideoPreview": false,
+	"autoExpandPlaylists": false,
+	"autoExpandSubs": false
 };
 
 initiate();
@@ -406,18 +408,30 @@ function addCustomStyles() {
 		#video-title.ytd-compact-video-renderer:hover {
 			color: #167ac6;
 		}
-		.ytp-exp-bigger-button-like-mobile .ytp-chrome-controls {
+		.ytp-chrome-controls {
 			height: 40px !important;
 			line-height: 40px !important;
 		}
-		.ytp-exp-bigger-button-like-mobile .ytp-chrome-bottom {
+		.ytp-chrome-bottom {
 			height: 40px !important;
 		}
-		.ytp-exp-bigger-button-like-mobile .ytp-progress-bar-container {
+		.ytp-progress-bar-container {
 			bottom: 39px !important;
 		}
-		.ytp-exp-bigger-button-like-mobile .ytp-time-display {
+		.ytp-time-display {
 			line-height: 39px !important;
+		}
+		.ytp-big-mode .ytp-volume-slider {
+			min-height: 40px !important;
+		}
+		.ytp-big-mode .ytp-volume-slider-handle:before {
+			height: 3px !important;
+		}
+		.ytp-big-mode .ytp-volume-slider-handle {
+			width: 12px !important;
+			height: 12px !important;
+			border-radius: 6px !important;
+			margin-top: -6px !important;
 		}
 		.ytp-volume-area svg {
 			transform: scale(1.25);
@@ -1066,11 +1080,12 @@ function addCustomStyles() {
 		#redux-trim-span,
 		#reduxSubDiv > yt-formatted-string,
 		#reduxSubDiv #notification-preference-button {
-			border: 1px solid #ccc;
+			border-top: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
 			background-color: #fafafa;
 		}
 		#reduxSubDiv #notification-preference-button {
-			border-right: none !important;
 			border-left: none !important;
 			padding-right: 8px;
     		padding-left: 2px;
@@ -2163,6 +2178,16 @@ function addCustomStyles() {
 		`,
 		disableVideoPreview: `
 		#thumbnail > #mouseover-overlay {
+			display: none !important;
+		}
+		`,
+		autoExpandPlaylists: `
+		#section-items > ytd-guide-collapsible-entry-renderer #collapser-item {
+			display: none !important;
+		}
+		`,
+		autoExpandSubs: `
+		#items > ytd-guide-collapsible-entry-renderer #collapser-item {
 			display: none !important;
 		}
 		`

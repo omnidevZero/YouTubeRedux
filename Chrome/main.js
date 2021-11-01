@@ -676,7 +676,10 @@ function trimStrings() {
 		subString.setAttribute('redux-sub-check', channelElement.href);
 
 		let existingSpan = document.querySelector('#redux-trim-span');
-		if (existingSpan) {
+		if (subString.innerText === '') {
+			if (existingSpan) existingSpan.remove();
+			return;
+		} else if (existingSpan) {
 			existingSpan.innerText = subString.innerText.replace(/\s+\S*$/, '');
 			return;
 		}
@@ -818,6 +821,16 @@ function removeMiniplayer() {
 	document.querySelector('.ytp-miniplayer-ui .ytp-miniplayer-close-button').click();
 }
 
+function expandPlaylists() {
+	let expander = document.querySelector('#section-items > ytd-guide-collapsible-entry-renderer #expander-item');
+	expander.click();
+}
+
+function expandSubs() {
+	let expander = document.querySelector('#items > ytd-guide-collapsible-entry-renderer #expander-item');
+	expander.click();
+}
+
 function main() {
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
@@ -884,6 +897,12 @@ function main() {
 	}
 	if (reduxSettings.disableMiniplayer && window.location.pathname === '/') {
 		waitForElement('.ytp-miniplayer-ui .ytp-miniplayer-close-button', 10, removeMiniplayer);
+	}
+	if (reduxSettings.autoExpandPlaylists) {
+		waitForElement('#section-items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandPlaylists);
+	}
+	if (reduxSettings.autoExpandSubs) {
+		waitForElement('#items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandSubs);
 	}
 	changeGridWidth();
 }
