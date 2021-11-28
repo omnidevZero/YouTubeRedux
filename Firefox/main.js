@@ -644,8 +644,8 @@ function sortPlaylists() {
 				let observerConfig = {
 					childList: true
 				};
-				let observerLikes = new MutationObserver(hidePlaylists);
-				observerLikes.observe(itemsContainer, observerConfig);
+				let observerPlaylistItems = new MutationObserver(hidePlaylists);
+				observerPlaylistItems.observe(itemsContainer, observerConfig);
 			}, baseTimeout*2);
 		}
     
@@ -831,6 +831,52 @@ function expandSubs() {
 	expander.click();
 }
 
+function fixHome() {
+	if (!!document.querySelector('.redux-home-container')) return;
+	let itemIds = [];
+	let contents = document.querySelector('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container)');
+	let contentsParent = document.querySelector('ytd-rich-grid-renderer');
+	let homeReduxDiv = document.createElement('div');
+	homeReduxDiv.style = 'transition-duration: 0.5s; opacity:0';
+	homeReduxDiv.id = "contents";
+	homeReduxDiv.className += 'redux-home-container style-scope ytd-rich-grid-renderer';
+	contentsParent.insertBefore(homeReduxDiv, contents);
+
+	setTimeout(() => {
+		addNewItems();
+		homeReduxDiv.style.opacity = '1';
+	}, 250);
+
+	let observerConfig = {
+		childList: true
+	};
+	let observerGridItems = new MutationObserver(addNewItems);
+	observerGridItems.observe(contents, observerConfig);
+
+	function addNewItems() {
+		if (!!document.querySelector('.redux-home-spinner')) document.querySelector('.redux-home-spinner').remove();
+		let rowItems = document.querySelectorAll('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) > ytd-rich-grid-row ytd-rich-item-renderer');
+		for (const item of rowItems) {
+			let currentId = item.querySelector('a#thumbnail')?.href;
+			if (!itemIds.includes(currentId)) {
+				itemIds.push(currentId);
+				homeReduxDiv.append(item);
+			} else {
+				item.style.display = 'none';
+			}
+		}
+		addSpinner();
+	}
+
+	function addSpinner() {
+		let spinner = document.createElement('ytd-continuation-item-renderer');
+		spinner.innerHTML = '<div id="spinnerContainer" class="active  style-scope tp-yt-paper-spinner"><div class="spinner-layer layer-1 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div><div class="spinner-layer layer-2 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div><div class="spinner-layer layer-3 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div><div class="spinner-layer layer-4 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div></div>';
+		spinner.style.width = '100%';
+		spinner.classList.add('style-scope', 'ytd-rich-grid-renderer', 'redux-home-spinner');
+		homeReduxDiv.append(spinner);
+	}
+}
+
 function main() {
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
@@ -903,6 +949,9 @@ function main() {
 	}
 	if (reduxSettings.autoExpandSubs) {
 		waitForElement('#items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandSubs);
+	}
+	if (reduxSettings.fixHomepage && window.location.pathname === '/') {
+		waitForElement('ytd-rich-grid-row', 10, fixHome);
 	}
 	changeGridWidth();
 }

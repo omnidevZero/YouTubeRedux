@@ -68,7 +68,8 @@ const defaultSettings = {
 	"hideCollapsedChat": false,
 	"disableVideoPreview": false,
 	"autoExpandPlaylists": false,
-	"autoExpandSubs": false
+	"autoExpandSubs": false,
+	"fixHomepage": true
 };
 
 initiate();
@@ -2189,6 +2190,11 @@ function addCustomStyles() {
 		autoExpandSubs: `
 		#items > ytd-guide-collapsible-entry-renderer #collapser-item {
 			display: none !important;
+		}
+		`,
+		fixHomepage: `
+		[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) {
+			opacity: 0 !important;
 		}
 		`
 	};

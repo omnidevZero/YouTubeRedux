@@ -371,20 +371,21 @@
             <div id="pages-wrapper" style="overflow-x: clip;">
                 <div id="all-pages">
                     <div id="page-1" class="page">
-                        <div style="flex: 0 0 50%;">
+                        <div style="flex: 0 0 50%; overflow-y: auto; max-height: 280px;" class="scrollable">
                             <redux>General</redux>
-                            <label>Number of videos per row (main page)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
+                            <label>Number of videos per row (homepage)<input type="range" min="1" max="10" name="gridItems" class="settings"><span><input class="mini settings slider-control" type="number" min="1" max="10"></input></span></label>
                             <label><input type="checkbox" name="extraLayout" class="settings">Extra layout changes<div class="tooltip"><span class="tooltip-text-small">Adds more classic styles to multiple pages in order to match the old layout more closely.<br><span style="color:yellow">Disabling this setting may cause incompatibility with other settings.</span></span></div></label>
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="extraComments" class="settings" disabled>Restore old comments styles</label>
                                 <label class="subsetting"><input type="checkbox" name="darkerRed" class="settings" disabled>Use darker red color</label>
-                                <label class="subsetting"><input type="checkbox" name="noHomeScalingRe" class="settings" disabled>No home page scaling<div class="tooltip"><span class="tooltip-text-small">When enabled it will prevent reducing empty space at the sides of the home page which scales down with window size - page will retain its left/right padding.</span></div></label>
+                                <label class="subsetting"><input type="checkbox" name="noHomeScalingRe" class="settings" disabled>No homepage scaling<div class="tooltip"><span class="tooltip-text-small">When enabled it will prevent reducing empty space at the sides of the homepage which scales down with window size - page will retain its left/right padding.</span></div></label>
                                 <label class="subsetting"><input type="checkbox" name="extraSidebarStyles" class="settings" disabled>Additional sidebar changes</label>
                             </div>
-                            <label><input type="checkbox" name="playlistsFirst" class="settings">Playlists grouping on home page</label>
+                            <label><input type="checkbox" name="playlistsFirst" class="settings">Playlists grouping on homepage</label>
                             <div class="subsettings-container">
-                                <label class="subsetting"><input type="checkbox" name="sortFoundPlaylists" class="settings" disabled>Strict grouping<div class="tooltip"><span class="tooltip-text-small">While scrolling down the home page, newly found playlists will be automatically grouped with others.</span></div></label>
+                                <label class="subsetting"><input type="checkbox" name="sortFoundPlaylists" class="settings" disabled>Strict grouping<div class="tooltip"><span class="tooltip-text-small">While scrolling down the homepage, newly found playlists will be automatically grouped with others.</span></div></label>
                             </div>
+                            <label><input type="checkbox" name="fixHomepage" class="settings">Homepage layout fix<div class="tooltip"><span class="tooltip-text-small">Changes homepage structure so it's compatible with 'Number of videos per row' and 'Playlist grouping' settings.</span></div></label>
                             <redux>Video Page</redux>
                             <label style="display:inline-block">
                                 <input type="checkbox" name="smallPlayer" class="settings">Use small video player
@@ -403,7 +404,7 @@
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="blackBars" class="settings" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
                             </div>
-                            <label><input type="checkbox" name="altVideoLayout" class="settings">Use alternative video page layout<div class="tooltip"><span class="tooltip-text-small">Positions video title and channel info above the player and rearranges buttons below the player. Best used with 'Use dark theme for playlists' option disabled.</span></div></label>
+                            <label><input type="checkbox" name="altVideoLayout" class="settings">Use alternative video page layout<div class="tooltip"><span class="tooltip-text">Positions video title and channel info above the player and rearranges buttons below the player. Best used with 'Use dark theme for playlists' option disabled.</span></div></label>
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="altVideoLayoutExtra" class="settings" disabled>Also rearrange likes/dislikes</label>
                             </div>
@@ -456,7 +457,7 @@
                                     </select>
                                 </label>
                             </label>
-                            <label><input type="checkbox" name="collapseSidebar" class="settings">Fully collapse sidebar on home page</label>
+                            <label><input type="checkbox" name="collapseSidebar" class="settings">Fully collapse sidebar on homepage</label>
                             <label><input type="checkbox" name="myChannel" class="settings">Add <button id="changeChannel" name="myChannelCustomText">My channel</button> button to sidebar menu</label>    
                             <label><input type="checkbox" name="disableVideoPreview" class="settings">Disable video preview<div class="tooltip"><span class="tooltip-text">Hovering over video thumbnails will no longer play a short preview.</span></div></label>
                             <label><input type="checkbox" name="autoExpandPlaylists" class="settings">Auto expand sidebar playlists</label>
@@ -488,7 +489,7 @@
                                     <input type="radio" name="favicon" class="settings" value="3" style="display:inline-block;"><img src='/images/favicon3.ico' style="height:16px; width:16px"></img></input>
                                 </div>
                             </fieldset>
-                            <fieldset style="padding-top: 0; padding-bottom: 0;"><legend>Video filter settings<div class="tooltip" style="right: 1px;"><span class="tooltip-text-small">• Mini scales all filters down.<br>• No home: hides video filters on home page<br>• No video: hides video filters on video page</span></div></legend>
+                            <fieldset style="padding-top: 0; padding-bottom: 0;"><legend>Video filter settings<div class="tooltip" style="right: 1px;"><span class="tooltip-text-small">• Mini scales all filters down.<br>• No home: hides video filters on homepage<br>• No video: hides video filters on video page</span></div></legend>
                                 <div style="text-align: center">
                                     <label style="display:inline-block"><input type="checkbox" name="filterMiniRe" class="settings">Mini</label>
                                     <label style="display:inline-block"><input type="checkbox" name="filterMainRe" class="settings">No home</label>
@@ -501,7 +502,7 @@
                                 <br>• Join - removes the button from channel actions under the video player
                                 <br>• Clip - removes the button from video actions under the video player
                                 <br>• YouTube apps - removes the button from the top bar
-                                <br>• Channel avatars on home page - no effect when 'Extra layout changes' setting is enabled, which already hides channel avatars
+                                <br>• Channel avatars on homepage - no effect when 'Extra layout changes' setting is enabled, which already hides channel avatars
                                 <br>• Search with your voice - removes the button to the right of the search bar
                                 <br>• People also search for - removes this section from search results
                                 <br>• Related videos age - removes this info (time since upload date) from related videos
@@ -511,7 +512,7 @@
                                 <br>• Collapsed chat - removes the button to expand chat once it's been collapsed
                             </span></div></legend>
                                 <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
-                                    <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on home page"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on homepage"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideAutoplayButton" class="settings toggle"></input><span aria-label="Auto-play"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideVoiceSearch" class="settings toggle"></input><span aria-label="Search with your voice"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideCastButton" class="settings toggle"></input><span aria-label="Play on TV"></span></label>
