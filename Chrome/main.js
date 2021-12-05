@@ -120,43 +120,28 @@ function alignItems() {
 
 function changeLikesCounter() {
 	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-	let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
 	let observerConfig = {
 		attributes: true
 	};
 	let observerLikes = new MutationObserver(fixLikes);
 	observerLikes.observe(likes, observerConfig);
-	let observerDislikes = new MutationObserver(fixLikes);
-	observerDislikes.observe(dislikes, observerConfig);
+
 	fixLikes();
 	flags.likesTracked = true;
 
 	function fixLikes() {
 		observerLikes.disconnect();
-		observerDislikes.disconnect();
 
 		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
-		let rawLikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
-		let rawLikes = rawLikesElement.innerText.split("/")[0];
-		let rawDislikesElement = document.querySelector('#info > #menu-container > ytd-sentiment-bar-renderer > tp-yt-paper-tooltip > #tooltip');
-		let rawDislikes = rawDislikesElement.innerText.split("/")[1];
-		if (rawDislikes == undefined) {
-			if (dislikes.children.length > 0) {
-				likes.innerText = likes.innerText.replace(String.fromCharCode(160), "").replace(/\d+/, "").trim(); //removes &nbsp and digits if they are inserted to vids with disabled comments
-				dislikes.innerText = dislikes.innerText.replace(String.fromCharCode(160), "").replace(/\d+/, "").trim();
-			}
-
-			observerLikes.observe(likes, observerConfig);
-			observerDislikes.observe(dislikes, observerConfig);
-			return;
+		let rawLikes = likes.ariaLabel?.replace(/[^\d]+$/g, '');
+		if (!rawLikes) {
+			let likeButton = document.querySelector('#top-level-buttons-computed yt-icon-button > button');
+			let replacementText = likeButton.ariaLabel ? likeButton.ariaLabel : 'Like';
+			likes.innerText = replacementText;
 		} else {
-			likes.innerText = rawLikes.trim();
-			dislikes.innerText = rawDislikes.trim();
-
-			observerLikes.observe(likes, observerConfig);
-			observerDislikes.observe(dislikes, observerConfig);
+			likes.innerText = rawLikes;
 		}
+		observerLikes.observe(likes, observerConfig);
 	}
 }
 
@@ -680,13 +665,13 @@ function trimStrings() {
 			if (existingSpan) existingSpan.remove();
 			return;
 		} else if (existingSpan) {
-			existingSpan.innerText = subString.innerText.replace(/\s+\S*$/, '');
+			existingSpan.innerText = subString.innerText.replace(/\s+\S*$/g, '');
 			return;
 		}
 
 		let reduxTrimSpan = document.createElement('span');
 		reduxTrimSpan.id = 'redux-trim-span';
-		reduxTrimSpan.innerText = subString.innerText.replace(/\s+\S*$/, '');
+		reduxTrimSpan.innerText = subString.innerText.replace(/\s+\S*$/g, '');
 		reduxTrimSpan.classList.add('ytd-video-owner-renderer');
 
 		let container = document.querySelector('#reduxSubDiv');
@@ -857,7 +842,7 @@ function fixHome() {
 		if (!!document.querySelector('.redux-home-spinner')) document.querySelector('.redux-home-spinner').remove();
 		let rowItems = document.querySelectorAll('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) > ytd-rich-grid-row ytd-rich-item-renderer');
 		for (const item of rowItems) {
-			let currentId = item.querySelector('a#thumbnail')?.href;
+			let currentId = item.querySelector('a#thumbnail') ? item.querySelector('a#thumbnail').href : 'MISSING';
 			if (!itemIds.includes(currentId)) {
 				itemIds.push(currentId);
 				homeReduxDiv.append(item);
@@ -875,6 +860,56 @@ function fixHome() {
 		spinner.classList.add('style-scope', 'ytd-rich-grid-renderer', 'redux-home-spinner');
 		homeReduxDiv.append(spinner);
 	}
+}
+
+function formatNumber(number) {
+	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+	let views = document.querySelector('#count.ytd-video-primary-info-renderer');
+	let separator = ' ';
+
+	if (views.innerText.includes('.') || likes.innerText.includes('.')) {
+		separator = '.';
+	} else if (views.innerText.includes(',') || likes.innerText.includes(',')) {
+		separator = ',';
+	}
+
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+}
+
+function updateDislikes() {
+	let dislikesSource = document.querySelector('.ryd-tooltip #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-formatted-string');
+	let observerConfig = {
+		childList: true
+	};
+	let observerLikes = new MutationObserver(() => {
+		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+		let likesCount = parseInt(likes.ariaLabel?.replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+		updateLikesBar(likesCount, dislikesCount);
+	});
+	observerLikes.observe(dislikesSource, observerConfig);
+
+	if (reduxSettings.showRawValues) {
+		let checkIfChanged = setInterval(() => {
+			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-formatted-string');
+			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+			if (dislikes && dislikes.innerText.match(/^[\d+]/)) {
+				dislikes.innerText = formatNumber(dislikesCount.replace(/\s+/g, ''));
+			}
+		}, 20);
+		setTimeout(() => {
+			if (checkIfChanged) {
+				clearInterval(checkIfChanged);
+			}
+		}, 5000);
+	}
+}
+
+function updateLikesBar(likesCount, dislikesCount) {
+	let likeBar = document.querySelector('#like-bar.ytd-sentiment-bar-renderer');
+	let likes = parseInt(likesCount);
+	let dislikes = parseInt(parseFloat(dislikesCount.toString().replace(/\s+/g, '')).toFixed(0));
+	likeBar.style.width = (likes / (likes + dislikes)) * 100 + '%';
 }
 
 function main() {
@@ -913,6 +948,9 @@ function main() {
 	}
 	if (reduxSettings.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked) {
 		waitForElement('#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
+	}
+	if (reduxSettings.compatibleDislikes && window.location.href.includes('/watch?')) {
+		waitForElement('.ryd-tooltip #tooltip', 10, updateDislikes);
 	}
 	if (window.location.href.includes('/feed/trending') || window.location.href.includes('/feed/explore')) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);

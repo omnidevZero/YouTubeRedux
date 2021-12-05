@@ -77,7 +77,8 @@ const defaultSettings = {
 	"disableVideoPreview": false,
 	"autoExpandPlaylists": false,
 	"autoExpandSubs": false,
-	"fixHomepage": true
+	"fixHomepage": true,
+	"compatibleDislikes": false
 };
 
 initiate();
@@ -2225,6 +2226,11 @@ function addCustomStyles() {
 		fixHomepage: `
 		[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) {
 			opacity: 0 !important;
+		}
+		`,
+		compatibleDislikes: `
+		.ryd-tooltip {
+			display: none !important;
 		}
 		`
 	};
