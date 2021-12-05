@@ -133,10 +133,10 @@ function changeLikesCounter() {
 		observerLikes.disconnect();
 
 		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		let rawLikes = likes.ariaLabel?.replace(/[^\d]+$/g, '');
+		let rawLikes = likes.getAttribute('aria-label')?.replace(/[^\d]+$/g, '');
 		if (!rawLikes) {
 			let likeButton = document.querySelector('#top-level-buttons-computed yt-icon-button > button');
-			let replacementText = likeButton.ariaLabel ? likeButton.ariaLabel : 'Like';
+			let replacementText = likeButton.getAttribute('aria-label') ? likeButton.getAttribute('aria-label') : 'Like';
 			likes.innerText = replacementText;
 		} else {
 			likes.innerText = rawLikes;
@@ -883,7 +883,7 @@ function updateDislikes() {
 	};
 	let observerLikes = new MutationObserver(() => {
 		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		let likesCount = parseInt(likes.ariaLabel?.replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		let likesCount = parseInt(likes.getAttribute('aria-label')?.replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
 		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 		updateLikesBar(likesCount, dislikesCount);
 	});
@@ -894,7 +894,7 @@ function updateDislikes() {
 			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-formatted-string');
 			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 			if (dislikes && dislikes.innerText.match(/^[\d+]/)) {
-				dislikes.innerText = formatNumber(dislikesCount.replace(/\s+/g, ''));
+				dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));
 			}
 		}, 20);
 		setTimeout(() => {
