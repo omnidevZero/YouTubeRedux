@@ -133,7 +133,7 @@ function changeLikesCounter() {
 		observerLikes.disconnect();
 
 		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		let rawLikes = likes.getAttribute('aria-label')?.replace(/[^\d]+$/g, '');
+		let rawLikes = likes.getAttribute('aria-label') ? likes.getAttribute('aria-label').replace(/[^\d]+$/g, '') : '';
 		if (!rawLikes) {
 			let likeButton = document.querySelector('#top-level-buttons-computed yt-icon-button > button');
 			let replacementText = likeButton.getAttribute('aria-label') ? likeButton.getAttribute('aria-label') : 'Like';
@@ -883,7 +883,8 @@ function updateDislikes() {
 	};
 	let observerLikes = new MutationObserver(() => {
 		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		let likesCount = parseInt(likes.getAttribute('aria-label')?.replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		if (!likes.getAttribute('aria-label')) return;
+		let likesCount = parseInt(likes.getAttribute('aria-label').replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
 		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 		updateLikesBar(likesCount, dislikesCount);
 	});
