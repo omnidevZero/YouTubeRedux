@@ -70,7 +70,8 @@ const defaultSettings = {
 	"autoExpandPlaylists": false,
 	"autoExpandSubs": false,
 	"fixHomepage": true,
-	"compatibleDislikes": false
+	"compatibleDislikes": false,
+	"hideDislikes": false
 };
 
 initiate();
@@ -2200,6 +2201,11 @@ function addCustomStyles() {
 		`,
 		compatibleDislikes: `
 		.ryd-tooltip {
+			display: none !important;
+		}
+		`,
+		hideDislikes: `
+		.top-level-buttons.ytd-menu-renderer > ytd-toggle-button-renderer:last-child {
 			display: none !important;
 		}
 		`

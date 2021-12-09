@@ -136,7 +136,8 @@ function changeLikesCounter() {
 		let rawLikes = likes.getAttribute('aria-label') ? likes.getAttribute('aria-label').replace(/[^\d]+$/g, '') : '';
 		if (!rawLikes) {
 			let likeButton = document.querySelector('#top-level-buttons-computed yt-icon-button > button');
-			let replacementText = likeButton.getAttribute('aria-label') ? likeButton.getAttribute('aria-label') : 'Like';
+			let buttonAria = likeButton.getAttribute('aria-label');
+			let replacementText = /\d+/.test(buttonAria) ? buttonAria.replace(/[^,.\d]/g, '') : buttonAria;
 			likes.innerText = replacementText;
 		} else {
 			likes.innerText = rawLikes;
@@ -693,7 +694,7 @@ function trimViews() {
 	const modifyViews = () => {
 		let views = document.querySelector('span.view-count:not(#redux-view-count)');
 		let reduxSpan = document.querySelector('#redux-view-count');
-		reduxSpan.textContent = views.textContent.replace(/[^\d+,.:\s].*/,'');
+		reduxSpan.textContent = views.textContent.replace(/[^,.\d]/g,'');
 	};
 
 	modifyViews();
