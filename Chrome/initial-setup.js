@@ -71,7 +71,8 @@ const defaultSettings = {
 	"autoExpandSubs": false,
 	"fixHomepage": true,
 	"compatibleDislikes": false,
-	"hideDislikes": false
+	"hideDislikes": false,
+	"hideDownload": false
 };
 
 initiate();
@@ -876,6 +877,9 @@ function addCustomStyles() {
 			font-size: 12px;
 			max-height: 24px;
 			height: 24px;
+		}
+		#top-level-buttons-computed ytd-download-button-renderer yt-formatted-string {
+			font-weight: normal;
 		}
 		`,
 		darkerRed: `
@@ -2206,6 +2210,11 @@ function addCustomStyles() {
 		`,
 		hideDislikes: `
 		.top-level-buttons.ytd-menu-renderer > ytd-toggle-button-renderer:last-child {
+			display: none !important;
+		}
+		`,
+		hideDownload: `
+		#top-level-buttons-computed ytd-download-button-renderer {
 			display: none !important;
 		}
 		`

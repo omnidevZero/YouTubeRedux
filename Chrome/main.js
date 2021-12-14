@@ -694,7 +694,7 @@ function trimViews() {
 	const modifyViews = () => {
 		let views = document.querySelector('span.view-count:not(#redux-view-count)');
 		let reduxSpan = document.querySelector('#redux-view-count');
-		reduxSpan.textContent = views.textContent.replace(/[^,.\d]/g,'');
+		reduxSpan.textContent = views.textContent.replace(/[^,.\d\s]/g,'').trim();
 	};
 
 	modifyViews();
@@ -887,13 +887,14 @@ function updateDislikes() {
 		if (!likes.getAttribute('aria-label')) return;
 		let likesCount = parseInt(likes.getAttribute('aria-label').replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
 		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
 		updateLikesBar(likesCount, dislikesCount);
 	});
 	observerLikes.observe(dislikesSource, observerConfig);
 
 	if (reduxSettings.showRawValues) {
 		let checkIfChanged = setInterval(() => {
-			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-formatted-string');
+			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
 			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 			if (dislikes && dislikes.innerText.match(/^[\d+]/)) {
 				dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));

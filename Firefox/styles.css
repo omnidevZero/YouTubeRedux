@@ -4,6 +4,7 @@ html:not([dark]) {
     --redux-spec-text-primary-inverse: #fff;
     --redux-double-inverse: #030303;
     --redux-spec-text-secondary: #606060;
+    --redux-spec-text-secondary-buttons: #606060;
     --redux-spec-call-to-action: #065fd4;
     --redux-spec-general-background-a: #f9f9f9;
     --redux-spec-icon-disabled: #909090;
@@ -15,6 +16,7 @@ html[dark] {
     --redux-spec-text-primary-inverse: #030303;
     --redux-double-inverse: #fff;
     --redux-spec-text-secondary: #aaa;
+    --redux-spec-text-secondary-buttons: "#fff";
     --redux-spec-call-to-action: #3ea6ff;
     --redux-spec-icon-disabled: #717171;
     --redux-spec-icon-inactive: #fff;
@@ -189,13 +191,16 @@ ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
     color: #606060;
 }
 html[dark] #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
-    color: #AAAAAA;
+    color: var(--redux-spec-text-secondary-buttons) !important;
 }
 html:not([dark]) ytd-toggle-button-renderer.style-text[is-icon-button] #text.ytd-toggle-button-renderer {
     color: #606060 !important;
 }
 html:not([dark]) #container.ytd-sentiment-bar-renderer {
     background-color: #ccc;
+}
+#top-level-buttons-computed ytd-download-button-renderer yt-formatted-string {
+    color: var(--redux-spec-text-secondary-buttons) !important;
 }
 
 /*PLAYLIST STYLES*/
