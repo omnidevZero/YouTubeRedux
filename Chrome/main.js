@@ -878,20 +878,14 @@ function formatNumber(number) {
 }
 
 function updateDislikes() {
-	let dislikesSource = document.querySelector('.ryd-tooltip #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-child > a > yt-formatted-string');
+	let dislikesSource = document.querySelector('.ryd-tooltip #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
 	let observerConfig = {
 		childList: true
 	};
-	let observerLikes = new MutationObserver(() => {
-		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		if (!likes.getAttribute('aria-label')) return;
-		let likesCount = parseInt(likes.getAttribute('aria-label').replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
-		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
-		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
-		updateLikesBar(likesCount, dislikesCount);
-	});
+	let observerLikes = new MutationObserver(update);
 	observerLikes.observe(dislikesSource, observerConfig);
 
+	update();
 	if (reduxSettings.showRawValues) {
 		let checkIfChanged = setInterval(() => {
 			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
@@ -905,6 +899,15 @@ function updateDislikes() {
 				clearInterval(checkIfChanged);
 			}
 		}, 5000);
+	}
+
+	function update() {
+		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+		if (!likes.getAttribute('aria-label')) return;
+		let likesCount = parseInt(likes.getAttribute('aria-label').replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
+		updateLikesBar(likesCount, dislikesCount);
 	}
 }
 
