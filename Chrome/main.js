@@ -137,7 +137,7 @@ function changeLikesCounter() {
 		if (!rawLikes) {
 			let likeButton = document.querySelector('#top-level-buttons-computed yt-icon-button > button');
 			let buttonAria = likeButton.getAttribute('aria-label');
-			let replacementText = /\d+/.test(buttonAria) ? buttonAria.replace(/[^,.\d]/g, '') : buttonAria;
+			let replacementText = /\d+/.test(buttonAria) ? formatNumber(buttonAria.replace(/[^\d]/g, '')) : buttonAria;
 			likes.innerText = replacementText;
 		} else {
 			likes.innerText = rawLikes;

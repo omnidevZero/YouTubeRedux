@@ -24,6 +24,7 @@ html[dark] {
 }
 html {
     --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
+    --redux-spec-10-percent-layer-inverted: rgba(0, 0, 0, 0.1);
     --redux-paper-dialog-background-color: var(--redux-spec-brand-background-solid);
 }
 /*GENERAL STYLES*/
@@ -334,4 +335,10 @@ html[dark] #show-more-related input, html[dark] #show-more-comments input {
 html[dark] #redux-trim-span {
     border: 1px solid var(--redux-spec-10-percent-layer);
     background: none;
+}
+html[dark] ytd-multi-page-menu-renderer {
+    border-top: 1px solid var(--redux-spec-10-percent-layer) !important;
+}
+ytd-multi-page-menu-renderer {
+    border-top: 1px solid var(--redux-spec-10-percent-layer-inverted) !important;
 }

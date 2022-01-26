@@ -2184,7 +2184,9 @@ function addCustomStyles() {
 		}
 		`,
 		disableVideoPreview: `
-		#thumbnail > #mouseover-overlay {
+		#thumbnail > #mouseover-overlay,
+		ytd-thumbnail #hover-overlays,
+		ytd-video-preview[mini-mode] {
 			display: none !important;
 		}
 		`,
