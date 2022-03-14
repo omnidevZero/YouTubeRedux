@@ -431,7 +431,10 @@
                     <div id="page-2" class="page">
                         <div style="flex: 0 0 50%; overflow-y: auto; max-height: 290px;" class="scrollable">
                             <redux>Misc</redux>
-                            <label><input type="checkbox" name="compatibleDislikes" class="settings">Dislikes restoring compatibility<div class="tooltip"><span class="tooltip-text"><br><br>Makes video page compatible with extensions that restore dislikes count. May cause issues if multiple extensions keep fighting over priority to modify page elements.</span></div></label>
+                            <label><input type="checkbox" name="compatibleDislikes" class="settings">Dislikes restoring compatibility<div class="tooltip"><span class="tooltip-text"><br><br>Makes video page compatible with extensions that restore dislikes count. May cause issues if multiple extensions keep fighting over priority to modify page elements. Currently supported extensions:
+                                <br>• Return YouTube Dislike
+                                </span></div>
+                            </label>
                             <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
                             <label><input type="checkbox" name="extraChannel" class="settings">Extra channel page changes</label>
                             <label><input type="checkbox" name="channelListView" class="settings">Use list view for channel videos</label>
@@ -464,6 +467,7 @@
                             <label><input type="checkbox" name="disableVideoPreview" class="settings">Disable video preview<div class="tooltip"><span class="tooltip-text">Hovering over video thumbnails will no longer play a short preview.</span></div></label>
                             <label><input type="checkbox" name="autoExpandPlaylists" class="settings">Auto expand sidebar playlists</label>
                             <label><input type="checkbox" name="autoExpandSubs" class="settings">Auto expand sidebar subscriptions</label>
+                            <label><input type="checkbox" name="redirectShorts" class="settings">Redirect shorts to default video page</label>
                         </div>
                         <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>
@@ -498,7 +502,7 @@
                                     <label style="display:inline-block"><input type="checkbox" name="filterVideo" class="settings">No video</label>
                                 </div>
                             </fieldset>
-                            <fieldset style="padding-top: 0; padding-bottom: 0; display:flex;" class="hide"><legend>Hide stuff<div class="tooltip" style="right: 1px;"><span class="tooltip-text">Select what you want to hide:
+                            <fieldset style="padding-top: 0; padding-bottom: 0; display:flex;" class="hide"><legend>Hide features<div class="tooltip" style="right: 1px;"><span class="tooltip-text">Select what you want to hide:
                                 <br>• Auto-play - removes the button from video player controls
                                 <br>• Play on TV - removes the button from video player controls; AKA the Cast button which allows you to cast video to the paired TV
                                 <br>• Join - removes the button from channel actions under the video player
@@ -514,6 +518,7 @@
                                 <br>• Collapsed chat - removes the button to expand chat once it's been collapsed
                                 <br>• Dislikes - removes the dislike button and count from video page
                                 <br>• Download - removes the button from video page
+                                <br>• Shorts - removes the button from homepage and hides shorts in search results
                             </span></div></legend>
                                 <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on homepage"></span></label>
@@ -531,6 +536,7 @@
                                     <label class="toggle-label"><input type="checkbox" name="hideCollapsedChat" class="settings toggle"></input><span aria-label="Collapsed chat"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideDislikes" class="settings toggle"></input><span aria-label="Dislikes"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideDownload" class="settings toggle"></input><span aria-label="Download"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideShorts" class="settings toggle"></input><span aria-label="Shorts"></span></label>
                                 </div>
                             </fieldset>
                         </div>

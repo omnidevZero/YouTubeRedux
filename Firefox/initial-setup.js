@@ -439,6 +439,12 @@ function addCustomStyles() {
 		.ytp-big-mode .ytp-volume-slider-handle:before {
 			height: 3px !important;
 		}
+		.ytp-big-mode .ytp-volume-slider-handle:after {
+			height: 3px !important;
+		}
+		.ytp-big-mode .ytp-volume-slider-active .ytp-volume-panel {
+			width: 72px !important;
+		}
 		.ytp-big-mode .ytp-volume-slider-handle {
 			width: 12px !important;
 			height: 12px !important;
@@ -2234,6 +2240,9 @@ function addCustomStyles() {
 		[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) {
 			opacity: 0 !important;
 		}
+		.redux-home-container ytd-rich-item-renderer {
+			transition-duration: 0.25s;
+		}
 		`,
 		compatibleDislikes: `
 		.ryd-tooltip {
@@ -2247,6 +2256,11 @@ function addCustomStyles() {
 		`,
 		hideDownload: `
 		#top-level-buttons-computed ytd-download-button-renderer {
+			display: none !important;
+		}
+		`,
+		hideShorts: `
+		#endpoint[title="Shorts"] {
 			display: none !important;
 		}
 		`
