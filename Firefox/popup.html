@@ -363,10 +363,19 @@
         select[name="smallPlayerWidth"] {
             max-width: 90px;
         }
+        #restore-defaults {
+            position: absolute;
+            right: 0;
+        }
+        #restore-defaults > button {
+            font-size: 9px;
+            color: silver;
+        }
       </style>
     </head>
     <body>
         <div class="browser-warning"><div class="browser-warning-text"></div></div>
+        <div id="restore-defaults"><button>Restore defaults</button></div>
         <div id="header"><span>YouTube Redux</span></div>
         <fieldset style="position:relative; border: none;">
             <legend>Settings</legend>

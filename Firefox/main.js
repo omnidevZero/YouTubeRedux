@@ -273,7 +273,15 @@ function recalculateVideoSize() {
 	startRecalc();
 }
 
-function startObservingComments() {
+function startObservingScrolling(mode) {
+	let maxComments = 20;
+	let commentsInterval = 20;
+	let commentsContElement;
+	let maxRelated;
+	let relatedInterval = 20;
+	let relatedElement;
+	let related;
+	let relatedContinuation;
 
 	function disableInfiniteComments() {
 		let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
@@ -347,40 +355,35 @@ function startObservingComments() {
 		}
 	}
 
-	let maxComments = 20;
-	let commentsInterval = 20;
-	let maxRelated;
-	let relatedInterval = 20;
-	let commentsContElement;
-	let observerConfig = {
+	const observerConfig = {
 		childList: true
 	};
-	let contentsElement = document.querySelector('#comments > #sections > #contents.style-scope.ytd-item-section-renderer');
-	let relatedElement;
-	let related;
-	let relatedContinuation;
+	const contentsElement = document.querySelector('#comments > #sections > #contents.style-scope.ytd-item-section-renderer');
 
-	if (!!document.querySelector('#show-more-comments')) {document.querySelector('#show-more-comments').remove();}
-	if (!!document.querySelector('#show-more-related')) {document.querySelector('#show-more-related').remove();}
-	setLayoutDifferences();
-	maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
-	if (related.length >= maxRelated && relatedContinuation != null) {
-		relatedContinuation.remove();
-		addRelatedButton();
+	if (mode === 'comments') {
+		if (!!document.querySelector('#show-more-comments')) {document.querySelector('#show-more-comments').remove();}
+		observerComments = new MutationObserver(disableInfiniteComments);
+		observerComments.observe(contentsElement, observerConfig);
+
+		const sortButtons = document.querySelectorAll('div[slot="dropdown-content"] > #menu > a');
+		sortButtons.forEach(element => {
+			element.onclick = resetCommentsObserver;
+		});
+	} else if (mode === 'related') {
+		if (!!document.querySelector('#show-more-related')) {document.querySelector('#show-more-related').remove();}
+		setLayoutDifferences();
+
+		maxRelated = related.length >= 39 ? 20 : related.length; //to reset max on url change;
+		if (related.length >= maxRelated && relatedContinuation != null) {
+			relatedContinuation.remove();
+			addRelatedButton();
+		}
+		observerRelated = new MutationObserver(disableInfiniteRelated);
+		observerRelated.observe(relatedElement, observerConfig);
 	}
 
-	observerComments = new MutationObserver(disableInfiniteComments);
-	observerComments.observe(contentsElement, observerConfig);
-	observerRelated = new MutationObserver(disableInfiniteRelated);
-	observerRelated.observe(relatedElement, observerConfig);
-
-	let sortButtons = document.querySelectorAll('div[slot="dropdown-content"] > #menu > a');
-	sortButtons.forEach(element => {
-		element.onclick = resetCommentsObserver;
-	});
-
 	function resetCommentsObserver() {
-		let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
+		const comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
 		comments.forEach(element => {
 			element.remove();
 		});
@@ -1002,7 +1005,10 @@ function main() {
 		waitForElement('#redux-recalc', 10, alignItems);
 	}
 	if (reduxSettings.disableInfiniteScrolling && window.location.href.includes('/watch?')) {
-		waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, startObservingComments); // additional element in selector for videos with disabled comments
+		waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, () => { startObservingScrolling('comments'); }); // additional element in selector for videos with disabled comments
+	}
+	if (reduxSettings.disableInfiniteScrolling && window.location.href.includes('/watch?')) {
+		waitForElement('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents', 10, () => { startObservingScrolling('related'); });
 	}
 	if (reduxSettings.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked) {
 		waitForElement('#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);

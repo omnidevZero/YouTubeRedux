@@ -151,6 +151,18 @@ document.querySelector('#changeChannel').addEventListener('click', function() {
 	document.body.append(popup);
 });
 
+//reset
+document.querySelector('#restore-defaults').addEventListener('click', () => {
+	const confirmation = confirm('All settings will be reset to default values and current page will be refreshed. Continue?');
+	if (confirmation) {
+		browser.storage.sync.clear();
+		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			browser.tabs.reload(tabs[0].id);
+		});
+		window.close();
+	}
+});
+
 function saveSettings() {
 	let newSettings = {};
 	//save slider
