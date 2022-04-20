@@ -143,6 +143,7 @@ function addCustomStyles() {
 		height:100% !important;
 		left:0 !important;
 		top: 0 !important;
+		object-fit: contain !important;
 		}
 		`,
 		darkPlaylist: `
@@ -570,6 +571,9 @@ function addCustomStyles() {
 		}
 		ytd-feed-filter-chip-bar-renderer {
 			margin-left: 16px;
+		}
+		ytd-expander.ytd-video-secondary-info-renderer {
+			margin-left: 0px !important;
 		}
 		/*SKELETON*/
 		#home-page-skeleton .rich-shelf-videos,

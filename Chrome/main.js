@@ -76,11 +76,11 @@ function waitForElement(selector, interval, callback) {
 function alignItems() {
 	let playerElement = document.querySelector('#player-container-outer');
 	let content = document.querySelector('#columns > #primary > #primary-inner');
-	let videoInfoElement = document.querySelector('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer');
+	let videoInfoElement = document.querySelector('#columns > #primary > #primary-inner #info ytd-video-primary-info-renderer');
 	let calcPadding = Math.ceil(playerElement.getBoundingClientRect().left - content.getBoundingClientRect().left);
 
 	if (calcPadding == 0 || calcPadding >= 1000 || playerElement == null || content == null || videoInfoElement == null) {
-		waitForElement('#columns > #primary > #primary-inner > #info ytd-video-primary-info-renderer', 10, alignItems);
+		waitForElement('#columns > #primary > #primary-inner #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
 	} else {
 		let reduxAlignElement = document.querySelector('#redux-style-align');
@@ -234,9 +234,9 @@ function recalculateVideoSize() {
 		let checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
 			let progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
 			let leftEdgeDistancePlayer = document.querySelector('#player-container-outer').getBoundingClientRect().x;
-			let leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner > #info').getBoundingClientRect().x;
+			let leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner #info').getBoundingClientRect().x;
 			let videoElement = document.querySelector('video');
-			let widthCtrlElement = document.querySelector('#columns > #primary > #primary-inner > #info');
+			let widthCtrlElement = document.querySelector('#columns > #primary > #primary-inner #info');
 
 			if ((widthCtrlElement.offsetWidth) < (playerSize.width-1)) { //condition for starting page in small window
 				let specialWidth = document.querySelector('video').offsetWidth;
