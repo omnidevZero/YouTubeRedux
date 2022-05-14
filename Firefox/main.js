@@ -3,6 +3,7 @@ let flags = {
 	"likesChanged":false,
 	"stylesChanged":false,
 	"isRearranged":false,
+	"isRearrangedNew":false,
 	"likesTracked":false,
 	"recalcListenersAdded":false,
 	"trueFullscreenListenersAdded":false
@@ -460,6 +461,52 @@ function rearrangeInfo() {
 	}
 
 	flags.isRearranged = true;
+}
+
+function rearrangeInfoNew() {
+	const newInfo = document.querySelector('#primary-inner > ytd-watch-metadata');
+	if (newInfo.hasAttribute('disable-upgrade') || newInfo.hasAttribute('hidden')) return;
+
+	// primary div
+	const container = newInfo.querySelector('#above-the-fold');
+	const description = newInfo.querySelector('#description-and-actions');
+	const owner = newInfo.querySelector('#owner-and-teaser');
+	const uploadInfo = newInfo.querySelector('#upload-info');
+	const reduxSubDiv = document.createElement('div');
+	reduxSubDiv.id = 'reduxSubDiv';
+	const subButton = newInfo.querySelector('#subscribe-button');
+	const subCount = newInfo.querySelector('#owner-sub-count');
+	const snippetText = newInfo.querySelector('#formatted-snippet-text');
+	const views = snippetText.childNodes[0];
+	const date = snippetText.childNodes[2];
+	const description1 = snippetText.childNodes[4] || null;
+	const description2 = snippetText.childNodes[5] || null;
+
+	uploadInfo.append(reduxSubDiv);
+	reduxSubDiv.append(subButton);
+	reduxSubDiv.append(subCount);
+
+	container.insertBefore(owner, description);
+	if (true) return; // REMOVE AFTER FULL ROLLOUT
+	// video info div
+	const videoInfo = document.createElement('div');
+	videoInfo.id = 'redux-video-info';
+	videoInfo.append(views);
+	const likeBar = document.createElement('div');
+	likeBar.innerHTML = `<div id="container" class="style-scope ytd-sentiment-bar-renderer redux-like-bar-container">
+	<div id="like-bar" class="style-scope ytd-sentiment-bar-renderer redux-like-bar"></div>
+  	</div>`;
+	videoInfo.append(likeBar);
+	owner.append(videoInfo);
+
+	// secondary div
+	const secondaryReduxDiv = document.createElement('div');
+	secondaryReduxDiv.id = 'secondary-redux-div';
+	const primaryInner = document.querySelector('#primary-inner');
+	primaryInner.insertBefore(secondaryReduxDiv, newInfo.nextElementSibling);
+
+	secondaryReduxDiv.append(date, description1, description2);
+	date.classList.add('redux-moved-date');
 }
 
 function moveTopLevelItems() {
@@ -1000,6 +1047,9 @@ function main() {
 	if (reduxSettings.rearrangeInfoRe && window.location.href.includes('/watch?') && !flags.isRearranged) {
 		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
 	}
+	if (reduxSettings.rearrangeInfoNew && window.location.href.includes('/watch?') && !flags.isRearrangedNew) {
+		waitForElement('#primary-inner > ytd-watch-metadata', 10, rearrangeInfoNew);
+	}
 	if (reduxSettings.smallPlayer && window.location.href.includes('/watch?')) {
 		waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);
 		waitForElement('#redux-recalc', 10, alignItems);
@@ -1064,7 +1114,7 @@ function main() {
 	changeGridWidth();
 }
 
-function start() {
+(() => {
 	main();
 	if (reduxSettings.fixHomepage) {
 		const logoSelector = 'ytd-topbar-logo-renderer#logo';
@@ -1105,6 +1155,4 @@ function start() {
 			main();
 		}
 	},100);
-}
-
-start();
+})();

@@ -16,6 +16,7 @@ const defaultSettings = {
 	"disableInfiniteScrolling": false, 
 	"blackBars": false, 
 	"rearrangeInfoRe": true, 
+	"rearrangeInfoNew": true, 
 	"classicLogoChoice": 2017, 
 	"filterMainRe": false, 
 	"filterVideo": true, 
@@ -300,10 +301,15 @@ function addCustomStyles() {
 		#meta.ytd-watch-flexy paper-button#more,
 		#meta.ytd-watch-flexy tp-yt-paper-button#more,
 		#meta.ytd-watch-flexy paper-button#less,
-		#meta.ytd-watch-flexy tp-yt-paper-button#less {
+		#meta.ytd-watch-flexy tp-yt-paper-button#less,
+		tp-yt-paper-button#expand,
+		tp-yt-paper-button#collapse {
 			width: 100% !important;
 			border-top: 1px solid #e2e2e2 !important;
 			margin-top: 10px !important;
+			font-size: 1.1rem !important;
+			text-transform: uppercase;
+			margin-top: 8px;
 		}
 		#meta.ytd-watch-flexy paper-button#more:hover > yt-formatted-string,
 		#meta.ytd-watch-flexy tp-yt-paper-button#more:hover > yt-formatted-string,
@@ -890,6 +896,72 @@ function addCustomStyles() {
 		}
 		#top-level-buttons-computed ytd-download-button-renderer yt-formatted-string {
 			font-weight: normal;
+		}
+		`,
+		rearrangeInfoNew: `
+		#primary-inner > ytd-watch-metadata,
+		#secondary-redux-div {
+			background-color: var(--redux-spec-brand-background-solid);
+			box-shadow: 0 1px 2px var(--redux-box-shadow) !important;
+			margin-top: 10px;
+			margin-bottom: 8px;
+			padding-top: 20px;
+			padding-left: 15px;
+			padding-bottom: 8px;
+		}
+		#secondary-redux-div {
+			padding-top: 10px;
+			font-size: 13px;
+			color: var(--redux-double-inverse);
+		}
+		#secondary-redux-div span {
+			display: block;
+		}
+		#primary-inner > ytd-watch-metadata #title > h1 > yt-formatted-string {
+			font-size: 20px;
+		}
+		#primary-inner > ytd-watch-metadata #owner-and-teaser {
+			margin-right: 15px;
+			padding-bottom: 12px;
+			border-bottom: 1px solid var(--redux-spec-10-percent-layer-inverted);
+		}
+		#primary-inner > ytd-watch-metadata #owner {
+			margin-top: 16px;
+			margin-right: 0px;
+			padding-left: 0px;
+			padding-right: 0px;
+			border: none;
+		}
+		#primary-inner > ytd-watch-metadata #avatar {
+			width: 48px;
+			height: 48px;
+			margin-right: 16px;
+		}
+		#primary-inner > ytd-watch-metadata #avatar img {
+			width: auto;
+		}
+		#primary-inner > ytd-watch-metadata #top-level-buttons-computed yt-formatted-string {
+			font-size: 11px;
+			font-weight: 500;
+		}
+		#primary-inner > ytd-watch-metadata #comment-teaser {
+			display: none;
+		}
+		#primary-inner > ytd-watch-metadata #description-inline-expander {
+			max-width: none;
+		}
+		#primary-inner > ytd-watch-metadata #description-and-actions {
+			flex-direction: column !important;
+		}
+		#primary-inner > ytd-watch-metadata #description-and-actions #expand,
+		#primary-inner > ytd-watch-metadata #description-and-actions #collapse {
+			left: 0 !important;
+			position: relative;
+			padding-top: 7px;
+		}
+		#redux-video-info {
+			display: flex;
+			flex-direction: column;
 		}
 		`,
 		darkerRed: `
@@ -2059,7 +2131,8 @@ function addCustomStyles() {
 		}
 		`,
 		hideVideoCategory: `
-		#meta.ytd-watch-flexy ytd-metadata-row-container-renderer #always-shown {
+		#meta.ytd-watch-flexy ytd-metadata-row-container-renderer #always-shown,
+		#primary-inner > ytd-watch-metadata #always-shown {
 			display: none !important;
 		}
 		`,
@@ -2269,7 +2342,7 @@ function addCustomStyles() {
 	customStyle.appendChild(document.createTextNode(customStyleInner));
 	document.documentElement.append(customStyle);
 
-	if (reduxSettings.favicon != "3") changeFavicon();
+	if (reduxSettings.favicon != "3") changeFavicon(reduxSettings.favicon);
 	// if (reduxSettings.oldIcons) changeIcons();
 
 	// function changeIcons() {
@@ -2289,27 +2362,20 @@ function addCustomStyles() {
 	// 	document.documentElement.appendChild(script);
 	// }
 
-	function changeFavicon() {
-		switch (reduxSettings.favicon) {
-		case "1":
-			if (document.querySelector('link[rel="shortcut icon"]') == null) {
-				setTimeout(changeFavicon, 250);
-				return;
-			}
-			document.querySelector('link[rel="shortcut icon"]').href = browser.runtime.getURL('/images/favicon1.ico');
-			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = browser.runtime.getURL('/images/favicon1.ico'));
-			break;
-		case "2":
-			if (document.querySelector('link[rel="shortcut icon"]') == null) {
-				setTimeout(changeFavicon, 250);
-				return;
-			}
-			document.querySelector('link[rel="shortcut icon"]').href = browser.runtime.getURL('/images/favicon2.png');
-			document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = browser.runtime.getURL('/images/favicon2.png'));
-			break;
-    
-		default:
-			break;
+	function changeFavicon(iconNumber) {
+		if (document.querySelector('link[rel="shortcut icon"]') == null) {
+			setTimeout(changeFavicon, 250);
+			return;
 		}
+
+		let iconExtension = 'png';
+		if (iconNumber == "1") iconExtension = 'ico';
+		const iconUrl = browser.runtime.getURL(`/images/favicon${iconNumber}.${iconExtension}`);
+		const linkElement = document.createElement('link');
+		linkElement.rel = 'icon';
+		linkElement.href = iconUrl;
+		document.head.prepend(linkElement);
+		document.querySelector('link[rel="shortcut icon"]').href = iconUrl;
+		document.querySelectorAll('link[rel="icon"]').forEach(element => element.href = iconUrl);
 	}
 }

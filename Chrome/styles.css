@@ -10,6 +10,7 @@ html:not([dark]) {
     --redux-spec-icon-disabled: #909090;
     --redux-spec-icon-inactive: #030303;
     --redux-spec-brand-background-solid: #fff;
+    --redux-box-shadow: var(--redux-spec-10-percent-layer-inverted);
 }
 html[dark] {
     --redux-spec-general-background-a: #181818;
@@ -21,6 +22,7 @@ html[dark] {
     --redux-spec-icon-disabled: #717171;
     --redux-spec-icon-inactive: #fff;
     --redux-spec-brand-background-solid: #212121;
+    --redux-box-shadow: var(--redux-spec-10-percent-layer);
 }
 html {
     --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
@@ -194,7 +196,8 @@ ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
 html[dark] #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
     color: var(--redux-spec-text-secondary-buttons) !important;
 }
-html:not([dark]) ytd-toggle-button-renderer.style-text[is-icon-button] #text.ytd-toggle-button-renderer {
+html:not([dark]) ytd-toggle-button-renderer.style-text[is-icon-button] #text.ytd-toggle-button-renderer,
+html:not([dark]) ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
     color: #606060 !important;
 }
 html:not([dark]) #container.ytd-sentiment-bar-renderer {
