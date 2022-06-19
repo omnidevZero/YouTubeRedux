@@ -2,7 +2,8 @@ function handleInstalled(reason) {
 	browser.storage.sync.get(['reduxSettings'], function(result) {
 		if (Object.keys(result).length > 0 && !result.reduxSettings.showChangelog) {
 			return;
-		} else {
+		} 
+		else if (reason != "browser_update") {
 			chrome.tabs.create({
 				url: `./changelog.html#${reason}`
 			});
