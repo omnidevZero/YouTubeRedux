@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "2.12.3",
+    "version": "2.13.0",
     "description": "Replicate old YouTube look and features within the modern layout!",
     "permissions": ["activeTab", "storage"],
     "browser_action": {
@@ -31,7 +31,11 @@
       {
         "matches": ["*://*.youtube.com/*"],
         "exclude_matches": ["*://*.youtube.com/embed/*"],
-        "js": ["initial-setup.js"],
+        "js": [
+          "helpers/enums.js",
+          "helpers/states.js", 
+          "initial-setup.js"
+        ],
         "run_at": "document_start"
       },
       {

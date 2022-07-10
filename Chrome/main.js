@@ -84,11 +84,12 @@ function alignItems() {
 		waitForElement('#columns > #primary > #primary-inner #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
 	} else {
-		let reduxAlignElement = document.querySelector('#redux-style-align');
-		let calcInner = `
+		const reduxAlignElement = document.querySelector('#redux-style-align');
+		const videoPlayer = document.querySelector('#player video');
+		const calcInner = `
 		#playlist > #container,
 		ytd-playlist-panel-renderer#playlist {
-			max-height: calc(${Math.ceil(document.querySelector('video').getBoundingClientRect().height)}px + 1px) !important;
+			max-height: calc(${Math.ceil(videoPlayer.getBoundingClientRect().height)}px + 1px) !important;
 		}
 		#primary.ytd-watch-flexy > #primary-inner {
 			padding-left: ${Math.max((calcPadding / window.innerWidth * 100).toFixed(3), 0)}vw !important;
@@ -346,13 +347,13 @@ function startObservingScrolling(mode) {
 
 	function setLayoutDifferences() {
 		if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3) { //condition for differences in layout between YT languages
-			related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > .ytd-item-section-renderer:not(ytd-continuation-item-renderer)');
-			relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents > ytd-continuation-item-renderer');
 			relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents');
+			related = relatedElement.querySelectorAll('ytd-compact-video-renderer, ytd-compact-radio-renderer, ytd-compact-playlist-renderer'); //normal video + mix + playlist
+			relatedContinuation = relatedElement.querySelector('ytd-continuation-item-renderer');
 		} else {
-			related = document.querySelectorAll('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > .ytd-watch-next-secondary-results-renderer:not(ytd-continuation-item-renderer)');
-			relatedContinuation = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-continuation-item-renderer');
 			relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
+			related = relatedElement.querySelectorAll('.ytd-watch-next-secondary-results-renderer');
+			relatedContinuation = relatedElement.querySelector('ytd-continuation-item-renderer');
 		}
 	}
 
@@ -361,7 +362,7 @@ function startObservingScrolling(mode) {
 	};
 	const contentsElement = document.querySelector('#comments > #sections > #contents.style-scope.ytd-item-section-renderer');
 
-	if (mode === 'comments') {
+	if (mode === INFINITE_SCROLLING_MODE.Comments) {
 		if (!!document.querySelector('#show-more-comments')) {document.querySelector('#show-more-comments').remove();}
 		observerComments = new MutationObserver(disableInfiniteComments);
 		observerComments.observe(contentsElement, observerConfig);
@@ -370,7 +371,7 @@ function startObservingScrolling(mode) {
 		sortButtons.forEach(element => {
 			element.onclick = resetCommentsObserver;
 		});
-	} else if (mode === 'related') {
+	} else if (mode === INFINITE_SCROLLING_MODE.Related) {
 		if (!!document.querySelector('#show-more-related')) {document.querySelector('#show-more-related').remove();}
 		setLayoutDifferences();
 
@@ -818,12 +819,22 @@ function autoplayInveral() {
 }
 
 function addOldAutoplay() {
-	if (window.location.href.includes('&list') || document.querySelector('#redux-autoplay') || !document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]')) return;
-	let relatedElement = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents') || document.querySelector('#secondary-inner.ytd-watch-flexy #related #items');
-	let firstRelated = document.querySelector('#related #items ytd-item-section-renderer #contents ytd-compact-video-renderer:first-child') || document.querySelector('#related #items ytd-compact-video-renderer:first-child');
-	let originalAutoplay = document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]');
-	let upNext = document.querySelector('.ytp-autonav-endscreen-upnext-header');
-	let autoplayElement = document.createElement('div');
+	const reduxAutoplay = document.querySelector('#redux-autoplay');
+
+	if (getRelatedVideosType() != relatedVideosType) {
+		setRelatedVideosType();
+		if (reduxAutoplay) {
+			reduxAutoplay.remove();
+		}
+	}
+
+	if (window.location.href.includes('&list') || reduxAutoplay || !document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]')) return;
+
+	const relatedContainer = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents') || document.querySelector('#secondary-inner.ytd-watch-flexy #related #items');
+	const relatedContainerParent = relatedContainer.parentElement;
+	const originalAutoplay = document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]');
+	const upNext = document.querySelector('.ytp-autonav-endscreen-upnext-header');
+	const autoplayElement = document.createElement('div');
 	autoplayElement.id = 'redux-autoplay';
 	autoplayElement.style = 'display: flex; justify-content: space-between; padding-right: 24px; padding-bottom: 2px;';
 	autoplayElement.innerHTML = `
@@ -850,7 +861,7 @@ function addOldAutoplay() {
 		autoplayElement.querySelector('#redux-autoplay-checkbox').checked = true;
 	}
 	
-	relatedElement.insertBefore(autoplayElement, firstRelated);
+	relatedContainerParent.insertBefore(autoplayElement, relatedContainer);
 	
 	autoplayElement.querySelector('span.redux-autoplay-checkbox-toggle').addEventListener('click', () => {
 		originalAutoplay.click();
@@ -1021,6 +1032,7 @@ function addClearHomepageEvent(selector, clearPlaylists) {
 }
 
 function main() {
+	setPageLocation();
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
 			confirmInterval = setInterval(confirmIt, 500);
@@ -1044,56 +1056,56 @@ function main() {
 			}, 60000*10);
 		}
 	}
-	if (reduxSettings.rearrangeInfoRe && window.location.href.includes('/watch?') && !flags.isRearranged) {
+	if (reduxSettings.rearrangeInfoRe && pageLocation === PAGE_LOCATION.Video && !flags.isRearranged) {
 		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
 	}
-	if (reduxSettings.rearrangeInfoNew && window.location.href.includes('/watch?') && !flags.isRearrangedNew) {
+	if (reduxSettings.rearrangeInfoNew && pageLocation === PAGE_LOCATION.Video && !flags.isRearrangedNew) {
 		waitForElement('#primary-inner > ytd-watch-metadata', 10, rearrangeInfoNew);
 	}
-	if (reduxSettings.smallPlayer && window.location.href.includes('/watch?')) {
+	if (reduxSettings.smallPlayer && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);
 		waitForElement('#redux-recalc', 10, alignItems);
 	}
-	if (reduxSettings.disableInfiniteScrolling && window.location.href.includes('/watch?')) {
-		waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, () => { startObservingScrolling('comments'); }); // additional element in selector for videos with disabled comments
+	if (reduxSettings.disableInfiniteScrolling && pageLocation === PAGE_LOCATION.Video) {
+		waitForElement('#contents > ytd-comment-thread-renderer, #contents > ytd-message-renderer', 10, () => { startObservingScrolling(INFINITE_SCROLLING_MODE.Comments); }); // additional element in selector for videos with disabled comments
 	}
-	if (reduxSettings.disableInfiniteScrolling && window.location.href.includes('/watch?')) {
-		waitForElement('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents', 10, () => { startObservingScrolling('related'); });
+	if (reduxSettings.disableInfiniteScrolling && pageLocation === PAGE_LOCATION.Video) {
+		waitForElement('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items ytd-continuation-item-renderer', 10, () => { startObservingScrolling(INFINITE_SCROLLING_MODE.Related); });
 	}
-	if (reduxSettings.showRawValues && window.location.href.includes('/watch?') && !flags.likesTracked) {
+	if (reduxSettings.showRawValues && pageLocation === PAGE_LOCATION.Video && !flags.likesTracked) {
 		waitForElement('#top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
-	if (reduxSettings.compatibleDislikes && window.location.href.includes('/watch?')) {
+	if (reduxSettings.compatibleDislikesRe && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('.ryd-tooltip #tooltip', 10, updateDislikes);
 	}
-	if (window.location.href.includes('/feed/trending') || window.location.href.includes('/feed/explore')) {
+	if (pageLocation === PAGE_LOCATION.Trending || pageLocation === PAGE_LOCATION.Explore) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);
 	}
-	if (reduxSettings.trueFullscreen && window.location.href.includes('/watch?') && !flags.trueFullscreenListenersAdded) {
+	if (reduxSettings.trueFullscreen && pageLocation === PAGE_LOCATION.Video && !flags.trueFullscreenListenersAdded) {
 		preventScrolling();
 	}
-	if (reduxSettings.playlistsFirst && window.location.pathname === '/') {
+	if (reduxSettings.playlistsFirst && pageLocation === PAGE_LOCATION.Home) {
 		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-thumbnail-overlay-bottom-panel-renderer', 10, sortPlaylists);
 	}
-	if (reduxSettings.trimSubs && window.location.href.includes('/watch?')) {
+	if (reduxSettings.trimSubs && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#reduxSubDiv > #owner-sub-count', 10, trimStrings);
 	}
-	if (reduxSettings.trimViews && window.location.href.includes('/watch?')) {
+	if (reduxSettings.trimViews && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('span.view-count', 10, trimViews);
 	}
-	if (reduxSettings.altStrings && window.location.href.includes('/watch?')) {
+	if (reduxSettings.altStrings && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('ytd-watch-flexy #info-contents ytd-video-primary-info-renderer > ytd-button-renderer:first-of-type yt-formatted-string', 10, alternativeStrings);
 	}
 	if (reduxSettings.myChannel) {
 		waitForElement('#guide ytd-guide-section-renderer:first-child #items', 100, insertMyChannel);
 	}
-	if (reduxSettings.hideClip && window.location.href.includes('/watch?')) {
+	if (reduxSettings.hideClip && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#info path[d="M8,7c0,0.55-0.45,1-1,1S6,7.55,6,7c0-0.55,0.45-1,1-1S8,6.45,8,7z M7,16c-0.55,0-1,0.45-1,1c0,0.55,0.45,1,1,1s1-0.45,1-1 C8,16.45,7.55,16,7,16z M10.79,8.23L21,18.44V20h-3.27l-5.76-5.76l-1.27,1.27C10.89,15.97,11,16.47,11,17c0,2.21-1.79,4-4,4 c-2.21,0-4-1.79-4-4c0-2.21,1.79-4,4-4c0.42,0,0.81,0.08,1.19,0.2l1.37-1.37l-1.11-1.11C8,10.89,7.51,11,7,11c-2.21,0-4-1.79-4-4 c0-2.21,1.79-4,4-4c2.21,0,4,1.79,4,4C11,7.43,10.91,7.84,10.79,8.23z M10.08,8.94L9.65,8.5l0.19-0.58C9.95,7.58,10,7.28,10,7 c0-1.65-1.35-3-3-3S4,5.35,4,7c0,1.65,1.35,3,3,3c0.36,0,0.73-0.07,1.09-0.21L8.7,9.55l0.46,0.46l1.11,1.11l0.71,0.71l-0.71,0.71 L8.9,13.91l-0.43,0.43l-0.58-0.18C7.55,14.05,7.27,14,7,14c-1.65,0-3,1.35-3,3c0,1.65,1.35,3,3,3s3-1.35,3-3 c0-0.38-0.07-0.75-0.22-1.12l-0.25-0.61L10,14.8l1.27-1.27l0.71-0.71l0.71,0.71L18.15,19H20v-0.15L10.08,8.94z M17.73,4H21v1.56 l-5.52,5.52l-2.41-2.41L17.73,4z M18.15,5l-3.67,3.67l1,1L20,5.15V5H18.15z"]', 100, hideClip);
 	}
-	if (reduxSettings.moveAutoplay && window.location.href.includes('/watch?')) {
+	if (reduxSettings.moveAutoplay && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents ytd-compact-video-renderer, #secondary-inner.ytd-watch-flexy #related #items ytd-compact-video-renderer', 10, autoplayInveral);
 	}
-	if (reduxSettings.disableMiniplayer && window.location.pathname === '/') {
+	if (reduxSettings.disableMiniplayer && pageLocation === PAGE_LOCATION.Home) {
 		waitForElement('.ytp-miniplayer-ui .ytp-miniplayer-close-button', 10, removeMiniplayer);
 	}
 	if (reduxSettings.autoExpandPlaylists) {
@@ -1102,13 +1114,13 @@ function main() {
 	if (reduxSettings.autoExpandSubs) {
 		waitForElement('#items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandSubs);
 	}
-	if (reduxSettings.fixHomepage && window.location.pathname === '/') {
+	if (reduxSettings.fixHomepage && pageLocation === PAGE_LOCATION.Home) {
 		waitForElement('ytd-rich-grid-row', 10, fixHome);
 	}
-	if (reduxSettings.hideShorts && window.location.href.includes('/results?')) {
+	if (reduxSettings.hideShorts && pageLocation === PAGE_LOCATION.SearchResults) {
 		waitForElement('#contents.ytd-section-list-renderer', 10, hideShortsInSearch);
 	}
-	if (reduxSettings.redirectShorts && window.location.href.includes('/shorts/')) {
+	if (reduxSettings.redirectShorts && pageLocation === PAGE_LOCATION.Shorts) {
 		redirectShorts();
 	}
 	changeGridWidth();
@@ -1148,7 +1160,7 @@ function main() {
 			}
 			clearStoredIntervals();
 			if (!!document.querySelector('.redux-moved-info') 
-			&& window.location.href.includes('/watch?')
+			&& pageLocation === PAGE_LOCATION.Video
 			&& document.querySelector('.redux-moved-info').getAttribute('redux-url-check') != window.location.search) {
 				clearMovedInfo(); //contains an interval
 			}

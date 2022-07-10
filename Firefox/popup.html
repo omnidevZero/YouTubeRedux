@@ -449,9 +449,7 @@
                     <div id="page-2" class="page">
                         <div style="flex: 0 0 50%; overflow-y: auto; max-height: 290px;" class="scrollable">
                             <redux>Misc</redux>
-                            <label><input type="checkbox" name="compatibleDislikes" class="settings">Dislikes restoring compatibility<div class="tooltip"><span class="tooltip-text"><br><br>Makes video page compatible with extensions that restore dislikes count. May cause issues if multiple extensions keep fighting over priority to modify page elements. Currently supported extensions:
-                                <br>• Return YouTube Dislike
-                                </span></div>
+                            <label><input type="checkbox" name="compatibleDislikesRe" class="settings">Return YouTube Dislikes compatibility<div class="tooltip"><span class="tooltip-text"><br><br>Makes video page compatible with Return YouTube Dislikes extension. Disable when experiencing issues with dislikes counter or bar.</span></div>
                             </label>
                             <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
                             <label><input type="checkbox" name="extraChannel" class="settings">Extra channel page changes</label>
@@ -538,6 +536,8 @@
                                 <br>• Dislikes - removes the dislike button and count from video page
                                 <br>• Download - removes the button from video page
                                 <br>• Shorts - removes the button from homepage and hides shorts in search results
+                                <br>• Chapters in description - removes the chapters section from video description
+                                <br>• Music in description - removes the music section from video description
                             </span></div></legend>
                                 <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on homepage"></span></label>
@@ -551,6 +551,8 @@
                                     <label class="toggle-label"><input type="checkbox" name="hideRelatedVideoAge" class="settings toggle"></input><span aria-label="Related videos age"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideVideoCategory" class="settings toggle"></input><span aria-label="Video categories"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideLicensingInfo" class="settings toggle"></input><span aria-label="Video licensing"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideChaptersInDescription" class="settings toggle"></input><span aria-label="Chapters in description"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideMusicInDescription" class="settings toggle"></input><span aria-label="Music in description"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideCountryCode" class="settings toggle"></input><span aria-label="Country code"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideCollapsedChat" class="settings toggle"></input><span aria-label="Collapsed chat"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideDislikes" class="settings toggle"></input><span aria-label="Dislikes"></span></label>

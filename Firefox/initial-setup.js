@@ -79,9 +79,11 @@ const defaultSettings = {
 	"autoExpandPlaylists": false,
 	"autoExpandSubs": false,
 	"fixHomepage": true,
-	"compatibleDislikes": false,
+	"compatibleDislikesRe": true,
 	"hideDislikes": false,
-	"hideDownload": false
+	"hideDownload": false,
+	"hideChaptersInDescription": true,
+	"hideMusicInDescription": false
 };
 
 initiate();
@@ -460,6 +462,36 @@ function addCustomStyles() {
 		}
 		.ytp-volume-area svg {
 			transform: scale(1.25);
+		}
+		ytd-compact-video-renderer.ytd-video-description-music-section-renderer {
+			min-width: 200px;
+			width: auto;
+		}
+		ytd-compact-video-renderer.ytd-video-description-music-section-renderer #video-title,
+		ytd-compact-video-renderer.ytd-video-description-music-section-renderer #channel-name #text {
+			font-size: 1.2rem !important;
+		}
+		#primary #info-rows ytd-info-row-renderer {
+			padding: 2px 0 !important;
+			border-bottom: none !important;
+		}
+		#primary #info-rows #title {
+			text-transform: lowercase;
+			font-size: 1.2rem !important;
+			margin-right: 10px !important;
+			flex-basis: 8em;
+    		max-width: 8em;
+		}
+		#primary #info-rows #title:first-line {
+			text-transform: capitalize;
+		}
+		#primary #info-rows #default-metadata-section,
+		#primary #info-rows #default-metadata-section > #truncation-text {
+			margin-left: 0 !important;
+		}
+		#primary #info-rows #default-metadata-section yt-formatted-string,
+		#primary #info-rows #info-row-container > yt-formatted-string {
+			font-size: 1.2rem !important;
 		}
 		/*EXTRA LAYOUT 2 - HOME*/
 		app-drawer#guide[position="left"] {
@@ -2240,16 +2272,22 @@ function addCustomStyles() {
 			color: #767676;
 			margin-right: 5px;
 		}
-		#items > #redux-autoplay {
+		ytd-item-section-renderer > #redux-autoplay {
 			margin-bottom: 8px;
 		}
 		[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {
 			display: none !important;
 		} 
-		#redux-autoplay + ytd-compact-video-renderer {
+		#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents > :first-child, 
+		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-video-renderer:first-child,
+		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-radio-renderer:first-child,
+		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-playlist-renderer:first-child {
 			margin-bottom: 32px;
 		} 
-		#redux-autoplay + ytd-compact-video-renderer::after {
+		#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents > :first-child::after, 
+		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-video-renderer:first-child::after,
+		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-radio-renderer:first-child::after,
+		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-playlist-renderer:first-child::after {
 			content: '';
 			margin-bottom: 16px;
 			margin-top: 16px;
@@ -2259,7 +2297,10 @@ function addCustomStyles() {
 			position: absolute;
 			bottom: -32px;
 		}
-		html[dark] #redux-autoplay + ytd-compact-video-renderer::after {
+		html[dark] #secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents > :first-child::after, 
+		html[dark] #secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-video-renderer:first-child::after,
+		html[dark] #secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-radio-renderer:first-child::after,
+		html[dark] #secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-playlist-renderer:first-child::after {
 			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		}
 		#redux-autoplay-upnext {
@@ -2321,7 +2362,7 @@ function addCustomStyles() {
 			transition-duration: 0.25s;
 		}
 		`,
-		compatibleDislikes: `
+		compatibleDislikesRe: `
 		.ryd-tooltip {
 			display: none !important;
 		}
@@ -2338,6 +2379,16 @@ function addCustomStyles() {
 		`,
 		hideShorts: `
 		#endpoint[title="Shorts"] {
+			display: none !important;
+		}
+		`,
+		hideChaptersInDescription: `
+		#primary ytd-horizontal-card-list-renderer {
+			display: none !important;
+		}
+		`,
+		hideMusicInDescription: `
+		#primary ytd-video-description-music-section-renderer {
 			display: none !important;
 		}
 		`
