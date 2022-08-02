@@ -28,8 +28,23 @@ html {
     --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
     --redux-spec-10-percent-layer-inverted: rgba(0, 0, 0, 0.1);
     --redux-paper-dialog-background-color: var(--redux-spec-brand-background-solid);
+    --ytd-toolbar-height: 50px !important;
+    --ytd-masthead-height: 50px !important;
+    --overridden-masthead-height: var(--ytd-masthead-height);
 }
 /*GENERAL STYLES*/
+ytd-app[masthead-hidden] {
+    --ytd-masthead-height: 0px !important;
+    --overridden-masthead-height: var(--ytd-masthead-height);
+}
+#page-manager.ytd-app,
+#guide-spacer.ytd-app {
+    --ytd-toolbar-offset: var(--overridden-masthead-height, var(--ytd-toolbar-height)) !important;
+    margin-top: var(--overridden-masthead-height,var(--ytd-toolbar-height)) !important;
+}
+ytd-mini-guide-renderer.ytd-app {
+    top: var(--overridden-masthead-height,var(--ytd-toolbar-height)) !important;
+}
 html:not([dark]) #video-title.ytd-rich-grid-media {
     color: #167ac6 !important;
 }
@@ -121,8 +136,9 @@ html:not([dark]) .more-button.ytd-comment-replies-renderer, html:not([dark]) .le
 span.yt-view-count-renderer, span.ytd-video-view-count-renderer {
     font-size:18px !important;
 }
-ytd-watch-flexy:not([theater]):not([fullscreen]) #primary.ytd-watch-flexy, ytd-watch-flexy:not([theater]):not([fullscreen]) #secondary.ytd-watch-flexy {
-    padding-top:12px !important;
+ytd-watch-flexy:not([theater]):not([fullscreen]) #primary.ytd-watch-flexy, 
+ytd-watch-flexy:not([theater]):not([fullscreen]) #secondary.ytd-watch-flexy {
+    padding-top: 10px !important;
 }
 ytd-expander.ytd-video-secondary-info-renderer {
     line-height:15px !important;
@@ -220,10 +236,8 @@ html:not([dark]) #container.ytd-sentiment-bar-renderer {
 }
     
 /*SEARCH RESULTS STYLES*/
-ytd-playlist-renderer[use-prominent-thumbs] ytd-playlist-thumbnail.ytd-playlist-renderer {
-    max-width: 246px !important;
-}
-ytd-thumbnail:not([rich-grid-thumbnail]) {
+ytd-item-section-renderer ytd-thumbnail:not([rich-grid-thumbnail]), 
+ytd-item-section-renderer ytd-playlist-thumbnail {
     max-width: 246px !important;
 }
 html:not([dark]) #video-title.ytd-video-renderer {
@@ -232,7 +246,7 @@ html:not([dark]) #video-title.ytd-video-renderer {
 html:not([dark]) #video-title.ytd-playlist-renderer {
     color:#167ac6 !important;
 }
-ytd-video-renderer[use-prominent-thumbs] #channel-info.ytd-video-renderer {
+ytd-video-renderer #channel-info.ytd-video-renderer {
     padding:0 !important;
 }
 ytd-search-filter-renderer.ytd-search-filter-group-renderer {
@@ -244,11 +258,11 @@ html:not([dark]) #video-title.ytd-radio-renderer {
 yt-img-shadow.ytd-channel-renderer {
     border-radius: 0% !important;
 }
-ytd-channel-renderer[use-prominent-thumbs] #avatar-section.ytd-channel-renderer .channel-link.ytd-channel-renderer {
+ytd-channel-renderer #avatar-section.ytd-channel-renderer .channel-link.ytd-channel-renderer {
     -webkit-justify-content: normal !important;
     justify-content: normal !important;
 }
-ytd-channel-renderer[use-prominent-thumbs] #avatar-section.ytd-channel-renderer {
+ytd-channel-renderer #avatar-section.ytd-channel-renderer {
     -webkit-flex: 0 !important;
     flex: 0 !important;
     margin-right: 22px !important;

@@ -6,7 +6,8 @@ let flags = {
 	"isRearrangedNew":false,
 	"likesTracked":false,
 	"recalcListenersAdded":false,
-	"trueFullscreenListenersAdded":false
+	"trueFullscreenListenersAdded":false,
+	"homeObserverAdded": false
 };
 let alignRetry = {
 	startCount: 0,
@@ -36,28 +37,48 @@ function confirmIt() {
 	if (confirmButton != null && !!buttonVisible && popupTypeCheck && buttonParentVisible) {
 		confirmButton.click();
 		document.querySelector('video').play();
-		//console.log('Clicked at: ' + new Date());
+		//log('Clicked at: ' + new Date());
 	}
 }
 
 function changeGridWidth() {
-	if (location.pathname == "/") {
-		let retry = setInterval(function() {
-			let styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
-			if (!styleItem) return;
-			let currentStyle = styleItem.style.cssText;
-			let currentStyleArray = currentStyle.split(";");
+	let styleItem;
 
-			for (let i = 0; i < currentStyleArray.length-1; i++) { //split, replace and join settings on the fly
-				if (currentStyleArray[i].includes('--ytd-rich-grid-items-per-row')) {
-					let splitElement = currentStyleArray[i].split(":");
-					splitElement[1] = reduxSettings.gridItems + " !important"; //to override different important from css
-					currentStyleArray[i] = splitElement.join(":");  
-				}
+	const changeGridAction = () => {
+		if (flags.homeObserverAdded) {
+			homeObserver.disconnect();
+		}
+
+		styleItem = document.querySelector('#primary > ytd-rich-grid-renderer');
+		if (!styleItem) return;
+		let currentStyle = styleItem.style.cssText;
+		let currentStyleArray = currentStyle.split(";");
+		
+		for (let i = 0; i < currentStyleArray.length-1; i++) { //split, replace and join settings on the fly
+			if (currentStyleArray[i].includes('--ytd-rich-grid-items-per-row')) {
+				let splitElement = currentStyleArray[i].split(":");
+				splitElement[1] = reduxSettings.gridItems + '!important'; //to override different important from css
+				currentStyleArray[i] = splitElement.join(":");  
 			}
-			styleItem.style.cssText = currentStyleArray.join(";");
-			if (currentStyle != "" && currentStyle.includes('--ytd-rich-grid-items-per-row:' + reduxSettings.gridItems)) {clearInterval(retry);}
-		},100);
+		}
+		styleItem.style.cssText = currentStyleArray.join(";");
+
+		if (flags.homeObserverAdded) {
+			homeObserver.observe(styleItem, {attributes: true, attributeFilter: ['style']});
+		}
+	};
+
+	changeGridAction();
+
+	if (pageLocation === PAGE_LOCATION.Home) {
+		if (!flags.homeObserverAdded) {
+			//observe since YT keeps restoring grid values on page navigation
+			homeObserver = new MutationObserver(() => {
+				changeGridAction();
+			});
+			homeObserver.observe(styleItem, {attributes: true, attributeFilter: ['style']});
+			flags.homeObserverAdded = true;
+		}
 	}
 }
 
@@ -83,7 +104,7 @@ function alignItems() {
 	if (calcPadding == 0 || calcPadding >= 1000 || playerElement == null || content == null || videoInfoElement == null) {
 		waitForElement('#columns > #primary > #primary-inner #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
-	} else {
+	} else if (!isTheater() && !isFullscreen()) {
 		const reduxAlignElement = document.querySelector('#redux-style-align');
 		const videoPlayer = document.querySelector('#player video');
 		const calcInner = `
@@ -465,13 +486,13 @@ function rearrangeInfo() {
 }
 
 function rearrangeInfoNew() {
-	const newInfo = document.querySelector('#primary-inner > ytd-watch-metadata');
+	const newInfo = document.querySelector('#primary-inner ytd-watch-metadata');
 	if (newInfo.hasAttribute('disable-upgrade') || newInfo.hasAttribute('hidden')) return;
 
 	// primary div
 	const container = newInfo.querySelector('#above-the-fold');
-	const description = newInfo.querySelector('#description-and-actions');
-	const owner = newInfo.querySelector('#owner-and-teaser');
+	const topRow = newInfo.querySelector('#top-row');
+	const owner = newInfo.querySelector('#owner');
 	const uploadInfo = newInfo.querySelector('#upload-info');
 	const reduxSubDiv = document.createElement('div');
 	reduxSubDiv.id = 'reduxSubDiv';
@@ -487,8 +508,9 @@ function rearrangeInfoNew() {
 	reduxSubDiv.append(subButton);
 	reduxSubDiv.append(subCount);
 
-	container.insertBefore(owner, description);
-	if (true) return; // REMOVE AFTER FULL ROLLOUT
+	container.insertBefore(owner, topRow);
+	// REMOVE COMMENT AFTER FULL ROLLOUT
+	/*
 	// video info div
 	const videoInfo = document.createElement('div');
 	videoInfo.id = 'redux-video-info';
@@ -508,6 +530,8 @@ function rearrangeInfoNew() {
 
 	secondaryReduxDiv.append(date, description1, description2);
 	date.classList.add('redux-moved-date');
+	*/
+	flags.isRearrangedNew = true;
 }
 
 function moveTopLevelItems() {
@@ -1060,7 +1084,7 @@ function main() {
 		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
 	}
 	if (reduxSettings.rearrangeInfoNew && pageLocation === PAGE_LOCATION.Video && !flags.isRearrangedNew) {
-		waitForElement('#primary-inner > ytd-watch-metadata', 10, rearrangeInfoNew);
+		waitForElement('#primary-inner ytd-watch-metadata', 10, rearrangeInfoNew);
 	}
 	if (reduxSettings.smallPlayer && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);
@@ -1123,11 +1147,18 @@ function main() {
 	if (reduxSettings.redirectShorts && pageLocation === PAGE_LOCATION.Shorts) {
 		redirectShorts();
 	}
-	changeGridWidth();
+	if (pageLocation === PAGE_LOCATION.Home) {
+		waitForElement('#primary > ytd-rich-grid-renderer', 10, changeGridWidth);
+	}
 }
 
 (() => {
-	main();
+	try {
+		main();
+	} catch (error) {
+		log(error, true);
+	}
+	
 	if (reduxSettings.fixHomepage) {
 		const logoSelector = 'ytd-topbar-logo-renderer#logo';
 		waitForElement(logoSelector, 10, () => {

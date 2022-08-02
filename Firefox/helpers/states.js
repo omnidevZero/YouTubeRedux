@@ -43,3 +43,6 @@ const setRelatedVideosType = () => {
 	relatedVideosType = getRelatedVideosType();
 };
 
+/* OBSERVERS */
+let homeObserver = null;
+let playerObserver = null;

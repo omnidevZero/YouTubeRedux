@@ -81,16 +81,50 @@
                 transform: translate(-300px, 0);
             }
         }
+        .important {
+            color: red;
+        }
+        .github-logo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            text-decoration: none;
+            margin: 10px 10px 0 0;
+        }
+        .github-logo img {
+            height: 64px;
+        }
       </style>
       <script src="./initial-setup.js"></script>
     </head>
     <body>
+        <a href="https://github.com/omnidevZero/YouTubeRedux" class="github-logo">
+            <div>
+                <img src="./images/github-logo.png"></img>
+            </div>
+            <div>
+                GitHub repo
+            </div>
+        </a>
         <div>
             <div id="youtube-redux-header">YouTube Redux has just been updated<span id="version"></span>!</div>
             <div id="main">
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">2.13.1</b><span> - 02.08.2022</span>
+                        <li>added an option to hide video heatmap (graph showing most watched parts)</li>
+                        <li>removed the option to align search bar to the left - it is now included in 'Extra layout changes' setting</li>
+                        <li>number of videos per row setting will now be properly retained during page navigation</li>
+                        <li>CSS fixes for search results and search bar</li>
+                        <li>fixed an issue that caused video player controls to go missing after exiting fullscreen mode</li>
+                        <li>minor fixes for new video page layout that's being rolled out - restoration of this page is basic at most for now as this change still wasn't made global (affects a specific group of users), more updates will follow</li>
+                        <li>added a GitHub repository link to this page</li>
                         <b class="update">2.13.0</b><span> - 10.07.2022</span>
                         <li>Return YouTube Dislike compatibility setting is now enabled by default and has been renamed for clarity (as RYD was the only compatible extension anyway)</li>
                         <li>partially restored the old look of music licensing and scaled down the new elements</li>
