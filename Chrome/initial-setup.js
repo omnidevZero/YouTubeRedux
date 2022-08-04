@@ -258,47 +258,49 @@ function addCustomStyles() {
 		extraLayout: `
 		/*EXTRA LAYOUT 1 - VIDEO*/
 		ytd-app {
-			background-color: #f1f1f1 !important;
+			background-color: #f1f1f1;
 		}
 		html[dark] ytd-app {
-			background-color: var(--redux-spec-general-background-a) !important;
+			background-color: var(--redux-spec-general-background-a);
 		}
-		ytd-video-primary-info-renderer, ytd-video-secondary-info-renderer {
-			background-color: white !important;
-			padding-left: 15px !important;
-			padding-right: 15px !important;
-			box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
-			border-bottom: 0 !important;
-			margin-bottom: 10px !important;
+		ytd-video-primary-info-renderer, 
+		ytd-video-secondary-info-renderer {
+			background-color: white;
+			padding-left: 15px;
+			padding-right: 15px;
+			box-shadow: 0 1px 2px rgba(0,0,0,.1);
+			border-bottom: 0;
+			margin-bottom: 10px;
 		}
-		html[dark] ytd-video-primary-info-renderer, html[dark] ytd-video-secondary-info-renderer {
-			background-color: #222222 !important;
-			padding-left: 15px !important;
-			box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
-			border-bottom: 0 !important;
-			margin-bottom: 10px !important;
+		html[dark] ytd-video-primary-info-renderer, 
+		html[dark] ytd-video-secondary-info-renderer {
+			background-color: #222222;
+			padding-left: 15px;
+			box-shadow: 0 1px 2px rgba(255,255,255,.1);
+			border-bottom: 0;
+			margin-bottom: 10px;
 		}
 		ytd-video-secondary-info-renderer {
-			padding-bottom: 8px !important;
+			padding-bottom: 8px;
 		}
 		.more-button.ytd-video-secondary-info-renderer, 
 		.less-button.ytd-video-secondary-info-renderer {
-			font-size: 1.1rem !important;
+			font-size: 1.1rem;
 		}
 		ytd-comments#comments {
-			background-color: white !important;
-			padding-left: 15px !important;
-			padding-top: 1px !important;
-			box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
+			background-color: white;
+			padding-left: 15px;
+			padding-top: 1px;
+			box-shadow: 0 1px 2px rgba(0,0,0,.1);
 		}
 		html[dark] ytd-comments#comments {
-			background-color: #222222 !important;
-			padding-left: 15px !important;
-			padding-top: 1px !important;
-			box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
+			background-color: #222222;
+			padding-left: 15px;
+			padding-top: 1px;
+			box-shadow: 0 1px 2px rgba(255,255,255,.1);
 		}
 		#meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
-			padding-top: 10px !important;
+			padding-top: 10px;
 		}
 		#meta.ytd-watch-flexy paper-button#more,
 		#meta.ytd-watch-flexy tp-yt-paper-button#more,
@@ -306,78 +308,77 @@ function addCustomStyles() {
 		#meta.ytd-watch-flexy tp-yt-paper-button#less,
 		tp-yt-paper-button#expand,
 		tp-yt-paper-button#collapse {
-			width: 100% !important;
-			border-top: 1px solid #e2e2e2 !important;
-			margin-top: 10px !important;
-			font-size: 1.1rem !important;
+			width: 100%;
+			border-top: 1px solid #e2e2e2;
+			margin-top: 10px;
+			font-size: 1.1rem;
 			text-transform: uppercase;
-			margin-top: 8px;
 		}
 		#meta.ytd-watch-flexy paper-button#more:hover > yt-formatted-string,
 		#meta.ytd-watch-flexy tp-yt-paper-button#more:hover > yt-formatted-string,
 		#meta.ytd-watch-flexy paper-button#less:hover > yt-formatted-string,
 		#meta.ytd-watch-flexy tp-yt-paper-button#less:hover > yt-formatted-string {
-			color: black !important;
+			color: black;
 		}
 		#show-more-comments:hover > input {
-			color: black !important;
+			color: black;
 		}
 		#show-more-related:hover > input {
-			color: black !important;
+			color: black;
 		}
 		html[dark] #meta.ytd-watch-flexy paper-button#more, 
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#more,
 		html[dark] #meta.ytd-watch-flexy paper-button#less,
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#less {
-			border-top: 1px solid var(--redux-spec-10-percent-layer) !important;
+			border-top: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		html[dark] #meta.ytd-watch-flexy paper-button#more:hover > yt-formatted-string,
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#more:hover > yt-formatted-string,
 		html[dark] #meta.ytd-watch-flexy paper-button#less:hover > yt-formatted-string,
 		html[dark] #meta.ytd-watch-flexy tp-yt-paper-button#less:hover > yt-formatted-string {
-			color: white !important;
+			color: white;
 		}
 		html[dark] #show-more-comments:hover > input {
-			color: white !important;
+			color: white;
 		}
 		html[dark] #show-more-related:hover > input {
-			color: white !important;
+			color: white;
 		}
 		#secondary-inner.ytd-watch-flexy #related {
-			background-color: white !important;
-			box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
-			padding-left: 15px !important;
-			padding-top: 7px !important;
-			margin-left: -13px !important;
+			background-color: white;
+			box-shadow: 0 1px 2px rgba(0,0,0,.1);
+			padding-left: 15px;
+			padding-top: 7px;
+			margin-left: -13px;
 		}
 		html[dark] #secondary-inner.ytd-watch-flexy #related {
-			background-color: #222222 !important;
-			box-shadow: 0 1px 2px rgba(255,255,255,.1) !important;
-			padding-left: 15px !important;
-			padding-top: 7px !important;
-			margin-left: -13px !important;
+			background-color: #222222;
+			box-shadow: 0 1px 2px rgba(255,255,255,.1);
+			padding-left: 15px;
+			padding-top: 7px;
+			margin-left: -13px;
 		}
 		#secondary-inner.ytd-watch-flexy #playlist + #related:not(#secondary-inner.ytd-watch-flexy #playlist[hidden="true"] + #related) {
-			padding-top: 7px !important;
+			padding-top: 7px;
 		}
 		#secondary-inner.ytd-watch-flexy #playlist[hidden="true"] + #related {
-			padding-top: 15px !important;
+			padding-top: 15px;
 		}
 		#always-shown ytd-rich-metadata-renderer {
-			background: none !important;
+			background: none;
 		}
 		#secondary-inner.ytd-watch-flexy ytd-playlist-panel-renderer:not([hidden="true"]) + #related #items > ytd-compact-video-renderer:first-child {
-			padding-top: 8px !important;
+			padding-top: 8px;
 		}
 		yt-chip-cloud-renderer,
 		#left-arrow-button.yt-chip-cloud-renderer, 
 		#right-arrow-button.yt-chip-cloud-renderer {
-			background-color: white !important;
+			background-color: white;
 		}
 		html[dark] yt-chip-cloud-renderer,
 		html[dark] #left-arrow-button.yt-chip-cloud-renderer, 
 		html[dark] #right-arrow-button.yt-chip-cloud-renderer {
-			background-color: #222222 !important;
+			background-color: #222222;
 		}
 		#right-arrow.yt-chip-cloud-renderer:before {
 			background: -webkit-gradient(linear, right top, left top, color-stop(10%, white), color-stop(90%, rgba(249, 249, 249, 0)));
@@ -404,7 +405,7 @@ function addCustomStyles() {
 		}
 		ytd-thumbnail-overlay-time-status-renderer {
 			font-size: 1.1rem;
-			padding: 1px 4px !important;
+			padding: 1px 4px;
 			margin-right: 0;
 		}
 		#related #text.ytd-channel-name {
@@ -413,41 +414,41 @@ function addCustomStyles() {
 		}
 		#video-title.ytd-compact-video-renderer {
 			line-height: 1.2;
-			margin-bottom: 2px !important;
+			margin-bottom: 2px;
 		}
 		#video-title.ytd-compact-video-renderer:hover {
 			color: #167ac6;
 		}
 		.ytp-chrome-controls {
-			height: 40px !important;
-			line-height: 40px !important;
+			height: 40px;
+			line-height: 40px;
 		}
 		.ytp-chrome-bottom {
-			height: 40px !important;
+			height: 40px;
 		}
 		.ytp-progress-bar-container {
-			bottom: 39px !important;
+			bottom: 39px;
 		}
 		.ytp-time-display {
-			line-height: 39px !important;
+			line-height: 39px;
 		}
 		.ytp-big-mode .ytp-volume-slider {
-			min-height: 40px !important;
+			min-height: 40px;
 		}
 		.ytp-big-mode .ytp-volume-slider-handle:before {
-			height: 3px !important;
+			height: 3px;
 		}
 		.ytp-big-mode .ytp-volume-slider-handle:after {
-			height: 3px !important;
+			height: 3px;
 		}
 		.ytp-big-mode .ytp-volume-slider-active .ytp-volume-panel {
-			width: 72px !important;
+			width: 72px;
 		}
 		.ytp-big-mode .ytp-volume-slider-handle {
-			width: 12px !important;
-			height: 12px !important;
-			border-radius: 6px !important;
-			margin-top: -6px !important;
+			width: 12px;
+			height: 12px;
+			border-radius: 6px;
+			margin-top: -6px;
 		}
 		.ytp-volume-area svg {
 			transform: scale(1.25);
@@ -458,19 +459,19 @@ function addCustomStyles() {
 		}
 		ytd-compact-video-renderer.ytd-video-description-music-section-renderer #video-title,
 		ytd-compact-video-renderer.ytd-video-description-music-section-renderer #channel-name #text {
-			font-size: 1.2rem !important;
+			font-size: 1.2rem;
 		}
 		#structured-description > #items > ytd-video-description-music-section-renderer {
 			border-top: 1px solid var(--yt-spec-10-percent-layer);
 		}
 		#primary #info-rows ytd-info-row-renderer {
-			padding: 2px 0 !important;
-			border-bottom: none !important;
+			padding: 2px 0;
+			border-bottom: none;
 		}
 		#primary #info-rows #title {
 			text-transform: lowercase;
-			font-size: 1.2rem !important;
-			margin-right: 10px !important;
+			font-size: 1.2rem;
+			margin-right: 10px;
 			flex-basis: 8em;
     		max-width: 8em;
 		}
@@ -479,39 +480,39 @@ function addCustomStyles() {
 		}
 		#primary #info-rows #default-metadata-section,
 		#primary #info-rows #default-metadata-section > #truncation-text {
-			margin-left: 0 !important;
+			margin-left: 0;
 		}
 		#primary #info-rows #default-metadata-section yt-formatted-string,
 		#primary #info-rows #info-row-container > yt-formatted-string {
-			font-size: 1.2rem !important;
+			font-size: 1.2rem;
 		}
 		/*EXTRA LAYOUT 2 - HOME*/
-		app-drawer#guide[position="left"] {
-			border-right: 1px solid #e8e8e8 !important;
+		tp-yt-app-drawer#guide[position="left"] {
+			border-right: 1px solid #e8e8e8;
 		}
-		html[dark] app-drawer#guide[position="left"] {
-			border-right: 1px solid var(--redux-spec-10-percent-layer) !important;
+		html[dark] tp-yt-app-drawer#guide[position="left"] {
+			border-right: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		#masthead-container.ytd-app #masthead:not([dark]) {
-			border-bottom: 1px solid #e8e8e8 !important;
+			border-bottom: 1px solid #e8e8e8;
 		}
 		html[dark] #masthead-container.ytd-app {
-			border-bottom: 1px solid var(--redux-spec-10-percent-layer) !important;
+			border-bottom: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		@media (max-width: 2000px) {
 			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer,
 			#page-manager ytd-browse[page-subtype="subscriptions"] ytd-two-column-browse-results-renderer {
-				max-width: 1356.81px !important;  
+				max-width: 1356.81px;  
 			}
 		}
 		@media (min-width: 2001px) {
 			#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer,
 			#page-manager ytd-browse[page-subtype="subscriptions"] ytd-two-column-browse-results-renderer {
-			  max-width: 2713.62px !important;
+			  max-width: 2713.62px;
 			} 
 		}
 		ytd-rich-shelf-renderer {
-			border-top: 1px solid var(--redux-spec-10-percent-layer) !important;
+			border-top: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		#video-title.ytd-rich-grid-media, 
 		#video-title.yt-simple-endpoint.ytd-grid-video-renderer {
@@ -576,7 +577,7 @@ function addCustomStyles() {
 			margin: 4px 0 1px 0 !important;
 		}
 		ytd-guide-entry-renderer[active] {
-			background-color: #f00 !important;
+			background-color: #f00;
 		}
 		ytd-guide-entry-renderer[active] .guide-icon.ytd-guide-entry-renderer {
 			color: white !important;
@@ -591,35 +592,38 @@ function addCustomStyles() {
 			background: none !important;
 		}
 		#player.ytd-watch-flexy {
-			margin-bottom: 10px !important;
+			margin-bottom: 10px;
 		}
 		ytd-watch-next-secondary-results-renderer:not([player-move-autonav-toggle_]) #items.ytd-watch-next-secondary-results-renderer > yt-related-chip-cloud-renderer.ytd-watch-next-secondary-results-renderer {
-			margin-top: calc(0% - 7px) !important;
+			margin-top: calc(0% - 7px);
 		}
 		#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
-			width: calc(var(--ytd-rich-grid-chips-bar-width) - 33px) !important;
+			width: calc(var(--ytd-rich-grid-chips-bar-width) - 33px);
 		}
 		ytd-feed-filter-chip-bar-renderer {
 			margin-left: 16px;
 		}
 		ytd-expander.ytd-video-secondary-info-renderer {
-			margin-left: 0px !important;
+			margin-left: 0px;
 		}
 		/*SKELETON*/
+		#home-page-skeleton {
+			margin-top: 50px;
+		}
 		#home-page-skeleton .rich-shelf-videos,
 		#home-page-skeleton #home-container-media {
-			margin-left: 8vw !important;
-			margin-right: 8vw !important;
+			margin-left: 8vw;
+			margin-right: 8vw;
 			transform: translate(20px, -2px);
 		}
 		#home-page-skeleton .rich-shelf-videos .rich-grid-media-skeleton.mini-mode,
 		#home-page-skeleton #home-container-media .rich-grid-media-skeleton.mini-mode {
-			flex-basis: 205px !important;
-			min-width: 205px !important;
-			max-width: 205px !important;
+			flex-basis: calc(100%/${reduxSettings.gridItems} - 16px - 0.01px);
+			min-width: calc(100%/${reduxSettings.gridItems} - 16px - 0.01px);
+			max-width: calc(100%/${reduxSettings.gridItems} - 16px - 0.01px);
 		}
 		#home-page-skeleton .video-details {
-			padding-bottom: 30px !important;
+			padding-bottom: 30px;
 		}
 		/*MISC*/
 		.badge-style-type-verified > yt-icon {
@@ -638,110 +642,39 @@ function addCustomStyles() {
 			margin-right: -4px !important;
 		}
 		/* Scrollbar */
-		body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar {
+		body::-webkit-scrollbar,
+		tp-yt-app-drawer#guide #contentContainer #guide-inner-content::-webkit-scrollbar,
+		ytd-product-list-renderer::-webkit-scrollbar,
+		ytd-transcript-body-renderer::-webkit-scrollbar,
+		ytd-macro-markers-list-renderer #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar,
+		ytd-playlist-sidebar-renderer::-webkit-scrollbar,
+		ytd-playlist-panel-renderer .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar,
+		ytd-channel-switcher-renderer .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar {
 			width: 8px !important;
 		}
-		body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar-thumb {
+		body::-webkit-scrollbar-thumb,
+		tp-yt-app-drawer#guide #contentContainer #guide-inner-content::-webkit-scrollbar-thumb,
+		ytd-product-list-renderer::-webkit-scrollbar-thumb,
+		ytd-transcript-body-renderer::-webkit-scrollbar-thumb,
+		ytd-macro-markers-list-renderer #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb,
+		ytd-playlist-sidebar-renderer::-webkit-scrollbar-thumb,
+		ytd-playlist-panel-renderer .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb,
+		ytd-channel-switcher-renderer .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb {
 			height: 56px;
 			border-radius: 0px !important;
 			border: 0px solid transparent !important;
 			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
+			background-color: var(--redux-scrollbar-default) !important;
 		}
-		body:not(.style-scope)[standardized-themed-scrollbar]:not(.style-scope):not([no-y-overflow]):not(.style-scope)::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
-		}
-		ytd-product-list-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
-		}
-		ytd-transcript-body-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
-		}
-		ytd-macro-markers-list-renderer[standardized-themed-scrollbar] #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
-		}
-		ytd-playlist-sidebar-renderer[standardized-themed-scrollbar]::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
-		}
-		ytd-playlist-panel-renderer[standardized-themed-scrollbar] .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar {
-			width: 8px !important;
-		}
-		ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: var(--redux-spec-icon-disabled) !important;
-		}
-		ytd-channel-switcher-renderer[standardized-themed-scrollbar] .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb:hover {
-			background-color: var(--redux-spec-icon-inactive) !important;
-		}
-		ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app::-webkit-scrollbar {
-			background: transparent;
-			width: 8px !important;
-		}
-		ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app::-webkit-scrollbar-thumb {
-			height: 56px;
-			border-radius: 0px !important;
-			border: 0px solid transparent !important;
-			background-clip: content-box;
-			background-color: transparent;
-		}
-		ytd-app[standardized-themed-scrollbar] #guide-inner-content.ytd-app:hover::-webkit-scrollbar-thumb {
-			background-color: var(--redux-spec-icon-disabled) !important;
+		body::-webkit-scrollbar-thumb:hover,
+		tp-yt-app-drawer#guide #contentContainer #guide-inner-content::-webkit-scrollbar-thumb:hover,
+		ytd-product-list-renderer::-webkit-scrollbar-thumb:hover,
+		ytd-transcript-body-renderer::-webkit-scrollbar-thumb:hover,
+		ytd-macro-markers-list-renderer #contents.ytd-macro-markers-list-renderer::-webkit-scrollbar-thumb:hover,
+		ytd-playlist-sidebar-renderer::-webkit-scrollbar-thumb:hover,
+		ytd-playlist-panel-renderer .playlist-items.ytd-playlist-panel-renderer::-webkit-scrollbar-thumb:hover,
+		ytd-channel-switcher-renderer .menu-container.ytd-channel-switcher-renderer::-webkit-scrollbar-thumb:hover {
+			background-color: var(--redux-scrollbar-hover) !important;
 		}
 		/* SUB + MISC BUTTONS */
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
@@ -749,36 +682,36 @@ function addCustomStyles() {
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
 		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
 		[page-subtype="channels"] #edit-buttons tp-yt-paper-button {
-			margin: 0 !important; 
-			padding: 2px 8px 2px 8px !important; 
-			text-transform: none !important; 
-			font-weight: normal !important; 
-			font-size: 12px !important;
-			max-height: 24px !important;
-			height: 24px !important;
+			margin: 0;
+			padding: 2px 8px 2px 8px;
+			text-transform: none;
+			font-weight: normal;
+			font-size: 12px;
+			max-height: 24px;
+			height: 24px;
 		}
 		ytd-channel-renderer #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button {
-			margin-right: 10px !important;
+			margin-right: 10px;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button > yt-formatted-string,
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
-			padding-top: 1px !important;
+			padding-top: 1px;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
-			background-color: #f00 !important;
+			background-color: #f00;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover {
-			background-color: #d90a17 !important;
+			background-color: #d90a17;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before {
-				content: url('${browser.runtime.getURL('/images/sub-icon.png')}') !important;
-				background-size: auto !important;
-				width: 16px !important;
-				height: 12px !important;
-				margin-right: 6px !important;
+				content: url('${browser.runtime.getURL('/images/sub-icon.png')}');
+				background-size: auto;
+				width: 16px;
+				height: 12px;
+				margin-right: 6px;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button[subscribed]::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button[subscribed]::before {
@@ -793,19 +726,19 @@ function addCustomStyles() {
 			margin-bottom: 2px;
 		}
 		#sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
-			margin-right: 0px !important;
+			margin-right: 0px;
 		}
 		#sponsor-button.ytd-video-owner-renderer > ytd-button-renderer, #analytics-button.ytd-video-owner-renderer > ytd-button-renderer {
-			margin-right: 4px !important;
+			margin-right: 4px;
 		}
 		[page-subtype="channels"] #edit-buttons ytd-button-renderer:first-child {
-			margin-right: 4px !important;
+			margin-right: 4px;
 		}
 		#notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
-			max-height: 21px !important; 
-			max-width: 21px !important; 
-			padding: 0 !important; 
-			margin-right: 5px !important;
+			max-height: 21px; 
+			max-width: 21px; 
+			padding: 0; 
+			margin-right: 5px;
 		}
 		/* Sign in masthead button */
 		#masthead #end ytd-button-renderer {
@@ -815,8 +748,8 @@ function addCustomStyles() {
 			display: none;
 		}
 		#masthead #end ytd-button-renderer yt-formatted-string {
-			margin-left: 0 !important;
-			text-transform: none !important;
+			margin-left: 0;
+			text-transform: none;
 			color: var(--redux-paper-dialog-background-color);
 			background-color: var(--redux-spec-call-to-action);
 			font-size: 11px;
@@ -824,14 +757,14 @@ function addCustomStyles() {
 		#masthead #end ytd-button-renderer tp-yt-paper-button {
 			background-color: var(--redux-spec-call-to-action);
 			color: white;
-			padding: 5px 10px !important;
+			padding: 5px 10px;
 			max-height: 25px;
 		}
 		/* Misc */
 		#search-form.ytd-searchbox,
 		#search-icon-legacy.ytd-searchbox {
-			height: 29px !important;
-			width: 66px !important;
+			height: 29px;
+			width: 66px;
 		}
 		#search-icon-legacy > yt-icon {
 			height: 20px !important;
@@ -849,13 +782,13 @@ function addCustomStyles() {
 			display: none;
 		}
 		#container.ytd-masthead {
-			height: 50px !important;
+			height: 50px;
 		}
 		#center.ytd-masthead { 
-			margin-right: auto !important;
+			margin-right: auto;
 		}
 		ytd-searchbox.ytd-masthead {
-			margin: 0 0 0 51px !important;
+			margin: 0 0 0 51px;
 		}
 		`,
 		rearrangeInfoRe: `
@@ -899,35 +832,35 @@ function addCustomStyles() {
             margin-left: 4px;
         }
         #sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
-            margin-right: 0px !important;
+            margin-right: 0px;
         }
         #sponsor-button.ytd-video-owner-renderer > ytd-button-renderer, #analytics-button.ytd-video-owner-renderer > ytd-button-renderer {
-            margin-right: 4px !important;
+            margin-right: 4px;
         }
         #notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
-            max-height: 21px !important; 
-            max-width: 21px !important; 
-            padding: 0 !important; 
-            margin-right: 5px !important;
+            max-height: 21px; 
+            max-width: 21px; 
+            padding: 0; 
+            margin-right: 5px;
         }
         #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
-            margin-top: 5px !important;
+            margin-top: 5px;
         }
         #meta ytd-expander[collapsed] > #content.ytd-expander {
-            max-height: 65px !important;
+            max-height: 65px;
         }
         #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
-            height: 20px !important;
-            width: 20px !important;
+            height: 20px;
+            width: 20px;
         }
 		#info-strings > #dot {
-			display: none !important;
+			display: none;
 		}
 		ytd-video-primary-info-renderer > #container {
 			border-bottom: 1px solid #e2e2e2;
 		}
 		html[dark] ytd-video-primary-info-renderer > #container {
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		}
 		#info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
 			font-size: 11px;
