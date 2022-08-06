@@ -96,7 +96,7 @@ function initiate() {
 					}
 				}
 				if (!settingFound) {
-					console.log('YouTube Redux - missing setting ' + i + ' was added.');
+					log('YouTube Redux - missing setting ' + i + ' was added.');
 					result.reduxSettings[i] = defaultSettings[i];
 					browser.storage.sync.set({reduxSettings: result.reduxSettings});
 				}
@@ -793,8 +793,8 @@ function addCustomStyles() {
 		`,
 		rearrangeInfoRe: `
         /*VID REARRANGE STYLES*/
-        .ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer {
-            display:none;
+        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden]) {
+            display: none;
         }
         #reduxSubDiv {
             display: flex !important;
@@ -956,8 +956,8 @@ function addCustomStyles() {
 		ytd-guide-entry-renderer[active] {
 			background-color: #cc181e !important;
 		}
-		#guide-section-title.ytd-guide-section-renderer,
-		#guide-section-title.ytd-guide-section-renderer a {
+		yt-formatted-string#guide-section-title.ytd-guide-section-renderer,
+		yt-formatted-string#guide-section-title.ytd-guide-section-renderer a {
 			color: #cc181e !important;
 		}
 		ytd-mini-guide-entry-renderer[active] .guide-icon.ytd-mini-guide-entry-renderer, ytd-mini-guide-entry-renderer[active] .title.ytd-mini-guide-entry-renderer {

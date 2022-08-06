@@ -11,6 +11,8 @@ html:not([dark]) {
     --redux-spec-icon-inactive: #030303;
     --redux-spec-brand-background-solid: #fff;
     --redux-box-shadow: var(--redux-spec-10-percent-layer-inverted);
+    --redux-scrollbar-default: #aaa;
+    --redux-scrollbar-hover: #909090;
 }
 html[dark] {
     --redux-spec-general-background-a: #181818;
@@ -23,6 +25,8 @@ html[dark] {
     --redux-spec-icon-inactive: #fff;
     --redux-spec-brand-background-solid: #212121;
     --redux-box-shadow: var(--redux-spec-10-percent-layer);
+    --redux-scrollbar-default: #aaa;
+    --redux-scrollbar-hover: #717171;
 }
 html {
     --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
@@ -46,11 +50,11 @@ ytd-mini-guide-renderer.ytd-app {
     top: var(--overridden-masthead-height,var(--ytd-toolbar-height)) !important;
 }
 html:not([dark]) #video-title.ytd-rich-grid-media {
-    color: #167ac6 !important;
+    color: #167ac6;
 }
 #video-title.ytd-rich-grid-media {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
-    line-height:1.8rem !important;
+    line-height: 1.8rem !important;
 }
 #text.ytd-channel-name {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
@@ -59,7 +63,7 @@ html:not([dark]) #video-title.ytd-rich-grid-media {
     font-size: min(11px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 }
 ytd-rich-item-renderer {
-    margin-bottom:20px !important;
+    margin-bottom: 20px !important;
 }
 ytd-guide-section-renderer {
     --paper-item-min-height: 30px !important;
@@ -193,10 +197,10 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
 #always-shown ytd-rich-metadata-renderer {
     background: none;
 }
-.redux-moved-info:first-of-type yt-icon {
+ytd-button-renderer.redux-moved-info:first-of-type yt-icon {
     content: url('moz-extension://__MSG_@@extension_id__/images/plus.svg');
 }
-.redux-moved-info:first-of-type yt-icon-button#button {
+ytd-button-renderer.redux-moved-info:first-of-type yt-icon-button#button {
     padding: 9px !important;
 }
 .redux-moved-info:last-of-type + yt-icon-button {

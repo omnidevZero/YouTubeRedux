@@ -446,7 +446,7 @@ function rearrangeInfo() {
 		infoContents.append(miscButton);
 	} else {
 		//condition for streams which have a different last button
-		let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer');
+		let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > ytd-button-renderer');
 		let lastTopLevelElement = topLevelElements[topLevelElements.length-1];
 		lastTopLevelElement.setAttribute('redux-last-top-stream', '');
 		lastTopLevelElement.classList.add('redux-moved-info');
@@ -489,53 +489,63 @@ function rearrangeInfoNew() {
 	const newInfo = document.querySelector('#primary-inner ytd-watch-metadata');
 	if (newInfo.hasAttribute('disable-upgrade') || newInfo.hasAttribute('hidden')) return;
 
-	// primary div
-	const container = newInfo.querySelector('#above-the-fold');
-	const topRow = newInfo.querySelector('#top-row');
-	const owner = newInfo.querySelector('#owner');
-	const uploadInfo = newInfo.querySelector('#upload-info');
-	const reduxSubDiv = document.createElement('div');
-	reduxSubDiv.id = 'reduxSubDiv';
-	const subButton = newInfo.querySelector('#subscribe-button');
-	const subCount = newInfo.querySelector('#owner-sub-count');
-	const snippetText = newInfo.querySelector('#formatted-snippet-text');
-	const views = snippetText.childNodes[0];
-	const date = snippetText.childNodes[2];
-	const description1 = snippetText.childNodes[4] || null;
-	const description2 = snippetText.childNodes[5] || null;
+	const oldInfo = document.querySelector('#primary-inner #info-contents[hidden]');
+	const oldMeta = document.querySelector('#primary-inner #meta-contents[hidden]');
+	
+	if (newInfo && oldInfo && oldMeta) {
+		newInfo.setAttribute('hidden', '');
+		oldInfo.removeAttribute('hidden');
+		oldMeta.removeAttribute('hidden');
+	} else {
+		// primary div
+		const container = newInfo.querySelector('#above-the-fold');
+		const topRow = newInfo.querySelector('#top-row');
+		const owner = newInfo.querySelector('#owner');
+		const uploadInfo = newInfo.querySelector('#upload-info');
+		const reduxSubDiv = document.createElement('div');
+		reduxSubDiv.id = 'reduxSubDiv';
+		const subButton = newInfo.querySelector('#subscribe-button');
+		const subCount = newInfo.querySelector('#owner-sub-count');
+		const snippetText = newInfo.querySelector('#formatted-snippet-text');
+		const views = snippetText.childNodes[0];
+		const date = snippetText.childNodes[2];
+		const description1 = snippetText.childNodes[4] || null;
+		const description2 = snippetText.childNodes[5] || null;
 
-	uploadInfo.append(reduxSubDiv);
-	reduxSubDiv.append(subButton);
-	reduxSubDiv.append(subCount);
+		uploadInfo.append(reduxSubDiv);
+		reduxSubDiv.append(subButton);
+		reduxSubDiv.append(subCount);
 
-	container.insertBefore(owner, topRow);
-	// REMOVE COMMENT AFTER FULL ROLLOUT
-	/*
-	// video info div
-	const videoInfo = document.createElement('div');
-	videoInfo.id = 'redux-video-info';
-	videoInfo.append(views);
-	const likeBar = document.createElement('div');
-	likeBar.innerHTML = `<div id="container" class="style-scope ytd-sentiment-bar-renderer redux-like-bar-container">
-	<div id="like-bar" class="style-scope ytd-sentiment-bar-renderer redux-like-bar"></div>
-  	</div>`;
-	videoInfo.append(likeBar);
-	owner.append(videoInfo);
+		container.insertBefore(owner, topRow);
+		// REMOVE COMMENT AFTER FULL ROLLOUT
+		/*
+		// video info div
+		const videoInfo = document.createElement('div');
+		videoInfo.id = 'redux-video-info';
+		videoInfo.append(views);
+		const likeBar = document.createElement('div');
+		likeBar.innerHTML = `<div id="container" class="style-scope ytd-sentiment-bar-renderer redux-like-bar-container">
+		<div id="like-bar" class="style-scope ytd-sentiment-bar-renderer redux-like-bar"></div>
+		</div>`;
+		videoInfo.append(likeBar);
+		owner.append(videoInfo);
 
-	// secondary div
-	const secondaryReduxDiv = document.createElement('div');
-	secondaryReduxDiv.id = 'secondary-redux-div';
-	const primaryInner = document.querySelector('#primary-inner');
-	primaryInner.insertBefore(secondaryReduxDiv, newInfo.nextElementSibling);
+		// secondary div
+		const secondaryReduxDiv = document.createElement('div');
+		secondaryReduxDiv.id = 'secondary-redux-div';
+		const primaryInner = document.querySelector('#primary-inner');
+		primaryInner.insertBefore(secondaryReduxDiv, newInfo.nextElementSibling);
 
-	secondaryReduxDiv.append(date, description1, description2);
-	date.classList.add('redux-moved-date');
-	*/
+		secondaryReduxDiv.append(date, description1, description2);
+		date.classList.add('redux-moved-date');
+		*/
+	}
+
 	flags.isRearrangedNew = true;
 }
 
 function moveTopLevelItems() {
-	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer');
+	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden])');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
@@ -599,7 +609,7 @@ function moveTopLevelItems() {
 function clearMovedInfo() {
 	let moveInfo = document.querySelectorAll('.redux-moved-info');
 	moveInfo.forEach(element => element.remove());
-	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, moveTopLevelItems);
+	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden])', 10, moveTopLevelItems);
 }
 
 function clearStoredIntervals() {
@@ -1056,7 +1066,6 @@ function addClearHomepageEvent(selector, clearPlaylists) {
 }
 
 function main() {
-	setPageLocation();
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
 			confirmInterval = setInterval(confirmIt, 500);
@@ -1081,7 +1090,7 @@ function main() {
 		}
 	}
 	if (reduxSettings.rearrangeInfoRe && pageLocation === PAGE_LOCATION.Video && !flags.isRearranged) {
-		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed.ytd-menu-renderer ytd-button-renderer', 10, rearrangeInfo);
+		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > ytd-button-renderer', 10, rearrangeInfo);
 	}
 	if (reduxSettings.rearrangeInfoNew && pageLocation === PAGE_LOCATION.Video && !flags.isRearrangedNew) {
 		waitForElement('#primary-inner ytd-watch-metadata', 10, rearrangeInfoNew);
@@ -1153,6 +1162,8 @@ function main() {
 }
 
 (() => {
+	setPageLocation();
+
 	try {
 		main();
 	} catch (error) {
@@ -1170,13 +1181,17 @@ function main() {
 			addClearHomepageEvent(filtersSelector, true);
 		});
 	}
+
 	YTReduxURLPath = location.pathname;
 	YTReduxURLSearch = location.search;
+
 	setInterval(function() {
 		if (location.pathname != YTReduxURLPath || location.search != YTReduxURLSearch) {
+			setPageLocation();
 			YTReduxURLPath = location.pathname;
 			YTReduxURLSearch = location.search;
 			flags.likesChanged = false;
+
 			if (reduxSettings.disableInfiniteScrolling) {
 				if (observerComments != undefined) {
 					observerComments.disconnect();
@@ -1189,13 +1204,20 @@ function main() {
 					element.remove();
 				});
 			}
+
 			clearStoredIntervals();
+
 			if (!!document.querySelector('.redux-moved-info') 
 			&& pageLocation === PAGE_LOCATION.Video
 			&& document.querySelector('.redux-moved-info').getAttribute('redux-url-check') != window.location.search) {
 				clearMovedInfo(); //contains an interval
 			}
-			main();
+
+			try {
+				main();
+			} catch (error) {
+				log(error, true);
+			}
 		}
-	},100);
+	}, 100);
 })();
