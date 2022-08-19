@@ -441,6 +441,7 @@ function rearrangeInfo() {
 	dateElement.classList.add('redux-moved-date');
 
 	infoBar.prepend(infoTop);
+
 	if (miscButton) {
 		miscButton.setAttribute('redux-last-top', '');
 		infoContents.append(miscButton);
@@ -452,11 +453,11 @@ function rearrangeInfo() {
 		lastTopLevelElement.classList.add('redux-moved-info');
 		infoContents.append(lastTopLevelElement);
 
-		let hiddenMiscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button[hidden]') || 
-        document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer[hidden]');
+		let hiddenMiscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button[hidden]') || document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer[hidden]');
 		hiddenMiscButton.setAttribute('redux-last-top', '');
 		infoContents.append(hiddenMiscButton);
 	}
+
 	moveTopLevelItems();
 	descriptionElement.prepend(dateElement);
 	if (dateOuter != null) {dateOuter.remove();}
@@ -483,6 +484,10 @@ function rearrangeInfo() {
 	}
 
 	flags.isRearranged = true;
+
+	if (reduxSettings.rearrangeInfoNew && pageLocation === PAGE_LOCATION.Video && !flags.isRearrangedNew) {
+		waitForElement('#primary-inner ytd-watch-metadata', 10, rearrangeInfoNew);
+	}
 }
 
 function rearrangeInfoNew() {
@@ -545,7 +550,7 @@ function rearrangeInfoNew() {
 }
 
 function moveTopLevelItems() {
-	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden])');
+	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden]), #info #flexible-item-buttons > *');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
@@ -564,7 +569,6 @@ function moveTopLevelItems() {
 			infoDiv.prepend(topLevelElements[i]);
 			topLevelElements[i].classList.add('redux-moved-info');
 			topLevelElements[i].setAttribute('redux-url-check', window.location.search);
-			topLevelElements[i].style.display = 'inline-block';
 		}
             
 		if (reduxSettings.altVideoLayoutExtra) {
@@ -601,7 +605,6 @@ function moveTopLevelItems() {
 			infoContents.insertBefore(topLevelElements[i], existingMovedItem);
 			topLevelElements[i].classList.add('redux-moved-info');
 			topLevelElements[i].setAttribute('redux-url-check', window.location.search);
-			topLevelElements[i].style.display = 'inline-block';
 		}
 	}
 }

@@ -801,7 +801,8 @@ function addCustomStyles() {
 		`,
 		rearrangeInfoRe: `
         /*VID REARRANGE STYLES*/
-        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden]) {
+        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden]),
+		.ytd-video-primary-info-renderer > #top-level-buttons-computed + #flexible-item-buttons {
             display: none;
         }
         #reduxSubDiv {
@@ -810,6 +811,7 @@ function addCustomStyles() {
         }
         #info.ytd-video-primary-info-renderer > #menu-container {
             transform: translateY(45px) !important;
+			flex-grow: 0;
         }
         #count.ytd-video-primary-info-renderer {
             width: 100% !important;
@@ -957,6 +959,10 @@ function addCustomStyles() {
 		#redux-video-info {
 			display: flex;
 			flex-direction: column;
+		}
+		ytd-video-primary-info-renderer[flex-menu-enabled] #flex.ytd-video-primary-info-renderer,
+		ytd-video-primary-info-renderer[flex-menu-enabled] #menu-container.ytd-video-primary-info-renderer {
+			display: block !important;
 		}
 		`,
 		darkerRed: `
