@@ -258,30 +258,33 @@ function addCustomStyles() {
 		extraLayout: `
 		/*EXTRA LAYOUT 1 - VIDEO*/
 		ytd-app {
-			background-color: #f1f1f1;
+			background-color: #f1f1f1 !important;
 		}
 		html[dark] ytd-app {
-			background-color: var(--redux-spec-general-background-a);
+			background-color: var(--redux-spec-general-background-a) !important;
+		}
+		ytd-video-primary-info-renderer {
+			padding-top: 15px !important;
 		}
 		ytd-video-primary-info-renderer, 
 		ytd-video-secondary-info-renderer {
 			background-color: white;
-			padding-left: 15px;
-			padding-right: 15px;
+			padding-left: 15px !important;
+			padding-right: 15px !important;
 			box-shadow: 0 1px 2px rgba(0,0,0,.1);
 			border-bottom: 0;
-			margin-bottom: 10px;
+			margin-bottom: 10px !important;
 		}
 		html[dark] ytd-video-primary-info-renderer, 
 		html[dark] ytd-video-secondary-info-renderer {
 			background-color: #222222;
-			padding-left: 15px;
+			padding-left: 15px !important;
 			box-shadow: 0 1px 2px rgba(255,255,255,.1);
 			border-bottom: 0;
-			margin-bottom: 10px;
+			margin-bottom: 10px !important;
 		}
 		ytd-video-secondary-info-renderer {
-			padding-bottom: 8px;
+			padding-bottom: 8px !important;
 		}
 		.more-button.ytd-video-secondary-info-renderer, 
 		.less-button.ytd-video-secondary-info-renderer {
@@ -289,14 +292,14 @@ function addCustomStyles() {
 		}
 		ytd-comments#comments {
 			background-color: white;
-			padding-left: 15px;
-			padding-top: 1px;
+			padding-left: 15px !important;
+			padding-top: 1px !important;
 			box-shadow: 0 1px 2px rgba(0,0,0,.1);
 		}
 		html[dark] ytd-comments#comments {
 			background-color: #222222;
-			padding-left: 15px;
-			padding-top: 1px;
+			padding-left: 15px !important;
+			padding-top: 1px !important;
 			box-shadow: 0 1px 2px rgba(255,255,255,.1);
 		}
 		#meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander > #content {
@@ -577,7 +580,7 @@ function addCustomStyles() {
 			margin: 4px 0 1px 0 !important;
 		}
 		ytd-guide-entry-renderer[active] {
-			background-color: #f00;
+			background-color: #f00 !important;
 		}
 		ytd-guide-entry-renderer[active] .guide-icon.ytd-guide-entry-renderer {
 			color: white !important;
@@ -604,7 +607,7 @@ function addCustomStyles() {
 			margin-left: 16px;
 		}
 		ytd-expander.ytd-video-secondary-info-renderer {
-			margin-left: 0px;
+			margin-left: 0px !important;
 		}
 		/*SKELETON*/
 		#home-page-skeleton {
@@ -779,7 +782,7 @@ function addCustomStyles() {
 			margin-left: 0;
 		}
 		ytd-searchbox[has-focus] #search-icon.ytd-searchbox {
-			display: none;
+			display: none !important;
 		}
 		#container.ytd-masthead {
 			height: 50px;
@@ -789,6 +792,9 @@ function addCustomStyles() {
 		}
 		ytd-searchbox.ytd-masthead {
 			margin: 0 0 0 51px;
+		}
+		#playlist-actions #top-level-buttons-computed yt-icon-button:not(.style-default-active) path {
+			fill: #909090;
 		}
 		`,
 		rearrangeInfoRe: `
@@ -851,7 +857,7 @@ function addCustomStyles() {
         #meta ytd-expander[collapsed] > #content.ytd-expander {
             max-height: 65px;
         }
-        #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
+        #menu #top-level-buttons-computed > ytd-toggle-button-renderer > a > yt-icon-button > #button > yt-icon {
             height: 20px;
             width: 20px;
         }
@@ -1835,10 +1841,6 @@ function addCustomStyles() {
 		path[d="M18.51,13.29l4.21,4.21l-4.21,4.21l-1.41-1.41l1.8-1.8c-2.95-0.03-5.73-1.32-7.66-3.55l1.51-1.31 c1.54,1.79,3.77,2.82,6.13,2.85l-1.79-1.79L18.51,13.29z M18.88,7.51l-1.78,1.78l1.41,1.41l4.21-4.21l-4.21-4.21l-1.41,1.41l1.8,1.8 c-3.72,0.04-7.12,2.07-8.9,5.34l-0.73,1.34C7.81,14.85,5.03,17,2,17v2c3.76,0,7.21-2.55,9.01-5.85l0.73-1.34 C13.17,9.19,15.9,7.55,18.88,7.51z M8.21,10.31l1.5-1.32C7.77,6.77,4.95,5,2,5v2C4.38,7,6.64,8.53,8.21,10.31z"] {
 			d: path("M16.808 4.655l2.069 1.978h-.527c-1.656 0-3.312.68-4.458 1.814L12.797 9.75l1.179 1.246 1.317-1.527c.764-.794 1.91-1.247 3.057-1.247h.55l-2.07 2.014 1.178 1.179 4.005-3.993-4.026-3.945-1.178 1.179zm1.974 10.998l-1.974-1.888 1.18-1.179 4.024 3.945-4.004 3.993-1.178-1.179 1.954-1.901h-.434c-1.656 0-3.312-.625-4.458-1.667L8.242 9.8C7.35 9.071 6.204 8.55 4.93 8.55H2l.006-1.794 2.965.003c1.784 0 3.312.521 4.459 1.563l5.904 6.185c.765.73 1.911 1.146 3.058 1.146h.39zm-9.02-2.092l-1.52 1.394c-.892.793-2.038 1.36-3.312 1.36H2v1.588h2.93c1.783 0 3.312-.567 4.459-1.701l1.537-1.396-1.164-1.245z") !important;
 		}
-		/* Playlist repeat all */
-		path[d="M21,13h1v5L3.93,18.03l2.62,2.62l-0.71,0.71L1.99,17.5l3.85-3.85l0.71,0.71l-2.67,2.67L21,17V13z M3,7l17.12-0.03 l-2.67,2.67l0.71,0.71l3.85-3.85l-3.85-3.85l-0.71,0.71l2.62,2.62L2,6v5h1V7z"] {
-			d: path("M3 6.929c0-.75.643-1.393 1.393-1.393h14.286L16.32 3.179 17.5 2l4.393 4.393-4.393 4.393-1.179-1.179L18.68 7.25H4.714V11H3V6.929zM2.107 17.607L6.5 13.214l1.179 1.179L5.32 16.75l13.965-.071v-3.965H21V17c0 .75-.643 1.393-1.393 1.393l-14.286.071 2.358 2.357L6.5 22l-4.393-4.393z") !important;
-		}
 		/* Playlist repeat all active */
 		path[d="M20,14h2v5L5.84,19.02l1.77,1.77l-1.41,1.41L1.99,18l4.21-4.21l1.41,1.41l-1.82,1.82L20,17V14z M4,7l14.21-0.02l-1.82,1.82 l1.41,1.41L22.01,6l-4.21-4.21l-1.41,1.41l1.77,1.77L2,5v6h2V7z"] {
 			d: path("M3 6.929c0-.75.643-1.393 1.393-1.393h14.286L16.32 3.179 17.5 2l4.393 4.393-4.393 4.393-1.179-1.179L18.68 7.25H4.714V11H3V6.929zM2.107 17.607L6.5 13.214l1.179 1.179L5.32 16.75l13.965-.071v-3.965H21V17c0 .75-.643 1.393-1.393 1.393l-14.286.071 2.358 2.357L6.5 22l-4.393-4.393z") !important;
@@ -2296,7 +2298,8 @@ function addCustomStyles() {
 		}
 		`,
 		hideDownload: `
-		#top-level-buttons-computed ytd-download-button-renderer {
+		#top-level-buttons-computed ytd-download-button-renderer,
+		#info ytd-download-button-renderer {
 			display: none !important;
 		}
 		`,
