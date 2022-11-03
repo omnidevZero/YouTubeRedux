@@ -550,7 +550,7 @@ function rearrangeInfoNew() {
 }
 
 function moveTopLevelItems() {
-	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden]), #info #flexible-item-buttons > *');
+	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer):not([is-hidden]), #info #flexible-item-buttons > *');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
@@ -612,7 +612,7 @@ function moveTopLevelItems() {
 function clearMovedInfo() {
 	let moveInfo = document.querySelectorAll('.redux-moved-info');
 	moveInfo.forEach(element => element.remove());
-	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden])', 10, moveTopLevelItems);
+	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer):not([is-hidden])', 10, moveTopLevelItems);
 }
 
 function clearStoredIntervals() {

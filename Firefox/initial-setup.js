@@ -690,9 +690,13 @@ function addCustomStyles() {
 		/* SUB + MISC BUTTONS */
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
+		#subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button:not([page-subtype="subscriptions"] #subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button),
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
 		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
-		[page-subtype="channels"] #edit-buttons tp-yt-paper-button {
+		#sponsor-button yt-button-shape > button, 
+		#analytics-button yt-button-shape > button,
+		[page-subtype="channels"] #edit-buttons tp-yt-paper-button,
+		[page-subtype="channels"] #edit-buttons yt-button-shape > button {
 			margin: 0;
 			padding: 2px 8px 2px 8px;
 			text-transform: none;
@@ -701,31 +705,37 @@ function addCustomStyles() {
 			max-height: 24px;
 			height: 24px;
 		}
-		ytd-channel-renderer #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button {
+		ytd-channel-renderer #subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
+		ytd-channel-renderer #subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button {
 			margin-right: 10px;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button > yt-formatted-string,
-		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string {
+		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button > yt-formatted-string,
+		#subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button > yt-formatted-string {
 			padding-top: 1px;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button) {
 			background-color: #f00;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover {
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover {
 			background-color: #d90a17;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before {
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before {
 				content: url('${browser.runtime.getURL('/images/sub-icon.png')}');
 				background-size: auto;
 				width: 16px;
-				height: 12px;
+				padding-top: 2px;
 				margin-right: 6px;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button[subscribed]::before,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button[subscribed]::before {
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button[subscribed]::before,
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button.yt-spec-button-shape-next--tonal::before {
 			content: "";
 			border-right: 1px solid #909090;
 			border-bottom: 1px solid #909090;
@@ -746,8 +756,8 @@ function addCustomStyles() {
 			margin-right: 4px;
 		}
 		#notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
-			max-height: 21px; 
-			max-width: 21px; 
+			max-height: 22px; 
+			max-width: 22px; 
 			padding: 0; 
 			margin-right: 5px;
 		}
@@ -787,7 +797,10 @@ function addCustomStyles() {
 		ytd-searchbox[has-focus] #container,
 		#container.ytd-searchbox,
 		body > iframe + div:last-of-type {
-			margin-left: 0;
+			margin-left: 0 !important;
+		}
+		#container.ytd-searchbox {
+			padding: 0 0 0 6px !important;
 		}
 		ytd-searchbox[has-focus] #search-icon.ytd-searchbox {
 			display: none !important;
@@ -807,7 +820,7 @@ function addCustomStyles() {
 		`,
 		rearrangeInfoRe: `
         /*VID REARRANGE STYLES*/
-        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer):not([is-hidden]),
+        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer):not([is-hidden]),
 		.ytd-video-primary-info-renderer > #top-level-buttons-computed + #flexible-item-buttons {
             display: none;
         }
@@ -854,8 +867,8 @@ function addCustomStyles() {
             margin-right: 4px;
         }
         #notification-preference-button > ytd-subscription-notification-toggle-button-renderer > a > yt-icon-button {
-            max-height: 21px; 
-            max-width: 21px; 
+            max-height: 22px; 
+            max-width: 22px; 
             padding: 0; 
             margin-right: 5px;
         }
@@ -887,8 +900,11 @@ function addCustomStyles() {
 		}
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
+		#subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button,
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
-		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button {
+		#sponsor-button yt-button-shape > button, 
+		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
+		#analytics-button yt-button-shape > button {
 			margin: 0; 
 			padding: 2px 8px 2px 8px; 
 			text-transform: none; 
@@ -987,7 +1003,8 @@ function addCustomStyles() {
 			background-color: #cc181e !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
 			background-color: #cc181e !important;
 		}
 		.badge-style-type-live-now.ytd-badge-supported-renderer {
@@ -1190,10 +1207,12 @@ function addCustomStyles() {
 			border-top-right-radius: 0px !important;
 			border-bottom-right-radius: 0px !important;
 		}
-		#reduxSubDiv tp-yt-paper-button[subscribed] {
+		#reduxSubDiv tp-yt-paper-button[subscribed],
+		#reduxSubDiv button.yt-spec-button-shape-next--tonal {
 			border: 1px solid #ccc;
 		}
-		html[dark] #reduxSubDiv tp-yt-paper-button[subscribed] {
+		html[dark] #reduxSubDiv tp-yt-paper-button[subscribed],
+		html[dark] #reduxSubDiv button.yt-spec-button-shape-next--tonal {
 			border: none;
 		}
 		`,
@@ -1213,7 +1232,8 @@ function addCustomStyles() {
 		ytd-guide-entry-renderer[active] #endpoint[href="/playlist?list=LL"] yt-icon:first-of-type {
 			filter: invert(1);
 		}
-		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon {
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon,
+		#segmented-like-button yt-icon {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
@@ -1236,7 +1256,8 @@ function addCustomStyles() {
 			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
 			filter: contrast(1);
 		}
-		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon {
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon,
+		#segmented-dislike-button yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;

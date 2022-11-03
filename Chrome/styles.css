@@ -67,6 +67,11 @@ ytd-rich-item-renderer {
 }
 ytd-guide-section-renderer {
     --paper-item-min-height: 30px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+ytd-guide-entry-renderer[guide-refresh] {
+    width: calc(100% - 8px) !important;
 }
 #guide-links-primary.ytd-guide-renderer > a, #guide-links-secondary.ytd-guide-renderer > a {
     font-size:10px !important;
@@ -86,6 +91,39 @@ yt-img-shadow.ytd-guide-entry-renderer {
 }
 .thumbnail.ytd-notification-renderer {
     border-radius:0% !important;
+}
+ytd-thumbnail #thumbnail.ytd-thumbnail,
+ytd-thumbnail::before,
+ytd-guide-entry-renderer,
+ytd-guide-entry-renderer > a,
+ytd-multi-page-menu-renderer,
+div.ytd-searchbox,
+.rich-grid-media-skeleton .rich-thumbnail,
+.rich-grid-media-skeleton .rich-thumbnail::before,
+ytd-thumbnail-overlay-endorsement-renderer,
+#video-preview-container,
+.html5-video-player,
+ytd-menu-popup-renderer,
+tp-yt-paper-item:focus:before,
+yt-interaction.down,
+ytd-player,
+body > iframe + div:last-of-type > div > div,
+ytd-playlist-thumbnail #thumbnail.ytd-playlist-thumbnail,
+yt-button-shape > button,
+yt-button-shape > a,
+ytd-thumbnail-overlay-time-status-renderer.ytd-thumbnail,
+tp-yt-paper-toast,
+tp-yt-paper-dialog,
+#playlist > #container,
+.ytp-popup,
+.ytp-rounded-menu,
+ytd-engagement-panel-section-list-renderer,
+ytd-miniplayer,
+.ytd-miniplayer {
+    border-radius: 0 !important;
+}
+#search-icon-legacy {
+    border-radius: 0 2px 2px 0 !important;
 }
 
 /* turned off due to max() not being supported in old browsers
@@ -225,6 +263,21 @@ html:not([dark]) #container.ytd-sentiment-bar-renderer {
 }
 #top-level-buttons-computed ytd-download-button-renderer yt-formatted-string {
     color: var(--redux-spec-text-secondary-buttons) !important;
+}
+ytd-video-primary-info-renderer yt-button-shape > button:not(#info #upload-info yt-button-shape > button) {
+    background-color: unset !important;
+    font-size: 13px;
+    font-weight: 400;
+}
+#top-level-buttons-computed #segmented-like-button {
+    padding-right: 0;
+}
+#top-level-buttons-computed #segmented-like-button button::after {
+    display: none;
+}
+ytd-video-primary-info-renderer > [button-renderer] yt-icon {
+    width: 21px !important;
+    height: 21px !important;
 }
 
 /*PLAYLIST STYLES*/
