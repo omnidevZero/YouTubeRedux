@@ -1244,7 +1244,9 @@ function addCustomStyles() {
 			width: 17px !important;
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
+		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
+		#segmented-like-button button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1262,7 +1264,9 @@ function addCustomStyles() {
 			width: 17px !important;
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
+		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
+		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
+		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1277,14 +1281,21 @@ function addCustomStyles() {
 		`,
 		classicLikesIconColors: `
 		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
-		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg {
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg,
+		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon > svg,
+		#segmented-like-button button[aria-pressed="true"] yt-icon {
 			fill: rgb(0 136 29) !important;
+		}
+		#segmented-like-button button[aria-pressed="true"] yt-icon yt-animated-icon svg {
+			filter: invert(19%) sepia(98%) saturate(4292%) hue-rotate(143deg) brightness(98%) contrast(103%);
 		}
 		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:first-of-type > a yt-formatted-string {
 			color: rgb(0 136 29) !important;
 		}
 		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
-		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon > svg {
+		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon > svg,
+		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon > svg,
+		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
 			fill: rgb(222 0 17) !important;
 		}
 		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:last-of-type > a yt-formatted-string {
@@ -1293,12 +1304,18 @@ function addCustomStyles() {
 		`,
 		classicLikesIconColorsExtra: `
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon {
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
+		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
+		#segmented-like-button button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed-old.png')}') !important;
+			filter: contrast(1);
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon {
+		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
+		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
+		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed-old.png')}') !important;
+			filter: contrast(1);
 		}
 		`,
 		hideJoinButton: `
@@ -1524,6 +1541,15 @@ function addCustomStyles() {
 			d: path("M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z") !important;
 			fill: #909090;
 		}
+		#segmented-like-button button[aria-pressed="false"] ytd-lottie-player {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		#segmented-like-button button[aria-pressed="false"] lottie-component {
+			content: url('${browser.runtime.getURL('/images/like-default-filled.svg')}') !important;
+			filter: invert(62%) sepia(0%) saturate(655%) hue-rotate(171deg) brightness(92%) contrast(85%);
+		}
 		/* Like pressed */
 		path[d="M3,11h3v10H3V11z M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11v10h10.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z"] {
 			d: path("M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z") !important;
@@ -1537,15 +1563,14 @@ function addCustomStyles() {
 			fill: #909090;
 		}
 		#like-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg {
-			transform: scale(1.5);
 		}
 		/* Like comment pressed */
 		#like-button.ytd-comment-action-buttons-renderer button[aria-pressed="true"] svg {
-			transform: scale(1) translateX(-1.5px);
 		}
 		/* Dislike not pressed */
 		path[d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z"] {
 			d: path("M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z") !important;
+			fill: #909090;
 		}
 		/* Dislike pressed */
 		path[d="M18,4h3v10h-3V4z M5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21c0.58,0,1.14-0.24,1.52-0.65L17,14V4H6.57 C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14z"] {
@@ -1560,11 +1585,9 @@ function addCustomStyles() {
 			fill: #909090
 		}
 		#dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="false"] svg {
-			transform: scale(1.5);
 		}
 		/* Dislike comment pressed */
 		#dislike-button.ytd-comment-action-buttons-renderer button[aria-pressed="true"] svg {
-			transform: scale(1) translateX(-1.5px);
 		}
 		/* Browse plus */
 		path[d="M17,13h-4v4h-2v-4H7v-2h4V7h2v4h4V13z M12,3c-4.96,0-9,4.04-9,9s4.04,9,9,9c4.96,0,9-4.04,9-9S16.96,3,12,3 M12,2 c5.52,0,10,4.48,10,10s-4.48,10-10,10C6.48,22,2,17.52,2,12S6.48,2,12,2L12,2z"] {
@@ -2131,10 +2154,8 @@ function addCustomStyles() {
 		}
 		`,
 		hideRelatedVideoAge: `
-		#related #metadata-line.ytd-video-meta-block > .ytd-video-meta-block:not(:last-of-type):after {
-			display: none !important;
-		}
-		#related #metadata-line.ytd-video-meta-block span:nth-child(2) {
+		#related #metadata-line.ytd-video-meta-block > .ytd-video-meta-block:not(:last-of-type):after,
+		#related #metadata-line.ytd-video-meta-block span:nth-of-type(2) {
 			display: none !important;
 		}
 		`,
