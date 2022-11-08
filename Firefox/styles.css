@@ -56,6 +56,12 @@ html:not([dark]) #video-title.ytd-rich-grid-media {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
     line-height: 1.8rem !important;
 }
+#video-title.ytd-rich-grid-media:hover {
+    font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
+    line-height: 1.8rem !important;
+    text-decoration: underline;
+}
+
 #text.ytd-channel-name {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 }
