@@ -165,6 +165,7 @@ ytd-mini-guide-renderer.ytd-app {
 .title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
     font-size: 20px;
 }
+
 ytd-toggle-button-renderer {
     font-weight: normal !important;
 }
@@ -338,10 +339,15 @@ ytd-channel-renderer #avatar-section.ytd-channel-renderer {
     flex: 0 !important;
     margin-right: 22px !important;
 }
+
+#container.style-scope.ytd-search{
+    align-items: center;
+}
+
 ytd-two-column-search-results-renderer tp-yt-paper-button.ytd-subscribe-button-renderer {
     margin-right: 15px !important;
 }
-    
+ 
 /*CHANNEL STYLES*/
 html:not([dark]) #video-title.ytd-grid-playlist-renderer {
     color:#167ac6 !important;
