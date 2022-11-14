@@ -338,6 +338,11 @@ ytd-channel-renderer #avatar-section.ytd-channel-renderer {
     flex: 0 !important;
     margin-right: 22px !important;
 }
+
+#container.style-scope.ytd-search{
+    align-items: center;
+}
+
 ytd-two-column-search-results-renderer tp-yt-paper-button.ytd-subscribe-button-renderer {
     margin-right: 15px !important;
 }
