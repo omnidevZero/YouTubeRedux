@@ -424,7 +424,8 @@ function rearrangeInfo() {
 	let infoBar = document.querySelector('#info.ytd-video-primary-info-renderer');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let miscButton = document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button:not([hidden])') 
-	|| document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer:not([hidden])');
+	|| document.querySelector('#info-contents > ytd-video-primary-info-renderer > yt-icon-button.ytd-menu-renderer:not([hidden])')
+	|| document.querySelector('#menu-container > #menu > ytd-menu-renderer > #button-shape');
 	let dateElement = document.querySelector('#info-strings > yt-formatted-string');
 	let dateOuter = document.querySelector('#info-text > #date');
 	let descriptionElement = document.querySelector('#container > ytd-expander.ytd-video-secondary-info-renderer > #content');
@@ -558,8 +559,7 @@ function moveTopLevelItems() {
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
 	let existingMovedItem = document.querySelector('[redux-last-top-stream]')
-		|| document.querySelector('yt-icon-button[redux-last-top]') 
-        || document.querySelector('ytd-button-renderer[redux-last-top]');
+		|| document.querySelector('[redux-last-top]');
 
 	if (reduxSettings.altVideoLayout) {
 		document.querySelector('ytd-video-primary-info-renderer').style = 'padding-left: 15px !important; padding-top: 15px !important';

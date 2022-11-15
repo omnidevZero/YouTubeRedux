@@ -496,7 +496,7 @@ function addCustomStyles() {
 		html[dark] tp-yt-app-drawer#guide[position="left"] {
 			border-right: 1px solid var(--redux-spec-10-percent-layer);
 		}
-		#masthead-container.ytd-app #masthead:not([dark]) {
+		html:not([dark]) #masthead-container.ytd-app #masthead:not([dark]) {
 			border-bottom: 1px solid #e8e8e8;
 		}
 		html[dark] #masthead-container.ytd-app {
@@ -604,7 +604,7 @@ function addCustomStyles() {
 			width: calc(var(--ytd-rich-grid-chips-bar-width) - 33px);
 		}
 		ytd-feed-filter-chip-bar-renderer {
-			margin-left: 16px;
+			justify-content: center;
 		}
 		ytd-expander.ytd-video-secondary-info-renderer {
 			margin-left: 0px !important;
@@ -708,17 +708,20 @@ function addCustomStyles() {
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button) {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button) {
 			background-color: #f00;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover {
 			background-color: #d90a17;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before {
 				content: url('${browser.runtime.getURL('/images/sub-icon.png')}');
 				background-size: auto;
 				width: 16px;
@@ -757,17 +760,24 @@ function addCustomStyles() {
 		#masthead #end ytd-button-renderer {
 			align-items: center;
 		}
-		#masthead #end ytd-button-renderer yt-icon {
+		#masthead #end .yt-spec-button-shape-next__icon {
 			display: none;
 		}
-		#masthead #end ytd-button-renderer yt-formatted-string {
+		#masthead #end ytd-button-renderer a {
+			border: none;
+		}
+		#masthead #end ytd-button-renderer a,
+		#masthead #end ytd-button-renderer span {
 			margin-left: 0;
 			text-transform: none;
 			color: var(--redux-paper-dialog-background-color);
 			background-color: var(--redux-spec-call-to-action);
 			font-size: 11px;
 		}
-		#masthead #end ytd-button-renderer tp-yt-paper-button {
+		#masthead #end ytd-button-renderer yt-button-shape {
+			padding: 0;
+		}
+		#masthead #end ytd-button-renderer a {
 			background-color: var(--redux-spec-call-to-action);
 			color: white;
 			padding: 5px 10px;
@@ -821,7 +831,7 @@ function addCustomStyles() {
             margin-top: 5px !important;
         }
         #info.ytd-video-primary-info-renderer > #menu-container {
-            transform: translateY(45px) !important;
+            transform: translateY(46px) !important;
 			flex-grow: 0;
         }
         #count.ytd-video-primary-info-renderer {
@@ -893,10 +903,14 @@ function addCustomStyles() {
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button,
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button,
 		#subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button,
+		#subscribe-button > ytd-button-renderer > yt-button-shape > button,
+		#subscribe-button > ytd-button-renderer > yt-button-shape > a[href*="/edit"],
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
-		#sponsor-button yt-button-shape > button, 
+		#sponsor-button yt-button-shape > button,
+		#sponsor-button > ytd-button-renderer > yt-button-shape > button,
 		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
-		#analytics-button yt-button-shape > button {
+		#analytics-button yt-button-shape > button,
+		#analytics-button > ytd-button-renderer > yt-button-shape > a[href*="/analytics"] {
 			margin: 0; 
 			padding: 2px 8px 2px 8px; 
 			text-transform: none; 
@@ -904,6 +918,9 @@ function addCustomStyles() {
 			font-size: 12px;
 			max-height: 24px;
 			height: 24px;
+		}
+		html[dark] #subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button span {
+			color: var(--redux-dimmed-white);
 		}
 		#top-level-buttons-computed ytd-download-button-renderer yt-formatted-string {
 			font-weight: normal;
@@ -1098,15 +1115,21 @@ function addCustomStyles() {
 		}
 		ytd-guide-signin-promo-renderer #sign-in-button {
 			background-color: var(--redux-spec-call-to-action);
+		}
+		ytd-guide-signin-promo-renderer #sign-in-button a {
 			color: var(--redux-spec-text-primary-inverse);
 		}
-		ytd-guide-signin-promo-renderer #sign-in-button #button {
+		ytd-guide-signin-promo-renderer #sign-in-button yt-button-shape {
+			padding: 0 !important;
+		}
+		ytd-guide-signin-promo-renderer #sign-in-button yt-button-shape > a {
 			padding: 5px 10px !important;
 		}
+		ytd-guide-signin-promo-renderer #sign-in-button div.yt-spec-button-shape-next__icon,
 		ytd-guide-signin-promo-renderer #sign-in-button yt-icon {
 			display: none !important;
 		}
-		ytd-guide-signin-promo-renderer #sign-in-button yt-formatted-string {
+		ytd-guide-signin-promo-renderer #sign-in-button a {
 			margin-left: 0 !important;
 			text-transform: none !important;
 			font-size: 11px !important;
