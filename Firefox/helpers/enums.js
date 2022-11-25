@@ -17,3 +17,8 @@ const RELATED_VIDEOS_TYPE = {
 	"Normal": 0,
 	"Alternative": 1
 };
+
+const THEME = {
+	"Light": 0,
+	"Dark": 1
+};

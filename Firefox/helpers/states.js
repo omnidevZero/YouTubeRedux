@@ -46,3 +46,13 @@ const setRelatedVideosType = () => {
 /* OBSERVERS */
 let homeObserver = null;
 let playerObserver = null;
+let cinematicsObserver = null;
+
+/* THEME STATE */
+const getTheme = () => {
+	if (document.querySelector('html[dark]')) {
+		return THEME.Dark;
+	} else {
+		return THEME.Light;
+	}
+};
