@@ -291,8 +291,18 @@ ytd-button-renderer.redux-moved-info:first-of-type yt-icon-button#button {
 ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
     border-radius: 0% !important;
 }
+#top-row.ytd-video-secondary-info-renderer {
+    padding-top: 7px !important;
+    padding-bottom: 10px;
+}
 #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
     color: #606060;
+}
+.cbox.yt-spec-button-shape-next--button-text-content {
+    padding: 0px 2px;
+}
+.yt-spec-button-shape-next__icon {
+    padding: 0px 2px;
 }
 html[dark] #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
     color: var(--redux-spec-text-secondary-buttons) !important;
