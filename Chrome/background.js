@@ -3,7 +3,7 @@ function handleInstalled(reason) {
 		if (Object.keys(result).length > 0 && !result.reduxSettings.showChangelog) {
 			return;
 		} 
-		else if (reason != "browser_update") {
+		else if (reason != "browser_update" && reason != "chrome_update") {
 			chrome.tabs.create({
 				url: `./changelog.html#${reason}`
 			});

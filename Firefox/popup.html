@@ -378,6 +378,9 @@
             font-size: 9px;
             color: silver;
         }
+        a, a:visited {
+            color: blue;
+        }
       </style>
     </head>
     <body>
@@ -487,7 +490,7 @@
                         </div>
                         <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>
-                            <label><input type="checkbox" name="showChangelog" class="settings">Show changelog on updates</label>
+                            <label><input type="checkbox" name="showChangelog" class="settings">Show <a href="./changelog.html" target="_blank">changelog</a> on updates</label>
                             <label><input type="checkbox" name="rearrangeInfoRe" class="settings">Recreate old video page layout<div class="tooltip"><span class="tooltip-text">Unchecking this option will disable video page layout rearrangement caused by YouTube Redux - Polymer (modern/default) layout will be used.</span></div></label>
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="rearrangeInfoNew" class="settings">Apply to updated layout<div class="tooltip tooltip-warning"><span class="tooltip-text">EXPERIMENTAL/IN PROGRESS: this setting reverts a portion of video page changes that were recently distributed to certain users. Not everything has been restored yet: e.g. likes bar is missing, precise likes values aren't displayed. Expect this setting to be fully functional when YouTube rolls out these UI changes to all users.</span></div></label>

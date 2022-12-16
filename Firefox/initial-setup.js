@@ -694,6 +694,7 @@ function addCustomStyles() {
 		#subscribe-button > ytd-subscribe-button-renderer > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-button-renderer > a > tp-yt-paper-button:not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button:not([page-subtype="subscriptions"] #subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button),
+		#notification-preference-button yt-button-shape > button,
 		#sponsor-button > ytd-button-renderer > a > tp-yt-paper-button, 
 		#analytics-button > ytd-button-renderer > a > tp-yt-paper-button,
 		#sponsor-button yt-button-shape > button, 
@@ -741,7 +742,8 @@ function addCustomStyles() {
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button[subscribed]::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button[subscribed]::before,
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button.yt-spec-button-shape-next--tonal::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button.yt-spec-button-shape-next--tonal::before,
+		#notification-preference-button yt-button-shape > button.yt-spec-button-shape-next--tonal::before {
 			content: "";
 			border-right: 1px solid #909090;
 			border-bottom: 1px solid #909090;
@@ -766,6 +768,14 @@ function addCustomStyles() {
 			max-width: 22px; 
 			padding: 0; 
 			margin-right: 5px;
+		}
+		#notification-preference-button > ytd-subscription-notification-toggle-button-renderer-next > yt-button-shape > button > div:last-of-type {
+			display: none;
+		}
+		#notification-preference-button > ytd-subscription-notification-toggle-button-renderer-next > yt-button-shape > button > div:first-of-type {
+			order: 2;
+			margin: 0;
+			transform: translateX(8px);
 		}
 		/* Sign in masthead button */
 		#masthead #end ytd-button-renderer {
@@ -842,7 +852,7 @@ function addCustomStyles() {
             margin-top: 5px !important;
         }
         #info.ytd-video-primary-info-renderer > #menu-container {
-            transform: translateY(46px) !important;
+            transform: translateY(40px) !important;
 			flex-grow: 0;
         }
         #count.ytd-video-primary-info-renderer {
@@ -930,7 +940,8 @@ function addCustomStyles() {
 			max-height: 24px;
 			height: 24px;
 		}
-		html[dark] #subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button span {
+		html[dark] #subscribe-button > ytd-subscribe-button-renderer > yt-button-shape > button span,
+		html[dark] #subscribe-button > ytd-button-renderer > yt-button-shape > button span {
 			color: var(--redux-dimmed-white);
 		}
 		#top-level-buttons-computed ytd-download-button-renderer yt-formatted-string {
@@ -1207,26 +1218,25 @@ function addCustomStyles() {
 			padding-bottom: 1px;
 			padding-top: 3px !important;
 			margin-left: 0px !important;
+			border-top: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
+		}
+		html[dark] #reduxSubDiv > yt-formatted-string {
+			border-top: 1px solid var(--redux-spec-10-percent-layer);
+			border-right: 1px solid var(--redux-spec-10-percent-layer);
+			border-bottom: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		#redux-trim-span,
 		#reduxSubDiv > yt-formatted-string,
 		#reduxSubDiv #notification-preference-button {
-			border-top: 1px solid #ccc;
-			border-right: 1px solid #ccc;
-			border-bottom: 1px solid #ccc;
 			background-color: #fafafa;
-		}
-		#reduxSubDiv #notification-preference-button {
-			border-left: none !important;
-			padding-right: 8px;
-    		padding-left: 2px;
 		}
 		#reduxSubDiv #notification-preference-button yt-icon-button {
 			margin-right: -7px !important;
 		}
 		html[dark] #reduxSubDiv > yt-formatted-string,
 		html[dark] #reduxSubDiv #notification-preference-button {
-			border: 1px solid var(--redux-spec-10-percent-layer);
 			background: none;
 		}
 		#reduxSubDiv tp-yt-paper-button {
@@ -1239,7 +1249,18 @@ function addCustomStyles() {
 		}
 		html[dark] #reduxSubDiv tp-yt-paper-button[subscribed],
 		html[dark] #reduxSubDiv button.yt-spec-button-shape-next--tonal {
-			border: none;
+			border: 1px solid var(--redux-spec-10-percent-layer);
+		}
+		#notification-preference-button yt-button-shape > button.yt-spec-button-shape-next--tonal::after {
+			content: "";
+			position: absolute;
+			right: 0;
+			height: 24px;
+			width: 24px;
+			border-left: 1px solid #ccc;
+		}
+		html[dark] #notification-preference-button yt-button-shape > button.yt-spec-button-shape-next--tonal::after {
+			border-left: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		`,
 		blackBars: `
@@ -1874,7 +1895,8 @@ function addCustomStyles() {
 		}
 		/* Sub personalized */
 		ytd-video-primary-info-renderer path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"],
-		ytd-menu-popup-renderer path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
+		ytd-menu-popup-renderer path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"],
+		path[d="M10,20h4c0,1.1-0.9,2-2,2S10,21.1,10,20z M20,17.35V19H4v-1.65l2-1.88v-5.15c0-2.92,1.56-5.22,4-5.98V3.96 c0-1.42,1.49-2.5,2.99-1.76C13.64,2.52,14,3.23,14,3.96l0,0.39c2.44,0.75,4,3.06,4,5.98v5.15L20,17.35z M19,17.77l-2-1.88v-5.47 c0-2.47-1.19-4.36-3.13-5.1c-1.26-0.53-2.64-0.5-3.84,0.03C8.15,6.11,7,7.99,7,10.42v5.47l-2,1.88V18h14V17.77z"] {
 			d: path("M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z") !important;
 			fill: #909090;
 		}
@@ -2402,6 +2424,9 @@ function addCustomStyles() {
 		compatibleDislikesRe: `
 		.ryd-tooltip {
 			display: none !important;
+		}
+		#info ytd-menu-renderer[has-flexible-items] {
+			overflow-y: unset;
 		}
 		`,
 		hideDislikes: `

@@ -1189,7 +1189,7 @@ function main() {
 	if (reduxSettings.moveAutoplay && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents ytd-compact-video-renderer, #secondary-inner.ytd-watch-flexy #related #items ytd-compact-video-renderer', 10, autoplayInveral);
 	}
-	if (reduxSettings.disableMiniplayer && pageLocation === PAGE_LOCATION.Home) {
+	if (reduxSettings.disableMiniplayer) {
 		waitForElement('.ytp-miniplayer-ui .ytp-miniplayer-close-button', 10, removeMiniplayer);
 	}
 	if (reduxSettings.autoExpandPlaylists) {

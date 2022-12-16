@@ -62,7 +62,6 @@ html:not([dark]) #video-title.ytd-rich-grid-media {
 #video-title.ytd-rich-grid-media:hover {
     text-decoration: underline;
 }
-
 #text.ytd-channel-name {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 }
@@ -145,7 +144,8 @@ ytd-rich-metadata-renderer[rounded],
 ytd-live-chat-frame,
 ytd-macro-markers-list-item-renderer[rounded] #thumbnail.ytd-macro-markers-list-item-renderer,
 .iv-card.ytp-rounded-info,
-yt-copy-link-renderer[rounded-container] #bar.yt-copy-link-renderer {
+yt-copy-link-renderer[rounded-container] #bar.yt-copy-link-renderer,
+#clarify-box > ytd-info-panel-content-renderer {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
@@ -291,6 +291,9 @@ ytd-button-renderer.redux-moved-info:first-of-type yt-icon-button#button {
 ytd-commentbox[is-reply] #author-thumbnail.ytd-commentbox {
     border-radius: 0% !important;
 }
+#top-row.ytd-video-secondary-info-renderer {
+    padding-top: 4px !important;
+}
 #info ytd-button-renderer.style-default[is-icon-button] #text.ytd-button-renderer {
     color: #606060;
 }
@@ -333,7 +336,7 @@ ytd-video-primary-info-renderer > [button-renderer] yt-icon {
     color: var(--redux-double-inverse);
     background-color: var(--redux-spec-badge-chip-background);
     padding: 1px 2px;
-    margin: -1px 0;
+    margin-bottom: 2px;
 }
 
 /*PLAYLIST STYLES*/
