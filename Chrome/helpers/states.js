@@ -34,7 +34,7 @@ const getRelatedVideosType = () => {
 
 	if (relatedVideos) {
 		return RELATED_VIDEOS_TYPE.Normal;
-	} else if (relatedVideosAlt) {
+	} else {
 		return RELATED_VIDEOS_TYPE.Alternative;
 	}
 };

@@ -238,13 +238,11 @@ function recalculateVideoSize() {
 		if (height == undefined) {height = playerSize.height;}
 		let existingRecalc = document.querySelector('#redux-recalc');
 		if (existingRecalc) {existingRecalc.remove();}
+		document.body.setAttribute('redux-player-width', width);
+		document.body.setAttribute('redux-player-height', height);
 		let script = document.createElement('script');
 		script.id = 'redux-recalc';
-		let scriptInner = `
-            var player = document.querySelector('#movie_player');
-            player.setInternalSize(${width},${height});
-            `;
-		script.appendChild(document.createTextNode(scriptInner));
+		script.src = browser.runtime.getURL('/helpers/resize.js');
 		document.body.append(script);
 
 		if (!isCheckingRecalc) {

@@ -338,6 +338,9 @@ ytd-video-primary-info-renderer > [button-renderer] yt-icon {
     padding: 1px 2px;
     margin-bottom: 2px;
 }
+.ytp-panel sup {
+    color: red;
+}
 
 /*PLAYLIST STYLES*/
 #text.ytd-alert-with-button-renderer {

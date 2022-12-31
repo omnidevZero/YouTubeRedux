@@ -1,9 +1,9 @@
 {
     "name": "YouTube Redux",
-    "version": "2.13.9",
+    "version": "3.0.0",
     "description": "Replicate old YouTube look and features within the modern layout!",
-    "permissions": ["activeTab", "storage"],
-    "browser_action": {
+    "permissions": ["activeTab", "storage", "scripting"],
+    "action": {
       "default_popup": "popup.html",
       "default_icon": {
         "16": "images/16.png",
@@ -19,7 +19,7 @@
       "128": "images/128.png"
     },
     "background": {
-      "scripts": ["background.js"]
+      "service_worker": "background.js"
     },
     "content_scripts": [
       {
@@ -41,7 +41,14 @@
       }
     ],
     "web_accessible_resources": [
-      "images/*"
+      {
+        "resources": ["images/*"],
+        "matches": ["*://*.youtube.com/*"]
+      },
+      {
+        "resources": ["helpers/*"],
+        "matches": ["*://*.youtube.com/*"]
+      }
     ],
-    "manifest_version": 2
+    "manifest_version": 3
   }

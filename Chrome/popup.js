@@ -190,15 +190,22 @@ function saveSettings() {
 	chrome.storage.sync.set({reduxSettings: newSettings});
 }
 
-function changeGridWidth(numberOfItems) {
+function changeGridWidth() {
 	if (globalURL == "https://www.youtube.com/" || globalURL == "http://www.youtube.com/") {
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-			chrome.tabs.executeScript(
-				tabs[0].id,
-				{code: `var styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
-          styleItem.style.setProperty("--ytd-rich-grid-items-per-row", ${numberOfItems}, "important")
-          `
-				});
+			chrome.scripting.executeScript(
+				{
+					target: {tabId: tabs[0].id},
+					function: () => {
+						chrome.storage.sync.get(['reduxSettings'], function(result) {
+							if (result) {
+								let styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
+								styleItem.style.setProperty("--ytd-rich-grid-items-per-row", result.reduxSettings.gridItems, "important");	
+							}
+						});
+					}
+				}
+			);
 		});
 	}
 }
