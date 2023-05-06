@@ -14,6 +14,7 @@ html:not([dark]) {
     --redux-scrollbar-default: #aaa;
     --redux-scrollbar-hover: #909090;
     --redux-spec-badge-chip-background: rgba(0, 0, 0, 0.05);
+    --redux-spec-badge-chip-background-hover: rgba(0, 0, 0, 0.1);
 }
 html[dark] {
     --redux-spec-general-background-a: #181818;
@@ -29,6 +30,7 @@ html[dark] {
     --redux-scrollbar-default: #aaa;
     --redux-scrollbar-hover: #717171;
     --redux-spec-badge-chip-background: rgba(255, 255, 255, 0.1);
+    --redux-spec-badge-chip-background-hover: rgba(255, 255, 255, 0.2);
 }
 html {
     --redux-spec-10-percent-layer: rgba(255, 255, 255, 0.1);
@@ -145,7 +147,9 @@ ytd-live-chat-frame,
 ytd-macro-markers-list-item-renderer[rounded] #thumbnail.ytd-macro-markers-list-item-renderer,
 .iv-card.ytp-rounded-info,
 yt-copy-link-renderer[rounded-container] #bar.yt-copy-link-renderer,
-#clarify-box > ytd-info-panel-content-renderer {
+#clarify-box > ytd-info-panel-content-renderer,
+.ytp-rounded-tooltip,
+.ytp-rounded-tooltip .ytp-tooltip-bg {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
@@ -153,7 +157,7 @@ yt-copy-link-renderer[rounded-container] #bar.yt-copy-link-renderer,
 }
 [redux-last-top],[redux-last-top-stream] {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 /* turned off due to max() not being supported in old browsers
@@ -446,6 +450,24 @@ yt-img-shadow.ytd-mini-channel-renderer {
 [page-subtype="channels"] ytd-rich-grid-row > #contents > ytd-rich-item-renderer[is-slim-grid]:first-of-type {
     margin-left: calc(var(--ytd-rich-grid-item-margin)/2);
 }
+#redux-sort-chip {
+    display: inline-flex;
+    background-color: var(--redux-spec-badge-chip-background);
+    justify-content: center;
+    align-items: center;
+    height: 32px;
+    margin: 0 12px 0 12px;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: var(--redux-double-inverse);
+    transition: background-color 0.5s cubic-bezier(0.05,0,0,1);
+}
+#redux-sort-chip:hover {
+    cursor: pointer;
+    background-color: var(--redux-spec-badge-chip-background-hover);
+}
     
 /*FEED STYLES*/
 yt-img-shadow.ytd-channel-list-sub-menu-avatar-renderer {
@@ -466,17 +488,10 @@ html[dark] #show-more-related input, html[dark] #show-more-comments input {
 #redux-trim-span {
     color: var(--redux-spec-text-secondary);
     margin-right: 4px;
-    font-size: var(--ytd-thumbnail-attribution_-_font-size);
-    font-weight: var(--ytd-thumbnail-attribution_-_font-weight);
-    line-height: var(--ytd-thumbnail-attribution_-_line-height);
-    letter-spacing: var(--ytd-thumbnail-attribution_-_letter-spacing);
-    text-transform: var(--ytd-thumbnail-attribution_-_text-transform);
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.8rem;
     border-radius: 0 2px 2px 0;
-    padding-left: 7px;
-    padding-right: 7px;
-    padding-bottom: 1px;
-    padding-top: 3px;
-    margin-left: 0px;
 }
 html[dark] #redux-trim-span {
     border: 1px solid var(--redux-spec-10-percent-layer);

@@ -26,6 +26,14 @@ let observerRelated;
 let intervalsArray = [];
 let isCheckingRecalc = false;
 
+function delay(ms) {
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve();
+		}, ms);
+	});
+}
+
 function confirmIt() {
 	let confirmButton = document.querySelector('paper-dialog > yt-confirm-dialog-renderer > div:last-child > div > #confirm-button') || document.querySelector('ytd-popup-container  yt-confirm-dialog-renderer > #main > div.buttons > #confirm-button');
 	if (!confirmButton) return;
@@ -786,7 +794,7 @@ function trimStrings() {
 		let reduxTrimSpan = document.createElement('span');
 		reduxTrimSpan.id = 'redux-trim-span';
 		reduxTrimSpan.innerText = subString.innerText.replace(/\s+\S*$/g, '');
-		reduxTrimSpan.classList.add('ytd-video-owner-renderer');
+		reduxTrimSpan.classList.add('style-scope', 'ytd-video-owner-renderer');
 
 		let container = document.querySelector('#reduxSubDiv');
 		container.insertBefore(reduxTrimSpan, subString);
@@ -996,7 +1004,7 @@ function fixHome() {
 }
 
 function formatNumber(number) {
-	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
+	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button span');
 	let views = document.querySelector('#count.ytd-video-primary-info-renderer');
 	let separator = ' ';
 
@@ -1010,17 +1018,19 @@ function formatNumber(number) {
 }
 
 function updateDislikes() {
-	let dislikesSource = document.querySelector('.ryd-tooltip #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+	let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span');
+	let buttonsContainer = document.querySelector('#top-level-buttons-computed');
 	let observerConfig = {
 		childList: true
 	};
 	let observerLikes = new MutationObserver(update);
-	observerLikes.observe(dislikesSource, observerConfig);
+	observerLikes.observe(buttonsContainer, observerConfig); //not used anyway? needs investigation
 
 	update();
+
 	if (reduxSettings.showRawValues) {
 		let checkIfChanged = setInterval(() => {
-			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:nth-child(2) > a > yt-formatted-string');
+			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span');
 			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 			if (dislikes && dislikes.innerText.match(/^[\d+]/)) {
 				dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));
@@ -1034,9 +1044,10 @@ function updateDislikes() {
 	}
 
 	function update() {
-		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-child > a > yt-formatted-string');
-		if (!likes.getAttribute('aria-label')) return;
-		let likesCount = parseInt(likes.getAttribute('aria-label').replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button span');
+		if (!likes) return;
+		let likesCount = parseInt(likes.innerText.replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip');
 		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
 		updateLikesBar(likesCount, dislikesCount);
@@ -1109,6 +1120,55 @@ function adjustAmbient() {
 		}
 	});
 	cinematicsObserver.observe(cinematics, { childList: true });
+}
+
+async function addSortByOldestVideosButton() {
+	await delay(250);
+	const sortChipId = 'redux-sort-chip';
+	const existingSortChip = document.querySelector(`#${sortChipId}`);
+	if (existingSortChip) {
+		return;
+	}
+	const chips = document.querySelector('#chips-wrapper #chips');
+	const sortChip = document.createElement('div');
+	sortChip.id = sortChipId;
+	sortChip.innerText = 'Oldest';
+	sortChip.addEventListener('click', () => {
+		const videos = document.querySelector('[page-subtype="channels"] #contents.ytd-rich-grid-renderer');
+		if (!videos) {
+			return;
+		} else if (!document.querySelector('#redux-sort-chip-style')) {
+			const customStyle = document.createElement('style');
+			customStyle.id = 'redux-sort-chip-style';
+			const customStyleInner = `
+			#contents.ytd-rich-grid-renderer { 
+				flex-direction: column-reverse;
+			}
+			#contents.ytd-rich-grid-renderer #contents { 
+				flex-direction: row-reverse;
+			}`;
+			customStyle.appendChild(document.createTextNode(customStyleInner));
+			document.head.append(customStyle); 
+		}
+	});
+
+	const initialChips = document.querySelectorAll('#chips-wrapper #chips > yt-chip-cloud-chip-renderer');
+	initialChips.forEach(chip => {
+		chip.addEventListener('click', async() => {
+			const reduxSortChipStyle = document.querySelector('#redux-sort-chip-style');
+			if (reduxSortChipStyle) {
+				reduxSortChipStyle.remove();
+			}
+
+			const existingSortChip = document.querySelector(`#${sortChipId}`);
+			if (existingSortChip) {
+				existingSortChip.remove();
+				addSortByOldestVideosButton();
+			}
+		});
+	});
+
+	chips.append(sortChip);
 }
 
 function main() {
@@ -1211,6 +1271,9 @@ function main() {
 	if (!reduxSettings.ignoreAmbientAdjustment && getTheme() === THEME.Dark && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#cinematics', 10, adjustAmbient);
 	}
+	if (reduxSettings.addSortByOldestVideos && pageLocation === PAGE_LOCATION.Channel) {
+		waitForElement('#chips-wrapper #chips > yt-chip-cloud-chip-renderer', 10, addSortByOldestVideosButton);
+	}
 }
 
 (() => {
@@ -1265,6 +1328,15 @@ function main() {
 			&& pageLocation === PAGE_LOCATION.Video
 			&& document.querySelector('.redux-moved-info').getAttribute('redux-url-check') != window.location.search) {
 				clearMovedInfo(); //contains an interval
+			}
+
+			if (reduxSettings.compatibleDislikesRe) {
+				const leftoverRYDTooltips = document.querySelectorAll('ytd-video-primary-info-renderer > .ryd-tooltip');
+				if (leftoverRYDTooltips.length > 0) {
+					leftoverRYDTooltips.forEach(element => {
+						element.remove();
+					});
+				}
 			}
 
 			try {

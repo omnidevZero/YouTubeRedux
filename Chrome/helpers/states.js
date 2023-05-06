@@ -8,7 +8,7 @@ const getPageLocation = () => {
 		return PAGE_LOCATION.Home;
 	} else if (location.href.includes('/watch?')) {
 		return PAGE_LOCATION.Video;
-	} else if (location.pathname.startsWith('/user/') || location.pathname.startsWith('/c/')) {
+	} else if (location.pathname.startsWith('/user/') || location.pathname.startsWith('/c/') || location.pathname.startsWith('/@')) {
 		return PAGE_LOCATION.Channel;
 	} else if (location.href.includes('/feed/trending')) {
 		return PAGE_LOCATION.Trending;
