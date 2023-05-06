@@ -1217,7 +1217,8 @@ function main() {
 		waitForElement('#info #segmented-like-button button[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
 	if (reduxSettings.compatibleDislikesRe && pageLocation === PAGE_LOCATION.Video) {
-		waitForElement('.ryd-tooltip #tooltip', 10, updateDislikes);
+		const rydTooltipSelector = reduxSettings.rearrangeInfoRe ? '#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip ': '.ryd-tooltip #tooltip';
+		waitForElement(rydTooltipSelector, 10, updateDislikes);
 	}
 	if (pageLocation === PAGE_LOCATION.Trending || pageLocation === PAGE_LOCATION.Explore) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);
