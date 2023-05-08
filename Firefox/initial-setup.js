@@ -1038,7 +1038,7 @@ function addCustomStyles() {
 			background-color: #cc181e !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
 			background-color: #cc181e !important;
 		}
@@ -1057,6 +1057,10 @@ function addCustomStyles() {
 		}
 		.ytp-sb-subscribe {
 			background-color: #cc181e !important;
+		}
+		#selectionBar.paper-tabs, 
+		#selectionBar.tp-yt-paper-tabs {
+			border-bottom: 2px solid #cc181e !important;
 		}
 		`,
 		channelListView: `

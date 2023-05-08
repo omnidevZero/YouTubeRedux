@@ -252,7 +252,7 @@ function recalculateVideoSize() {
             var player = document.querySelector('#movie_player');
             player.setInternalSize(${width},${height});
             `;
-		script.appendChild(document.createTextNode(scriptInner));
+		script.appendChild(document.createTextNode(scriptInner)); //manifest V2 solution
 		document.body.append(script);
 
 		if (!isCheckingRecalc) {
@@ -1046,9 +1046,9 @@ function updateDislikes() {
 	}
 
 	function update() {
-		let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button span');
-		if (!likes) return;
-		let likesCount = parseInt(likes.innerText.replace(/[,.\s]/g, '').replace(/[^\d]+$/g, ''));
+		let likesButtonWithAria = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button button');
+		if (!likesButtonWithAria.getAttribute('aria-label')) return; //gets likes value from aria label as it's the same with or without precise values
+		let likesCount = parseInt(likesButtonWithAria.getAttribute('aria-label').replace(/[,.\s]/g, '').match(/\d+/)[0]);
 		let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip');
 		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
@@ -1126,7 +1126,16 @@ function adjustAmbient() {
 
 async function addSortByOldestVideosButton() {
 	await delay(250);
+
+	const isReloading = document.querySelector('[continuation-is-reloading]');
+	if (isReloading) {
+
+		addSortByOldestVideosButton();
+		return;
+	}
+
 	const sortChipId = 'redux-sort-chip';
+	const originalChipsSelector = '#chips-wrapper #chips > yt-chip-cloud-chip-renderer';
 	const existingSortChip = document.querySelector(`#${sortChipId}`);
 	if (existingSortChip) {
 		return;
@@ -1135,11 +1144,19 @@ async function addSortByOldestVideosButton() {
 	const sortChip = document.createElement('div');
 	sortChip.id = sortChipId;
 	sortChip.innerText = 'Oldest';
-	sortChip.addEventListener('click', () => {
+	sortChip.addEventListener('click', function() {
 		const videos = document.querySelector('[page-subtype="channels"] #contents.ytd-rich-grid-renderer');
 		if (!videos) {
 			return;
 		} else if (!document.querySelector('#redux-sort-chip-style')) {
+			this.style.backgroundColor = 'var(--redux-double-inverse)';
+			this.style.color = 'var(--redux-spec-text-primary-inverse)';
+
+			const initialChips = document.querySelectorAll(originalChipsSelector);
+			initialChips.forEach(chip => {
+				chip.removeAttribute('selected');
+			});
+
 			const customStyle = document.createElement('style');
 			customStyle.id = 'redux-sort-chip-style';
 			const customStyleInner = `
@@ -1154,9 +1171,10 @@ async function addSortByOldestVideosButton() {
 		}
 	});
 
-	const initialChips = document.querySelectorAll('#chips-wrapper #chips > yt-chip-cloud-chip-renderer');
+	const initialChips = document.querySelectorAll(originalChipsSelector);
 	initialChips.forEach(chip => {
 		chip.addEventListener('click', async() => {
+			chip.setAttribute('selected', '');
 			const reduxSortChipStyle = document.querySelector('#redux-sort-chip-style');
 			if (reduxSortChipStyle) {
 				reduxSortChipStyle.remove();
@@ -1165,8 +1183,9 @@ async function addSortByOldestVideosButton() {
 			const existingSortChip = document.querySelector(`#${sortChipId}`);
 			if (existingSortChip) {
 				existingSortChip.remove();
-				addSortByOldestVideosButton();
 			}
+
+			addSortByOldestVideosButton();
 		});
 	});
 
