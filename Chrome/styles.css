@@ -40,6 +40,7 @@ html {
     --ytd-masthead-height: 50px !important;
     --overridden-masthead-height: var(--ytd-masthead-height);
     --redux-dimmed-white: #f1f1f1;
+    --redux-sign-in-button-background: #167ac6;
 }
 /*GENERAL STYLES*/
 ytd-app[masthead-hidden] {
@@ -87,6 +88,7 @@ ytd-guide-entry-renderer[guide-refresh] {
 #guide-section-title.ytd-guide-section-renderer,
 #guide-section-title.ytd-guide-section-renderer a {
     color:#F00 !important;
+    text-transform: uppercase;
 }
 .guide-icon.ytd-guide-entry-renderer {
     --iron-icon-height: 20px !important;
@@ -149,7 +151,10 @@ ytd-macro-markers-list-item-renderer[rounded] #thumbnail.ytd-macro-markers-list-
 yt-copy-link-renderer[rounded-container] #bar.yt-copy-link-renderer,
 #clarify-box > ytd-info-panel-content-renderer,
 .ytp-rounded-tooltip,
-.ytp-rounded-tooltip .ytp-tooltip-bg {
+.ytp-rounded-tooltip .ytp-tooltip-bg,
+.ytp-player-minimized .html5-main-video,
+.ytp-player-minimized .ytp-miniplayer-scrim,
+.ytp-player-minimized.html5-video-player {
     border-radius: 0 !important;
 }
 #search-icon-legacy {

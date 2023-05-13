@@ -71,14 +71,14 @@
             animation: scroll 10s linear 0s infinite;
             font-size: 10px;
             font-weight: normal;
-            opacity: 0.25;
+            opacity: 0.75;
         }
         @keyframes scroll {
             0% {
-                transform: translate(300px, 0);
+                transform: translate(500px, 0);
             }
             100% {
-                transform: translate(-300px, 0);
+                transform: translate(-250px, 0);
             }
         }
         .important {
@@ -117,10 +117,18 @@
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">3.1.2</b><span> - 13.05.2023</span>
+                        <li>made it more obvious that showing this page can be disabled</li>
+                        <li>fixed dislikes not working (for Return Youtube Dislike compatibility)
+                        <br><note>as a temporary workaround dislikes values will be precise regardless of user settings</note></li>
+                        <li>fixed shuffle and repeat icons blending in with background when using certain settings</li>
+                        <li>fixed "Oldest" button not being properly added when navigating pages</li>
+                        <li>fixed issues with video page buttons after navigating through multiple videos</li>
+                        <li>CSS fixes</li>
                         <b class="update">3.1.1</b><span> - 07.05.2023</span>
                         <li>fixed likes bar not being properly filled when not using precise likes values</li>
                         <li>updated the look of the "Oldest" sorting button when it's clicked and improved its behavior</li>
-                        <li>fixed darked red color not being applied to subscribe button</li>
+                        <li>fixed darker red color not being applied to subscribe button</li>
                         <b class="update">3.1.0</b><span> - 06.05.2023</span>
                         <li>added an option to hide chapters in search results (enabled by default)</li>
                         <li>added an option to sort channel videos by oldest (enabled by default)</li>
@@ -735,7 +743,7 @@
                     </ul>
                 </div>
                 <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 474px; margin-top: 10px; border: 1px solid black;" frameborder=0 height="100%"></iframe>
-                <div style="overflow:hidden; width: 200px; white-space: nowrap;">
+                <div style="overflow:hidden; width: 500px; white-space: nowrap;">
                     <div class="marquee">This page can be disabled using settings above.</div>
                 </div>
                 <div class="header-main" style="margin-top:20px;">You can access these settings via the extension's icon next to the address bar</div> 

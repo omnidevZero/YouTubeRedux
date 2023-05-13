@@ -577,7 +577,7 @@ function rearrangeInfoNew() {
 }
 
 function moveTopLevelItems() {
-	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer):not([is-hidden]), #info #flexible-item-buttons > *');
+	let topLevelElements = document.querySelectorAll('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer, .ryd-tooltip):not([is-hidden]), #info #flexible-item-buttons > *');
 	let infoContents = document.querySelector('#info-contents > ytd-video-primary-info-renderer');
 	let infoDiv = document.querySelector('#info-contents div#info');
 	let miscButton = document.querySelector('#info-contents ytd-video-primary-info-renderer > yt-icon-button');
@@ -595,6 +595,7 @@ function moveTopLevelItems() {
 			infoDiv.prepend(topLevelElements[i]);
 			topLevelElements[i].classList.add('redux-moved-info');
 			topLevelElements[i].setAttribute('redux-url-check', window.location.search);
+			topLevelElements[i].removeAttribute('hidden');
 		}
             
 		if (reduxSettings.altVideoLayoutExtra) {
@@ -631,6 +632,7 @@ function moveTopLevelItems() {
 			infoContents.insertBefore(topLevelElements[i], existingMovedItem);
 			topLevelElements[i].classList.add('redux-moved-info');
 			topLevelElements[i].setAttribute('redux-url-check', window.location.search);
+			topLevelElements[i].removeAttribute('hidden');
 		}
 	}
 }
@@ -638,7 +640,7 @@ function moveTopLevelItems() {
 function clearMovedInfo() {
 	let moveInfo = document.querySelectorAll('.redux-moved-info');
 	moveInfo.forEach(element => element.remove());
-	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer):not([is-hidden])', 10, moveTopLevelItems);
+	waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer, .ryd-tooltip):not([is-hidden])', 10, moveTopLevelItems);
 }
 
 function clearStoredIntervals() {
@@ -1003,6 +1005,27 @@ function fixHome() {
 	}
 }
 
+function addDislikesContainer() {
+	let interval = setInterval(() => {
+		const existingContainer = document.querySelector('#info #segmented-dislike-button span');
+		if (existingContainer) return;
+		const likesDivCloned = document.querySelector('#info #segmented-like-button .cbox').cloneNode(true);
+		likesDivCloned.querySelector('span').innerText = '';
+		const dislikesButton = document.querySelector('#info #segmented-dislike-button button');
+		dislikesButton.classList.remove('yt-spec-button-shape-next--icon-button');
+		dislikesButton.classList.add('yt-spec-button-shape-next--icon-leading');
+		const lastButtonNode = dislikesButton.childNodes[dislikesButton.childNodes.length - 1];
+		dislikesButton.insertBefore(likesDivCloned, lastButtonNode);
+	}, 100);
+
+	setTimeout(() => {
+		if (interval) {
+			clearInterval(interval);
+			interval = undefined;
+		}
+	}, 5000);
+}
+
 function formatNumber(number) {
 	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button span');
 	let views = document.querySelector('#count.ytd-video-primary-info-renderer');
@@ -1028,28 +1051,43 @@ function updateDislikes() {
 
 	update();
 
-	if (reduxSettings.showRawValues) {
-		let checkIfChanged = setInterval(() => {
-			let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span');
-			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
-			if (dislikes && dislikes.innerText.match(/^[\d+]/)) {
-				dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));
-			}
-		}, 20);
-		setTimeout(() => {
-			if (checkIfChanged) {
-				clearInterval(checkIfChanged);
-			}
-		}, 5000);
-	}
+	//if (reduxSettings.showRawValues) { //not getting rounder values anymore, refactor rearranging to allow node cloning in order to properly fix
+	let checkIfChanged = setInterval(() => {
+		let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span'); 
+		if (!dislikesSource) return;
+		let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span');
+		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+		if (dislikes) {
+			dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));
+		}
+	}, 20);
+	setTimeout(() => {
+		if (checkIfChanged) {
+			clearInterval(checkIfChanged);
+		}
+	}, 5000);
+	//}
 
 	function update() {
 		let likesButtonWithAria = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button button');
 		if (!likesButtonWithAria.getAttribute('aria-label')) return; //gets likes value from aria label as it's the same with or without precise values
 		let likesCount = parseInt(likesButtonWithAria.getAttribute('aria-label').replace(/[,.\s]/g, '').match(/\d+/)[0]);
+
 		let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip');
 		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
+		let dislikesButtonWithAria = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button button');
+
+		if (!dislikesButtonWithAria.hasAttribute('initial-dislikes')) {
+			dislikesButtonWithAria.setAttribute('initial-dislikes', dislikesCount);
+			dislikesButtonWithAria.addEventListener('click', function() {
+				if (!this.querySelector('.cbox')) {
+					addDislikesContainer();
+					updateDislikes();
+				}
+			});
+		}
+
 		updateLikesBar(likesCount, dislikesCount);
 	}
 }
@@ -1127,18 +1165,17 @@ async function addSortByOldestVideosButton() {
 
 	const isReloading = document.querySelector('[continuation-is-reloading]');
 	if (isReloading) {
-
 		addSortByOldestVideosButton();
 		return;
 	}
 
 	const sortChipId = 'redux-sort-chip';
-	const originalChipsSelector = '#chips-wrapper #chips > yt-chip-cloud-chip-renderer';
+	const originalChipsSelector = '[page-subtype="channels"] #chips-wrapper #chips > yt-chip-cloud-chip-renderer';
 	const existingSortChip = document.querySelector(`#${sortChipId}`);
 	if (existingSortChip) {
 		return;
 	}
-	const chips = document.querySelector('#chips-wrapper #chips');
+	const chipsContainer = document.querySelector('[page-subtype="channels"] #chips-wrapper #chips');
 	const sortChip = document.createElement('div');
 	sortChip.id = sortChipId;
 	sortChip.innerText = 'Oldest';
@@ -1187,7 +1224,7 @@ async function addSortByOldestVideosButton() {
 		});
 	});
 
-	chips.append(sortChip);
+	chipsContainer.append(sortChip);
 }
 
 function main() {
@@ -1213,6 +1250,10 @@ function main() {
 				document.dispatchEvent(keyboardEvent);
 			}, 60000*10);
 		}
+	}
+
+	if (reduxSettings.rearrangeInfoRe && reduxSettings.compatibleDislikesRe && pageLocation === PAGE_LOCATION.Video) {
+		waitForElement('#info #segmented-like-button span', 10, addDislikesContainer);
 	}
 	if (reduxSettings.rearrangeInfoRe && pageLocation === PAGE_LOCATION.Video && !flags.isRearranged) {
 		waitForElement('.ytd-video-primary-info-renderer > #top-level-buttons-computed > ytd-button-renderer', 10, rearrangeInfo);
@@ -1292,7 +1333,7 @@ function main() {
 		waitForElement('#cinematics', 10, adjustAmbient);
 	}
 	if (reduxSettings.addSortByOldestVideos && pageLocation === PAGE_LOCATION.Channel) {
-		waitForElement('#chips-wrapper #chips > yt-chip-cloud-chip-renderer', 10, addSortByOldestVideosButton);
+		waitForElement('[page-subtype="channels"] #chips-wrapper #chips > yt-chip-cloud-chip-renderer', 10, addSortByOldestVideosButton);
 	}
 }
 
