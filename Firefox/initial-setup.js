@@ -53,6 +53,7 @@ const defaultSettings = {
 	"classicLikesIconColors": false,
 	"hideJoinButton": false,
 	"hideClip": false,
+	"hideThanks": false,
 	"hidePeopleSearch": true,
 	"trimSubs": false,
 	"trimViews": false,
