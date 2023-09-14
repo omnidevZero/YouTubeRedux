@@ -54,6 +54,7 @@ const defaultSettings = {
 	"hideJoinButton": false,
 	"hideClip": false,
 	"hideThanks": false,
+	"hideHashtags": false,
 	"hidePeopleSearch": true,
 	"trimSubs": false,
 	"trimViews": false,

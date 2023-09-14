@@ -886,6 +886,14 @@ function hideThanks() {
 	});
 }
 
+function hideHashtags() {
+	const hashtags = document.querySelectorAll('#info [href^="/hashtag/"]');
+
+	hashtags.forEach(element => {
+		element.style.display = "none";
+	});
+}
+
 function autoplayInveral() {
 	let autoInterval = setInterval(addOldAutoplay, 10);
 	setTimeout(() => {
@@ -1306,6 +1314,9 @@ function main() {
 	}
 	if (reduxSettings.hideThanks && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#info path[d="M11 17h2v-1h1c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1h-3v-1h4V8h-2V7h-2v1h-1c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3v1H9v2h2v1zm5.5-15c-1.74 0-3.41.88-4.5 2.28C10.91 2.88 9.24 2 7.5 2 4.42 2 2 4.64 2 7.99c0 4.12 3.4 7.48 8.55 12.58L12 22l1.45-1.44C18.6 15.47 22 12.11 22 7.99 22 4.64 19.58 2 16.5 2zm-3.75 17.85-.75.74-.74-.73-.04-.04C6.27 14.92 3 11.69 3 7.99 3 5.19 4.98 3 7.5 3c1.4 0 2.79.71 3.71 1.89L12 5.9l.79-1.01C13.71 3.71 15.1 3 16.5 3 19.02 3 21 5.19 21 7.99c0 3.7-3.28 6.94-8.25 11.86z"]', 100, hideThanks);
+	}
+	if (reduxSettings.hideHashtags && pageLocation === PAGE_LOCATION.Video) {
+		waitForElement('#info yt-formatted-string', 100, hideHashtags);
 	}
 	if (reduxSettings.moveAutoplay && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents ytd-compact-video-renderer, #secondary-inner.ytd-watch-flexy #related #items ytd-compact-video-renderer', 10, autoplayInveral);
