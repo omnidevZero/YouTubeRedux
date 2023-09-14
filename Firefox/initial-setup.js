@@ -55,6 +55,7 @@ const defaultSettings = {
 	"hideClip": false,
 	"hideThanks": false,
 	"hideHashtags": false,
+	"hidePreTitle": false,
 	"hidePeopleSearch": true,
 	"trimSubs": false,
 	"trimViews": false,
@@ -2495,6 +2496,11 @@ function addCustomStyles() {
 		`,
 		hideHeatmap: `
 		.ytp-heat-map-chapter {
+			display: none !important;
+		}
+		`,
+		hidePreTitle: `
+		.super-title.ytd-video-primary-info-renderer {
 			display: none !important;
 		}
 		`
