@@ -454,7 +454,7 @@ function rearrangeInfo() {
 	reduxSubDiv.id = 'reduxSubDiv';
 	const subButton = videoInfo.querySelector('#subscribe-button');
 	const subCount = videoInfo.querySelector('#owner-sub-count');
-	const viewsAndDate = videoInfo.querySelector('#description-inner #tooltip');
+	const viewsAndDate = videoInfo.querySelector('#description tp-yt-paper-tooltip:not([disable-upgrade]) > #tooltip');
 	const views = viewsAndDate.innerText.split('•')[0];
 	const date = viewsAndDate.innerText.split('•')[1];
 	const description = videoInfo.querySelector("#description");
@@ -539,7 +539,7 @@ function rearrangeInfo() {
 function addMissingVideoPageElements() {
 	//move to description observer instead of interval
 	const loop = setInterval(() => {
-		const viewsAndDate = document.querySelector('#description-inner #tooltip');
+		const viewsAndDate = document.querySelector('#description tp-yt-paper-tooltip:not([disable-upgrade]) > #tooltip');
 		const views = viewsAndDate.innerText.split('•')[0];
 		const date = viewsAndDate.innerText.split('•')[1];
 		const reduxViewsLikesContainer = document.querySelector('#redux-video-stats');

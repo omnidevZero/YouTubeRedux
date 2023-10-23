@@ -895,10 +895,14 @@ function addCustomStyles() {
         #primary-inner > #meta > #meta-contents > ytd-video-secondary-info-renderer > #container > ytd-expander {
             margin-left: 0 !important;
         }
-        #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, #reduxSubDiv > #owner-sub-count {
+        #top-row > ytd-video-owner-renderer > #upload-info > #owner-sub-count, 
+		#reduxSubDiv > #owner-sub-count {
             padding-top: 4px;
             margin-left: 4px;
         }
+		#above-the-fold #upload-info {
+			margin-right: 0 !important;
+		}
         #sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
             margin-right: 0px;
         }
@@ -1004,7 +1008,8 @@ function addCustomStyles() {
 		#secondary-redux-div span {
 			display: block;
 		}
-		#description-inner ytd-watch-info-text {
+		#description-inner ytd-watch-info-text,
+		#description-inner > #info-container {
 			display: none;
 		}
 		#primary-inner ytd-watch-metadata #title > h1 > yt-formatted-string {
