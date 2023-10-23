@@ -187,8 +187,11 @@ ytd-mini-guide-renderer.ytd-app {
 } */
 
 /*VIDEO STYLES*/
-.title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
+.title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer,
+#above-the-fold #title yt-formatted-string {
     font-size: 20px;
+    font-weight: 400 !important;
+    font-family: "Roboto","Arial",sans-serif !important;
 }
 ytd-toggle-button-renderer {
     font-weight: normal !important;
@@ -290,7 +293,8 @@ html:not([dark]) ytd-author-comment-badge-renderer[creator] {
 #always-shown ytd-rich-metadata-renderer {
     background: none;
 }
-ytd-button-renderer.redux-moved-info:first-of-type yt-icon {
+ytd-button-renderer.redux-moved-info:first-of-type yt-icon,
+#above-the-fold #flexible-item-buttons > *:last-child yt-icon {
     content: url('chrome-extension://__MSG_@@extension_id__/images/plus.svg');
 }
 ytd-button-renderer.redux-moved-info:first-of-type yt-icon-button#button {
