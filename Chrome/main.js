@@ -167,7 +167,8 @@ function alignItems() {
 }
 
 function changeLikesCounter() {
-	let likesButton = document.querySelector('#above-the-fold #segmented-like-button button');
+	const likesButtonSelector = '#above-the-fold #segmented-like-button button, #above-the-fold like-button-view-model button';
+	let likesButton = document.querySelector(likesButtonSelector);
 	let observerConfig = {
 		attributes: true
 	};
@@ -180,20 +181,14 @@ function changeLikesCounter() {
 	function fixLikes() {
 		observerLikes.disconnect();
 
-		let likesButton = document.querySelector('#above-the-fold #segmented-like-button button');
-		let likesText = document.querySelector('#above-the-fold #segmented-like-button span');
-		let rawLikes = likesButton.getAttribute('aria-label') ? likesButton.getAttribute('aria-label').match(/(?=\d).*(?<=\d)/g)[0] : '';
+		let likesButton = document.querySelector(likesButtonSelector);
+		let likesText = likesButton.querySelector('[class*="text-content"]');
+		let rawLikes = likesButton.getAttribute('aria-label')?.match(/(?=\d).*(?<=\d)/g) ? likesButton.getAttribute('aria-label').match(/(?=\d).*(?<=\d)/g)[0] : '';
 
-		if (likesText) {
-			if (!rawLikes) {
-				let likeButton = document.querySelector('#above-the-fold #segmented-like-button button');
-				let buttonAria = likeButton.getAttribute('aria-label');
-				let replacementText = /\d+/.test(buttonAria) ? formatNumber(buttonAria.replace(/[^\d]/g, '')) : buttonAria;
-				likesText.innerText = replacementText;
-			} else {
-				likesText.innerText = rawLikes;
-			}
+		if (likesButton && rawLikes) {
+			likesText.innerText = rawLikes;
 		}
+
 		observerLikes.observe(likesButton, observerConfig);
 	}
 }
@@ -558,6 +553,10 @@ function addMissingVideoPageElements() {
 			<div id="like-bar" class="style-scope ytd-sentiment-bar-renderer redux-like-bar"></div>
 			</div>`;
 			reduxViewsLikesContainer.append(likeBar);
+
+			if (reduxSettings.compatibleDislikesRe) {
+				updateDislikes(); //move outside the inverval/observer to avoid spamming calls?
+			}
 		}
 	}, 100);
 
@@ -625,51 +624,43 @@ function preventScrolling() {
 }
 
 function sortPlaylists() {
-	if (!!document.querySelector('.redux-playlist')) return;
 	const baseTimeout = 250;
-	const playlistsSelector = reduxSettings.fixHomepage ? '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-item-renderer ytd-thumbnail-overlay-bottom-panel-renderer' : '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-grid-row ytd-thumbnail-overlay-bottom-panel-renderer';
+	const playlistsSelector = reduxSettings.fixHomepage ? '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-item-renderer ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer' : '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-grid-row ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer';
+
 	setTimeout(() => {
 		let playlistItems = document.querySelectorAll(playlistsSelector);
 		let itemsContainer = document.querySelector('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist)');
-		let allContainer = document.querySelector('ytd-rich-grid-renderer');
 		let currentLength = playlistItems.length;
 		if (currentLength == 0) return;
     
-		let playlistReduxDiv = document.createElement('div');
-		playlistReduxDiv.style = 'transition-duration: 0.5s; opacity:0';
-		playlistReduxDiv.id = "contents";
-		playlistReduxDiv.className += 'redux-playlist style-scope ytd-rich-grid-renderer';
-		allContainer.insertBefore(playlistReduxDiv, itemsContainer);
-		setTimeout(() => {playlistReduxDiv.style.opacity = '1';}, baseTimeout);
-    
 		for (let i = 0; i < playlistItems.length; i++) {
 			let parentEl = playlistItems[i].closest('ytd-rich-item-renderer');
-			parentEl.style = 'transition-duration:0.25s; opacity: 1;';
-			setTimeout(() => {parentEl.style.opacity = '0';}, 0);
+
 			setTimeout(() => {
-				playlistReduxDiv.prepend(parentEl);
-				parentEl.style.opacity = '1';
+				parentEl.style = 'transition-duration:0.25s; opacity: 0;';
+				parentEl.classList.add('redux-reordered-playlist-item');
+			}, 0);
+
+			setTimeout(() => {
+				parentEl.style.order = `-${i+1}`;
 			}, baseTimeout);
+
+			setTimeout(() => {
+				parentEl.style.opacity = '1';
+			}, baseTimeout*2);
 		}
 
-		function hidePlaylists() {
-			let playlistItems = document.querySelectorAll(playlistsSelector);
-			let movedItems = document.querySelector('.redux-playlist').children;
-			let existingPlaylist = false;
+		function reorderNewPlaylistItems() {
+			const alreadyReorderedItems = document.querySelectorAll('.redux-reordered-playlist-item');
+			const playlistItems = document.querySelectorAll(playlistsSelector);
 
-			for (const playlist of playlistItems) { //check if playlist in main container exists in grouped container and then add or hide it
-				const playlistId = playlist.closest('#thumbnail').href;
-				for (const item of movedItems) {
-					const movedItemId = item.querySelector('#thumbnail').href;
-					if (movedItemId === playlistId) {
-						existingPlaylist = true;
-						playlist.closest('ytd-rich-item-renderer').style.display = 'none';
-						break;
-					}
-				}
-				if (!existingPlaylist) {
-					playlistReduxDiv.append(playlist.closest('ytd-rich-item-renderer'));
-				}
+			for (let i = alreadyReorderedItems.length; i < playlistItems.length; i++) {
+				let parentEl = playlistItems[i].closest('ytd-rich-item-renderer');
+
+				setTimeout(() => {
+					parentEl.style.order = `-${i+1}`;
+					parentEl.classList.add('redux-reordered-playlist-item');
+				}, baseTimeout);
 			}
 		}
             
@@ -678,7 +669,7 @@ function sortPlaylists() {
 				let observerConfig = {
 					childList: true
 				};
-				let observerPlaylistItems = new MutationObserver(hidePlaylists);
+				let observerPlaylistItems = new MutationObserver(reorderNewPlaylistItems);
 				observerPlaylistItems.observe(itemsContainer, observerConfig);
 			}, baseTimeout*2);
 		}
@@ -889,7 +880,7 @@ function fixHome() {
 	let contents = document.querySelector('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container)');
 	let contentsParent = document.querySelector('ytd-rich-grid-renderer');
 	let homeReduxDiv = document.createElement('div');
-	homeReduxDiv.style = 'transition-duration: 0.5s; opacity:0';
+	homeReduxDiv.style = 'transition-duration: 0.25s; opacity:0';
 	homeReduxDiv.id = "contents";
 	homeReduxDiv.className += 'redux-home-container style-scope ytd-rich-grid-renderer';
 	contentsParent.insertBefore(homeReduxDiv, contents);
@@ -909,6 +900,7 @@ function fixHome() {
 	function addNewItems() {
 		if (!!document.querySelector('.redux-home-spinner')) document.querySelector('.redux-home-spinner').remove();
 		let rowItems = document.querySelectorAll('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) > ytd-rich-grid-row ytd-rich-item-renderer');
+
 		for (const item of rowItems) {
 			let currentId = item.querySelector('a#thumbnail') ? item.querySelector('a#thumbnail').href : 'MISSING';
 			if (!itemIds.includes(currentId)) {
@@ -918,7 +910,16 @@ function fixHome() {
 				item.style.display = 'none';
 			}
 		}
+
+		removeEmptyItems();
 		addSpinner();
+	}
+
+	function removeEmptyItems() {
+		const emptyItems = document.querySelectorAll('.redux-home-container #content:empty');
+		emptyItems.forEach(item => {
+			item.parentNode.remove();
+		});
 	}
 
 	function addSpinner() {
@@ -930,35 +931,15 @@ function fixHome() {
 	}
 }
 
-function addDislikesContainer() {
-	let interval = setInterval(() => {
-		const existingContainer = document.querySelector('#info #segmented-dislike-button span');
-		if (existingContainer) return;
-		const likesDivCloned = document.querySelector('#info #segmented-like-button .cbox').cloneNode(true);
-		likesDivCloned.querySelector('span').innerText = '';
-		const dislikesButton = document.querySelector('#info #segmented-dislike-button button');
-		dislikesButton.classList.remove('yt-spec-button-shape-next--icon-button');
-		dislikesButton.classList.add('yt-spec-button-shape-next--icon-leading');
-		const lastButtonNode = dislikesButton.childNodes[dislikesButton.childNodes.length - 1];
-		dislikesButton.insertBefore(likesDivCloned, lastButtonNode);
-	}, 100);
-
-	setTimeout(() => {
-		if (interval) {
-			clearInterval(interval);
-			interval = undefined;
-		}
-	}, 5000);
-}
-
 function formatNumber(number) {
-	let likes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button span');
+	let likesButton = document.querySelector('#above-the-fold #segmented-like-button button') || ocument.querySelector('#above-the-fold like-button-view-model button') ;
+	let likes = likesButton.getAttribute('aria-label')?.match(/(?=\d).*(?<=\d)/g) ? likesButton.getAttribute('aria-label').match(/(?=\d).*(?<=\d)/g)[0] : '';
 	let views = document.querySelector('#count.ytd-video-primary-info-renderer');
 	let separator = ' ';
 
-	if (views.innerText.includes('.') || likes.innerText.includes('.')) {
+	if (views.innerText.includes('.') || likes.includes('.')) {
 		separator = '.';
-	} else if (views.innerText.includes(',') || likes.innerText.includes(',')) {
+	} else if (views.innerText.includes(',') || likes.includes(',')) {
 		separator = ',';
 	}
 
@@ -966,7 +947,6 @@ function formatNumber(number) {
 }
 
 function updateDislikes() {
-	let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span');
 	let buttonsContainer = document.querySelector('#top-level-buttons-computed');
 	let observerConfig = {
 		childList: true
@@ -976,41 +956,38 @@ function updateDislikes() {
 
 	update();
 
-	//if (reduxSettings.showRawValues) { //not getting rounder values anymore, refactor rearranging to allow node cloning in order to properly fix
-	let checkIfChanged = setInterval(() => {
-		let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span'); 
-		if (!dislikesSource) return;
-		let dislikes = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span');
-		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
-		if (dislikes) {
-			dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));
-		}
-	}, 20);
-	setTimeout(() => {
-		if (checkIfChanged) {
-			clearInterval(checkIfChanged);
-		}
-	}, 5000);
-	//}
+	if (reduxSettings.showRawValues) {
+		let checkIfChanged = setInterval(() => {
+			let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span'); 
+			if (!dislikesSource) return;
+			
+			let dislikes = document.querySelector('#above-the-fold #segmented-dislike-button span');
+			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+			
+			if (dislikes) {
+				dislikes.innerText = formatNumber(dislikesCount.replace(/[,.\s]/g, ''));
+			}
+		}, 20);
+		setTimeout(() => {
+			if (checkIfChanged) {
+				clearInterval(checkIfChanged);
+			}
+		}, 5000);
+	}
 
 	function update() {
-		let likesButtonWithAria = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button button');
+		let likesButtonWithAria = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-like-button button') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed like-button-view-model button');
 		if (!likesButtonWithAria.getAttribute('aria-label')) return; //gets likes value from aria label as it's the same with or without precise values
+		if (!parseInt(likesButtonWithAria.getAttribute('aria-label').replace(/[,.\s]/g, '').match(/\d+/))) return;
+
 		let likesCount = parseInt(likesButtonWithAria.getAttribute('aria-label').replace(/[,.\s]/g, '').match(/\d+/)[0]);
+		let dislikesSource = document.querySelector('.ryd-tooltip:last-of-type #tooltip');
+		let dislikesCount = '';
 
-		let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip');
-		let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
-		dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
-		let dislikesButtonWithAria = document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button button');
-
-		if (!dislikesButtonWithAria.hasAttribute('initial-dislikes')) {
-			dislikesButtonWithAria.setAttribute('initial-dislikes', dislikesCount);
-			dislikesButtonWithAria.addEventListener('click', function() {
-				if (!this.querySelector('.cbox')) {
-					addDislikesContainer();
-					updateDislikes();
-				}
-			});
+		if (dislikesSource)
+		{
+			dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
+			dislikesCount = dislikesCount.replace(/[,.\s]/g, '');
 		}
 
 		updateLikesBar(likesCount, dislikesCount);
@@ -1018,7 +995,7 @@ function updateDislikes() {
 }
 
 function updateLikesBar(likesCount, dislikesCount) {
-	let likeBar = document.querySelector('#like-bar.ytd-sentiment-bar-renderer');
+	let likeBar = document.querySelector('#above-the-fold #like-bar.ytd-sentiment-bar-renderer');
 	let likes = parseInt(likesCount);
 	let dislikes = parseInt(parseFloat(dislikesCount.toString().replace(/\s+/g, '')).toFixed(0));
 	likeBar.style.width = (likes / (likes + dislikes)) * 100 + '%';
@@ -1191,11 +1168,10 @@ function main() {
 		waitForElement('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items ytd-continuation-item-renderer', 10, () => { startObservingScrolling(INFINITE_SCROLLING_MODE.Related); });
 	}
 	if (reduxSettings.showRawValues && pageLocation === PAGE_LOCATION.Video && !flags.likesTracked) {
-		waitForElement('#above-the-fold #segmented-like-button button[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
+		waitForElement('#above-the-fold #segmented-like-button button[aria-label]:not([aria-label=""]), #above-the-fold like-button-view-model button[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
 	if (reduxSettings.compatibleDislikesRe && pageLocation === PAGE_LOCATION.Video) {
-		const rydTooltipSelector = reduxSettings.rearrangeInfo2 ? '#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip ': '.ryd-tooltip #tooltip';
-		waitForElement(rydTooltipSelector, 10, updateDislikes);
+		waitForElement('.ryd-tooltip #tooltip', 10, updateDislikes);
 	}
 	if (pageLocation === PAGE_LOCATION.Trending || pageLocation === PAGE_LOCATION.Explore) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);
@@ -1204,7 +1180,7 @@ function main() {
 		preventScrolling();
 	}
 	if (reduxSettings.playlistsFirst && pageLocation === PAGE_LOCATION.Home) {
-		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-thumbnail-overlay-bottom-panel-renderer', 10, sortPlaylists);
+		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer icon-shape:not(:empty)', 10, sortPlaylists);
 	}
 	if (reduxSettings.trimSubs && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#reduxSubDiv > #owner-sub-count', 10, trimStrings);

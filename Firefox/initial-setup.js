@@ -613,7 +613,7 @@ function addCustomStyles() {
 		ytd-guide-entry-renderer[active] .title.ytd-guide-entry-renderer {
 			color: white !important;
 		}
-		ytd-rich-section-renderer {
+		ytd-rich-section-renderer:not(:nth-child(1)) {
 			display:none !important;
 		}
 		[page-subtype="channels"] ytd-two-column-browse-results-renderer .flex-container.ytd-compact-station-renderer {
@@ -1108,7 +1108,8 @@ function addCustomStyles() {
 		#above-the-fold #actions-inner #top-level-buttons-computed {
 			justify-content: space-between;
 		}
-		#above-the-fold ytd-segmented-like-dislike-button-renderer {
+		#above-the-fold ytd-segmented-like-dislike-button-renderer,
+		#above-the-fold segmented-like-dislike-button-view-model {
 			order: 99;
 			margin-left: auto;
 		}
@@ -1454,7 +1455,8 @@ function addCustomStyles() {
 			filter: invert(1);
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon,
-		#segmented-like-button yt-icon {
+		#segmented-like-button yt-icon,
+		like-button-view-model yt-icon {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
@@ -1475,7 +1477,8 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
-		#segmented-like-button button[aria-pressed="true"] yt-icon {
+		#segmented-like-button button[aria-pressed="true"] yt-icon,
+		like-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1512,10 +1515,12 @@ function addCustomStyles() {
 		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg,
 		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon > svg,
-		#segmented-like-button button[aria-pressed="true"] yt-icon {
+		#segmented-like-button button[aria-pressed="true"] yt-icon,
+		like-button-view-model button[aria-pressed="true"] yt-icon {
 			fill: rgb(0 136 29) !important;
 		}
-		#segmented-like-button button[aria-pressed="true"] yt-icon yt-animated-icon svg {
+		#segmented-like-button button[aria-pressed="true"] yt-icon yt-animated-icon svg,
+		like-button-view-model button[aria-pressed="true"] yt-icon yt-animated-icon svg {
 			filter: invert(19%) sepia(98%) saturate(4292%) hue-rotate(143deg) brightness(98%) contrast(103%);
 		}
 		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:first-of-type > a yt-formatted-string {
@@ -1535,7 +1540,8 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
-		#segmented-like-button button[aria-pressed="true"] yt-icon {
+		#segmented-like-button button[aria-pressed="true"] yt-icon,
+		like-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed-old.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1770,12 +1776,14 @@ function addCustomStyles() {
 			d: path("M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z") !important;
 			fill: #909090;
 		}
-		#segmented-like-button button[aria-pressed="false"] ytd-lottie-player {
+		#segmented-like-button button[aria-pressed="false"] ytd-lottie-player,
+		like-button-view-model button[aria-pressed="false"] ytd-lottie-player {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 		}
-		#segmented-like-button button[aria-pressed="false"] lottie-component {
+		#segmented-like-button button[aria-pressed="false"] lottie-component,
+		like-button-view-model button[aria-pressed="false"] lottie-component {
 			content: url('${browser.runtime.getURL('/images/like-default-filled.svg')}') !important;
 			filter: invert(62%) sepia(0%) saturate(655%) hue-rotate(171deg) brightness(92%) contrast(85%);
 		}
