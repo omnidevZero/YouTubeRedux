@@ -1157,7 +1157,7 @@ function main() {
 	}
 
 	if (reduxSettings.rearrangeInfo2 && pageLocation === PAGE_LOCATION.Video && !flags.isRearranged) {
-		waitForElement('#above-the-fold #top-level-buttons-computed > ytd-button-renderer', 10, rearrangeInfo);
+		waitForElement('#above-the-fold #top-level-buttons-computed > *', 10, rearrangeInfo);
 	}
 	if (reduxSettings.smallPlayer && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('ytd-watch-flexy #movie_player', 10, recalculateVideoSize);

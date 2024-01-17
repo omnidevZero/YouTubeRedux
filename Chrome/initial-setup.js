@@ -76,6 +76,7 @@ const defaultSettings = {
 	"hideChaptersInDescription": true,
 	"hideMusicInDescription": false,
 	"hideHeatmap": false,
+	"hideSurveys": true,
 	"ignoreAmbientAdjustment": false,
 	"addSortByOldestVideos": true
 };
@@ -506,6 +507,10 @@ function addCustomStyles() {
 		#primary #info-rows #info-row-container > yt-formatted-string {
 			font-size: 1.2rem;
 		}
+		like-button-view-model button::after {
+			display: none !important;
+		}
+
 		/*EXTRA LAYOUT 2 - HOME*/
 		tp-yt-app-drawer#guide[position="left"] {
 			border-right: 1px solid #e8e8e8;
@@ -1071,9 +1076,13 @@ function addCustomStyles() {
 			margin: 0;
 			padding: 0;
 		}
-		#above-the-fold #top-row yt-icon {
+		#above-the-fold #top-row yt-icon,
+		segmented-like-dislike-button-view-model lottie-component {
 			width: 17px !important;
 			height: 17px !important;
+		}
+		segmented-like-dislike-button-view-model ytd-lottie-player {
+			position: unset !important;
 		}
 		#above-the-fold #top-row button > div {
 			display: flex;
@@ -1475,7 +1484,8 @@ function addCustomStyles() {
 			filter: contrast(1);
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon,
-		#segmented-dislike-button yt-icon {
+		#segmented-dislike-button yt-icon,
+		dislike-button-view-model yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
@@ -1490,7 +1500,8 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
-		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
+		#segmented-dislike-button button[aria-pressed="true"] yt-icon,
+		dislike-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1540,7 +1551,8 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
-		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
+		#segmented-dislike-button button[aria-pressed="true"] yt-icon,
+		dislike-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed-old.png')}') !important;
 			filter: contrast(1);
 		}
@@ -2598,7 +2610,8 @@ function addCustomStyles() {
 		hideShorts: `
 		#endpoint[title="Shorts"],
 		ytd-search ytd-reel-shelf-renderer,
-		#related ytd-reel-shelf-renderer {
+		#related ytd-reel-shelf-renderer,
+		[slot="extra-content"] ytd-reel-shelf-renderer {
 			display: none !important;
 		}
 		`,
@@ -2619,6 +2632,11 @@ function addCustomStyles() {
 		`,
 		hideHeatmap: `
 		.ytp-heat-map-chapter {
+			display: none !important;
+		}
+		`,
+		hideSurveys: `
+		#attached-survey {
 			display: none !important;
 		}
 		`
