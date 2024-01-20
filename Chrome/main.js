@@ -625,7 +625,7 @@ function preventScrolling() {
 
 function sortPlaylists() {
 	const baseTimeout = 250;
-	const playlistsSelector = reduxSettings.fixHomepage ? '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-item-renderer ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer' : '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-grid-row ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer';
+	const playlistsSelector = '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-grid-row ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer';
 
 	setTimeout(() => {
 		let playlistItems = document.querySelectorAll(playlistsSelector);
@@ -874,63 +874,6 @@ function expandSubs() {
 	expander.click();
 }
 
-function fixHome() {
-	if (!!document.querySelector('.redux-home-container')) return;
-	let itemIds = [];
-	let contents = document.querySelector('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container)');
-	let contentsParent = document.querySelector('ytd-rich-grid-renderer');
-	let homeReduxDiv = document.createElement('div');
-	homeReduxDiv.style = 'transition-duration: 0.25s; opacity:0';
-	homeReduxDiv.id = "contents";
-	homeReduxDiv.className += 'redux-home-container style-scope ytd-rich-grid-renderer';
-	contentsParent.insertBefore(homeReduxDiv, contents);
-
-	setTimeout(() => {
-		addNewItems();
-		homeReduxDiv.style.opacity = '1';
-	}, 250);
-
-	let observerConfig = {
-		childList: true,
-		subtree: true
-	};
-	let observerGridItems = new MutationObserver(addNewItems);
-	observerGridItems.observe(contents, observerConfig);
-
-	function addNewItems() {
-		if (!!document.querySelector('.redux-home-spinner')) document.querySelector('.redux-home-spinner').remove();
-		let rowItems = document.querySelectorAll('[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) > ytd-rich-grid-row ytd-rich-item-renderer');
-
-		for (const item of rowItems) {
-			let currentId = item.querySelector('a#thumbnail') ? item.querySelector('a#thumbnail').href : 'MISSING';
-			if (!itemIds.includes(currentId)) {
-				itemIds.push(currentId);
-				homeReduxDiv.append(item);
-			} else {
-				item.style.display = 'none';
-			}
-		}
-
-		removeEmptyItems();
-		addSpinner();
-	}
-
-	function removeEmptyItems() {
-		const emptyItems = document.querySelectorAll('.redux-home-container #content:empty');
-		emptyItems.forEach(item => {
-			item.parentNode.remove();
-		});
-	}
-
-	function addSpinner() {
-		let spinner = document.createElement('ytd-continuation-item-renderer');
-		spinner.innerHTML = '<div id="spinnerContainer" class="active  style-scope tp-yt-paper-spinner"><div class="spinner-layer layer-1 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div><div class="spinner-layer layer-2 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div><div class="spinner-layer layer-3 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div><div class="spinner-layer layer-4 style-scope tp-yt-paper-spinner"><div class="circle-clipper left style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div><div class="circle-clipper right style-scope tp-yt-paper-spinner"><div class="circle style-scope tp-yt-paper-spinner"></div></div></div></div>';
-		spinner.style.width = '100%';
-		spinner.classList.add('style-scope', 'ytd-rich-grid-renderer', 'redux-home-spinner');
-		homeReduxDiv.append(spinner);
-	}
-}
-
 function formatNumber(number) {
 	let likesButton = document.querySelector('#above-the-fold #segmented-like-button button') || ocument.querySelector('#above-the-fold like-button-view-model button') ;
 	let likes = likesButton.getAttribute('aria-label')?.match(/(?=\d).*(?<=\d)/g) ? likesButton.getAttribute('aria-label').match(/(?=\d).*(?<=\d)/g)[0] : '';
@@ -1024,25 +967,6 @@ function redirectShorts() {
 	const currentLocation = window.location.href;
 	const redirectLocation = currentLocation.replace('/shorts/', '/watch?v=');
 	window.location.href = redirectLocation;
-}
-
-function addClearHomepageEvent(selector, clearPlaylists) {
-	const elements = document.querySelectorAll(selector);
-	for (const element of elements) {
-		element.addEventListener('click', () => {
-			const reduxHomeContainerItems = document.querySelectorAll('.redux-home-container > ytd-rich-item-renderer');
-			const reduxPlaylistContainerItems = document.querySelectorAll('.redux-playlist > ytd-rich-item-renderer');
-			const containerItems = clearPlaylists ? [...reduxHomeContainerItems, ...reduxPlaylistContainerItems] : reduxHomeContainerItems;
-			for (const item of containerItems) {
-				item.style.opacity = '0';
-			}
-			setTimeout(() => {			
-				for (const item of containerItems) {
-					item.remove();
-				}
-			}, 1000);
-		});
-	}
 }
 
 function adjustAmbient() {
@@ -1212,9 +1136,6 @@ function main() {
 	if (reduxSettings.autoExpandSubs) {
 		waitForElement('#items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandSubs);
 	}
-	if (reduxSettings.fixHomepage && pageLocation === PAGE_LOCATION.Home) {
-		waitForElement('ytd-rich-grid-row', 10, fixHome);
-	}
 	if (reduxSettings.hideShorts && pageLocation === PAGE_LOCATION.SearchResults) {
 		waitForElement('#contents.ytd-section-list-renderer', 10, hideShortsInSearch);
 	}
@@ -1239,20 +1160,6 @@ function main() {
 		main();
 	} catch (error) {
 		log(error, true);
-	}
-	
-	if (reduxSettings.fixHomepage) {
-		const logoSelector = 'ytd-topbar-logo-renderer#logo';
-		waitForElement(logoSelector, 10, () => {
-			addClearHomepageEvent(logoSelector);
-		});
-
-		if (pageLocation === PAGE_LOCATION.Home) {
-			const filtersSelector = '[page-subtype="home"] #chips yt-chip-cloud-chip-renderer';
-			waitForElement(filtersSelector, 10, () => {
-				addClearHomepageEvent(filtersSelector, true);
-			}, 30000);
-		}
 	}
 
 	YTReduxURLPath = location.pathname;

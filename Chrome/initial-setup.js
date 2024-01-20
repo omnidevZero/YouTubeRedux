@@ -68,7 +68,6 @@ const defaultSettings = {
 	"disableVideoPreview": false,
 	"autoExpandPlaylists": false,
 	"autoExpandSubs": false,
-	"fixHomepage": true,
 	"compatibleDislikesRe": true,
 	"hideDislikes": false,
 	"hideDownload": false,
@@ -2578,14 +2577,6 @@ function addCustomStyles() {
 		autoExpandSubs: `
 		#items > ytd-guide-collapsible-entry-renderer #collapser-item {
 			display: none !important;
-		}
-		`,
-		fixHomepage: `
-		[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist):not(.redux-home-container) {
-			opacity: 0 !important;
-		}
-		.redux-home-container ytd-rich-item-renderer {
-			transition-duration: 0.25s;
 		}
 		`,
 		compatibleDislikesRe: `

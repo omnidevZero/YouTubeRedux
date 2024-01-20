@@ -491,6 +491,10 @@ yt-img-shadow.ytd-channel-list-sub-menu-avatar-renderer {
 [page-subtype="home"] ytd-rich-grid-renderer {
     --ytd-rich-grid-items-per-row: 6 !important;
 }
+[page-subtype="home"] #contents > ytd-rich-grid-row,
+[page-subtype="home"] #contents > ytd-rich-grid-row > #contents {
+    display: contents !important;
+}
 html[dark] #show-more-related input, html[dark] #show-more-comments input {
     border-top: 1px solid var(--yt-spec-10-percent-layer) !important;
 }
@@ -512,3 +516,8 @@ html[dark] ytd-multi-page-menu-renderer {
 ytd-multi-page-menu-renderer {
     border-top: 1px solid var(--redux-spec-10-percent-layer-inverted) !important;
 }
+.ghost-grid.ytd-ghost-grid-renderer {
+    margin: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
