@@ -72,7 +72,9 @@ html:not([dark]) #video-title.ytd-rich-grid-media {
     font-size: min(11px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 }
 ytd-rich-item-renderer {
-    margin-bottom: 20px !important;
+    margin-bottom: 15px !important;
+    margin-left: calc(var(--ytd-rich-grid-item-margin)/2) !important;
+    margin-right: calc(var(--ytd-rich-grid-item-margin)/2) !important;
 }
 ytd-guide-section-renderer {
     --paper-item-min-height: 30px !important;
@@ -159,10 +161,6 @@ yt-copy-link-renderer[rounded-container] #bar.yt-copy-link-renderer,
 }
 #search-icon-legacy {
     border-radius: 0 2px 2px 0 !important;
-}
-[redux-last-top],[redux-last-top-stream] {
-    display: inline-block;
-    vertical-align: top;
 }
 
 /* turned off due to max() not being supported in old browsers

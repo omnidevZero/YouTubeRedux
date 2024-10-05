@@ -76,6 +76,8 @@ const defaultSettings = {
 	"hideMusicInDescription": false,
 	"hideHeatmap": false,
 	"hideSurveys": true,
+	"hideHomeChannelAvatars": true,
+	"hideMixTopStack": true,
 	"ignoreAmbientAdjustment": false,
 	"addSortByOldestVideos": true
 };
@@ -202,6 +204,18 @@ function addCustomStyles() {
 		}
 		#playlist > #container {
 		margin-right: -12px !important;
+		}
+		/* Close button */
+		#secondary ytd-playlist-panel-renderer #header-top-row button svg > path {
+			fill: #606060;
+		}
+		/* Misc button */
+		#secondary ytd-playlist-panel-renderer #end-actions button svg > path {
+			fill: #606060;
+		}
+		/* Playlist shuffle/repeat buttons */
+		#secondary ytd-playlist-panel-renderer #playlist-action-menu svg > path {
+			fill: #606060;
 		}
 		/* Playlist shuffle active */
 		path[d="M18.51,13.29l4.21,4.21l-4.21,4.21l-1.41-1.41l1.8-1.8c-2.95-0.03-5.73-1.32-7.66-3.55l1.51-1.31 c1.54,1.79,3.77,2.82,6.13,2.85l-1.79-1.79L18.51,13.29z M18.88,7.51l-1.78,1.78l1.41,1.41l4.21-4.21l-4.21-4.21l-1.41,1.41l1.8,1.8 c-3.72,0.04-7.12,2.07-8.9,5.34l-0.73,1.34C7.81,14.85,5.03,17,2,17v2c3.76,0,7.21-2.55,9.01-5.85l0.73-1.34 C13.17,9.19,15.9,7.55,18.88,7.51z M8.21,10.31l1.5-1.32C7.77,6.77,4.95,5,2,5v2C4.38,7,6.64,8.53,8.21,10.31z"] {
@@ -583,6 +597,7 @@ function addCustomStyles() {
 		}
 		#contents.ytd-rich-grid-renderer {
 			margin-top: 12px !important;
+			padding-left: 32px !important;
 		}
 		html[dark] #contents.ytd-rich-grid-renderer, html[dark] #contents.ytd-section-list-renderer {
 			background: #222222 !important;
@@ -1107,6 +1122,9 @@ function addCustomStyles() {
 		}
 		#above-the-fold #actions-inner #top-level-buttons-computed {
 			justify-content: space-between;
+			/* FIXES BUTTONS ORDER BUT BREAKS RYD
+			display: contents;
+			*/
 		}
 		#above-the-fold ytd-segmented-like-dislike-button-renderer,
 		#above-the-fold segmented-like-dislike-button-view-model {
@@ -1141,7 +1159,7 @@ function addCustomStyles() {
 		}
 		/* misc button */
 		#above-the-fold #button-shape {
-			order: 2;
+			order: 1;
 		}
 		/* reverse the order within main buttons */
 		#above-the-fold #flexible-item-buttons > *:nth-child(1) {
@@ -2629,6 +2647,20 @@ function addCustomStyles() {
 		hideSurveys: `
 		#attached-survey {
 			display: none !important;
+		}
+		`,
+		hideHomeChannelAvatars: `
+		#details.ytd-rich-grid-media > #avatar-container {
+			display: none !important;
+		}
+		`,
+		hideMixTopStack: `
+		yt-collections-stack *[class*='collections-stack'] {
+			display: none !important;
+		}
+		ytd-compact-radio-renderer[collections] .modern-collection-parent.ytd-compact-radio-renderer,
+		ytd-compact-radio-renderer[collections] .details.ytd-compact-radio-renderer {
+			margin-top: 0px !important;
 		}
 		`
 	};
