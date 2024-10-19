@@ -14,7 +14,7 @@ const defaultSettings = {
 	"classicLikesColors": false, 
 	"autoConfirm": true, 
 	"disableInfiniteScrolling": false, 
-	"blackBars": false, 
+	"blackBars": true, 
 	"rearrangeInfo2": true, 
 	"classicLogoChoice": 2017, 
 	"filterMainRe": false, 

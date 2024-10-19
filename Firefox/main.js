@@ -167,21 +167,7 @@ function alignItems() {
 }
 
 function changeLikesCounter() {
-	const buttonsContainer = document.querySelector('#above-the-fold ytd-menu-renderer');
-
-	let observerConfig = {
-		childList: true,
-		subtree: true
-	};
-	let observerLikes = new MutationObserver(fixLikes);
-	observerLikes.observe(buttonsContainer, observerConfig);
-
-	fixLikes();
-	flags.likesTracked = true;
-
-	function fixLikes() {
-		observerLikes.disconnect();
-
+	const fixLikes = () => {
 		let likesButton = document.querySelector('#above-the-fold #segmented-like-button button, #above-the-fold like-button-view-model button');
 		if (likesButton) {
 			let likesText = likesButton.querySelector('[class*="text-content"]');
@@ -191,9 +177,19 @@ function changeLikesCounter() {
 				likesText.innerText = rawLikes;
 			}
 		}
+	};
 
-		observerLikes.observe(buttonsContainer, observerConfig);
-	}
+	fixLikes();
+
+	const loop = setInterval(() => {
+		fixLikes();
+	}, 20);
+
+	setTimeout(() => {
+		if (loop != undefined) {
+			clearInterval(loop);
+		}
+	}, 10000);
 }
 
 function isTheater() {
@@ -1069,7 +1065,7 @@ function main() {
 	if (reduxSettings.disableInfiniteScrolling && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items ytd-continuation-item-renderer', 10, () => { startObservingScrolling(INFINITE_SCROLLING_MODE.Related); });
 	}
-	if (reduxSettings.showRawValues && pageLocation === PAGE_LOCATION.Video && !flags.likesTracked) {
+	if (reduxSettings.showRawValues && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#above-the-fold #segmented-like-button button[aria-label]:not([aria-label=""]), #above-the-fold like-button-view-model button[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
 	if (reduxSettings.compatibleDislikesRe && pageLocation === PAGE_LOCATION.Video) {
@@ -1172,7 +1168,7 @@ function main() {
 			}
 
 			if (reduxSettings.compatibleDislikesRe) {
-				const leftoverRYDTooltips = document.querySelectorAll('ytd-video-primary-info-renderer > .ryd-tooltip');
+				const leftoverRYDTooltips = document.querySelectorAll('.ryd-tooltip');
 				if (leftoverRYDTooltips.length > 0) {
 					leftoverRYDTooltips.forEach(element => {
 						element.remove();

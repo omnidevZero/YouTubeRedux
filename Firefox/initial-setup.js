@@ -22,7 +22,7 @@ const defaultSettings = {
 	"classicLikesColors": false, 
 	"autoConfirm": true, 
 	"disableInfiniteScrolling": false, 
-	"blackBars": false, 
+	"blackBars": true, 
 	"rearrangeInfo2": true, 
 	"classicLogoChoice": 2017, 
 	"filterMainRe": false, 
@@ -84,6 +84,8 @@ const defaultSettings = {
 	"hideMusicInDescription": false,
 	"hideHeatmap": false,
 	"hideSurveys": true,
+	"hideHomeChannelAvatars": true,
+	"hideMixTopStack": true,
 	"ignoreAmbientAdjustment": false,
 	"addSortByOldestVideos": true
 };
