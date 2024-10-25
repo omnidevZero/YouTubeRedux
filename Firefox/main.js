@@ -90,7 +90,7 @@ function changeGridWidth() {
 	}
 }
 
-function waitForElement(selector, interval, callback, timeout = 10 * 60 * 1000) {
+function waitForElement(selector, interval, callback, timeout = 1 * 60 * 1000) {
 	let wait = setInterval(() => {
 		let element = document.querySelector(selector);
 
@@ -467,10 +467,12 @@ function rearrangeInfo() {
 	// video stats div
 	const reduxViewsLikesContainer = document.createElement('div');
 	reduxViewsLikesContainer.id = 'redux-video-stats';
+
 	const reduxViewsCount = document.createElement('div');
 	reduxViewsCount.id = 'redux-views-count';
-	reduxViewsCount.innerText = views;
+	reduxViewsCount.innerText = views.trim();
 	reduxViewsCount.setAttribute('redux-url-check', window.location.search);
+
 	reduxViewsLikesContainer.append(reduxViewsCount);
 	const likeBar = document.createElement('div');
 	likeBar.innerHTML = `<div id="container" class="style-scope ytd-sentiment-bar-renderer redux-like-bar-container">
@@ -512,8 +514,9 @@ function addMissingVideoPageElements() {
 		const views = viewsAndDate.innerText.split('•')[0];
 		const date = viewsAndDate.innerText.split('•')[1];
 		const reduxViewsLikesContainer = document.querySelector('#redux-video-stats');
-		reduxViewsLikesContainer.setAttribute('redux-url-check', window.location.search);
-		reduxViewsLikesContainer.innerText = views;
+		const reduxViewsCount = document.querySelector("#redux-views-count");
+		reduxViewsCount.setAttribute('redux-url-check', window.location.search);
+		reduxViewsCount.innerText = views.trim();
 
 		const existingMovedDate = document.querySelector('#redux-moved-date');
 		if (existingMovedDate && existingMovedDate.innerText != date) {
@@ -656,7 +659,7 @@ function trimStrings() {
 
 	let checkForChannelChange = setInterval(() => {
 		let subString = document.querySelector('#reduxSubDiv > #owner-sub-count') || document.querySelector('#info #owner-sub-count');
-		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]') || document.querySelector('#top-row ytd-video-owner-renderer > a[href]');
+		let channelElement = document.querySelector('#upload-info a[href]');
 		if (subString.getAttribute('redux-sub-check') !== channelElement.href) {
 			trimSubs();
 			clearInterval(checkForChannelChange);
@@ -671,7 +674,7 @@ function trimStrings() {
 
 	function trimSubs() {
 		let subString = document.querySelector('#reduxSubDiv > #owner-sub-count') || document.querySelector('#info #owner-sub-count');
-		let channelElement = document.querySelector('#info ytd-video-owner-renderer > a[href]') || document.querySelector('#top-row ytd-video-owner-renderer > a[href]');
+		let channelElement = document.querySelector('#upload-info a[href]');
 		subString.setAttribute('redux-sub-check', channelElement.href);
 
 		let existingSpan = document.querySelector('#redux-trim-span');
@@ -694,26 +697,26 @@ function trimStrings() {
 }
 
 function trimViews() {
-	let views = document.querySelector('span.view-count:not(#redux-view-count)');
-	let reduxSpan = document.querySelector('#redux-view-count');
-	if (reduxSpan) return;
+	let views = document.querySelector('#redux-views-count') || document.querySelector('span.view-count:not(#redux-views-count-trimmed)');
+	let reduxViewsTrimmed = document.querySelector('#redux-views-count-trimmed');
+	if (reduxViewsTrimmed) return;
 	views.style.display = 'none';
-	let container = document.querySelector('#count ytd-video-view-count-renderer');
-	reduxSpan = document.createElement('span');
-	reduxSpan.id = 'redux-view-count';
-	reduxSpan.classList.add('view-count', 'style-scope', 'ytd-video-view-count-renderer');
-	container.prepend(reduxSpan);
+	let container = document.querySelector('#redux-video-stats') || document.querySelector('#count ytd-video-view-count-renderer');
+	reduxViewsTrimmed = document.createElement('span');
+	reduxViewsTrimmed.id = 'redux-views-count-trimmed';
+	reduxViewsTrimmed.classList.add('view-count', 'style-scope', 'ytd-video-view-count-renderer');
+	container.prepend(reduxViewsTrimmed);
 
 	const modifyViews = () => {
-		let views = document.querySelector('span.view-count:not(#redux-view-count)');
-		let reduxSpan = document.querySelector('#redux-view-count');
-		reduxSpan.textContent = views.textContent.replace(/[^,.\d\s]/g,'').trim();
+		let views = document.querySelector('#redux-views-count') || document.querySelector('span.view-count:not(#redux-views-count-trimmed)');
+		let reduxViewsTrimmed = document.querySelector('#redux-views-count-trimmed');
+		reduxViewsTrimmed.textContent = views.textContent.replace(/[^,.\d\s]/g,'').trim();
 	};
 
 	modifyViews();
 
 	let viewsObserver = new MutationObserver(modifyViews);
-	viewsObserver.observe(views, {characterData: true, subtree: true});
+	viewsObserver.observe(views, {attributes: true});
 }
 
 function alternativeStrings() {
@@ -1069,7 +1072,7 @@ function main() {
 		waitForElement('#above-the-fold #segmented-like-button button[aria-label]:not([aria-label=""]), #above-the-fold like-button-view-model button[aria-label]:not([aria-label=""])', 10, changeLikesCounter);
 	}
 	if (reduxSettings.compatibleDislikesRe && pageLocation === PAGE_LOCATION.Video) {
-		waitForElement('.ryd-tooltip #tooltip', 10, updateDislikes);
+		waitForElement('.ryd-tooltip #tooltip', 10, updateDislikes, 20 * 1000);
 	}
 	if (pageLocation === PAGE_LOCATION.Trending || pageLocation === PAGE_LOCATION.Explore) {
 		waitForElement('#page-manager ytd-browse #primary > ytd-section-list-renderer > #continuations', 10, splitTrendingLoop);

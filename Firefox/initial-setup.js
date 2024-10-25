@@ -37,7 +37,8 @@ const defaultSettings = {
 	"squareSubs": true,
 	"hideHomeAvatars": false, 
 	"noHomeScalingRe": true, 
-	"squareSearch": false, 
+	"squareSearch": true, 
+	"squareComments": true,
 	"extraSidebarStyles": true, 
 	"altVideoLayout": false, 
 	"altVideoLayoutExtra": false, 
@@ -531,6 +532,19 @@ function addCustomStyles() {
 		like-button-view-model button::after {
 			display: none !important;
 		}
+		ytd-toggle-button-renderer button:hover,
+		#reply-button-end button:hover,
+		#more-replies button:hover,
+		#less-replies button:hover,
+		#right-arrow-button button:hover,
+		#left-arrow-button button:hover,
+		#voice-search-button button:hover {
+			background: none !important;
+			filter: brightness(0.8);
+		}
+		.yt-spec-touch-feedback-shape {
+			display: none !important;
+		}
 
 		/*EXTRA LAYOUT 2 - HOME*/
 		tp-yt-app-drawer#guide[position="left"] {
@@ -733,11 +747,12 @@ function addCustomStyles() {
 		#sponsor-button yt-button-shape > button, 
 		#analytics-button yt-button-shape > button,
 		[page-subtype="channels"] #edit-buttons tp-yt-paper-button,
-		[page-subtype="channels"] #edit-buttons yt-button-shape > button {
+		[page-subtype="channels"] #edit-buttons yt-button-shape > button,
+		yt-subscribe-button-view-model > yt-animated-action button {
 			margin: 0;
-			padding: 2px 8px 2px 8px;
+			padding: 2px 8px 2px 8px !important;
 			text-transform: none;
-			font-weight: normal;
+			font-weight: normal !important;
 			font-size: 12px;
 			max-height: 24px;
 			height: 24px;
@@ -754,24 +769,27 @@ function addCustomStyles() {
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button) {
-			background-color: #f00;
+		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		yt-subscribe-button-view-model button:not(.yt-spec-button-shape-next--tonal) {
+			background-color: #f00 !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover {
-			background-color: #d90a17;
+		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
+		yt-subscribe-button-view-model button:not(.yt-spec-button-shape-next--tonal):hover {
+			background-color: #d90a17 !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before {
+		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
+		yt-subscribe-button-view-model button:not(.yt-spec-button-shape-next--tonal)::before {
 				content: url('${browser.runtime.getURL('/images/sub-icon.png')}');
-				background-size: auto;
-				width: 16px;
-				padding-top: 2px;
-				margin-right: 6px;
+				background-size: auto !important;
+				width: 16px !important;
+				padding-top: 2px !important;
+				margin-right: 6px !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button[subscribed]::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button[subscribed]::before,
@@ -1079,7 +1097,7 @@ function addCustomStyles() {
 			display: flex;
 			flex-direction: column;
 			font-size: 1.8rem !important;
-			transform: translateY(15px);
+			transform: translateY(26px);
 			color: var(--redux-spec-text-secondary);
 		}
 		#redux-views-count {
@@ -1249,6 +1267,9 @@ function addCustomStyles() {
 		#selectionBar.tp-yt-paper-tabs {
 			border-bottom: 2px solid #cc181e !important;
 		}
+		.yt-tab-group-shape-wiz__slider {
+			background-color: #cc181e !important;
+		}
 		`,
 		channelListView: `
 		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items {
@@ -1308,6 +1329,13 @@ function addCustomStyles() {
 		`,
 		squareSearch: `
 		yt-img-shadow.ytd-video-renderer  {
+			border-radius: 0 !important;
+		}
+		`,
+		squareComments: `
+		#author-thumbnail yt-img-shadow,
+		ytd-creator-heart-renderer yt-img-shadow,
+		#creator-thumbnail yt-img-shadow {
 			border-radius: 0 !important;
 		}
 		`,
@@ -1494,7 +1522,8 @@ function addCustomStyles() {
 		ytd-comment-action-buttons-renderer #dislike-button yt-icon:hover {
 			filter: contrast(0.25);
 		}
-		ytd-comment-action-buttons-renderer #like-button yt-icon {
+		ytd-comment-action-buttons-renderer #like-button yt-icon,
+		ytd-toggle-button-renderer#like-button yt-icon {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
@@ -1503,6 +1532,7 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon,
 		#segmented-like-button button[aria-pressed="true"] yt-icon,
 		like-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
@@ -1516,7 +1546,8 @@ function addCustomStyles() {
 			height: 17px !important;
 			width: 17px !important;
 		}
-		ytd-comment-action-buttons-renderer #dislike-button yt-icon {
+		ytd-comment-action-buttons-renderer #dislike-button yt-icon,
+		ytd-toggle-button-renderer#dislike-button yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
@@ -1525,13 +1556,11 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] yt-icon,
 		#segmented-dislike-button button[aria-pressed="true"] yt-icon,
 		dislike-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
-		}
-		#vote-count-middle.ytd-comment-action-buttons-renderer {
-			margin-top: 2px;
 		}
 		`,
 		hideApps: `
@@ -1543,6 +1572,7 @@ function addCustomStyles() {
 		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg,
 		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon > svg,
+		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon > svg,
 		#segmented-like-button button[aria-pressed="true"] yt-icon,
 		like-button-view-model button[aria-pressed="true"] yt-icon {
 			fill: rgb(0 136 29) !important;
@@ -1557,6 +1587,7 @@ function addCustomStyles() {
 		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon > svg,
 		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon > svg,
+		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] yt-icon > svg,
 		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
 			fill: rgb(222 0 17) !important;
 		}
@@ -1568,6 +1599,7 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon,
 		#segmented-like-button button[aria-pressed="true"] yt-icon,
 		like-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed-old.png')}') !important;
@@ -1576,6 +1608,7 @@ function addCustomStyles() {
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] yt-icon,
 		#segmented-dislike-button button[aria-pressed="true"] yt-icon,
 		dislike-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed-old.png')}') !important;
@@ -1627,9 +1660,10 @@ function addCustomStyles() {
 		html[dark] [page-subtype="channels"] #tabs-inner-container {
 			background: #222222 !important;
 		}
-		[page-subtype="channels"] #channel-header-container {
-			padding-left: 10px;
-    		padding-right: 10px;
+		[page-subtype="channels"] #page-header,
+		[page-subtype="channels"] #tabsContainer {
+			padding-left: 10px !important;
+    		padding-right: 10px !important;
 		}
 		`,
 		noPlayerActionAnimations: `
