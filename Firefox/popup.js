@@ -1,17 +1,13 @@
 let minVersion = 53;
-let storage;
+let storage = browser.storage.sync;
 if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
-	if (parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]) >= minVersion) {
-		storage = browser.storage.sync;
-	} else {
+	if (parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]) < minVersion) {
 		storage = browser.storage.local;
 		let warnings = document.querySelectorAll('.browser-warning');
 		warnings.forEach(element => {
 			element.style.display = 'inline';
 		});
 	}
-} else {
-	storage = browser.storage.local;
 }
 let donateButton = document.querySelector('#donate');
 let globalURL;

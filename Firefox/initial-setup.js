@@ -1,10 +1,10 @@
 let minVersion = 53;
 let browserVersion;
-let storage = browser.storage.local;
+let storage = browser.storage.sync;
 if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
 	browserVersion = parseInt(navigator.userAgent.match(/Firefox\/([^\s]+)/)[1]);
-	if (browserVersion >= minVersion) {
-		storage = browser.storage.sync;
+	if (browserVersion < minVersion) {
+		storage = browser.storage.local;
 	}
 }
 let reduxSettings;
@@ -74,6 +74,7 @@ const defaultSettings = {
 	"disableMiniplayer": false,
 	"hideCountryCode": false,
 	"hideCollapsedChat": false,
+	"hideLiveChatReplay": true,
 	"disableVideoPreview": false,
 	"autoExpandPlaylists": false,
 	"autoExpandSubs": false,
@@ -88,7 +89,8 @@ const defaultSettings = {
 	"hideHomeChannelAvatars": true,
 	"hideMixTopStack": true,
 	"ignoreAmbientAdjustment": false,
-	"addSortByOldestVideos": true
+	"addSortByOldestVideos": true,
+	"hideClickAnimations": true
 };
 
 initiate();
@@ -121,6 +123,14 @@ function initiate() {
 
 		logoExtension = reduxSettings.classicLogoChoice === 'XL' ? 'png' : 'svg';
 		addCustomStyles();
+	});
+
+	//display changelog if there was an update
+	storage.get(['queueDisplayChangelog'], function(result) {
+		const queueDisplayChangelog = result.queueDisplayChangelog;
+		if (queueDisplayChangelog) {
+			browser.runtime.sendMessage({ message: "displayChangelog" });
+		}
 	});
 }
 
@@ -575,7 +585,8 @@ function addCustomStyles() {
 			border-top: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		#video-title.ytd-rich-grid-media, 
-		#video-title.yt-simple-endpoint.ytd-grid-video-renderer {
+		#video-title.yt-simple-endpoint.ytd-grid-video-renderer,
+		ytd-rich-item-renderer yt-lockup-metadata-view-model a[href] {
 			font-size: min(13px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 			line-height: 1.3em !important;
 		}
@@ -583,7 +594,8 @@ function addCustomStyles() {
 		[page-subtype="subscriptions"] #text.ytd-channel-name, 
 		[page-subtype="subscriptions"] #metadata-line.ytd-grid-video-renderer, 
 		[page-subtype="channels"] #text.complex-string.ytd-channel-name, 
-		[page-subtype="channels"] #metadata-line.ytd-grid-video-renderer {
+		[page-subtype="channels"] #metadata-line.ytd-grid-video-renderer,
+		yt-lockup-metadata-view-model div > span {
 			font-size: min(11px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 			line-height: 1.3em !important;
 		}
@@ -634,7 +646,8 @@ function addCustomStyles() {
 		#avatar-link.ytd-rich-grid-media {
 			display:none !important;
 		}
-		h3.ytd-rich-grid-media, h3.ytd-grid-video-renderer {
+		h3.ytd-rich-grid-media, h3.ytd-grid-video-renderer,
+		ytd-rich-item-renderer yt-lockup-metadata-view-model a[href] {
 			margin: 4px 0 1px 0 !important;
 		}
 		ytd-guide-entry-renderer[active] {
@@ -858,11 +871,13 @@ function addCustomStyles() {
 		}
 		/* Misc */
 		#search-form.ytd-searchbox,
-		#search-icon-legacy.ytd-searchbox {
+		#search-icon-legacy.ytd-searchbox,
+		yt-searchbox {
 			height: 29px !important;
 			width: 66px !important;
 		}
-		#search-icon-legacy > yt-icon {
+		#search-icon-legacy > yt-icon,
+		yt-searchbox yt-icon {
 			height: 20px !important;
 			width: 20px !important;
 		}
@@ -871,13 +886,16 @@ function addCustomStyles() {
 		}
 		ytd-searchbox[has-focus] #container,
 		#container.ytd-searchbox,
-		body > iframe + div:last-of-type {
+		body > iframe + div:last-of-type,
+		yt-searchbox > .YtSearchboxComponentInputBox {
 			margin-left: 0 !important;
 		}
-		#container.ytd-searchbox {
+		#container.ytd-searchbox,
+		.YtSearchboxComponentInputBox {
 			padding: 0 0 0 6px !important;
 		}
-		ytd-searchbox[has-focus] #search-icon.ytd-searchbox {
+		ytd-searchbox[has-focus] #search-icon.ytd-searchbox,
+		.YtSearchboxComponentInputBoxHasFocus .YtSearchboxComponentInnerSearchIcon {
 			display: none !important;
 		}
 		#container.ytd-masthead,
@@ -887,11 +905,15 @@ function addCustomStyles() {
 		#center.ytd-masthead { 
 			margin-right: auto !important;
 		}
-		ytd-searchbox.ytd-masthead {
+		ytd-searchbox.ytd-masthead,
+		yt-searchbox {
 			margin: 0 0 0 51px !important;
 		}
 		#playlist-actions #top-level-buttons-computed yt-icon-button:not(.style-default-active) path {
 			fill: #909090;
+		}
+		.YtVideoMetadataCarouselViewModelHost {
+			background-color: unset !important;
 		}
 		`,
 		rearrangeInfo2: `
@@ -2644,6 +2666,11 @@ function addCustomStyles() {
 			display: none !important;
 		}
 		`,
+		hideLiveChatReplay: `
+		#bottom-row > #teaser-carousel {
+			display: none !important;
+		}
+		`,
 		disableVideoPreview: `
 		#thumbnail > #mouseover-overlay,
 		ytd-thumbnail #hover-overlays,
@@ -2725,6 +2752,16 @@ function addCustomStyles() {
 		ytd-compact-radio-renderer[collections] .modern-collection-parent.ytd-compact-radio-renderer,
 		ytd-compact-radio-renderer[collections] .details.ytd-compact-radio-renderer {
 			margin-top: 0px !important;
+		}
+		`,
+		hideClickAnimations: `
+		.fill.yt-interaction,
+		.stroke.yt-interaction {
+			opacity: 0 !important;
+			border: unset !important;
+		}
+		paper-ripple {
+			display: none !important;
 		}
 		`
 	};

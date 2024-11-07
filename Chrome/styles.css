@@ -55,8 +55,18 @@ ytd-app[masthead-hidden] {
 ytd-mini-guide-renderer.ytd-app {
     top: var(--overridden-masthead-height,var(--ytd-toolbar-height)) !important;
 }
-html:not([dark]) #video-title.ytd-rich-grid-media {
+html:not([dark]) #video-title.ytd-rich-grid-media,
+html:not([dark]) ytd-rich-item-renderer yt-lockup-metadata-view-model a[href] {
     color: #167ac6;
+}
+yt-lockup-view-model .yt-lockup-view-model-wiz__content-image {
+    padding-bottom: 0 !important;
+}
+.yt-lockup-metadata-view-model-wiz__menu-button {
+    margin-top: 12px;
+}
+yt-content-metadata-view-model > div:first-child {
+    margin-top: 0 !important;
 }
 #video-title.ytd-rich-grid-media {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
@@ -170,7 +180,16 @@ ytp-autonav-endscreen-upnext-thumbnail,
 .ytp-autonav-endscreen-button-container > button,
 .ytp-autonav-endscreen-button-container > a,
 yt-interaction.ytd-guide-entry-renderer,
-yt-chip-cloud-chip-renderer {
+yt-interaction.rounded-large .fill.yt-interaction, 
+yt-interaction.rounded-large .stroke.yt-interaction,
+yt-chip-cloud-chip-renderer,
+yt-playability-error-supported-renderers,
+.YtSearchboxComponentInputBox,
+.YtSearchboxComponentSearchButton,
+yt-thumbnail-view-model,
+yt-page-header-view-model > div,
+.rich-thumbnail.ytd-ghost-grid-renderer,
+.YtPlayerStoryboardStoryboardImageWrapper {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
