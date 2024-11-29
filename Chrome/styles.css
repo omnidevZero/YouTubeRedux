@@ -189,7 +189,10 @@ yt-playability-error-supported-renderers,
 yt-thumbnail-view-model,
 yt-page-header-view-model > div,
 .rich-thumbnail.ytd-ghost-grid-renderer,
-.YtPlayerStoryboardStoryboardImageWrapper {
+.YtPlayerStoryboardStoryboardImageWrapper,
+ytd-universal-watch-card-renderer[rounded] #header,
+ytd-universal-watch-card-renderer[rounded] #hero,
+ytd-button-banner-view-model a {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
@@ -409,10 +412,18 @@ ytd-video-primary-info-renderer > [button-renderer] yt-icon {
     
 /*SEARCH RESULTS STYLES*/
 ytd-item-section-renderer ytd-thumbnail:not([rich-grid-thumbnail]), 
-ytd-item-section-renderer ytd-playlist-thumbnail {
+ytd-item-section-renderer ytd-playlist-thumbnail,
+ytd-item-section-renderer yt-lockup-view-model a {
     max-width: 246px !important;
 }
-html:not([dark]) #video-title.ytd-video-renderer {
+ytd-item-section-renderer yt-lockup-view-model a {
+    justify-content: flex-start !important;
+}
+ytd-item-section-renderer yt-lockup-view-model > div {
+    margin-top: 0px !important;
+}
+html:not([dark]) #video-title.ytd-video-renderer,
+html:not([dark]) ytd-item-section-renderer .yt-lockup-metadata-view-model-wiz__title {
     color:#167ac6 !important;
 }
 html:not([dark]) #video-title.ytd-playlist-renderer {

@@ -1184,6 +1184,7 @@ function addCustomStyles() {
 		}
 		#above-the-fold #flexible-item-buttons > * button,
 		#above-the-fold #top-level-buttons-computed button,
+		#above-the-fold #top-level-buttons-computed button animated-rolling-character,
 		#above-the-fold #button-shape button,
 		ytd-segmented-like-dislike-button-renderer button {
 			background-color: unset !important;
