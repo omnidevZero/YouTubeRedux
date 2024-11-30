@@ -1192,13 +1192,17 @@ function addCustomStyles() {
 		}
 		#above-the-fold #flexible-item-buttons > * button,
 		#above-the-fold #top-level-buttons-computed button,
-		#above-the-fold #top-level-buttons-computed button animated-rolling-character,
 		#above-the-fold #button-shape button,
 		ytd-segmented-like-dislike-button-renderer button {
 			background-color: unset !important;
 			font-size: 12px;
 			font-weight: 400;
 			padding: 0 10px;
+		}
+		#above-the-fold #top-level-buttons-computed button animated-rolling-character {
+			background-color: unset !important;
+			font-size: 12px;
+			font-weight: 400;
 		}
 		ytd-segmented-like-dislike-button-renderer #segmented-like-button button::after {
 			display: none;
