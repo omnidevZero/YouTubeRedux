@@ -184,15 +184,19 @@ yt-interaction.rounded-large .fill.yt-interaction,
 yt-interaction.rounded-large .stroke.yt-interaction,
 yt-chip-cloud-chip-renderer,
 yt-playability-error-supported-renderers,
-.YtSearchboxComponentInputBox,
-.YtSearchboxComponentSearchButton,
+.ytSearchboxComponentInputBox,
+.ytSearchboxComponentSearchButton,
+.ytSearchboxComponentSuggestionsContainer,
 yt-thumbnail-view-model,
 yt-page-header-view-model > div,
 .rich-thumbnail.ytd-ghost-grid-renderer,
-.YtPlayerStoryboardStoryboardImageWrapper,
+.ytPlayerStoryboardStoryboardImageWrapper,
 ytd-universal-watch-card-renderer[rounded] #header,
 ytd-universal-watch-card-renderer[rounded] #hero,
-ytd-button-banner-view-model a {
+ytd-button-banner-view-model a,
+.ShortsLockupViewModelHostThumbnailContainerRounded,
+#shorts-inner-container #player-container,
+.ytChipShapeChip {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
@@ -413,11 +417,8 @@ ytd-video-primary-info-renderer > [button-renderer] yt-icon {
 /*SEARCH RESULTS STYLES*/
 ytd-item-section-renderer ytd-thumbnail:not([rich-grid-thumbnail]), 
 ytd-item-section-renderer ytd-playlist-thumbnail,
-ytd-item-section-renderer yt-lockup-view-model a {
+ytd-item-section-renderer .yt-lockup-view-model-wiz__content-image {
     max-width: 246px !important;
-}
-ytd-item-section-renderer yt-lockup-view-model a {
-    justify-content: flex-start !important;
 }
 ytd-item-section-renderer yt-lockup-view-model > div {
     margin-top: 0px !important;
@@ -518,7 +519,6 @@ yt-img-shadow.ytd-mini-channel-renderer {
     height: 32px;
     margin: 0 12px 0 12px;
     padding: 0 12px;
-    border-radius: 8px;
     font-size: 1.4rem;
     line-height: 2rem;
     color: var(--redux-double-inverse);

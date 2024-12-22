@@ -490,19 +490,19 @@ function rearrangeInfo() {
 	const secondaryReduxDiv = document.createElement('div');
 	secondaryReduxDiv.id = 'secondary-redux-div';
 
-	if (reduxSettings.altVideoLayout) {
-		const videoTitle = document.querySelector('#above-the-fold #title');
-		let reduxHeader = document.createElement('div');
-		reduxHeader.id = 'redux-video-header';
-		primaryElement.prepend(reduxHeader);
+	// if (reduxSettings.altVideoLayout) {
+	// 	const videoTitle = document.querySelector('#above-the-fold #title');
+	// 	let reduxHeader = document.createElement('div');
+	// 	reduxHeader.id = 'redux-video-header';
+	// 	primaryElement.prepend(reduxHeader);
 
-		if (!reduxSettings.extraLayout) {
-			reduxHeader.style = 'background-color: transparent; box-shadow: none !important;';
-		}
+	// 	if (!reduxSettings.extraLayout) {
+	// 		reduxHeader.style = 'background-color: transparent; box-shadow: none !important;';
+	// 	}
 
-		reduxHeader.append(videoTitle);
-		reduxHeader.append(videoInfo);
-	}
+	// 	reduxHeader.append(videoTitle);
+	// 	reduxHeader.append(videoInfo);
+	// }
 
 	flags.isRearranged = true;
 }
@@ -586,11 +586,13 @@ function preventScrolling() {
 
 	document.addEventListener('fullscreenchange', function() {
 		setTimeout(() => { //timeout accomodates for fullscreen transition animation
-			if (document.querySelector('ytd-watch-flexy[fullscreen]') != null) {
+			if (document.querySelector('ytd-watch-flexy[fullscreen]')) {
 				document.querySelector('.ytp-right-controls > button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
+				document.querySelector('.ytp-chapter-container').style.pointerEvents = 'none';
 				document.addEventListener('wheel', scrollingAction, {passive: false});
 				document.addEventListener('keydown', keysAction, {passive: false});
 			} else {
+				document.querySelector('.ytp-chapter-container').style.pointerEvents = null;
 				document.removeEventListener('wheel', scrollingAction, {passive: false});
 				document.removeEventListener('keydown', keysAction, {passive: false});
 			}
@@ -963,73 +965,6 @@ function adjustAmbient() {
 	cinematicsObserver.observe(cinematics, { childList: true });
 }
 
-async function addSortByOldestVideosButton() {
-	await delay(250);
-
-	const isReloading = document.querySelector('[continuation-is-reloading]');
-	if (isReloading) {
-		addSortByOldestVideosButton();
-		return;
-	}
-
-	const sortChipId = 'redux-sort-chip';
-	const originalChipsSelector = '[page-subtype="channels"] #chips-wrapper #chips > yt-chip-cloud-chip-renderer';
-	const existingSortChip = document.querySelector(`#${sortChipId}`);
-	if (existingSortChip) {
-		return;
-	}
-	const chipsContainer = document.querySelector('[page-subtype="channels"] #chips-wrapper #chips');
-	const sortChip = document.createElement('div');
-	sortChip.id = sortChipId;
-	sortChip.innerText = 'Oldest';
-	sortChip.addEventListener('click', function() {
-		const videos = document.querySelector('[page-subtype="channels"] #contents.ytd-rich-grid-renderer');
-		if (!videos) {
-			return;
-		} else if (!document.querySelector('#redux-sort-chip-style')) {
-			this.style.backgroundColor = 'var(--redux-double-inverse)';
-			this.style.color = 'var(--redux-spec-text-primary-inverse)';
-
-			const initialChips = document.querySelectorAll(originalChipsSelector);
-			initialChips.forEach(chip => {
-				chip.removeAttribute('selected');
-			});
-
-			const customStyle = document.createElement('style');
-			customStyle.id = 'redux-sort-chip-style';
-			const customStyleInner = `
-			#contents.ytd-rich-grid-renderer { 
-				flex-direction: column-reverse;
-			}
-			#contents.ytd-rich-grid-renderer #contents { 
-				flex-direction: row-reverse;
-			}`;
-			customStyle.appendChild(document.createTextNode(customStyleInner));
-			document.head.append(customStyle); 
-		}
-	});
-
-	const initialChips = document.querySelectorAll(originalChipsSelector);
-	initialChips.forEach(chip => {
-		chip.addEventListener('click', async() => {
-			chip.setAttribute('selected', '');
-			const reduxSortChipStyle = document.querySelector('#redux-sort-chip-style');
-			if (reduxSortChipStyle) {
-				reduxSortChipStyle.remove();
-			}
-
-			const existingSortChip = document.querySelector(`#${sortChipId}`);
-			if (existingSortChip) {
-				existingSortChip.remove();
-			}
-
-			addSortByOldestVideosButton();
-		});
-	});
-
-	chipsContainer.append(sortChip);
-}
-
 function main() {
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
@@ -1124,9 +1059,6 @@ function main() {
 	}
 	if (!reduxSettings.ignoreAmbientAdjustment && getTheme() === THEME.Dark && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#cinematics', 10, adjustAmbient);
-	}
-	if (reduxSettings.addSortByOldestVideos && pageLocation === PAGE_LOCATION.Channel) {
-		waitForElement('[page-subtype="channels"] #chips-wrapper #chips > yt-chip-cloud-chip-renderer', 10, addSortByOldestVideosButton);
 	}
 }
 

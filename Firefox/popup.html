@@ -381,6 +381,9 @@
         a, a:visited {
             color: blue;
         }
+        [hidden] {
+            display: none;
+        }
       </style>
     </head>
     <body>
@@ -425,8 +428,8 @@
                             <div class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="blackBars" class="settings" disabled>Use pillarboxing<div class="tooltip"><span class="tooltip-text-small">Adds black bars to the sides of low aspect ratio videos (e.g. 4:3).</span></div></label>
                             </div>
-                            <label><input type="checkbox" name="altVideoLayout" class="settings">Use alternative video page layout<div class="tooltip"><span class="tooltip-text">Positions video title and channel info above the player and rearranges buttons below the player. Best used with 'Use dark theme for playlists' option disabled. <br><span style="color:yellow">Rearranging buttons is currently not compatible with Return YouTube Dislike.</span></span></div></label>
-                            <div class="subsettings-container">
+                            <label hidden><input type="checkbox" name="altVideoLayout" class="settings">Use alternative video page layout<div class="tooltip"><span class="tooltip-text">Positions video title and channel info above the player and rearranges buttons below the player. Best used with 'Use dark theme for playlists' option disabled. <br><span style="color:yellow">Rearranging buttons is currently not compatible with Return YouTube Dislike.</span></span></div></label>
+                            <div hidden class="subsettings-container">
                                 <label class="subsetting"><input type="checkbox" name="altVideoLayoutExtra" class="settings" disabled>Also rearrange likes/dislikes</label>
                             </div>
                         </div>
@@ -455,7 +458,6 @@
                             </label>
                             <label><input type="checkbox" name="oldIcons" class="settings">Restore old icons<div class="tooltip"><span class="tooltip-text">Changes current flat/hollow icons to their old inverted/filled version. Affects sidebar, video page, header icons and more.</span></div></label>
                             <label><input type="checkbox" name="extraChannel" class="settings">Extra channel page changes</label>
-                            <label><input type="checkbox" name="addSortByOldestVideos" class="settings">Add sorting by oldest videos to channel page</label>
                             <label><input type="checkbox" name="channelListView" class="settings">Use list view for channel videos</label>
                             <label><input type="checkbox" name="squareAvatar" class="settings">Make own avatar square shaped</label>
                             <label><input type="checkbox" name="squareSubs" class="settings">Make subs avatars square shaped</label>
@@ -488,6 +490,7 @@
                             <label><input type="checkbox" name="autoExpandSubs" class="settings">Auto expand sidebar subscriptions</label>
                             <label><input type="checkbox" name="ignoreAmbientAdjustment" class="settings">Ignore adjusting to Ambient Mode<div class="tooltip"><span class="tooltip-text">When enabled the extension will no longer adjust the main window's background to be visually compatible with video player's Ambient Mode.</span></div></label>
                             <label><input type="checkbox" name="redirectShorts" class="settings">Redirect shorts to default video page</label>
+                            <label><input type="checkbox" name="ignoreChaptersClick" class="settings">Don't scroll down to chapters on click<div class="tooltip"><span class="tooltip-text">Ignores scrolling down when clicking on space below the video progress button</span></div></label>
                         </div>
                         <div style="flex: 0 0 50%;">
                             <redux style="margin: 5px 0 5px 0;"></redux>
