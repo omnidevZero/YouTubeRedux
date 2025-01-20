@@ -196,7 +196,9 @@ ytd-universal-watch-card-renderer[rounded] #hero,
 ytd-button-banner-view-model a,
 .ShortsLockupViewModelHostThumbnailContainerRounded,
 #shorts-inner-container #player-container,
-.ytChipShapeChip {
+.ytChipShapeChip,
+#chip-container.yt-chip-cloud-chip-renderer,
+.yt-flexible-actions-view-model-wiz__action > button-view-model > button {
     border-radius: 0 !important;
 }
 #search-icon-legacy {

@@ -12,6 +12,7 @@ let playerSize = {};
 let aspectRatio = (window.screen.width / window.screen.height).toFixed(2);
 let logoExtension;
 const defaultSettings = {
+	"completedSettingsTutorial": false,
 	"gridItems": 6, 
 	"hideAutoplayButton": false, 
 	"hideCastButton": false,
@@ -90,6 +91,7 @@ const defaultSettings = {
 	"hideMixTopStack": true,
 	"ignoreAmbientAdjustment": false,
 	"hideClickAnimations": true,
+	"hideHashtags": true,
 	"altUploadIcon": true,
 	"ignoreChaptersClick": true
 };
@@ -295,6 +297,7 @@ function addCustomStyles() {
 		`,
 		filterMiniRe: `
 		#chips yt-chip-cloud-chip-renderer,
+		#chips yt-chip-cloud-chip-renderer > #chip-container,
 		#redux-sort-chip {
 			height: 20px !important;
 		}
@@ -2780,6 +2783,11 @@ function addCustomStyles() {
 			border: unset !important;
 		}
 		paper-ripple {
+			display: none !important;
+		}
+		`,
+		hideHashtags: `
+		a[href^="/hashtag/"] {
 			display: none !important;
 		}
 		`,

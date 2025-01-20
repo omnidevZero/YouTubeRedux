@@ -112,11 +112,17 @@
             </div>
         </a>
         <div>
-            <div id="youtube-redux-header">YouTube Redux has just been updated<span id="version"></span>!</div>
+            <div id="youtube-redux-header">YouTube Redux has been updated<span id="version"></span>!</div>
             <div id="main">
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">3.7.0</b><span> - 20.01.2025</span>
+                        <li>added an option to hide hashtags on video page <note>(enabled by default, found within "Hide features" section of settings)</note></li>
+                        <li>moved the "Hide features" section to its own, third page of settings</li>
+                        <li>added a visual indicator pointing to the next settings page in order to showcase all of its pages - navigating to the last page will stop this indicator from being displayed in the future</li>
+                        <li>shorts redirection setting will no longer add a new entry in session history</li>
+                        <li>CSS fixes</li>
                         <b class="update">3.6.0</b><span> - 22.12.2024</span>
                         <li>removed alternative video page setting since it wasn't working properly for a while now and was causing conflicts with other settings; it may return fixed in the future</li>
                         <li>removed the option to sort by oldest videos on the channel page since this button was already added back by YouTube</li>
@@ -792,7 +798,7 @@
                         - added important to grid css for smooth injection by default</li>
                     </ul>
                 </div>
-                <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 474px; margin-top: 10px; border: 1px solid black;" frameborder=0 height="100%"></iframe>
+                <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 460px; margin-top: 10px; border: 1px solid black;" frameborder=0 height="100%"></iframe>
                 <div style="overflow:hidden; width: 500px; white-space: nowrap;">
                     <div class="marquee">This page can be disabled using settings above.</div>
                 </div>

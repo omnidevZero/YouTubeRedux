@@ -64,17 +64,38 @@ document.querySelector('.slider-control').addEventListener('change', function() 
 
 //navigation buttons
 document.querySelector('#right-arrow').addEventListener('click', function() {
-	if (this.hasAttribute('disabled')) return;
+	if (this.hasAttribute('disabled')) {
+		return;
+	}
+
 	document.querySelector('#left-arrow').removeAttribute('disabled');
-	document.querySelector('#right-arrow').setAttribute('disabled', '');
-	document.querySelector('#all-pages').style = 'transform: translateX(-100%)';
+	let currentActivePage = document.querySelector('#all-pages').getAttribute("active-page");
+	document.querySelector('#all-pages').setAttribute("active-page", ++currentActivePage);
+	document.querySelector('#all-pages').style = `transform: translateX(-${(currentActivePage - 1)*100}%)`;
+
+	if (currentActivePage >= 3) {
+		document.querySelector('#right-arrow').setAttribute('disabled', '');
+		if (!currentSettings.completedSettingsTutorial) {
+			document.querySelector("input[name='completedSettingsTutorial']").checked = true;
+			this.classList.remove("glow");
+			saveSettings();
+		}
+	}
 });
 
 document.querySelector('#left-arrow').addEventListener('click', function() {
-	if (this.hasAttribute('disabled')) return;
+	if (this.hasAttribute('disabled')) {
+		return;
+	}
+
 	document.querySelector('#right-arrow').removeAttribute('disabled');
-	document.querySelector('#left-arrow').setAttribute('disabled', '');
-	document.querySelector('#all-pages').style = 'transform: translateX(0%)';
+	let currentActivePage = document.querySelector('#all-pages').getAttribute("active-page");
+	document.querySelector('#all-pages').setAttribute("active-page", --currentActivePage);
+	document.querySelector('#all-pages').style = `transform: translateX(-${(currentActivePage - 1)*100}%)`;
+
+	if (currentActivePage <= 1) {
+		document.querySelector('#left-arrow').setAttribute('disabled', '');
+	}
 });
 
 //font selection
@@ -268,6 +289,13 @@ storage.get(['reduxSettings'], function(result) {
 		currentSettings = result.reduxSettings;
 		calculateSizeOptions();
 		getSettings();
-		if (currentSettings.myChannelCustomText) document.querySelector('#changeChannel').innerText = currentSettings.myChannelCustomText;
+
+		if (currentSettings.myChannelCustomText) {
+			document.querySelector('#changeChannel').innerText = currentSettings.myChannelCustomText;
+		}
+
+		if (!currentSettings.completedSettingsTutorial) {
+			document.querySelector('#right-arrow').classList.add("glow");
+		}
 	}
 });

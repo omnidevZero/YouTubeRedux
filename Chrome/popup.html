@@ -58,6 +58,7 @@
             width: 100%;
             margin-top: 8px;
             filter: drop-shadow( 0px 3px 2px rgba(0, 0, 0, 0.7));
+            user-select: none;
         }
         input {
             margin: 0px 5px 0px 5px;
@@ -193,9 +194,7 @@
         }
         .page {
             display: flex;
-            flex-shrink: 0;
-            flex-basis: 545px;
-            padding-right: 10px;
+            flex: 0 0 100%;
             transition: all 0.3s ease;
         }
         .navigation {
@@ -206,10 +205,6 @@
         #all-pages {
             display:flex; 
             transition: all 0.3s ease;
-            padding-block-start: 0.35em;
-            padding-inline-start: 0.75em;
-            padding-inline-end: 0.75em;
-            padding-block-end: 0.625em;
         }
         .nav-arrow svg {
             height: 50px;
@@ -334,6 +329,7 @@
             display: none;
         }
         .toggle + span {
+            display: flex;
             height: 100%;
             opacity: 0.35;
             border: 1px solid #909090;
@@ -347,12 +343,12 @@
         }
         .toggle + span::before {
             content: attr(aria-label);
-        }
-        .toggle-label::before {
-            content: '\00a0';
+            display: flex;
+            align-items: center;
         }
         .hide label {
             position: relative;
+            margin-right: 2px;
         }
         .scrollable::-webkit-scrollbar {
             width: 4px;
@@ -382,6 +378,22 @@
         [hidden] {
             display: none;
         }
+        @keyframes glow {
+            from {
+                fill: black;
+                transform: scale(1);
+            }
+            to {
+                fill: gold;
+                transform: scale(1.5);
+            }
+        }
+        .glow > svg {
+            animation-name: glow;
+            animation-duration: 0.5s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
       </style>
     </head>
     <body>
@@ -392,7 +404,7 @@
             <legend>Settings</legend>
             <div style="text-align:center; display:none; z-index:99" class="outer-warning"><div class="warning"><span style="color:red;"></span><span style="color:black;">PLEASE VISIT YOUTUBE IN ORDER TO CHANGE SETTINGS</div></div>
             <div id="pages-wrapper" style="overflow-x: clip;">
-                <div id="all-pages">
+                <div id="all-pages" active-page="1">
                     <div id="page-1" class="page">
                         <div style="flex: 0 0 50%; overflow-y: auto; max-height: 280px;" class="scrollable">
                             <redux>General</redux>
@@ -523,34 +535,45 @@
                                     <label style="display:inline-block"><input type="checkbox" name="filterVideo" class="settings">No video</label>
                                 </div>
                             </fieldset>
-                            <fieldset style="padding-top: 0; padding-bottom: 0; display:flex;" class="hide"><legend>Hide features<div class="tooltip" style="right: 1px;"><span class="tooltip-text">Select what you want to hide:
-                                <br>• Auto-play - removes the button from video player controls
-                                <br>• Play on TV - removes the button from video player controls; AKA the Cast button which allows you to cast video to the paired TV
-                                <br>• Join - removes the button from channel actions under the video player
-                                <br>• Clip - removes the button from video actions under the video player
-                                <br>• Thanks - removes the button from video actions under the video player
-                                <br>• YouTube apps - removes the button from the top bar
-                                <br>• Channel avatars on homepage - no effect when 'Extra layout changes' setting is enabled, which already hides channel avatars
-                                <br>• Search with your voice - removes the button to the right of the search bar
-                                <br>• People also search for - removes this section from search results
-                                <br>• Related videos age - removes this info (time since upload date) from related videos
-                                <br>• Video categories - removes this info from video description
-                                <br>• Video licensing - removes this info from video description
-                                <br>• Country code - removes this info from YouTube logo
-                                <br>• Collapsed chat - removes the button to expand chat once it's been collapsed
-                                <br>• Live chat replay - removes the live chat replay section from video description
-                                <br>• Dislikes - removes the dislike button and count from video page
-                                <br>• Download - removes the button from video page
-                                <br>• Shorts - removes the button from homepage and hides shorts in search results
-                                <br>• Chapters in description - removes the chapters section from video description
-                                <br>• Chapters in search - removes the chapters section from search results
-                                <br>• Music in description - removes the music section from video description
-                                <br>• Heatmap - removes the heatmap from above the video progress bar
-                                <br>• Surveys - removes random surveys asking how would you rate certain videos
-                                <br>• Homepage Avatars - removes homepage channel avatars below video thumbnails
-                                <br>• Mix Thumbnail Stack - removes visual indicators on top of video thumbnails that show it's a mix
-                                <br>• Click animations - removes background animations of buttons when clicking on them (shadow, ripple, filleffects etc.)
-                            </span></div></legend>
+                            <label hidden><input type="checkbox" name="completedSettingsTutorial" class="settings">User has completed settings tutorial</label>
+                        </div>
+                    </div>
+                    <div id="page-3" class="page">
+                        <div style="display: flex; flex-direction: column;">
+                            <redux style="margin: 5px 0 5px 0;">Hide features
+                                <div class="tooltip" style="right: 1px; font-weight: normal; font-family: unset;">
+                                    <span class="tooltip-text" style="font-weight: normal; transform: translateY(-5%);">Select what you want to hide:
+                                        <br>• Auto-play - removes the button from video player controls
+                                        <br>• Play on TV - removes the button from video player controls; AKA the Cast button which allows you to cast video to the paired TV
+                                        <br>• Join - removes the button from channel actions under the video player
+                                        <br>• Clip - removes the button from video actions under the video player
+                                        <br>• Thanks - removes the button from video actions under the video player
+                                        <br>• YouTube apps - removes the button from the top bar
+                                        <br>• Channel avatars on homepage - no effect when 'Extra layout changes' setting is enabled, which already hides channel avatars
+                                        <br>• Search with your voice - removes the button to the right of the search bar
+                                        <br>• People also search for - removes this section from search results
+                                        <br>• Related videos age - removes this info (time since upload date) from related videos
+                                        <br>• Video categories - removes this info from video description
+                                        <br>• Video licensing - removes this info from video description
+                                        <br>• Country code - removes this info from YouTube logo
+                                        <br>• Collapsed chat - removes the button to expand chat once it's been collapsed
+                                        <br>• Live chat replay - removes the live chat replay section from video description
+                                        <br>• Dislikes - removes the dislike button and count from video page
+                                        <br>• Download - removes the button from video page
+                                        <br>• Shorts - removes the button from homepage and hides shorts in search results
+                                        <br>• Chapters in description - removes the chapters section from video description
+                                        <br>• Chapters in search - removes the chapters section from search results
+                                        <br>• Music in description - removes the music section from video description
+                                        <br>• Heatmap - removes the heatmap from above the video progress bar
+                                        <br>• Surveys - removes random surveys asking how would you rate certain videos
+                                        <br>• Homepage Avatars - removes homepage channel avatars below video thumbnails
+                                        <br>• Mix Thumbnail Stack - removes visual indicators on top of video thumbnails that show it's a mix
+                                        <br>• Click animations - removes background animations of buttons when clicking on them (shadow, ripple, filleffects etc.)
+                                        <br>• Hashtags - removes hashtag links from video title and/or description header
+                                    </span>
+                                </div>
+                            </redux>
+                            <div style="padding-top: 0; padding-bottom: 0; display:flex; flex-basis: 100%;" class="hide">
                                 <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeAvatars" class="settings toggle"></input><span aria-label="Channel avatars on homepage"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideAutoplayButton" class="settings toggle"></input><span aria-label="Auto-play"></span></label>
@@ -578,8 +601,9 @@
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeChannelAvatars" class="settings toggle"></input><span aria-label="Homepage Avatars"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideMixTopStack" class="settings toggle"></input><span aria-label="Mix Thumbnail Stack"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideClickAnimations" class="settings toggle"></input><span aria-label="Click animations"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideHashtags" class="settings toggle"></input><span aria-label="Hashtags"></span></label>
                                 </div>
-                            </fieldset>
+                            </div>
                         </div>
                     </div>
                 </div>
