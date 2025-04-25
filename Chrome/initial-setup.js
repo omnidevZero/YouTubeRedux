@@ -85,7 +85,9 @@ const defaultSettings = {
 	"hideClickAnimations": true,
 	"hideHashtags": true,
 	"altUploadIcon": true,
-	"ignoreChaptersClick": true
+	"ignoreChaptersClick": true,
+	"hideTicketShelf": true,
+	"hideAISummary": true
 };
 
 initiate();
@@ -553,6 +555,13 @@ function addCustomStyles() {
 		}
 
 		/*EXTRA LAYOUT 2 - HOME*/
+		#guide-content.ytd-app,
+		#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
+			background-color: var(--redux-spec-base-background) !important;
+		}
+		#background.ytd-masthead {
+			display: flex !important;
+		}
 		tp-yt-app-drawer#guide[position="left"] {
 			border-right: 1px solid #e8e8e8;
 		}
@@ -2666,7 +2675,8 @@ function addCustomStyles() {
 		disableVideoPreview: `
 		#thumbnail > #mouseover-overlay,
 		ytd-thumbnail #hover-overlays,
-		ytd-video-preview[mini-mode] {
+		ytd-video-preview[mini-mode],
+		ytd-video-preview {
 			display: none !important;
 		}
 		`,
@@ -2764,6 +2774,16 @@ function addCustomStyles() {
 		ignoreChaptersClick: `
 		.ytp-chapter-container {
 			pointer-events: none;
+		}
+		`,
+		hideTicketShelf: `
+		#ticket-shelf {
+			display: none !important;
+		}
+		`,
+		hideAISummary: `
+		#primary-inner #expandable-metadata {
+			display: none !important;
 		}
 		`
 	};

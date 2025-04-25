@@ -9,6 +9,7 @@ html:not([dark]) {
     --redux-spec-general-background-a: #f9f9f9;
     --redux-spec-icon-disabled: #909090;
     --redux-spec-icon-inactive: #030303;
+    --redux-spec-base-background: #fff;
     --redux-spec-brand-background-solid: #fff;
     --redux-box-shadow: var(--redux-spec-10-percent-layer-inverted);
     --redux-scrollbar-default: #aaa;
@@ -25,6 +26,7 @@ html[dark] {
     --redux-spec-call-to-action: #3ea6ff;
     --redux-spec-icon-disabled: #717171;
     --redux-spec-icon-inactive: #fff;
+    --redux-spec-base-background: #0f0f0f;
     --redux-spec-brand-background-solid: #212121;
     --redux-box-shadow: var(--redux-spec-10-percent-layer);
     --redux-scrollbar-default: #aaa;
@@ -198,11 +200,17 @@ ytd-button-banner-view-model a,
 #shorts-inner-container #player-container,
 .ytChipShapeChip,
 #chip-container.yt-chip-cloud-chip-renderer,
-.yt-flexible-actions-view-model-wiz__action > button-view-model > button {
+.yt-flexible-actions-view-model-wiz__action > button-view-model > button,
+.ytp-tooltip.ytp-preview:not(.ytp-text-detail), .ytp-tooltip-bg,
+ytd-expandable-metadata-renderer[is-watch] {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
     border-radius: 0 2px 2px 0 !important;
+}
+#guide-spacer,
+#frosted-glass {
+    display: none;
 }
 
 /* turned off due to max() not being supported in old browsers
@@ -227,6 +235,10 @@ ytd-mini-guide-renderer.ytd-app {
 } */
 
 /*VIDEO STYLES*/
+ytd-video-preview {
+    padding: 0 !important;
+    margin: 12px;
+}
 .title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer,
 #above-the-fold #title yt-formatted-string {
     font-size: 20px;
@@ -572,4 +584,8 @@ ytd-multi-page-menu-renderer {
 .ghost-grid.ytd-ghost-grid-renderer {
     margin: 0 !important;
     flex-wrap: nowrap !important;
+}
+#ticket-shelf,
+#primary-inner #expandable-metadata {
+    background-color: var(--redux-spec-base-background) !important;
 }
