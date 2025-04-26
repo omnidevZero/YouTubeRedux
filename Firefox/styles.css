@@ -197,18 +197,21 @@ ytd-universal-watch-card-renderer[rounded] #header,
 ytd-universal-watch-card-renderer[rounded] #hero,
 ytd-button-banner-view-model a,
 .ShortsLockupViewModelHostThumbnailContainerRounded,
+.shortsLockupViewModelHostThumbnailContainerRounded,
 #shorts-inner-container #player-container,
 .ytChipShapeChip,
 #chip-container.yt-chip-cloud-chip-renderer,
 .yt-flexible-actions-view-model-wiz__action > button-view-model > button,
 .ytp-tooltip.ytp-preview:not(.ytp-text-detail), .ytp-tooltip-bg,
-ytd-expandable-metadata-renderer[is-watch] {
+ytd-expandable-metadata-renderer[is-watch],
+ytd-shorts[enable-new-carousel] .reel-video-in-sequence-thumbnail.ytd-shorts,
+.metadata-container.ytd-reel-player-overlay-renderer {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
     border-radius: 0 2px 2px 0 !important;
 }
-#guide-spacer,
+ytd-app[frosted-glass-exp] #guide-spacer,
 #frosted-glass {
     display: none;
 }
