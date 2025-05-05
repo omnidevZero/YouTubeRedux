@@ -95,7 +95,8 @@ const defaultSettings = {
 	"altUploadIcon": true,
 	"ignoreChaptersClick": true,
 	"hideTicketShelf": true,
-	"hideAISummary": true
+	"hideAISummary": true,
+	"hideEndScreen": false
 };
 
 initiate();
@@ -509,8 +510,11 @@ function addCustomStyles() {
 			border-radius: 6px !important;
 			margin-top: -6px !important;
 		}
-		.ytp-volume-area svg {
-			transform: scale(1.25) !important;
+		.ytp-volume-area button {
+			padding: 0 !important;
+		}
+		.ytp-volume-area .ytp-volume-icon {
+			height: 38px !important;
 		}
 		ytd-compact-video-renderer.ytd-video-description-music-section-renderer {
 			min-width: 200px;
@@ -2813,6 +2817,11 @@ function addCustomStyles() {
 		`,
 		hideAISummary: `
 		#primary-inner #expandable-metadata {
+			display: none !important;
+		}
+		`,
+		hideEndScreen: `
+		#ytd-player .ytp-ce-element {
 			display: none !important;
 		}
 		`

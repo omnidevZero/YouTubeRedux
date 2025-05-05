@@ -205,15 +205,35 @@ ytd-button-banner-view-model a,
 .ytp-tooltip.ytp-preview:not(.ytp-text-detail), .ytp-tooltip-bg,
 ytd-expandable-metadata-renderer[is-watch],
 ytd-shorts[enable-new-carousel] .reel-video-in-sequence-thumbnail.ytd-shorts,
-.metadata-container.ytd-reel-player-overlay-renderer {
+.metadata-container.ytd-reel-player-overlay-renderer,
+ytd-feed-nudge-renderer[rounded-container] #dismissible.ytd-feed-nudge-renderer,
+.ytwTopLandscapeImageLayoutViewModelHostImageHoverOverlayContainer {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
     border-radius: 0 2px 2px 0 !important;
 }
+/* 2025 layout changes */
 ytd-app[frosted-glass-exp] #guide-spacer,
-#frosted-glass {
+#frosted-glass,
+.smartimation__border {
     display: none;
+}
+/* 2025 mono video controls */
+.ytp-xs-mono-button-style > .ytp-time-wrapper {
+    background: none !important;
+    height: unset !important;
+    font-weight: normal !important;
+}
+/* 2025 delhi video controls */
+.ytp-delhi-modern .ytp-time-wrapper {
+    background: none !important;
+    height: unset !important;
+    font-weight: normal !important;
+    color: #DDDDDD !important;
+}
+.ytp-delhi-modern .ytp-time-wrapper > span {
+    color: #DDDDDD !important;
 }
 
 /* turned off due to max() not being supported in old browsers
