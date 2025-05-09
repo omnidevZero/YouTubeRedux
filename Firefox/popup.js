@@ -227,7 +227,7 @@ function changeGridWidth(numberOfItems) {
 		browser.tabs.query({active: true, currentWindow: true}, function(tabs) {
 			browser.tabs.executeScript(
 				tabs[0].id,
-				{code: `var styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
+				{code: `var styleItem = document.querySelector("#primary > ytd-rich-grid-renderer #contents");
           styleItem.style.setProperty("--ytd-rich-grid-items-per-row", ${numberOfItems}, "important")
           `
 				});

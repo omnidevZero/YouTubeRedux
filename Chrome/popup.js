@@ -220,7 +220,7 @@ function changeGridWidth() {
 					function: () => {
 						chrome.storage.sync.get(['reduxSettings'], function(result) {
 							if (result) {
-								let styleItem = document.querySelector("#primary > ytd-rich-grid-renderer");
+								let styleItem = document.querySelector("#primary > ytd-rich-grid-renderer #contents");
 								styleItem.style.setProperty("--ytd-rich-grid-items-per-row", result.reduxSettings.gridItems, "important");	
 							}
 						});

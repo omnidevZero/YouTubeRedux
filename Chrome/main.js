@@ -49,47 +49,6 @@ function confirmIt() {
 	}
 }
 
-function changeGridWidth() {
-	let styleItem;
-
-	const changeGridAction = () => {
-		if (flags.homeObserverAdded) {
-			homeObserver.disconnect();
-		}
-
-		styleItem = document.querySelector('#primary > ytd-rich-grid-renderer');
-		if (!styleItem) return;
-		let currentStyle = styleItem.style.cssText;
-		let currentStyleArray = currentStyle.split(";");
-		
-		for (let i = 0; i < currentStyleArray.length-1; i++) { //split, replace and join settings on the fly
-			if (currentStyleArray[i].includes('--ytd-rich-grid-items-per-row')) {
-				let splitElement = currentStyleArray[i].split(":");
-				splitElement[1] = reduxSettings.gridItems + '!important'; //to override different important from css
-				currentStyleArray[i] = splitElement.join(":");  
-			}
-		}
-		styleItem.style.cssText = currentStyleArray.join(";");
-
-		if (flags.homeObserverAdded) {
-			homeObserver.observe(styleItem, {attributes: true, attributeFilter: ['style']});
-		}
-	};
-
-	changeGridAction();
-
-	if (pageLocation === PAGE_LOCATION.Home) {
-		if (!flags.homeObserverAdded) {
-			//observe since YT keeps restoring grid values on page navigation
-			homeObserver = new MutationObserver(() => {
-				changeGridAction();
-			});
-			homeObserver.observe(styleItem, {attributes: true, attributeFilter: ['style']});
-			flags.homeObserverAdded = true;
-		}
-	}
-}
-
 function waitForElement(selector, interval, callback, timeout = 1 * 60 * 1000) {
 	let wait = setInterval(() => {
 		let element = document.querySelector(selector);
@@ -1051,9 +1010,6 @@ function main() {
 	}
 	if (reduxSettings.redirectShorts && pageLocation === PAGE_LOCATION.Shorts) {
 		redirectShorts();
-	}
-	if (reduxSettings.gridItems != defaultSettings.gridItems && pageLocation === PAGE_LOCATION.Home) {
-		waitForElement('#primary > ytd-rich-grid-renderer', 10, changeGridWidth);
 	}
 	if (!reduxSettings.ignoreAmbientAdjustment && getTheme() === THEME.Dark && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#cinematics', 10, adjustAmbient);

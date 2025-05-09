@@ -207,7 +207,8 @@ ytd-expandable-metadata-renderer[is-watch],
 ytd-shorts[enable-new-carousel] .reel-video-in-sequence-thumbnail.ytd-shorts,
 .metadata-container.ytd-reel-player-overlay-renderer,
 ytd-feed-nudge-renderer[rounded-container] #dismissible.ytd-feed-nudge-renderer,
-.ytwTopLandscapeImageLayoutViewModelHostImageHoverOverlayContainer {
+.ytwTopLandscapeImageLayoutViewModelHostImageHoverOverlayContainer,
+ytd-button-renderer.ytd-feed-filter-chip-bar-renderer {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
@@ -491,6 +492,10 @@ ytd-channel-renderer #avatar-section.ytd-channel-renderer {
 #container.style-scope.ytd-search {
     align-items: center;
 }
+ytd-search ytd-video-renderer,
+ytd-search yt-lockup-view-model {
+    margin-top: 10px !important;
+}
 
 ytd-two-column-search-results-renderer tp-yt-paper-button.ytd-subscribe-button-renderer {
     margin-right: 15px !important;
@@ -576,9 +581,6 @@ yt-img-shadow.ytd-channel-list-sub-menu-avatar-renderer {
 }
 
 /*ADDITIONAL*/
-[page-subtype="home"] ytd-rich-grid-renderer {
-    --ytd-rich-grid-items-per-row: 6 !important;
-}
 [page-subtype="home"] #contents > ytd-rich-grid-row,
 [page-subtype="home"] #contents > ytd-rich-grid-row > #contents {
     display: contents !important;

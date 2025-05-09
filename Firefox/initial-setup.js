@@ -142,6 +142,11 @@ function initiate() {
 
 function addCustomStyles() {
 	let allStyles = {
+		gridItems: `
+		#primary > ytd-rich-grid-renderer #contents {
+			--ytd-rich-grid-items-per-row: ${reduxSettings.gridItems} !important;
+		}
+		`,
 		hideCastButton: `/*PLAY ON TV BUTTON*/.ytp-remote-button:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}`,
 		hideAutoplayButton: `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"], #redux-autoplay {display:none !important;}`,
 		smallPlayer: `
@@ -568,7 +573,8 @@ function addCustomStyles() {
 
 		/*EXTRA LAYOUT 2 - HOME*/
 		#guide-content.ytd-app,
-		#chips-wrapper.ytd-feed-filter-chip-bar-renderer {
+		#chips-wrapper.ytd-feed-filter-chip-bar-renderer,
+		ytd-search-header-renderer #chip-bar {
 			background-color: var(--redux-spec-base-background) !important;
 		}
 		#background.ytd-masthead {
@@ -631,6 +637,10 @@ function addCustomStyles() {
 		}
 		[page-subtype="subscriptions"] #contents.ytd-section-list-renderer {
 			margin-right: -16px !important;
+		}
+		[page-subtype="subscriptions"] #contents.ytd-rich-grid-renderer {
+			padding-top: 0px !important;
+			padding-left: 32px !important;
 		}
 		[page-subtype="home"] #contents.ytd-rich-grid-renderer,
 		[page-subtype="subscriptions"] #contents.ytd-section-list-renderer,
@@ -931,6 +941,9 @@ function addCustomStyles() {
 		}
 		.ytVideoMetadataCarouselViewModelHost {
 			background-color: unset !important;
+		},
+		ytd-search-header-renderer #chip-bar {
+			padding: 0 18px !important;
 		}
 		`,
 		rearrangeInfo2: `
