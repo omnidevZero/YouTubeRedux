@@ -439,6 +439,9 @@ ytd-video-primary-info-renderer > [button-renderer] yt-icon {
     background-color: #f00 !important;
     background-image: none !important;
 }
+ytd-watch-metadata #above-the-fold #owner {
+    max-width: none !important;
+}
 
 /*PLAYLIST STYLES*/
 #text.ytd-alert-with-button-renderer {
