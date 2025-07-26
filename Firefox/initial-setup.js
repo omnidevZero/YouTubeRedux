@@ -306,7 +306,8 @@ function addCustomStyles() {
 		filterMiniRe: `
 		#chips yt-chip-cloud-chip-renderer,
 		#chips yt-chip-cloud-chip-renderer > #chip-container,
-		#redux-sort-chip {
+		#redux-sort-chip,
+		.ytChipShapeChip {
 			height: 20px !important;
 		}
 		yt-chip-cloud-chip-renderer.ytd-feed-filter-chip-bar-renderer {
@@ -956,6 +957,12 @@ function addCustomStyles() {
             display: flex !important;
             margin-top: 5px !important;
         }
+		#reduxSubDiv [subscribed] #subscribe-button-shape {
+			display: none;
+		}
+		html:not([dark]) ytd-subscription-notification-toggle-button-renderer-next lottie-component g > path {
+			fill: #606060;
+		}
         #info.ytd-video-primary-info-renderer > #menu-container {
             transform: translateY(40px) !important;
 			flex-grow: 0;
@@ -1597,7 +1604,8 @@ function addCustomStyles() {
 		}
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon,
 		#segmented-dislike-button yt-icon,
-		dislike-button-view-model yt-icon {
+		dislike-button-view-model yt-icon,
+		dislike-button-view-model .ytIconWrapperHost {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;

@@ -169,6 +169,26 @@ document.querySelector('#restore-defaults').addEventListener('click', () => {
 	}
 });
 
+//export config
+document.querySelector('#export-config').addEventListener('click', () => {
+	chrome.downloads.download({
+		url: URL.createObjectURL(new Blob([JSON.stringify(currentSettings, null, 2)], { type: "application/json" })),
+		filename: `YouTube_Redux_config_${new Date().toISOString().replaceAll(":", "-")}.json`,
+		saveAs: true
+	});
+});
+
+//import config
+document.querySelector('#import-config').addEventListener('click', async() => {
+	const [fileHandle] = await window.showOpenFilePicker();
+	const file = await fileHandle.getFile();
+	const contents = await file.text();
+
+	currentSettings = JSON.parse(contents);
+	chrome.storage.sync.set({reduxSettings: currentSettings});
+	setPopupState();
+});
+
 function saveSettings() {
 	let newSettings = {};
 	//save slider
@@ -209,6 +229,7 @@ function saveSettings() {
 	}
 
 	chrome.storage.sync.set({reduxSettings: newSettings});
+	currentSettings = newSettings;
 }
 
 function changeGridWidth() {
@@ -268,6 +289,19 @@ function getSettings() {
 	}
 }
 
+function setPopupState() {
+	calculateSizeOptions();
+	getSettings();
+
+	if (currentSettings.myChannelCustomText) {
+		document.querySelector('#changeChannel').innerText = currentSettings.myChannelCustomText;
+	}
+
+	if (!currentSettings.completedSettingsTutorial) {
+		document.querySelector('#right-arrow').classList.add("glow");
+	}
+}
+
 function calculateSizeOptions() {
 	let options = document.querySelectorAll('select[name="smallPlayerWidth"] option');
 	options.forEach(element => {
@@ -283,15 +317,6 @@ function calculateSizeOptions() {
 chrome.storage.sync.get(['reduxSettings'], function(result) {
 	if (result) {
 		currentSettings = result.reduxSettings;
-		calculateSizeOptions();
-		getSettings();
-
-		if (currentSettings.myChannelCustomText) {
-			document.querySelector('#changeChannel').innerText = currentSettings.myChannelCustomText;
-		}
-
-		if (!currentSettings.completedSettingsTutorial) {
-			document.querySelector('#right-arrow').classList.add("glow");
-		}
+		setPopupState();
 	}
 });

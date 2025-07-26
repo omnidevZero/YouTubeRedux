@@ -74,7 +74,8 @@ yt-content-metadata-view-model > div:first-child {
     font-size: min(14px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
     line-height: 1.8rem !important;
 }
-#video-title.ytd-rich-grid-media:hover {
+#video-title.ytd-rich-grid-media:hover,
+.yt-lockup-metadata-view-model-wiz__title > .yt-core-attributed-string--white-space-pre-wrap:hover {
     text-decoration: underline;
 }
 #text.ytd-channel-name {
@@ -113,9 +114,8 @@ ytd-guide-entry-renderer[guide-refresh] {
 yt-img-shadow.ytd-guide-entry-renderer {
     margin-right: 15px !important;
 }
-.thumbnail.ytd-notification-renderer {
-    border-radius:0% !important;
-}
+/* Round corners */
+.thumbnail.ytd-notification-renderer,
 ytd-thumbnail #thumbnail.ytd-thumbnail,
 ytd-thumbnail::before,
 ytd-guide-entry-renderer,
@@ -208,11 +208,24 @@ ytd-shorts[enable-new-carousel] .reel-video-in-sequence-thumbnail.ytd-shorts,
 .metadata-container.ytd-reel-player-overlay-renderer,
 ytd-feed-nudge-renderer[rounded-container] #dismissible.ytd-feed-nudge-renderer,
 .ytwTopLandscapeImageLayoutViewModelHostImageHoverOverlayContainer,
-ytd-button-renderer.ytd-feed-filter-chip-bar-renderer {
+ytd-button-renderer.ytd-feed-filter-chip-bar-renderer,
+.ytd-rich-item-renderer-highlight,
+.ytdMiniplayerComponentContent,
+.ytGhostCommentsGhostFill,
+.ytGhostCommentsCircle {
     border-radius: 0 !important;
 }
 #search-icon-legacy {
     border-radius: 0 2px 2px 0 !important;
+}
+/* 2025 hover highlights */
+.ytd-rich-item-renderer-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}
+#details.ytd-rich-grid-media,
+.yt-lockup-view-model-wiz {
+    cursor: unset !important;
 }
 /* 2025 layout changes */
 ytd-app[frosted-glass-exp] #guide-spacer,
@@ -510,6 +523,9 @@ html:not([dark]) #video-title.ytd-grid-playlist-renderer {
 }
 html:not([dark]) #video-title.yt-simple-endpoint.ytd-grid-video-renderer {
     color:#167ac6 !important;
+}
+#video-title.yt-simple-endpoint.ytd-grid-video-renderer:hover {
+    text-decoration: underline;
 }
 .tab-content.paper-tab,
 .tab-content.tp-yt-paper-tab {
