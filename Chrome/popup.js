@@ -169,24 +169,11 @@ document.querySelector('#restore-defaults').addEventListener('click', () => {
 	}
 });
 
-//export config
+//export/import config
 document.querySelector('#export-config').addEventListener('click', () => {
-	chrome.downloads.download({
-		url: URL.createObjectURL(new Blob([JSON.stringify(currentSettings, null, 2)], { type: "application/json" })),
-		filename: `YouTube_Redux_config_${new Date().toISOString().replaceAll(":", "-")}.json`,
-		saveAs: true
+	chrome.tabs.create({
+		url: `./config.html?data=${btoa(JSON.stringify(currentSettings, null, 2))}`
 	});
-});
-
-//import config
-document.querySelector('#import-config').addEventListener('click', async() => {
-	const [fileHandle] = await window.showOpenFilePicker();
-	const file = await fileHandle.getFile();
-	const contents = await file.text();
-
-	currentSettings = JSON.parse(contents);
-	chrome.storage.sync.set({reduxSettings: currentSettings});
-	setPopupState();
 });
 
 function saveSettings() {
@@ -223,7 +210,7 @@ function saveSettings() {
 	}
 
 	//save buttons
-	let buttons = document.querySelectorAll('button');
+	let buttons = document.querySelectorAll('fieldset button');
 	for (let i = 0; i < buttons.length; i++) {
 		newSettings[buttons[i].name] = buttons[i].value;
 	}

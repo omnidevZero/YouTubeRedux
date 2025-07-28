@@ -11,41 +11,6 @@ function handleChangelog() {
 	}
 }
 
-function handleConfig() {
-	//export
-	const exportElement = document.querySelector('#export-button');
-	exportElement.addEventListener('click', () => {
-		const data = window.location.hash.split('=')[1];
-		
-		browser.downloads.download({
-			url: URL.createObjectURL(new Blob([atob(data)], { type: "application/json" })),
-			filename: `YouTube_Redux_config_${new Date().toISOString().replaceAll(":", "-")}.json`,
-			saveAs: true
-		});
-
-		document.querySelector('.config').setAttribute('hidden', '');
-	});
-
-	//import
-	const importElement = document.querySelector('#import-button');
-	importElement.addEventListener('click', () => {
-		document.querySelector('#import-button input').click();
-		document.querySelector('#import-button input').addEventListener('change', async(e) => {
-			const file = e.target.files[0];
-			const fileContent = await file.text();
-
-			storage.set({reduxSettings: JSON.parse(fileContent)});
-			browser.tabs.update({
-				url: `./changelog.html`
-			});
-		});
-	});
-
-	if (window.location.href.includes('#config')) {
-		document.querySelector('.config').removeAttribute('hidden');
-	}
-}
-
 function addShowMore() {
 	const updatesToDisplay = 3;
 	let counter = 0;
@@ -76,4 +41,3 @@ function addShowMore() {
 
 handleChangelog();
 addShowMore();
-handleConfig();

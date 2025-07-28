@@ -180,17 +180,10 @@ document.querySelector('#restore-defaults').addEventListener('click', () => {
 	}
 });
 
-//export config
+//export/import config
 document.querySelector('#export-config').addEventListener('click', () => {
 	browser.tabs.create({
-		url: `./changelog.html#config?data=${btoa(JSON.stringify(currentSettings, null, 2))}`
-	});
-});
-
-//import config
-document.querySelector('#import-config').addEventListener('click', async() => {
-	browser.tabs.create({
-		url: `./changelog.html#config?data=${btoa(JSON.stringify(currentSettings, null, 2))}`
+		url: `./config.html?data=${btoa(JSON.stringify(currentSettings, null, 2))}`
 	});
 });
 
@@ -228,7 +221,7 @@ function saveSettings() {
 	}
 
 	//save buttons
-	let buttons = document.querySelectorAll('button');
+	let buttons = document.querySelectorAll('fieldset button');
 	for (let i = 0; i < buttons.length; i++) {
 		newSettings[buttons[i].name] = buttons[i].value;
 	}

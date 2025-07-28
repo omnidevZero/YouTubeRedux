@@ -3,6 +3,7 @@
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="./images/32.png">
     <title>YouTube Redux</title>
       <style>
         html {
@@ -99,31 +100,6 @@
         .github-logo img {
             height: 48px;
         }
-        .config {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 101%;
-            z-index: 2;
-            position: fixed;
-        }
-        .config-button {
-            width: 33%;
-            height: 33%;
-            font-size: 5em;
-            cursor: pointer;
-            box-shadow: 0 0 20px 2px silver;
-        }
-        .config .bg {
-            background-color:#0000008f;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5%;
-        }
       </style>
       <script src="./initial-setup.js"></script>
     </head>
@@ -139,15 +115,12 @@
         <div>
             <div id="youtube-redux-header">YouTube Redux has been updated<span id="version"></span>!</div>
             <div id="main">
-                <div class="config" hidden>
-                    <div class="bg">
-                        <button id="export-button" class="config-button">EXPORT</button>
-                        <button id="import-button" class="config-button">IMPORT<input type="file" accept="application/json" hidden></input></button>
-                    </div>
-                </div>
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">3.9.1</b><span> - 28.07.2025</span>
+                        <li>updated download permissions to be optional (used for exporting settings to file)</li>
+                        <li>added an option to export and import settings manually, skipping additional permissions</li>
                         <b class="update">3.9.0</b><span> - 26.07.2025</span>
                         <li>added an option to export and import settings <note>(found in the top-right corner of settings window)</note></li>
                         <li>CSS fixes</li>

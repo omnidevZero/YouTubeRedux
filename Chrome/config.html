@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="./images/32.png">
+    <title>YouTube Redux</title>
+      <style>
+        html {
+            min-height: 100vh;
+        }
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background-image: linear-gradient(-45deg, #909090, transparent);
+            font-size: 12px;
+            overflow-x: hidden;
+        }
+        #header,
+        #alert {
+            text-align: center;
+            font-size:20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+            color: white;
+            transform: scale(1.3, 1.3);
+            pointer-events: none;
+            position: fixed;
+            width: 100%;
+        }
+        #alert {
+            top: -50px;
+            color: yellow;
+        }
+        #alert.show-alert {
+            animation: slide-in-out 5s forwards;
+        }
+        #main {
+            display: flex;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            position: relative;
+            height: 100%;
+        }
+        #changes {
+            font-size: 16px;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            font-weight: normal;
+            width: 50%;
+            max-height: 30vh;
+            overflow: auto;
+        }
+        .show-more {
+            cursor: pointer;
+            color: cornflowerblue;
+            font-weight: normal;
+        }
+        note {
+            font-style: italic;
+            font-size: 14px;
+        }
+        [hidden] {
+            display: none !important;
+        }
+        ::-webkit-scrollbar {
+			background: transparent;
+			width: 8px !important;
+		}
+		::-webkit-scrollbar-thumb {
+			height: 56px;
+			border-radius: 4px !important;
+			border: 0px solid transparent !important;
+			background-clip: content-box;
+			background-color: rgba(128, 128, 128, 0.25);
+		}
+        .config-button {
+            height: 100%;
+            font-size: 2em;
+            cursor: pointer;
+            box-shadow: 0 0 20px 2px silver;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            flex-direction: column;
+            position: relative;
+        }
+        .config {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5%;
+        }
+        .btn-col {
+            display: flex;
+            flex-direction: column;
+            row-gap: 50px;
+            height: 66%;
+            width: 33%;
+        }
+        textarea {
+            display: block;
+            width: 100%;
+        }
+        .copy-paste-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 5px 15px;
+        }
+        .text-area-container {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .config-button img {
+            position: absolute;
+            height: 66%;
+            width: 100%;
+            opacity: 0.2;
+        }
+        #export-button-file:hover::after {
+            opacity: 1;
+        }
+        #export-button-file::after {
+            content: 'Requires download permissions';
+            color: silver;
+            font-size: 12px;
+            opacity: 0;
+            transition-duration: 0.5s;
+            display: block;
+            position: absolute;
+            bottom: 0;
+        }
+        @keyframes slide-in-out {
+            0% {
+                top: -50px;
+            }
+            10% {
+                top: 50px;
+            }
+            90% {
+                top: 50px;
+                opacity: 1;
+            }
+            100% {
+                top: 50px;
+                opacity: 0;
+            }
+        }
+      </style>
+      <script src="./initial-setup.js"></script>
+    </head>
+<body>
+        <div id="header">Export/import YouTube Redux configuration</div>
+        <div id="main">
+            <div class="config">
+                <div class="export-btns btn-col">
+                    <div id="export-button-file" class="config-button">
+                        <span>EXPORT TO FILE</span>
+                        <img src="/images/export-icon.svg"></img>
+                    </div>
+                    <div id="export-button-clipboard" class="config-button">
+                        <span>EXPORT TO CLIPBOARD</span>
+                        <div class="text-area-container">
+                            <button class="copy-paste-btn">COPY</button>
+                            <textarea spellcheck="false" placeholder="Couldn't find data to export."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="import-btns btn-col">
+                    <div id="import-button-file" class="config-button">
+                        <img src="/images/import-icon.svg"></img>
+                        <span>IMPORT FROM FILE</span>
+                        <input type="file" accept="application/json" hidden></input>
+                    </div>
+                    <div id="import-button-clipboard" class="config-button">
+                        <span>IMPORT FROM CLIPBOARD</span>
+                        <div class="text-area-container">
+                            <button class="copy-paste-btn">IMPORT</button>
+                            <textarea spellcheck="false" placeholder="Paste config here and press the 'Import' button."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./config.js"></script>
+    </body>
+  </html>
