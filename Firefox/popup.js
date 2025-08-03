@@ -10,11 +10,16 @@ if (navigator.userAgent.match(/Firefox\/([^\s]+)/)) {
 	}
 }
 let donateButton = document.querySelector('#donate');
+let githubButton = document.querySelector('#github-button');
 let globalURL;
 let currentSettings;
 
 donateButton.onclick = function() {
 	window.open("https://www.paypal.com/donate?hosted_button_id=MD9WRXSTLB49W");
+};
+
+githubButton.onclick = function() {
+	window.open("https://github.com/omnidevZero/YouTubeRedux");
 };
 
 browser.tabs.query({active: true, lastFocusedWindow: true}, tabs => {

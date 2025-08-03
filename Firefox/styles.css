@@ -212,8 +212,15 @@ ytd-button-renderer.ytd-feed-filter-chip-bar-renderer,
 .ytd-rich-item-renderer-highlight,
 .ytdMiniplayerComponentContent,
 .ytGhostCommentsGhostFill,
-.ytGhostCommentsCircle {
+.ytGhostCommentsCircle,
+#playlist-thumbnail.ytd-structured-description-playlist-lockup-renderer,
+.watch-skeleton .text-shell,
+.watch-skeleton #secondary-info #top-row #video-owner #channel-icon,
+.watch-skeleton #secondary-info #top-row #subscribe-button {
     border-radius: 0 !important;
+}
+#ghost-comment-section.ytd-continuation-item-renderer {
+    margin-top: 24px;
 }
 #search-icon-legacy {
     border-radius: 0 2px 2px 0 !important;
@@ -464,7 +471,7 @@ ytd-watch-metadata #above-the-fold #owner {
     padding: 4px 0 !important;
 }
 #playlist.ytd-watch-flexy {
-    margin-bottom: 8px !important;
+    margin-bottom: 10px !important;
     margin-left: -13px !important;
 }
     
@@ -523,6 +530,9 @@ html:not([dark]) #video-title.ytd-grid-playlist-renderer {
 }
 html:not([dark]) #video-title.yt-simple-endpoint.ytd-grid-video-renderer {
     color:#167ac6 !important;
+}
+#video-title.yt-simple-endpoint.ytd-grid-video-renderer:hover {
+    text-decoration: underline;
 }
 .tab-content.paper-tab,
 .tab-content.tp-yt-paper-tab {

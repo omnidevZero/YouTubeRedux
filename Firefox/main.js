@@ -94,7 +94,7 @@ function alignItems() {
 		const calcInner = `
 		#playlist > #container,
 		ytd-playlist-panel-renderer#playlist {
-			max-height: calc(${Math.ceil(videoPlayer.getBoundingClientRect().height)}px + 1px) !important;
+			max-height: calc(${Math.ceil(videoPlayer.getBoundingClientRect().height)}px + 2px) !important;
 		}
 		#primary.ytd-watch-flexy > #primary-inner {
 			padding-left: ${Math.max((calcPadding / window.innerWidth * 100).toFixed(3), 0)}vw !important;
@@ -224,7 +224,7 @@ function recalculateVideoSize() {
 
 		function checkIfProperlyRecalculated(width, height) {
 			let videoPlayerElement = document.querySelector('ytd-watch-flexy .html5-video-container');
-			let bottomBarElement = document.querySelector('.ytp-chrome-bottom');
+			let bottomBarElement = document.querySelector('#movie_player:not(.ytp-delhi-modern) .ytp-chrome-bottom');
 			if (videoPlayerElement != null && bottomBarElement != null && (bottomBarElement.offsetWidth < videoPlayerElement.offsetWidth*0.9)) {
 				insertRecalcScript(width, height);
 			}
@@ -237,7 +237,7 @@ function recalculateVideoSize() {
 		let retryCount = 0;
 		let retryInterval = 10;
 		let checkingVideo = setInterval(() => { //check in loop for X seconds if player size is correct; reset checking if it's not; applied to fix initial page elements load
-			let progressBar = document.querySelector('ytd-watch-flexy .ytp-chrome-bottom');
+			let progressBar = document.querySelector('ytd-watch-flexy #movie_player:not(.ytp-delhi-modern) .ytp-chrome-bottom');
 			let leftEdgeDistancePlayer = document.querySelector('#player-container-outer').getBoundingClientRect().x;
 			let leftEdgeDistanceInfo = document.querySelector('#page-manager.ytd-app #primary-inner #info').getBoundingClientRect().x;
 			let videoElement = document.querySelector('video');

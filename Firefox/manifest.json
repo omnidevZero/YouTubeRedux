@@ -1,6 +1,6 @@
 {
     "name": "YouTube Redux",
-    "version": "3.9.1",
+    "version": "3.9.2",
     "description": "Replicate old YouTube look and features within the modern layout!",
     "permissions": ["activeTab", "storage"],
     "optional_permissions": ["downloads"],

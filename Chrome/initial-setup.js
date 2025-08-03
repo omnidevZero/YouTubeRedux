@@ -481,13 +481,13 @@ function addCustomStyles() {
 			height: 40px !important;
 			line-height: 40px !important;
 		}
-		.ytp-chrome-bottom {
+		#movie_player:not(.ytp-delhi-modern) .ytp-chrome-bottom {
 			height: 40px !important;
 		}
-		.ytp-progress-bar-container {
+		#movie_player:not(.ytp-delhi-modern) .ytp-progress-bar-container {
 			bottom: 39px !important;
 		}
-		.ytp-time-display {
+		#movie_player:not(.ytp-delhi-modern) .ytp-time-display {
 			line-height: 39px !important;
 		}
 		.ytp-big-mode .ytp-volume-slider {
@@ -1148,7 +1148,7 @@ function addCustomStyles() {
 			display: flex;
 			flex-direction: column;
 			font-size: 1.8rem !important;
-			transform: translateY(26px);
+			transform: translateY(27px);
 			color: var(--redux-spec-text-secondary);
 		}
 		#redux-views-count {
@@ -1168,7 +1168,9 @@ function addCustomStyles() {
 			padding: 0;
 		}
 		#above-the-fold #top-row yt-icon,
-		segmented-like-dislike-button-view-model lottie-component {
+		segmented-like-dislike-button-view-model ytd-lottie-player,
+		segmented-like-dislike-button-view-model lottie-component,
+		segmented-like-dislike-button-view-model dislike-button-view-model .ytIconWrapperHost {
 			width: 17px !important;
 			height: 17px !important;
 		}
@@ -1564,6 +1566,8 @@ function addCustomStyles() {
 		ytd-guide-entry-renderer[active] #endpoint[href="/playlist?list=LL"] yt-icon:first-of-type {
 			filter: invert(1);
 		}
+
+		/* TOP BUTTONS - LIKE */
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon,
 		#segmented-like-button yt-icon,
 		like-button-view-model yt-icon {
@@ -1572,28 +1576,8 @@ function addCustomStyles() {
 			height: 17px !important;
 			width: 17px !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon:hover,
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon:hover,
-		ytd-comment-action-buttons-renderer #like-button yt-icon:hover,
-		ytd-comment-action-buttons-renderer #dislike-button yt-icon:hover {
-			filter: contrast(0.25);
-		}
-		ytd-comment-action-buttons-renderer #like-button yt-icon,
-		ytd-toggle-button-renderer#like-button yt-icon {
-			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
-			filter: contrast(0);
-			height: 17px !important;
-			width: 17px !important;
-		}
-		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
-		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
-		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon,
-		#segmented-like-button button[aria-pressed="true"] yt-icon,
-		like-button-view-model button[aria-pressed="true"] yt-icon {
-			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
-			filter: contrast(1);
-		}
+
+		/* TOP BUTTONS - DISLIKE */
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon,
 		#segmented-dislike-button yt-icon,
 		dislike-button-view-model yt-icon,
@@ -1603,19 +1587,59 @@ function addCustomStyles() {
 			height: 17px !important;
 			width: 17px !important;
 		}
+
+		/* TOP + COMMENTS BUTTONS HOVER EFFECT - LIKE + DISLIKE */
+		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button > yt-icon:hover,
+		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button > yt-icon:hover,
+		like-button-view-model yt-icon:hover,
+		dislike-button-view-model .ytIconWrapperHost:hover,
+		ytd-comment-action-buttons-renderer #like-button yt-icon:hover,
+		ytd-toggle-button-renderer#like-button .ytIconWrapperHost:hover,
+		ytd-comment-action-buttons-renderer #dislike-button yt-icon:hover,
+		ytd-toggle-button-renderer#dislike-button .ytIconWrapperHost:hover {
+			filter: contrast(0.25);
+		}
+
+		/* COMMENTS BUTTONS - LIKE */
+		ytd-comment-action-buttons-renderer #like-button yt-icon,
+		ytd-toggle-button-renderer#like-button yt-icon,
+		ytd-toggle-button-renderer#like-button .ytIconWrapperHost > span {
+			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
+			filter: contrast(0);
+			height: 17px !important;
+			width: 17px !important;
+		}
+
+		/* COMMENTS BUTTONS - DISLIKE */
 		ytd-comment-action-buttons-renderer #dislike-button yt-icon,
-		ytd-toggle-button-renderer#dislike-button yt-icon {
+		ytd-toggle-button-renderer#dislike-button yt-icon,
+		ytd-toggle-button-renderer#dislike-button .ytIconWrapperHost > span {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
 			height: 17px !important;
 			width: 17px !important;
 		}
+
+		/* TOP + COMMENTS BUTTONS - LIKE: PRESSED */
+		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
+		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
+		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] .ytIconWrapperHost > span,
+		#segmented-like-button button[aria-pressed="true"] yt-icon,
+		like-button-view-model button[aria-pressed="true"] yt-icon {
+			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
+			filter: contrast(1);
+		}
+			
+		/* TOP + COMMENTS BUTTONS - DISLIKE: PRESSED */
 		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
 		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
 		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] yt-icon,
+		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] .ytIconWrapperHost > span,
 		#segmented-dislike-button button[aria-pressed="true"] yt-icon,
-		dislike-button-view-model button[aria-pressed="true"] yt-icon {
+		dislike-button-view-model button[aria-pressed="true"] .ytIconWrapperHost {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1626,48 +1650,33 @@ function addCustomStyles() {
 		}
 		`,
 		classicLikesIconColors: `
-		#top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
-		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon > svg,
-		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon > svg,
-		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon > svg,
-		#segmented-like-button button[aria-pressed="true"] yt-icon,
-		like-button-view-model button[aria-pressed="true"] yt-icon {
-			fill: rgb(0 136 29) !important;
-		}
-		#segmented-like-button button[aria-pressed="true"] yt-icon yt-animated-icon svg,
-		like-button-view-model button[aria-pressed="true"] yt-icon yt-animated-icon svg {
+		/* COMMENTS BUTTONS - LIKE: PRESSED */
+		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] .ytIconWrapperHost > span {
 			filter: invert(19%) sepia(98%) saturate(4292%) hue-rotate(143deg) brightness(98%) contrast(103%);
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:first-of-type > a yt-formatted-string {
+
+		/* COMMENTS BUTTONS - DISLIKE: PRESSED */
+		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] .ytIconWrapperHost > span {
+			filter: brightness(0) saturate(100%) invert(10%) sepia(91%) saturate(5539%) hue-rotate(340deg) brightness(101%) contrast(108%);
+		}
+
+		/* TOP LIKES COUNT TEXT COLOR */
+		#top-level-buttons-computed like-button-view-model button[aria-pressed="true"] > div:last-of-type {
 			color: rgb(0 136 29) !important;
 		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon > svg,
-		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon > svg,
-		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon > svg,
-		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] yt-icon > svg,
-		#segmented-dislike-button button[aria-pressed="true"] yt-icon {
-			fill: rgb(222 0 17) !important;
-		}
-		#top-level-buttons-computed > ytd-toggle-button-renderer.style-default-active:last-of-type > a yt-formatted-string {
+
+		/* TOP DISLIKES COUNT TEXT COLOR */
+		#top-level-buttons-computed dislike-button-view-model button[aria-pressed="true"] > div:last-of-type {
 			color: rgb(222 0 17) !important;
 		}
 		`,
 		classicLikesIconColorsExtra: `
-		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:first-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #like-button #button[aria-pressed="true"] yt-icon,
-		ytd-comment-action-buttons-renderer #like-button button[aria-pressed="true"] yt-icon,
-		ytd-toggle-button-renderer#like-button button[aria-pressed="true"] yt-icon,
-		#segmented-like-button button[aria-pressed="true"] yt-icon,
+		/* TOP BUTTONS - LIKE: PRESSED */
 		like-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed-old.png')}') !important;
 			filter: contrast(1);
 		}
-		ytd-video-primary-info-renderer #top-level-buttons-computed > ytd-toggle-button-renderer:last-of-type > a > yt-icon-button > #button[aria-pressed="true"] > yt-icon,
-		ytd-comment-action-buttons-renderer #dislike-button #button[aria-pressed="true"] yt-icon,
-		ytd-comment-action-buttons-renderer #dislike-button button[aria-pressed="true"] yt-icon,
-		ytd-toggle-button-renderer#dislike-button button[aria-pressed="true"] yt-icon,
-		#segmented-dislike-button button[aria-pressed="true"] yt-icon,
-		dislike-button-view-model button[aria-pressed="true"] yt-icon {
+		dislike-button-view-model button[aria-pressed="true"] .ytIconWrapperHost {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed-old.png')}') !important;
 			filter: contrast(1);
 		}
@@ -1938,12 +1947,12 @@ function addCustomStyles() {
 		#like-button.ytd-comment-action-buttons-renderer button[aria-pressed="true"] svg {
 		}
 		/* Dislike not pressed */
-		path[d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z"] {
+		path[d="M17 4H6.57c-1.07 0-1.98.67-2.19 1.61l-1.34 6C2.77 12.85 3.82 14 5.23 14h4.23l-1.52 4.94C7.62 19.97 8.46 21 9.62 21c.58 0 1.14-.24 1.52-.65L17 14h4V4h-4zm-6.6 15.67c-.19.21-.48.33-.78.33-.26 0-.5-.11-.63-.3-.07-.1-.15-.26-.09-.47l1.52-4.94.4-1.29H5.23c-.41 0-.8-.17-1.03-.46-.12-.15-.25-.4-.18-.72l1.34-6c.1-.47.61-.82 1.21-.82H16v8.61l-5.6 6.06zM20 13h-3V5h3v8z"] {
 			d: path("M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z") !important;
 			fill: #909090;
 		}
 		/* Dislike pressed */
-		path[d="M18,4h3v10h-3V4z M5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21c0.58,0,1.14-0.24,1.52-0.65L17,14V4H6.57 C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14z"] {
+		path[d="M18 4h3v10h-3V4zM5.23 14h4.23l-1.52 4.94C7.62 19.97 8.46 21 9.62 21c.58 0 1.14-.24 1.52-.65L17 14V4H6.57c-1.07 0-1.98.67-2.19 1.61l-1.34 6C2.77 12.85 3.82 14 5.23 14z"] {
 			d: path("M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v1.91l.01.01L1 14c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z") !important;
 		}
 		/* Dislike comment not pressed */
