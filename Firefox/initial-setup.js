@@ -36,7 +36,6 @@ const defaultSettings = {
 	"channelListView": false, 
 	"squareAvatar": true, 
 	"squareSubs": true,
-	"hideHomeAvatars": false, 
 	"noHomeScalingRe": true, 
 	"squareSearch": true, 
 	"squareComments": true,
@@ -1381,11 +1380,6 @@ function addCustomStyles() {
 		ytd-popup-container #header yt-img-shadow#avatar { 
 			border-radius: 0 !important;
 		} 
-		`,
-		hideHomeAvatars: `
-		#avatar-link.ytd-rich-grid-media {
-			display:none !important;
-		}
 		`,
 		noHomeScalingRe: `
 		#page-manager ytd-browse[page-subtype="home"]  {
@@ -2807,7 +2801,9 @@ function addCustomStyles() {
 		}
 		`,
 		hideHomeChannelAvatars: `
-		#details.ytd-rich-grid-media > #avatar-container {
+		#avatar-link.ytd-rich-grid-media,
+		#details.ytd-rich-grid-media > #avatar-container,
+		[page-subtype="home"] .yt-lockup-metadata-view-model-wiz__avatar {
 			display: none !important;
 		}
 		`,
