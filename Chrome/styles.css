@@ -298,6 +298,10 @@ ytd-app[frosted-glass-exp] #guide-spacer,
 }
 :root {
     --yt-frosted-glass-backdrop-filter-override: none !important;
+    --yt-sys-color-baseline--overlay-background-medium: rgba(28, 28, 28, 0.9) !important;
+    --yt-sys-color-baseline--overlay-background-medium-light: rgba(28, 28, 28, 0.9) !important;
+    --yt-sys-color-baseline--overlay-background-light: rgba(28, 28, 28, 0.9) !important;
+    --yt-sys-color-baseline--overlay-background-extra-light: rgba(28, 28, 28, 0.9) !important;
     --yt-spec-overlay-background-medium: rgba(28, 28, 28, 0.9) !important;
     --yt-spec-overlay-background-medium-light: rgba(28, 28, 28, 0.9) !important;
     --yt-spec-overlay-background-light: rgba(28, 28, 28, 0.9) !important;
@@ -757,6 +761,43 @@ ytd-app[frosted-glass-exp] #guide-spacer,
     stroke-width: 2px !important;
     paint-order: stroke !important;
 }
+.ytp-delhi-modern .ytp-chrome-controls .ytp-button[aria-pressed]::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 3px !important;
+  border-radius: 3px !important;
+  left: 24px !important;
+  bottom: 9px !important;
+  background-color: #f00 !important;
+  -webkit-transition:
+    left 0.1s cubic-bezier(0.4, 0, 1, 1),
+    width 0.1s cubic-bezier(0.4, 0, 1, 1) !important;
+  transition:
+    left 0.1s cubic-bezier(0.4, 0, 1, 1),
+    width 0.1s cubic-bezier(0.4, 0, 1, 1) !important;
+}
+.ytp-delhi-modern.ytp-fullscreen .ytp-chrome-controls .ytp-button[aria-pressed]::after {
+  height: 3px !important;
+  border-radius: 3px !important;
+  left: 27px !important;
+  bottom: 10px !important;
+}
+.ytp-delhi-modern .ytp-chrome-controls .ytp-button[aria-pressed="true"]::after {
+  width: 24px !important;
+  left: 12px !important;
+  -webkit-transition:
+    left 0.25s cubic-bezier(0, 0, 0.2, 1),
+    width 0.25s cubic-bezier(0, 0, 0.2, 1) !important;
+  transition:
+    left 0.25s cubic-bezier(0, 0, 0.2, 1),
+    width 0.25s cubic-bezier(0, 0, 0.2, 1) !important;
+}
+.ytp-delhi-modern.ytp-fullscreen .ytp-chrome-controls .ytp-button[aria-pressed="true"]::after {
+  width: 27px !important;
+  left: 14px !important;
+}
 /* Play button */
 .ytp-delhi-modern.paused-mode .ytp-play-button svg path,
 [d*="M 17 8.6 L 10.89 4.99 C 9.39 4.11 7.5 5.19 7.5 6.93 C 7.5 6.93 7.5 6.93 7.5 6.93 L 7.5 29.06 C 7.5 30.8 9.39 31.88 10.89 31 C 10.89 31 10.89 31 10.89 31 L 17 27.4 C 17 27.4 17 27.4 17 27.4 C 17 27.4 17 27.4 17 27.4 L 17 8.6 C 17 8.6 17 8.6 17 8.6 C 17 8.6 17 8.6 17 8.6 Z M 17 8.6 L 17 8.6 C 17 8.6 17 8.6 17 8.6 C 17 8.6 17 8.6 17 8.6 V 27.4 C 17 27.4 17 27.4 17 27.4 C 17 27.4 17 27.4 17 27.4 L 33 18 C 33 18 33 18 33 18 C 33 18 33 18 33 18 V 18 L 17 8.6 C 17 8.6 17 8.6 17 8.6 C 17 8.6 17 8.6 17 8.6 Z"] {
@@ -796,9 +837,6 @@ ytd-app[frosted-glass-exp] #guide-spacer,
 /* Subtitle button */
 .ytp-delhi-modern .ytp-subtitles-button svg path {
     d: path("M11,11 C9.9,11 9,11.9 9,13 L9,23 C9,24.1 9.9,25 11,25 L25,25 C26.1,25 27,24.1 27,23 L27,13 C27,11.9 26.1,11 25,11 L11,11 Z M11,17 L14,17 L14,19 L11,19 L11,17 L11,17 Z M20,23 L11,23 L11,21 L20,21 L20,23 L20,23 Z M25,23 L22,23 L22,21 L25,21 L25,23 L25,23 Z M25,19 L16,19 L16,17 L25,17 L25,19 L25,19 Z");
-}
-.ytp-delhi-modern .ytp-subtitles-button[aria-pressed="true"] svg path {
-    d: path("M11,11 C9.89,11 9,11.9 9,13 L9,23 C9,24.1 9.89,25 11,25 L25,25 C26.1,25 27,24.1 27,23 L27,13 C27,11.9 26.1,11 25,11 L11,11 Z M17,17 L15.5,17 L15.5,16.5 L13.5,16.5 L13.5,19.5 L15.5,19.5 L15.5,19 L17,19 L17,20 C17,20.55 16.55,21 16,21 L13,21 C12.45,21 12,20.55 12,20 L12,16 C12,15.45 12.45,15 13,15 L16,15 C16.55,15 17,15.45 17,16 L17,17 L17,17 Z M24,17 L22.5,17 L22.5,16.5 L20.5,16.5 L20.5,19.5 L22.5,19.5 L22.5,19 L24,19 L24,20 C24,20.55 23.55,21 23,21 L20,21 C19.45,21 19,20.55 19,20 L19,16 C19,15.45 19.45,15 20,15 L23,15 C23.55,15 24,15.45 24,16 L24,17 L24,17 Z");
 }
 /* Settings button */
 .ytp-delhi-modern .ytp-settings-button svg path {
