@@ -72,6 +72,7 @@ function waitForElement(selector, interval, callback, timeout = 1 * 60 * 1000) {
 		setTimeout(() => {
 			if (wait) {
 				stopInterval(wait);
+				log(`Did not find ${selector} after ${timeout}ms (${callback.name})`);
 			}
 		}, timeout);
 	}
@@ -83,9 +84,10 @@ function alignItems() {
 	let playerElement = document.querySelector('#player-container-outer');
 	let content = document.querySelector('#columns > #primary > #primary-inner');
 	let videoInfoElement = document.querySelector('#columns > #primary > #primary-inner #info ytd-video-primary-info-renderer');
-	let calcPadding = Math.ceil(playerElement.getBoundingClientRect().left - content.getBoundingClientRect().left);
+	let flexPadding = 16;
+	let calcPadding = Math.floor(playerElement.getBoundingClientRect().left - flexPadding);
 
-	if (calcPadding == 0 || calcPadding >= 1000 || playerElement == null || content == null || videoInfoElement == null) {
+	if (calcPadding <= 0 || calcPadding >= 1000 || playerElement == null || content == null || videoInfoElement == null) {
 		waitForElement('#columns > #primary > #primary-inner #info ytd-video-primary-info-renderer', 10, alignItems);
 		return;
 	} else if (!isTheater() && !isFullscreen()) {
@@ -94,13 +96,10 @@ function alignItems() {
 		const calcInner = `
 		#playlist > #container,
 		ytd-playlist-panel-renderer#playlist {
-			max-height: calc(${Math.ceil(videoPlayer.getBoundingClientRect().height)}px + 2px) !important;
+			max-height: ${videoPlayer.getBoundingClientRect().height}px !important;
 		}
-		#primary.ytd-watch-flexy > #primary-inner {
-			padding-left: ${Math.max((calcPadding / window.innerWidth * 100).toFixed(3), 0)}vw !important;
-		}
-		#secondary.ytd-watch-flexy {
-			margin-right: ${Math.max((calcPadding / window.innerWidth * 100).toFixed(3), 0)}vw !important;
+		#columns.ytd-watch-flexy {
+			margin: 0 ${calcPadding}px !important;
 		}
         `;
 
@@ -129,7 +128,7 @@ function changeLikesCounter() {
 	const fixLikes = () => {
 		let likesButton = document.querySelector('#above-the-fold #segmented-like-button button, #above-the-fold like-button-view-model button');
 		if (likesButton) {
-			let likesText = likesButton.querySelector('[class*="text-content"]');
+			let likesText = likesButton.querySelector('.ytSpecButtonShapeNextButtonTextContent');
 			let rawLikes = likesButton.getAttribute('aria-label')?.match(/(?=\d).*(?<=\d)/g) ? likesButton.getAttribute('aria-label').match(/(?=\d).*(?<=\d)/g)[0] : '';
 	
 			if (likesButton && rawLikes) {
@@ -177,10 +176,12 @@ function recalculateVideoSize() {
 				setTimeout(alignItems, 40); //TODO slow systems may struggle with this timeout when exiting fullscreen - properly detect mode change
 			});
 		}
+
 		document.addEventListener("fullscreenchange", function() {
 			startRecalc();
 			setTimeout(alignItems, 40);
 		});
+
 		window.addEventListener('resize', () => {
 			let repeatInsert = setInterval(() => { //insert in loop for X seconds to prevent YT from overriding
 				let specialWidth = document.querySelector('video').offsetWidth;
@@ -190,7 +191,7 @@ function recalculateVideoSize() {
 			setTimeout(() => {
 				clearInterval(repeatInsert);
 			}, 2000);
-			alignItems();
+			setTimeout(alignItems, 40);
 		});
 		flags.recalcListenersAdded = true;
 	}
@@ -287,6 +288,7 @@ function startObservingScrolling(mode) {
 	let relatedElement;
 	let related;
 	let relatedContinuation;
+	const moreButtonSeletor = '#description tp-yt-paper-button#expand';
 
 	function disableInfiniteComments() {
 		let comments = document.querySelectorAll('#contents > ytd-comment-thread-renderer');
@@ -314,12 +316,13 @@ function startObservingScrolling(mode) {
 	function addCommentsButton() {
 		let showMoreComments = document.createElement('div');
 		let continueElement = commentsContElement;
-		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
+		let showMoreText = document.querySelector(moreButtonSeletor) == null ? 'SHOW MORE' : document.querySelector(moreButtonSeletor).textContent;
 		showMoreComments.id = 'show-more-comments';
 		showMoreComments.style = 'text-align:center; margin-bottom: 16px; margin-right: 15px;';
 		showMoreComments.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--redux-spec-text-secondary); letter-spacing: 0.007px; padding-bottom: 8px;"></input>';
 		showMoreComments.querySelector('input').value = showMoreText;
 		contentsElement.append(showMoreComments);
+
 		document.querySelector('#show-more-comments').onclick = function() {
 			let comments = document.querySelector('ytd-comments#comments ytd-item-section-renderer > #contents');
 			comments.append(continueElement);
@@ -333,12 +336,13 @@ function startObservingScrolling(mode) {
 	function addRelatedButton() {
 		let showMoreRelated = document.createElement('div');
 		let continueElement = relatedContinuation;
-		let showMoreText = document.querySelector('.more-button.ytd-video-secondary-info-renderer') == null ? 'SHOW MORE' : document.querySelector('.more-button.ytd-video-secondary-info-renderer').textContent;
+		let showMoreText = document.querySelector(moreButtonSeletor) == null ? 'SHOW MORE' : document.querySelector(moreButtonSeletor).textContent;
 		showMoreRelated.id = 'show-more-related';
 		showMoreRelated.style = 'text-align:center; margin-top: 4px; margin-right: 15px';
 		showMoreRelated.innerHTML = '<input type="button" style="font-family: Roboto, Arial, sans-serif; padding-top: 9px; width: 100%; border-top: 1px solid #e2e2e2; border-bottom: none; border-left: none; border-right: none; background:none; font-size: 1.1rem; outline: none; cursor:pointer; text-transform: uppercase; font-weight: 500; color: var(--redux-spec-text-secondary); letter-spacing: 0.007px;"></input>';
 		showMoreRelated.querySelector('input').value = showMoreText;
 		relatedElement.append(showMoreRelated);
+
 		document.querySelector('#show-more-related').onclick = function() {
 			relatedElement.append(continueElement);
 			window.scrollBy({top: 50, left: 0, behavior: "smooth"});
@@ -351,11 +355,11 @@ function startObservingScrolling(mode) {
 	function setLayoutDifferences() {
 		if (document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items').childElementCount <= 3) { //condition for differences in layout between YT languages
 			relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-item-section-renderer > #contents');
-			related = relatedElement.querySelectorAll('ytd-compact-video-renderer, ytd-compact-radio-renderer, ytd-compact-playlist-renderer'); //normal video + mix + playlist
+			related = relatedElement.querySelectorAll('yt-lockup-view-model');
 			relatedContinuation = relatedElement.querySelector('ytd-continuation-item-renderer');
 		} else {
 			relatedElement = document.querySelector('#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items');
-			related = relatedElement.querySelectorAll('.ytd-watch-next-secondary-results-renderer');
+			related = relatedElement.querySelectorAll('yt-lockup-view-model');
 			relatedContinuation = relatedElement.querySelector('ytd-continuation-item-renderer');
 		}
 	}
@@ -545,7 +549,7 @@ function preventScrolling() {
 
 	document.addEventListener('fullscreenchange', function() {
 		setTimeout(() => { //timeout accomodates for fullscreen transition animation
-			if (document.querySelector('ytd-watch-flexy[fullscreen]')) {
+			if (isFullscreen()) {
 				document.querySelector('.ytp-right-controls > button.ytp-fullerscreen-edu-button.ytp-button').style.display = 'none';
 				document.querySelector('.ytp-chapter-container').style.pointerEvents = 'none';
 				document.addEventListener('wheel', scrollingAction, {passive: false});
@@ -563,7 +567,7 @@ function preventScrolling() {
 
 function sortPlaylists() {
 	const baseTimeout = 250;
-	const playlistsSelector = '[page-subtype="home"] #contents.ytd-rich-grid-renderer:not(.redux-playlist) > ytd-rich-grid-row ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer';
+	const playlistsSelector = '[page-subtype="home"] ytd-two-column-browse-results-renderer #content .ytLockupViewModelCollectionStack2';
 
 	setTimeout(() => {
 		let playlistItems = document.querySelectorAll(playlistsSelector);
@@ -681,64 +685,19 @@ function trimViews() {
 }
 
 function alternativeStrings() {
-	let saveButton = document.querySelector('ytd-watch-flexy #info-contents ytd-video-primary-info-renderer > ytd-button-renderer:first-of-type yt-formatted-string');
+	let saveButton = document.querySelector('#above-the-fold #flexible-item-buttons button .ytSpecButtonShapeNextButtonTextContent');
 	saveButton.innerText = 'Add to';
 }
 
-function insertMyChannel() {
-	let container = document.querySelector('#guide ytd-guide-section-renderer:first-child #items');
-	let channelElement = document.querySelector('ytd-guide-entry-renderer a[href*="studio.youtube.com"]');
-
-	if (document.querySelector('#redux-mychannel') || !channelElement) return;
-
-	let myChannel = channelElement.href;
-	let myChannelUrl = myChannel.substring(myChannel.indexOf('/channel/')+9, myChannel.length);
-	let myChannelElement = document.createElement('div');
-	myChannelElement.id = 'redux-mychannel';
-	myChannelElement.classList.add('style-scope', 'ytd-guide-section-renderer');
-	myChannelElement.setAttribute('is-primary', '');
-	myChannelElement.setAttribute('line-end-style', 'none');
-	myChannelElement.style = 'transition: 0.5s ease-out; max-height: 0; overflow: hidden;';
-	myChannelElement.innerHTML = `
-	<a id="endpoint" class="yt-simple-endpoint style-scope ytd-guide-entry-renderer" tabindex="-1" role="tablist" title="My channel" href="/channel/">
-	<div style="padding: 0 24px; min-width:0; height: var(--paper-item-min-height, 48px); width: 100%; display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-direction: row; -webkit-flex-direction: row; flex-direction: row; -ms-flex-align: center; -webkit-align-items: center; align-items: center; font-family: var(--paper-font-subhead_-_font-family); -webkit-font-smoothing: var(--paper-font-subhead_-_-webkit-font-smoothing); font-size: var(--paper-font-subhead_-_font-size); font-weight: var(--paper-font-subhead_-_font-weight); line-height: var(--paper-font-subhead_-_line-height); white-space: var(--paper-item_-_white-space); font-size: var(--paper-item_-_font-size, var(--paper-font-subhead_-_font-size)); font-weight: var(--paper-item_-_font-weight, var(--paper-font-subhead_-_font-weight)); line-height: var(--paper-item_-_line-height, var(--paper-font-subhead_-_line-height)); letter-spacing: var(--paper-item_-_letter-spacing); font-family: var(--paper-item_-_font-family, var(--paper-font-subhead_-_font-family)); color: var(--paper-item_-_color); min-height: var(--paper-item-min-height, 48px);" role="tab" class="style-scope ytd-guide-entry-renderer" tabindex="0" aria-disabled="false" aria-selected="false">
-		<icon style="height: 20px ; width: 20px; margin-right: 15px; fill: rgb(135, 135, 135);" class="guide-icon style-scope ytd-guide-entry-renderer"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block;"><g class="style-scope yt-icon"><path d="M12,2 C6.477,2 2,6.477 2,12 C2,17.523 6.477,22 12,22 C17.523,22 22,17.523 22,12 C22,6.477 17.523,2 12,2 L12,2 Z M12,5 C13.656,5 15,6.344 15,8 C15,9.658 13.656,11 12,11 C10.344,11 9,9.658 9,8 C9,6.344 10.344,5 12,5 L12,5 Z M12,19.2 C9.496,19.2 7.293,17.921 6.002,15.98 C6.028,13.993 10.006,12.9 12,12.9 C13.994,12.9 17.972,13.993 17.998,15.98 C16.707,17.921 14.504,19.2 12,19.2 L12,19.2 Z" class="style-scope yt-icon"></path></g></svg></icon>
-		<img-shadow height="24" width="24" class="style-scope ytd-guide-entry-renderer" disable-upgrade="" hidden="">
-		</img-shadow>
-		<span id="redux-channel-text" class="title style-scope ytd-guide-entry-renderer">My channel</span>
-		<span class="guide-entry-count style-scope ytd-guide-entry-renderer">
-		</span>
-		<icon class="guide-entry-badge style-scope ytd-guide-entry-renderer" disable-upgrade="">
-		</icon>
-		<div id="newness-dot" class="style-scope ytd-guide-entry-renderer"></div>
-	</div>
-	</a>
-`;
-	myChannelElement.querySelector('#endpoint').href = `/channel/${myChannelUrl}`;
-	myChannelElement.querySelector('#redux-channel-text').innerText = reduxSettings.myChannelCustomText ? reduxSettings.myChannelCustomText : 'My channel';
-	container.insertBefore(myChannelElement, container.children[0].nextSibling);
-	setTimeout(() => {
-		myChannelElement.style.maxHeight = '30px';
-	},50);
-}
-
-function hideClip() {
-	const clipButton = document.querySelector('#info path[d="M8,7c0,0.55-0.45,1-1,1S6,7.55,6,7c0-0.55,0.45-1,1-1S8,6.45,8,7z M7,16c-0.55,0-1,0.45-1,1c0,0.55,0.45,1,1,1s1-0.45,1-1 C8,16.45,7.55,16,7,16z M10.79,8.23L21,18.44V20h-3.27l-5.76-5.76l-1.27,1.27C10.89,15.97,11,16.47,11,17c0,2.21-1.79,4-4,4 c-2.21,0-4-1.79-4-4c0-2.21,1.79-4,4-4c0.42,0,0.81,0.08,1.19,0.2l1.37-1.37l-1.11-1.11C8,10.89,7.51,11,7,11c-2.21,0-4-1.79-4-4 c0-2.21,1.79-4,4-4c2.21,0,4,1.79,4,4C11,7.43,10.91,7.84,10.79,8.23z M10.08,8.94L9.65,8.5l0.19-0.58C9.95,7.58,10,7.28,10,7 c0-1.65-1.35-3-3-3S4,5.35,4,7c0,1.65,1.35,3,3,3c0.36,0,0.73-0.07,1.09-0.21L8.7,9.55l0.46,0.46l1.11,1.11l0.71,0.71l-0.71,0.71 L8.9,13.91l-0.43,0.43l-0.58-0.18C7.55,14.05,7.27,14,7,14c-1.65,0-3,1.35-3,3c0,1.65,1.35,3,3,3s3-1.35,3-3 c0-0.38-0.07-0.75-0.22-1.12l-0.25-0.61L10,14.8l1.27-1.27l0.71-0.71l0.71,0.71L18.15,19H20v-0.15L10.08,8.94z M17.73,4H21v1.56 l-5.52,5.52l-2.41-2.41L17.73,4z M18.15,5l-3.67,3.67l1,1L20,5.15V5H18.15z"]');
-
-	if (clipButton) {
-		clipButton.closest('ytd-button-renderer').style.display = 'none';
-	}
-}
-
 function hideThanks() {
-	const thanksButton = document.querySelector('#info path[d="M16.5,3C19.02,3,21,5.19,21,7.99c0,3.7-3.28,6.94-8.25,11.86L12,20.59l-0.74-0.73l-0.04-0.04C6.27,14.92,3,11.69,3,7.99 C3,5.19,4.98,3,7.5,3c1.4,0,2.79,0.71,3.71,1.89L12,5.9l0.79-1.01C13.71,3.71,15.1,3,16.5,3 M16.5,2c-1.74,0-3.41,0.88-4.5,2.28 C10.91,2.88,9.24,2,7.5,2C4.42,2,2,4.64,2,7.99c0,4.12,3.4,7.48,8.55,12.58L12,22l1.45-1.44C18.6,15.47,22,12.11,22,7.99 C22,4.64,19.58,2,16.5,2L16.5,2z M11.33,10.86c0.2,0.14,0.53,0.26,1,0.36c0.47,0.1,0.86,0.22,1.18,0.35 c0.99,0.4,1.49,1.09,1.49,2.07c0,0.7-0.28,1.27-0.83,1.71c-0.33,0.26-0.73,0.43-1.17,0.54V17h-2v-1.16 c-0.18-0.05-0.37-0.1-0.53-0.19c-0.46-0.23-0.92-0.55-1.18-0.95C9.15,14.48,9.06,14.24,9,14h2c0.05,0.09,0.07,0.18,0.15,0.25 c0.23,0.19,0.54,0.29,0.92,0.29c0.36,0,0.63-0.07,0.82-0.22s0.28-0.35,0.28-0.59c0-0.25-0.11-0.45-0.34-0.6s-0.59-0.27-1.1-0.39 c-1.67-0.39-2.51-1.16-2.51-2.34c0-0.68,0.26-1.26,0.78-1.71c0.28-0.25,0.62-0.43,1-0.54V7h2v1.12c0.46,0.11,0.85,0.29,1.18,0.57 C14.59,9.05,14.9,9.48,15,10h-2c-0.04-0.09-0.1-0.17-0.16-0.24c-0.17-0.19-0.44-0.29-0.81-0.29c-0.32,0-0.56,0.08-0.74,0.24 c-0.17,0.16-0.26,0.36-0.26,0.6C11.03,10.53,11.13,10.72,11.33,10.86z"]');
+	const thanksButton = document.querySelector('#above-the-fold path[d="M16.25 2A6.7 6.7 0 0012 3.509 6.75 6.75 0 001 8.75c0 4.497 2.784 7.818 5.207 9.87a23.498 23.498 0 004.839 3.143l.096.044.03.013.01.005.003.002.002.001c.273-.609.544-1.218.813-1.828 0 0-9-4-9-11.25a4.75 4.75 0 018.932-2.247A1 1 0 0011 7.5v.638c-.357.1-.689.26-.979.49A2.35 2.35 0 009.13 10.5c-.007.424.112.84.342 1.197.21.31.497.563.831.734.546.29 1.23.411 1.693.502.557.109.899.19 1.117.315.086.048.109.082.114.09.004.006.028.045.028.162 0 .024-.008.118-.165.235-.162.122-.5.27-1.09.27-.721 0-1.049-.21-1.181-.323a.6.6 0 01-.142-.168l.005.013.006.014.002.009a.996.996 0 00-1.884.64l.947-.316-.003.001c-.875.292-.939.314-.943.317l.001.003.003.006.004.015.012.032c.045.111.1.218.162.321.146.236.324.444.535.624.357.306.841.566 1.476.702v.605a1 1 0 002 0v-.614c1.29-.289 2.245-1.144 2.245-2.386 0-.44-.103-.852-.327-1.212-.22-.355-.52-.6-.82-.77-.555-.316-1.244-.445-1.719-.539-.567-.111-.915-.185-1.143-.305a.5.5 0 01-.1-.07l-.004-.003-.003-.009a.4.4 0 01-.009-.092c0-.158.053-.244.14-.314.109-.086.341-.19.74-.19.373-.001.73.144.997.404a.996.996 0 001.518-1.286l-.699.58.698-.582v-.001l-.002-.001-.002-.003-.006-.006-.016-.018a2.984 2.984 0 00-.178-.182A3.45 3.45 0 0013 8.154V7.5a1 1 0 00-.933-.997A4.75 4.75 0 0121 8.75C21 16 12 20 12 20l.813 1.827.002-.001.003-.001.01-.005.029-.013.097-.045c.081-.037.191-.09.33-.16a23.5 23.5 0 004.509-2.982C20.216 16.568 23 13.248 23 8.75A6.75 6.75 0 0016.25 2Zm-3.437 19.827L12 20l-.813 1.828.813.36.813-.361Z"]');
 
 	if (thanksButton) {
-		thanksButton.closest('ytd-button-renderer').style.display = 'none';
+		thanksButton.closest('button-view-model').style.display = 'none';
 	}
 }
 
-function autoplayInveral() {
+function moveAutoplay() {
 	let autoInterval = setInterval(addOldAutoplay, 10);
 	setTimeout(() => {
 		clearInterval(autoInterval);
@@ -755,11 +714,11 @@ function addOldAutoplay() {
 		}
 	}
 
-	if (window.location.href.includes('&list') || reduxAutoplay || !document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]')) return;
+	if (window.location.href.includes('&list') || reduxAutoplay || !document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]')) return;
 
 	const relatedContainer = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents') || document.querySelector('#secondary-inner.ytd-watch-flexy #related #items');
 	const relatedContainerParent = relatedContainer.parentElement;
-	const originalAutoplay = document.querySelector('[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"]');
+	const originalAutoplay = document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]');
 	const upNext = document.querySelector('.ytp-autonav-endscreen-upnext-header');
 	const autoplayElement = document.createElement('div');
 	autoplayElement.id = 'redux-autoplay';
@@ -781,7 +740,8 @@ function addOldAutoplay() {
 	</div>
 	`;
 
-	if (upNext) autoplayElement.querySelector('#redux-autoplay-upnext').innerText = upNext.innerText;	
+	// disabled due to YT no longer exposing next autoplayed item in the related column
+	// if (upNext) autoplayElement.querySelector('#redux-autoplay-upnext').innerText = upNext.innerText;	
 	autoplayElement.querySelector('#redux-autoplay-label').innerText = originalAutoplay.getAttribute('aria-label');
 
 	if (originalAutoplay.querySelector('div[aria-checked]').getAttribute('aria-checked') === 'true') {
@@ -802,14 +762,11 @@ function removeMiniplayer() {
 	document.querySelector('.ytp-miniplayer-ui .ytp-miniplayer-close-button').click();
 }
 
-function expandPlaylists() {
-	let expander = document.querySelector('#section-items > ytd-guide-collapsible-entry-renderer #expander-item');
-	expander.click();
-}
-
-function expandSubs() {
-	let expander = document.querySelector('#items > ytd-guide-collapsible-entry-renderer #expander-item');
-	expander.click();
+function expandSidebarSections() {
+	const expanders = document.querySelectorAll('#guide-renderer #expander-item');
+	for (let i = expanders.length - 1; i >= 0 ; i--) {
+		expanders[i].click();
+	}
 }
 
 function formatNumber(number) {
@@ -842,7 +799,7 @@ function updateDislikes() {
 			let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span'); 
 			if (!dislikesSource) return;
 			
-			let dislikes = document.querySelector('#above-the-fold dislike-button-view-model div[class*="text-content"]');
+			let dislikes = document.querySelector('#above-the-fold dislike-button-view-model button');
 			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 			
 			if (dislikes) {
@@ -925,14 +882,6 @@ function adjustAmbient() {
 }
 
 function main() {
-    // Thanks to arnavbhate for this code - https://github.com/omnidevZero/YouTubeRedux/issues/324#issuecomment-3569626163
-    let url = new URL(window.location.href);
-    if (url.toString().indexOf('start_radio') !== -1) {
-        url.searchParams.delete('start_radio');
-        url.searchParams.delete('list');
-        location.replace(url);
-    }
-
 	if (reduxSettings.autoConfirm) {
 		if (confirmInterval == undefined) {
 			confirmInterval = setInterval(confirmIt, 500);
@@ -983,7 +932,7 @@ function main() {
 		preventScrolling();
 	}
 	if (reduxSettings.playlistsFirst && pageLocation === PAGE_LOCATION.Home) {
-		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer ytd-playlist-thumbnail ytd-thumbnail-overlay-bottom-panel-renderer icon-shape:not(:empty)', 10, sortPlaylists);
+		waitForElement('#page-manager ytd-browse[page-subtype="home"] ytd-two-column-browse-results-renderer #content .ytLockupViewModelCollectionStack2', 10, sortPlaylists);
 	}
 	if (reduxSettings.trimSubs && pageLocation === PAGE_LOCATION.Video) {
 		waitForElement('#reduxSubDiv > #owner-sub-count', 10, trimStrings);
@@ -992,28 +941,19 @@ function main() {
 		waitForElement('span.view-count', 10, trimViews);
 	}
 	if (reduxSettings.altStrings && pageLocation === PAGE_LOCATION.Video) {
-		waitForElement('ytd-watch-flexy #info-contents ytd-video-primary-info-renderer > ytd-button-renderer:first-of-type yt-formatted-string', 10, alternativeStrings);
-	}
-	if (reduxSettings.myChannel) {
-		waitForElement('#guide ytd-guide-section-renderer:first-child #items', 100, insertMyChannel);
-	}
-	if (reduxSettings.hideClip && pageLocation === PAGE_LOCATION.Video) {
-		waitForElement('#info path[d="M8,7c0,0.55-0.45,1-1,1S6,7.55,6,7c0-0.55,0.45-1,1-1S8,6.45,8,7z M7,16c-0.55,0-1,0.45-1,1c0,0.55,0.45,1,1,1s1-0.45,1-1 C8,16.45,7.55,16,7,16z M10.79,8.23L21,18.44V20h-3.27l-5.76-5.76l-1.27,1.27C10.89,15.97,11,16.47,11,17c0,2.21-1.79,4-4,4 c-2.21,0-4-1.79-4-4c0-2.21,1.79-4,4-4c0.42,0,0.81,0.08,1.19,0.2l1.37-1.37l-1.11-1.11C8,10.89,7.51,11,7,11c-2.21,0-4-1.79-4-4 c0-2.21,1.79-4,4-4c2.21,0,4,1.79,4,4C11,7.43,10.91,7.84,10.79,8.23z M10.08,8.94L9.65,8.5l0.19-0.58C9.95,7.58,10,7.28,10,7 c0-1.65-1.35-3-3-3S4,5.35,4,7c0,1.65,1.35,3,3,3c0.36,0,0.73-0.07,1.09-0.21L8.7,9.55l0.46,0.46l1.11,1.11l0.71,0.71l-0.71,0.71 L8.9,13.91l-0.43,0.43l-0.58-0.18C7.55,14.05,7.27,14,7,14c-1.65,0-3,1.35-3,3c0,1.65,1.35,3,3,3s3-1.35,3-3 c0-0.38-0.07-0.75-0.22-1.12l-0.25-0.61L10,14.8l1.27-1.27l0.71-0.71l0.71,0.71L18.15,19H20v-0.15L10.08,8.94z M17.73,4H21v1.56 l-5.52,5.52l-2.41-2.41L17.73,4z M18.15,5l-3.67,3.67l1,1L20,5.15V5H18.15z"]', 100, hideClip);
+		waitForElement('#below #comments:not([hidden])', 10, alternativeStrings);
 	}
 	if (reduxSettings.hideThanks && pageLocation === PAGE_LOCATION.Video) {
-		waitForElement('#info path[d="M16.5,3C19.02,3,21,5.19,21,7.99c0,3.7-3.28,6.94-8.25,11.86L12,20.59l-0.74-0.73l-0.04-0.04C6.27,14.92,3,11.69,3,7.99 C3,5.19,4.98,3,7.5,3c1.4,0,2.79,0.71,3.71,1.89L12,5.9l0.79-1.01C13.71,3.71,15.1,3,16.5,3 M16.5,2c-1.74,0-3.41,0.88-4.5,2.28 C10.91,2.88,9.24,2,7.5,2C4.42,2,2,4.64,2,7.99c0,4.12,3.4,7.48,8.55,12.58L12,22l1.45-1.44C18.6,15.47,22,12.11,22,7.99 C22,4.64,19.58,2,16.5,2L16.5,2z M11.33,10.86c0.2,0.14,0.53,0.26,1,0.36c0.47,0.1,0.86,0.22,1.18,0.35 c0.99,0.4,1.49,1.09,1.49,2.07c0,0.7-0.28,1.27-0.83,1.71c-0.33,0.26-0.73,0.43-1.17,0.54V17h-2v-1.16 c-0.18-0.05-0.37-0.1-0.53-0.19c-0.46-0.23-0.92-0.55-1.18-0.95C9.15,14.48,9.06,14.24,9,14h2c0.05,0.09,0.07,0.18,0.15,0.25 c0.23,0.19,0.54,0.29,0.92,0.29c0.36,0,0.63-0.07,0.82-0.22s0.28-0.35,0.28-0.59c0-0.25-0.11-0.45-0.34-0.6s-0.59-0.27-1.1-0.39 c-1.67-0.39-2.51-1.16-2.51-2.34c0-0.68,0.26-1.26,0.78-1.71c0.28-0.25,0.62-0.43,1-0.54V7h2v1.12c0.46,0.11,0.85,0.29,1.18,0.57 C14.59,9.05,14.9,9.48,15,10h-2c-0.04-0.09-0.1-0.17-0.16-0.24c-0.17-0.19-0.44-0.29-0.81-0.29c-0.32,0-0.56,0.08-0.74,0.24 c-0.17,0.16-0.26,0.36-0.26,0.6C11.03,10.53,11.13,10.72,11.33,10.86z"]', 100, hideThanks);
+		waitForElement('#above-the-fold path[d="M16.25 2A6.7 6.7 0 0012 3.509 6.75 6.75 0 001 8.75c0 4.497 2.784 7.818 5.207 9.87a23.498 23.498 0 004.839 3.143l.096.044.03.013.01.005.003.002.002.001c.273-.609.544-1.218.813-1.828 0 0-9-4-9-11.25a4.75 4.75 0 018.932-2.247A1 1 0 0011 7.5v.638c-.357.1-.689.26-.979.49A2.35 2.35 0 009.13 10.5c-.007.424.112.84.342 1.197.21.31.497.563.831.734.546.29 1.23.411 1.693.502.557.109.899.19 1.117.315.086.048.109.082.114.09.004.006.028.045.028.162 0 .024-.008.118-.165.235-.162.122-.5.27-1.09.27-.721 0-1.049-.21-1.181-.323a.6.6 0 01-.142-.168l.005.013.006.014.002.009a.996.996 0 00-1.884.64l.947-.316-.003.001c-.875.292-.939.314-.943.317l.001.003.003.006.004.015.012.032c.045.111.1.218.162.321.146.236.324.444.535.624.357.306.841.566 1.476.702v.605a1 1 0 002 0v-.614c1.29-.289 2.245-1.144 2.245-2.386 0-.44-.103-.852-.327-1.212-.22-.355-.52-.6-.82-.77-.555-.316-1.244-.445-1.719-.539-.567-.111-.915-.185-1.143-.305a.5.5 0 01-.1-.07l-.004-.003-.003-.009a.4.4 0 01-.009-.092c0-.158.053-.244.14-.314.109-.086.341-.19.74-.19.373-.001.73.144.997.404a.996.996 0 001.518-1.286l-.699.58.698-.582v-.001l-.002-.001-.002-.003-.006-.006-.016-.018a2.984 2.984 0 00-.178-.182A3.45 3.45 0 0013 8.154V7.5a1 1 0 00-.933-.997A4.75 4.75 0 0121 8.75C21 16 12 20 12 20l.813 1.827.002-.001.003-.001.01-.005.029-.013.097-.045c.081-.037.191-.09.33-.16a23.5 23.5 0 004.509-2.982C20.216 16.568 23 13.248 23 8.75A6.75 6.75 0 0016.25 2Zm-3.437 19.827L12 20l-.813 1.828.813.36.813-.361Z"]', 100, hideThanks);
 	}
 	if (reduxSettings.moveAutoplay && pageLocation === PAGE_LOCATION.Video) {
-		waitForElement('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents ytd-compact-video-renderer, #secondary-inner.ytd-watch-flexy #related #items ytd-compact-video-renderer', 10, autoplayInveral);
+		waitForElement('#secondary-inner #related #contents > yt-lockup-view-model', 10, moveAutoplay);
 	}
 	if (reduxSettings.disableMiniplayer) {
 		waitForElement('.ytp-miniplayer-ui .ytp-miniplayer-close-button', 10, removeMiniplayer);
 	}
-	if (reduxSettings.autoExpandPlaylists) {
-		waitForElement('#section-items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandPlaylists);
-	}
-	if (reduxSettings.autoExpandSubs) {
-		waitForElement('#items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandSubs);
+	if (reduxSettings.autoExpandSidebarSections) {
+		waitForElement('#section-items > ytd-guide-collapsible-entry-renderer #expander-item', 10, expandSidebarSections);
 	}
 	if (reduxSettings.hideShorts && pageLocation === PAGE_LOCATION.SearchResults) {
 		waitForElement('#contents.ytd-section-list-renderer', 10, hideShortsInSearch);

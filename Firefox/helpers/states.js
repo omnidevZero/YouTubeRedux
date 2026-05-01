@@ -29,8 +29,8 @@ const setPageLocation = () => {
 let relatedVideosType = RELATED_VIDEOS_TYPE.Normal;
 
 const getRelatedVideosType = () => {
-	const relatedVideos = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents > ytd-compact-video-renderer');
-	const relatedVideosAlt = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items > ytd-compact-video-renderer');
+	const relatedVideos = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents > yt-lockup-view-model');
+	const relatedVideosAlt = document.querySelector('#secondary-inner.ytd-watch-flexy #related #items > yt-lockup-view-model');
 
 	if (relatedVideos) {
 		return RELATED_VIDEOS_TYPE.Normal;

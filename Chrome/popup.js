@@ -11,17 +11,6 @@ githubButton.onclick = function() {
 	window.open("https://github.com/omnidevZero/YouTubeRedux");
 };
 
-chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
-	globalURL = tabs[0].url;
-	let fields = document.querySelectorAll('fieldset');
-	if (globalURL && !globalURL.includes("www.youtube.com")) {
-		for (let i = 0; i < fields.length; i++) {
-			document.querySelectorAll('fieldset')[i].setAttribute("disabled", "");
-		}
-		document.querySelector('.outer-warning').style.display = "table";
-	}
-});
-
 let settingsElements = document.querySelectorAll('.settings:not(.slider-control)');
 for (let i = 0; i < settingsElements.length; i++) {
 	settingsElements[i].addEventListener('change', function() {
@@ -129,37 +118,6 @@ document.querySelectorAll('label.logo-label').forEach(element => {
 		let preview = document.querySelector('.logo-preview');
 		preview.style.display = 'none';
 	});
-});
-
-//changeChannel button
-document.querySelector('#changeChannel').addEventListener('click', function() {
-	if (document.querySelector('#changeChannelPopup')) return;
-	let popup = document.createElement('div');
-	popup.style = 'display:flex; align-content: center; position: fixed; top: 50%; transform: translate(10%, 100%); background: linear-gradient(0deg, black, grey); padding: 10px; border-radius: 4px; color: white; flex-direction: column; box-shadow: 0px 1px 3px black;';
-	popup.id = 'changeChannelPopup';
-	popup.innerHTML = `
-	<div>Current button text - <span style="color:yellow"></span></div>
-	<div>Do you want to change it?</div>
-	<div style="display: flex; flex-direction: row;">
-	<div><button id="submit" style="color: white; border: 1px solid grey; border-radius: 4px; margin: 8px 4px">Change</button></div>
-	<div><button id="cancel" style="color: white; border: 1px solid grey; border-radius: 4px; margin: 8px 4px">Cancel</button></div>
-	</div>
-	`;
-	popup.querySelector('span').innerText = this.innerText;
-	popup.querySelector('#submit').addEventListener('click', () => {
-		let textChoice = prompt('Enter your desired button label text', 'My channel');
-		if (textChoice) {
-			
-			this.value = textChoice;
-			this.innerText = this.value;
-			saveSettings();
-		}
-		popup.remove();
-	});
-	popup.querySelector('#cancel').addEventListener('click', () => {
-		popup.remove();
-	});
-	document.body.append(popup);
 });
 
 //reset
@@ -284,10 +242,6 @@ function getSettings() {
 function setPopupState() {
 	calculateSizeOptions();
 	getSettings();
-
-	if (currentSettings.myChannelCustomText) {
-		document.querySelector('#changeChannel').innerText = currentSettings.myChannelCustomText;
-	}
 
 	if (!currentSettings.completedSettingsTutorial) {
 		document.querySelector('#right-arrow').classList.add("glow");

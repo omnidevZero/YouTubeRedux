@@ -100,6 +100,12 @@
         .github-logo img {
             height: 48px;
         }
+        .update {
+            padding: 2px;
+            background-color: #0078d4;
+            color: white;
+            border-radius: 5px;
+        }
       </style>
       <script src="./initial-setup.js"></script>
     </head>
@@ -118,6 +124,50 @@
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
+                        <b class="update">3.11.0</b><span> - 01.05.2026</span>
+                        <li>removed the requirement to visit YouTube page in order to change extension settings</li>
+                        <li>improved the quality of old icons for likes/dislikes</li>
+                        <li>fixed an issue that caused livestreams to be hidden when using "Extra layout changes"</li>
+                        <li>CSS fixes for the "Restore old comments styles" setting</li>
+                        <li>fixed an issue that would sometimes cause the video player to shrink by 1px when loading videos</li>
+                        <li>fixed the "Playlists grouping on homepage" setting</li>
+                        <li>fixed the related videos part of the "Disable infinite scrolling" setting</li>
+                        <li>fixed using localized strings for buttons added by the "Disable infinite scrolling" setting</li>
+                        <li>fixed the "Show precise values for likes/dislikes" setting</li>
+                        <li>CSS fixes for the "Use dark theme for playlists" setting</li>
+                        <li>temporarily removed the "True fullscreen mode" setting until it's fixed later</li>
+                        <li>fixed the "Use alternative video page strings" setting</li>
+                        <li>fixed time skips not being hidden when using the "Disable video player action animations" setting</li>
+                        <li>fixed the "Move Auto-play back to related videos" setting and adjusted it to the newest changes since the next auto-played item is no longer exposed in the related videos section</li>
+                        <li>fixed the "Use old upload icon" setting</li>
+                        <li>fixed the "Custom video title font" setting</li>
+                        <li>removed the "Add 'My Channel' button to sidebar menu" setting since it was added back by YouTube</li>
+                        <li>merged the "Auto expand sidebar playlists" and "Auto expand sidebar subscriptions" settings into "Auto expand sidebar sections"</li>
+                        <li>removed the "Don't scroll down to chapters on click" setting since that behavior no longer occurs</li>
+                        <li>fixed the "Video filter settings > No video" setting</li>
+                        <li>removed the "Use list view for channel videos" setting</li>
+                        <li>fixed the "Hide features > Auto-play" setting</li>
+                        <li>removed the "Hide features > Clip" setting</li>
+                        <li>fixed the "Hide features > Thanks" setting</li>
+                        <li>removed the "Hide features > People search for"</li>
+                        <li>removed the "Hide features > YouTube apps" setting</li>
+                        <li>fixed the "Hide features > Related videos age" setting</li>
+                        <li>fixed the "Hide features > Video categories" setting</li>
+                        <li>removed the "Hide features > Licensing info" setting</li>
+                        <li>added the "Hide features > Description extras" setting <note>(disabled by default)</note></li>
+                        <li>fixed the "Hide features > Chapters in description" setting</li>
+                        <li>removed the "Hide features > Music in description" setting</li>
+                        <li>removed the "Hide features > Collapsed chat" setting</li>
+                        <li>removed the "Hide features > Live chat replay" setting</li>
+                        <li>fixed the "Hide features > Dislikes" setting</li>
+                        <li>fixed the "Hide features > Download" setting</li>
+                        <li>fixed the "Hide features > Homepage avatars" setting</li>
+                        <li>fixed the "Hide features > Mix Thumbnail Stack" setting</li>
+                        <li>fixed the "Hide features > AI summary" setting</li>
+                        <li>additional CSS fixes</li>
+                        <li>merged <i>Making YouTube Redux more faithful to pre-Polymer style</i> (<a href="https://github.com/omnidevZero/YouTubeRedux/pull/322">#322</a>) - thanks <a href="https://github.com/Tali64">Tali64</a></li>
+                        <li>merged <i>Fix issue #324 + more tweaks to make extension even closer to pre-Polymer</i> (<a href="https://github.com/omnidevZero/YouTubeRedux/pull/330">#330</a>) - thanks <a href="https://github.com/Tali64">Tali64</a> and <a href="https://github.com/arnavbhate">arnavbhate</a></li>
+                        <li>temporarily removed the above fix for issue #324</li>
                         <b class="update">3.10.0</b><span> - 27.10.2025</span>
                         <li>initial changes to restore the old video player UI - more changes will follow</li>
                         <li>added an option to enable immersive fullscreen mode which hides everything besides the exit button while in fullscreen mode <note>(disabled by default, found within "Video page" section of settings)</note></li>
@@ -229,7 +279,7 @@
                         <li>added an option to hide chapters in search results (enabled by default)</li>
                         <li>added an option to sort channel videos by oldest (enabled by default)</li>
                         <li>fixed shorts not being hidden in search results when using the option to hide them</li>
-                        <li>fixed related videos margin in theater mode (PR#140)</li>
+                        <li>fixed related videos margin in theater mode (<a href="https://github.com/omnidevZero/YouTubeRedux/pull/140">#140</a>) - thanks <a href="https://github.com/spitfirex86">spitfirex86</a></li>
                         <li>fixed subscribe button from being displayed incorrectly</li>
                         <li>fixed an issue subs count scaling when "Trim subscribers count" option was enabled</li>
                         <li>fixed an issue with thumbnails scaling in channel pages</li>

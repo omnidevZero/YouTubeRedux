@@ -33,8 +33,7 @@ const defaultSettings = {
 	"darkerRed": false, 
 	"immersiveFullscreen": false, 
 	"trueFullscreen": false, 
-	"favicon": 3, 
-	"channelListView": false, 
+	"favicon": 3,
 	"squareAvatar": true, 
 	"squareSubs": true,
 	"noHomeScalingRe": true, 
@@ -50,11 +49,8 @@ const defaultSettings = {
 	"hideVoiceSearch": false, 
 	"subBorder": true,
 	"classicLikesStyle": true,
-	"hideApps": false,
 	"classicLikesIconColors": false,
 	"hideJoinButton": false,
-	"hideClip": false,
-	"hidePeopleSearch": true,
 	"trimSubs": false,
 	"trimViews": false,
 	"altStrings": false,
@@ -64,27 +60,21 @@ const defaultSettings = {
 	"altLoaderSmaller": false,
 	"showChangelog": true,
 	"oldIcons": true,
-	"myChannel": false,
-	"myChannelCustomText": "My channel",
 	"extraComments": true,
 	"collapseSidebar": false,
 	"hideRelatedVideoAge": true,
 	"hideVideoCategory": true,
-	"hideLicensingInfo": true,
+	"hideDescriptionExtras": false,
 	"moveAutoplay": true,
 	"disableMiniplayer": false,
 	"hideCountryCode": false,
-	"hideCollapsedChat": false,
-	"hideLiveChatReplay": true,
 	"disableVideoPreview": false,
-	"autoExpandPlaylists": false,
-	"autoExpandSubs": false,
+	"autoExpandSidebarSections": false,
 	"compatibleDislikesRe": true,
 	"hideDislikes": false,
 	"hideDownload": false,
 	"hideChaptersInSearch": true,
 	"hideChaptersInDescription": true,
-	"hideMusicInDescription": false,
 	"hideHeatmap": false,
 	"hideSurveys": true,
 	"hideHomeChannelAvatars": true,
@@ -93,7 +83,6 @@ const defaultSettings = {
 	"hideClickAnimations": true,
 	"hideHashtags": true,
 	"altUploadIcon": true,
-	"ignoreChaptersClick": true,
 	"hideTicketShelf": true,
 	"hideAISummary": true,
 	"hideEndScreen": false,
@@ -149,7 +138,7 @@ function addCustomStyles() {
 		}
 		`,
 		hideCastButton: `/*PLAY ON TV BUTTON*/.ytp-remote-button:not([data-tooltip-target-id="ytp-autonav-toggle-button"]) {display:none !important;}`,
-		hideAutoplayButton: `/*AUTOPLAY BUTTON*/[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"], #redux-autoplay {display:none !important;}`,
+		hideAutoplayButton: `/*AUTOPLAY BUTTON*/[data-tooltip-target-id="ytp-autonav-toggle-button"], #redux-autoplay {display:none !important;}`,
 		smallPlayer: `
 		/*SMALL PLAYER*/
 		#primary.ytd-watch-flexy {
@@ -179,7 +168,7 @@ function addCustomStyles() {
 		darkPlaylist: `
 		/*DARK PLAYLIST*/
 		#playlist.ytd-watch-flexy {
-		transform: translate(-12px, -1px) !important;
+		margin-left: -18px !important;
 		}
 		.header.ytd-playlist-panel-renderer {
 		background-color: #1a1a1a !important;
@@ -234,7 +223,7 @@ function addCustomStyles() {
 		color: #B8B8B8 !important;
 		}
 		#playlist > #container {
-		margin-right: -12px !important;
+		border: none !important;
 		}
 		/* Close button */
 		#secondary ytd-playlist-panel-renderer #header-top-row button svg > path {
@@ -297,11 +286,8 @@ function addCustomStyles() {
 		}
 		`,
 		filterVideo: `
-		#items > yt-related-chip-cloud-renderer.ytd-watch-next-secondary-results-renderer {
+		#related yt-related-chip-cloud-renderer {
 			display: none !important;
-		}
-		#items.ytd-watch-next-secondary-results-renderer ytd-compact-autoplay-renderer:first-child > #contents ytd-compact-video-renderer {
-			padding-bottom: 0 !important;
 		}
 		`,
 		filterMiniRe: `
@@ -410,6 +396,9 @@ function addCustomStyles() {
 		}
 		html[dark] #show-more-related:hover > input {
 			color: white;
+		}
+		#secondary.ytd-watch-flexy {
+			width: 416px !important;
 		}
 		#secondary-inner.ytd-watch-flexy #related {
 			background-color: white;
@@ -612,7 +601,8 @@ function addCustomStyles() {
 			font-size: min(13px, calc((90 / var(--ytd-rich-grid-items-per-row)) * 1px)) !important;
 			line-height: 1.3em !important;
 		}
-		#contents.ytd-rich-grid-renderer #text.ytd-channel-name, 
+		#contents.ytd-rich-grid-renderer #text.ytd-channel-name,
+		#contents.ytd-rich-grid-renderer .ytLockupMetadataViewModelMetadata a[href],
 		[page-subtype="subscriptions"] #text.ytd-channel-name, 
 		[page-subtype="subscriptions"] #metadata-line.ytd-grid-video-renderer, 
 		[page-subtype="channels"] #text.complex-string.ytd-channel-name, 
@@ -685,7 +675,7 @@ function addCustomStyles() {
 		ytd-guide-entry-renderer[active] .title.ytd-guide-entry-renderer {
 			color: white !important;
 		}
-		ytd-rich-section-renderer:not(:nth-child(1)) {
+		[page-subtype="home"] ytd-rich-section-renderer:not(:nth-child(1)) {
 			display:none !important;
 		}
 		[page-subtype="channels"] ytd-two-column-browse-results-renderer .flex-container.ytd-compact-station-renderer {
@@ -807,23 +797,23 @@ function addCustomStyles() {
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
-		yt-subscribe-button-view-model button:not(.yt-spec-button-shape-next--tonal) {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		yt-subscribe-button-view-model button:not(.ytSpecButtonShapeNextTonal) {
 			background-color: #f00 !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button):hover,
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
-		yt-subscribe-button-view-model button:not(.yt-spec-button-shape-next--tonal):hover {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button):hover,
+		yt-subscribe-button-view-model button:not(.ytSpecButtonShapeNextTonal):hover {
 			background-color: #d90a17 !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button)::before,
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
-		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
-		yt-subscribe-button-view-model button:not(.yt-spec-button-shape-next--tonal)::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
+		#subscribe-button > ytd-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button)::before,
+		yt-subscribe-button-view-model button:not(.ytSpecButtonShapeNextTonal)::before {
 				content: url('${browser.runtime.getURL('/images/sub-icon.png')}');
 				background-size: auto !important;
 				width: 16px !important;
@@ -832,8 +822,8 @@ function addCustomStyles() {
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button[subscribed]::before,
 		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button[subscribed]::before,
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button.yt-spec-button-shape-next--tonal::before,
-		#notification-preference-button yt-button-shape > button.yt-spec-button-shape-next--tonal::before {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button.ytSpecButtonShapeNextTonal::before,
+		#notification-preference-button yt-button-shape > button.ytSpecButtonShapeNextTonal::before {
 			content: "";
 			border-right: 1px solid #909090;
 			border-bottom: 1px solid #909090;
@@ -841,7 +831,7 @@ function addCustomStyles() {
 			width: 3px;
 			transform: rotate(45deg);
 			margin-left: 2px;
-			margin-right: 10px;
+			margin-right: 4px;
 			margin-bottom: 2px;
 		}
 		#sponsor-button.ytd-video-owner-renderer, #analytics-button.ytd-video-owner-renderer {
@@ -913,7 +903,7 @@ function addCustomStyles() {
 		ytd-searchbox[has-focus] #container,
 		#container.ytd-searchbox,
 		body > iframe + div:last-of-type,
-		yt-searchbox > .ytSearchboxComponentInputBox {
+		yt-searchbox .ytSearchboxComponentInputBox {
 			margin-left: 0 !important;
 		}
 		#container.ytd-searchbox,
@@ -947,7 +937,7 @@ function addCustomStyles() {
 		`,
 		rearrangeInfo2: `
         /*VID REARRANGE STYLES*/
-        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, ytd-segmented-like-dislike-button-renderer):not([is-hidden]),
+        .ytd-video-primary-info-renderer > #top-level-buttons-computed > *:not(ytd-toggle-button-renderer, segmented-like-dislike-button-view-model):not([is-hidden]),
 		.ytd-video-primary-info-renderer > #top-level-buttons-computed + #flexible-item-buttons {
             display: none;
         }
@@ -1164,7 +1154,8 @@ function addCustomStyles() {
 		#redux-views-count {
 			font-size: 1.8rem !important;
 		}
-		ytd-segmented-like-dislike-button-renderer yt-animated-rolling-number {
+		segmented-like-dislike-button-view-model .ytSpecButtonShapeNextButtonTextContent,
+		segmented-like-dislike-button-view-model dislike-button-view-model button {
 			font-size: 1.2rem !important;
 			color: var(--redux-spec-text-secondary) !important;
 		}
@@ -1215,7 +1206,6 @@ function addCustomStyles() {
 			display: contents;
 			*/
 		}
-		#above-the-fold ytd-segmented-like-dislike-button-renderer,
 		#above-the-fold segmented-like-dislike-button-view-model {
 			order: 99;
 			margin-left: auto;
@@ -1234,7 +1224,7 @@ function addCustomStyles() {
 		#above-the-fold #flexible-item-buttons > * button,
 		#above-the-fold #top-level-buttons-computed button,
 		#above-the-fold #button-shape button,
-		ytd-segmented-like-dislike-button-renderer button {
+		segmented-like-dislike-button-view-model button {
 			background-color: unset !important;
 			font-size: 12px;
 			font-weight: 400;
@@ -1245,7 +1235,7 @@ function addCustomStyles() {
 			font-size: 12px;
 			font-weight: 400;
 		}
-		ytd-segmented-like-dislike-button-renderer #segmented-like-button button::after {
+		segmented-like-dislike-button-view-model #segmented-like-button button::after {
 			display: none;
 		}
 		#above-the-fold #flexible-item-buttons > *:last-child {
@@ -1312,8 +1302,8 @@ function addCustomStyles() {
 			background-color: #cc181e !important;
 		}
 		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) > tp-yt-paper-button:not([subscribed]):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button),
-		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
-		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not(.yt-spec-button-shape-next--tonal):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
+		#subscribe-button > ytd-subscribe-button-renderer:not(.style-primary) yt-button-shape > button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button yt-button-shape > button),
+		#subscribe-button > ytd-button-renderer:not(.style-primary) > a > tp-yt-paper-button:not(.ytSpecButtonShapeNextTonal):not([page-subtype="subscriptions"] #subscribe-button tp-yt-paper-button) {
 			background-color: #cc181e !important;
 		}
 		.badge-style-type-live-now.ytd-badge-supported-renderer {
@@ -1352,45 +1342,6 @@ function addCustomStyles() {
 		[fullscreen] .ytp-fullscreen-button {
 			position: absolute !important;
 			right: 0 !important;
-		}
-		`,
-		channelListView: `
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items {
-			counter-reset: video;
-		}
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer {
-			width: 100% !important;
-			margin-bottom: 0 !important;
-			counter-increment: video;
-		}
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #dismissible::before {
-			content: counter(video);
-			top: -36px;
-			position: relative;
-			margin-right: 10px;
-			color: var(--redux-spec-text-secondary) !important;
-			display: inline-block;
-			min-width: 3ch;
-			text-align: center;
-		}
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #dismissible {
-			position: relative !important;
-		}
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer ytd-thumbnail {
-			display: inline-block !important;
-			max-width: 150px !important;
-			max-height: 84px !important;
-		}
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #details.ytd-grid-video-renderer {
-			position: absolute !important;
-			top: 0 !important;
-			display: inline-block !important;
-			margin-left: 10px !important;
-			transform: translateY(-50%) !important;
-			top: 50% !important;
-		}
-		[page-subtype="channels"] #contents > ytd-item-section-renderer > #contents > ytd-grid-renderer > #items > ytd-grid-video-renderer #details.ytd-grid-video-renderer > #meta > h3.ytd-grid-video-renderer {
-			margin: 0px 0 1px 0 !important;
 		}
 		`,
 		squareAvatar: `
@@ -1451,7 +1402,7 @@ function addCustomStyles() {
 			padding: 5px 10px !important;
 			height: 27px;
 		}
-		ytd-guide-signin-promo-renderer #sign-in-button div.yt-spec-button-shape-next__icon,
+		ytd-guide-signin-promo-renderer #sign-in-button div.ytSpecButtonShapeNextIcon,
 		ytd-guide-signin-promo-renderer #sign-in-button yt-icon {
 			display: none !important;
 		}
@@ -1459,9 +1410,6 @@ function addCustomStyles() {
 			margin-left: 0 !important;
 			text-transform: none !important;
 			font-size: 11px !important;
-		}
-		#redux-mychannel div {
-			padding: 0 10px !important;
 		}
 		`,
 		// altVideoLayout: `
@@ -1505,7 +1453,7 @@ function addCustomStyles() {
 		// }
 		// `,
 		customTitleFont: `
-		.title.style-scope.ytd-video-primary-info-renderer yt-formatted-string.ytd-video-primary-info-renderer {
+		#above-the-fold #title yt-formatted-string {
 			font-family: "${reduxSettings.titleFontValue}" !important;
 		}
 		`,
@@ -1526,6 +1474,7 @@ function addCustomStyles() {
 			border-top: 1px solid #ccc;
 			border-right: 1px solid #ccc;
 			border-bottom: 1px solid #ccc;
+			max-height: unset !important;
 		}
 		html[dark] #reduxSubDiv > yt-formatted-string,
 		html[dark] #reduxSubDiv > #redux-trim-span {
@@ -1550,15 +1499,15 @@ function addCustomStyles() {
 			border-bottom-right-radius: 0px !important;
 		}
 		#reduxSubDiv tp-yt-paper-button[subscribed],
-		#reduxSubDiv button.yt-spec-button-shape-next--tonal {
+		#reduxSubDiv button.ytSpecButtonShapeNextTonal {
 			border: 1px solid #ccc;
 			color: var(--redux-spec-text-secondary);
 		}
 		html[dark] #reduxSubDiv tp-yt-paper-button[subscribed],
-		html[dark] #reduxSubDiv button.yt-spec-button-shape-next--tonal {
+		html[dark] #reduxSubDiv button.ytSpecButtonShapeNextTonal {
 			border: 1px solid var(--redux-spec-10-percent-layer);
 		}
-		#notification-preference-button yt-button-shape > button.yt-spec-button-shape-next--tonal::after {
+		#notification-preference-button yt-button-shape > button.ytSpecButtonShapeNextTonal::after {
 			content: "";
 			position: absolute;
 			right: 0;
@@ -1566,7 +1515,7 @@ function addCustomStyles() {
 			width: 24px;
 			border-left: 1px solid #ccc;
 		}
-		html[dark] #notification-preference-button yt-button-shape > button.yt-spec-button-shape-next--tonal::after {
+		html[dark] #notification-preference-button yt-button-shape > button.ytSpecButtonShapeNextTonal::after {
 			border-left: 1px solid var(--redux-spec-10-percent-layer);
 		}
 		`,
@@ -1579,6 +1528,7 @@ function addCustomStyles() {
 		#endpoint[href="/playlist?list=LL"] yt-icon:first-of-type {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
+			opacity: 0.66;
 			height: 17px !important;
 			width: 17px !important;
 			padding-left: 3px !important;
@@ -1593,6 +1543,7 @@ function addCustomStyles() {
 		like-button-view-model yt-icon {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
+			opacity: 0.66;
 			height: 17px !important;
 			width: 17px !important;
 		}
@@ -1604,6 +1555,7 @@ function addCustomStyles() {
 		dislike-button-view-model .ytIconWrapperHost {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
+			opacity: 0.66;
 			height: 17px !important;
 			width: 17px !important;
 		}
@@ -1626,6 +1578,7 @@ function addCustomStyles() {
 		ytd-toggle-button-renderer#like-button .ytIconWrapperHost > span {
 			content: url('${browser.runtime.getURL('/images/like.png')}') !important;
 			filter: contrast(0);
+			opacity: 0.66;
 			height: 17px !important;
 			width: 17px !important;
 		}
@@ -1636,6 +1589,7 @@ function addCustomStyles() {
 		ytd-toggle-button-renderer#dislike-button .ytIconWrapperHost > span {
 			content: url('${browser.runtime.getURL('/images/dislike.png')}') !important;
 			filter: contrast(0);
+			opacity: 0.66;
 			height: 17px !important;
 			width: 17px !important;
 		}
@@ -1650,6 +1604,7 @@ function addCustomStyles() {
 		like-button-view-model button[aria-pressed="true"] yt-icon {
 			content: url('${browser.runtime.getURL('/images/like-pressed.png')}') !important;
 			filter: contrast(1);
+			opacity: 1;
 		}
 			
 		/* TOP + COMMENTS BUTTONS - DISLIKE: PRESSED */
@@ -1662,11 +1617,7 @@ function addCustomStyles() {
 		dislike-button-view-model button[aria-pressed="true"] .ytIconWrapperHost {
 			content: url('${browser.runtime.getURL('/images/dislike-pressed.png')}') !important;
 			filter: contrast(1);
-		}
-		`,
-		hideApps: `
-		ytd-masthead #buttons > ytd-topbar-menu-button-renderer:nth-child(2) {
-			display: none !important;
+			opacity: 1;
 		}
 		`,
 		classicLikesIconColors: `
@@ -1708,7 +1659,7 @@ function addCustomStyles() {
 		`,
 		altStrings: `
 		#date > yt-formatted-string::before, 
-		.redux-moved-date::before {
+		#redux-moved-date::before {
 			content: 'Published on ';
 		}
 		`,
@@ -1717,16 +1668,16 @@ function addCustomStyles() {
 			background: none;
 			padding: 0;
 		}
-		#end ytd-button-renderer:first-child span {
+		#end ytd-button-renderer:first-child span[role="text"] {
 			display: none;
 		}
-		#end ytd-button-renderer:first-child .yt-spec-button-shape-next__icon {
+		#end ytd-button-renderer:first-child .ytSpecButtonShapeNextIcon {
 			content: url('${browser.runtime.getURL('/images/old-upload.svg')}') !important;
 			filter: contrast(0.25);
 			height: 20px;
 			width: 17px;
 		}
-		ytd-masthead[dark] #end ytd-button-renderer:first-child .yt-spec-button-shape-next__icon {
+		ytd-masthead[dark] #end ytd-button-renderer:first-child .ytSpecButtonShapeNextIcon {
 			content: url('${browser.runtime.getURL('/images/old-upload-dark.svg')}') !important;
 			filter: contrast(1);
 			height: 20px;
@@ -1758,15 +1709,13 @@ function addCustomStyles() {
 			padding-left: 10px !important;
     		padding-right: 10px !important;
 		}
-		[page-subtype="channels"] #chips-content {
-			margin-left: 8px;
-		}
 		[page-subtype="channels"] ytd-rich-grid-renderer {
 			--ytd-rich-grid-items-per-row: ${reduxSettings.gridItems} !important;
 		}
 		`,
 		noPlayerActionAnimations: `
 		#ytd-player .ytp-bezel,
+		#ytd-player .ytp-seek-overlay,
 		.ytp-doubletap-ui,
 		.ytp-doubletap-ui-legacy {
 			display: none !important;
@@ -2402,7 +2351,7 @@ function addCustomStyles() {
 		}
 		`,
 		extraComments: `
-		#content-text.ytd-comment-renderer {
+		ytd-comment-view-model #content-text {
 			line-height: 17px !important;
 		}
 		#placeholder-area.ytd-comment-simplebox-renderer {
@@ -2508,17 +2457,20 @@ function addCustomStyles() {
 			content: '•';
 			margin: 0 5px;
 		}
-		#vote-count-middle.ytd-comment-action-buttons-renderer {
+		#vote-count-middle {
 			order: 2;
 			margin-top: 0px !important;
 			margin-right: 0px !important;
 		}
-		#vote-count-left.ytd-comment-action-buttons-renderer[hidden] + #like-button.ytd-comment-action-buttons-renderer {
+		#like-button {
 			order: 3;
 			margin-left: 0px !important;
 		}
-		#dislike-button.ytd-comment-action-buttons-renderer {
+		#dislike-button {
 			order: 4;
+		}
+		.ytSubThreadSubThreadContent {
+			margin-top: 0 !important;
 		}
 		#reply-button-end yt-button-shape > button {
 			padding-left: 0;
@@ -2536,9 +2488,6 @@ function addCustomStyles() {
 		#reply-button-end yt-button-shape span::after {
 			content: '•';
 			margin: 0 5px;
-		}
-		#reply-button-end > ytd-button-renderer {
-			margin-left: 0px !important;
 		}
 		#comments #sort-menu #label.yt-dropdown-menu {
 			box-sizing: border-box;
@@ -2600,11 +2549,6 @@ function addCustomStyles() {
 			display: none !important;
 		}
 		`,
-		hidePeopleSearch: `
-		ytd-search ytd-horizontal-card-list-renderer {
-			display: none !important;
-		}
-		`,
 		collapseSidebar: `
 		ytd-mini-guide-renderer[mini-guide-visible] {
 			display: none !important;
@@ -2614,19 +2558,18 @@ function addCustomStyles() {
 		}
 		`,
 		hideRelatedVideoAge: `
-		#related #metadata-line.ytd-video-meta-block > .ytd-video-meta-block:not(:last-of-type):after,
-		#related #metadata-line.ytd-video-meta-block span:nth-of-type(2) {
+		#related yt-content-metadata-view-model [role="group"]:nth-child(2) > span:not(:first-child) {
 			display: none !important;
 		}
 		`,
 		hideVideoCategory: `
-		#meta.ytd-watch-flexy ytd-metadata-row-container-renderer #always-shown,
-		#primary-inner > ytd-watch-metadata #always-shown {
+		#description .videoAttributesSectionViewModelHost,
+		#description ytd-horizontal-card-list-renderer:not([modern-chapters]) {
 			display: none !important;
 		}
 		`,
-		hideLicensingInfo: `
-		#meta.ytd-watch-flexy ytd-metadata-row-container-renderer #collapsible {
+		hideDescriptionExtras: `
+		#description [slot="extra-content"] {
 			display: none !important;
 		}
 		`,
@@ -2702,9 +2645,10 @@ function addCustomStyles() {
 		ytd-item-section-renderer > #redux-autoplay {
 			margin-bottom: 8px;
 		}
-		[class="ytp-button"][data-tooltip-target-id="ytp-autonav-toggle-button"] {
+		[data-tooltip-target-id="ytp-autonav-toggle-button"] {
 			display: none !important;
 		} 
+		/* disabled due to YT no longer exposing next autoplayed item in the related column
 		#secondary-inner.ytd-watch-flexy #related #items ytd-item-section-renderer #contents > :first-child, 
 		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-video-renderer:first-child,
 		#secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-radio-renderer:first-child,
@@ -2730,6 +2674,7 @@ function addCustomStyles() {
 		html[dark] #secondary > #secondary-inner > #related > ytd-watch-next-secondary-results-renderer > #items > ytd-compact-playlist-renderer:first-child::after {
 			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 		}
+		*/
 		#redux-autoplay-upnext {
 			font-family: Roboto, Arial, sans-serif;
 			color: #222222;
@@ -2759,16 +2704,6 @@ function addCustomStyles() {
 			display: none !important;
 		}
 		`,
-		hideCollapsedChat: `
-		ytd-live-chat-frame[collapsed] {
-			display: none !important;
-		}
-		`,
-		hideLiveChatReplay: `
-		#bottom-row > #teaser-carousel {
-			display: none !important;
-		}
-		`,
 		disableVideoPreview: `
 		#thumbnail > #mouseover-overlay,
 		ytd-thumbnail #hover-overlays,
@@ -2777,13 +2712,8 @@ function addCustomStyles() {
 			display: none !important;
 		}
 		`,
-		autoExpandPlaylists: `
-		#section-items > ytd-guide-collapsible-entry-renderer #collapser-item {
-			display: none !important;
-		}
-		`,
-		autoExpandSubs: `
-		#items > ytd-guide-collapsible-entry-renderer #collapser-item {
+		autoExpandSidebarSections: `
+		#guide-renderer #collapser-item {
 			display: none !important;
 		}
 		`,
@@ -2796,13 +2726,12 @@ function addCustomStyles() {
 		}
 		`,
 		hideDislikes: `
-		.top-level-buttons.ytd-menu-renderer > ytd-toggle-button-renderer:last-child {
+		segmented-like-dislike-button-view-model dislike-button-view-model {
 			display: none !important;
 		}
 		`,
 		hideDownload: `
-		#top-level-buttons-computed ytd-download-button-renderer,
-		#info ytd-download-button-renderer {
+		#above-the-fold ytd-download-button-renderer {
 			display: none !important;
 		}
 		`,
@@ -2821,12 +2750,7 @@ function addCustomStyles() {
 		}
 		`,
 		hideChaptersInDescription: `
-		#primary ytd-horizontal-card-list-renderer {
-			display: none !important;
-		}
-		`,
-		hideMusicInDescription: `
-		#primary ytd-video-description-music-section-renderer {
+		#description ytd-horizontal-card-list-renderer[modern-chapters] {
 			display: none !important;
 		}
 		`,
@@ -2836,7 +2760,8 @@ function addCustomStyles() {
 		}
 		`,
 		hideSurveys: `
-		#attached-survey {
+		#attached-survey,
+		ytd-feed-nudge-renderer {
 			display: none !important;
 		}
 		`,
@@ -2844,17 +2769,14 @@ function addCustomStyles() {
 		#avatar-link.ytd-rich-grid-media,
 		#details.ytd-rich-grid-media > #avatar-container,
 		[page-subtype="home"] .yt-lockup-metadata-view-model-wiz__avatar,
-		[page-subtype="home"] .yt-lockup-metadata-view-model__avatar {
+		[page-subtype="home"] .yt-lockup-metadata-view-model__avatar,
+		[page-subtype="home"] .ytLockupMetadataViewModelAvatar {
 			display: none !important;
 		}
 		`,
 		hideMixTopStack: `
-		yt-collections-stack *[class*='collections-stack'] {
+		yt-collections-stack *[class*='ytCollectionsStackCollectionStack'] {
 			display: none !important;
-		}
-		ytd-compact-radio-renderer[collections] .modern-collection-parent.ytd-compact-radio-renderer,
-		ytd-compact-radio-renderer[collections] .details.ytd-compact-radio-renderer {
-			margin-top: 0px !important;
 		}
 		`,
 		hideClickAnimations: `
@@ -2872,18 +2794,13 @@ function addCustomStyles() {
 			display: none !important;
 		}
 		`,
-		ignoreChaptersClick: `
-		.ytp-chapter-container {
-			pointer-events: none;
-		}
-		`,
 		hideTicketShelf: `
 		#ticket-shelf {
 			display: none !important;
 		}
 		`,
 		hideAISummary: `
-		#primary-inner #expandable-metadata {
+		#primary-inner #video-summary {
 			display: none !important;
 		}
 		`,
