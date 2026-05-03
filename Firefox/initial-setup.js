@@ -62,7 +62,8 @@ const defaultSettings = {
 	"oldIcons": true,
 	"extraComments": true,
 	"collapseSidebar": false,
-	"hideRelatedVideoAge": true,
+	"hideShorts": true,
+	"hideRelatedVideoAgeRe": false,
 	"hideVideoCategory": true,
 	"hideDescriptionExtras": false,
 	"moveAutoplay": true,
@@ -645,6 +646,9 @@ function addCustomStyles() {
 			background: #fff !important;
 			box-shadow: 0 1px 2px rgba(0,0,0,.1) !important;
 		}
+		[page-subtype="home"] .ytLockupMetadataViewModelAvatar {
+			margin-top: 8px !important;
+		}
 		[page-subtype="home"] #contents.ytd-rich-grid-renderer {
 			margin-top: 12px !important;
 			padding-left: 32px !important;
@@ -675,8 +679,9 @@ function addCustomStyles() {
 		ytd-guide-entry-renderer[active] .title.ytd-guide-entry-renderer {
 			color: white !important;
 		}
-		[page-subtype="home"] ytd-rich-section-renderer:not(:nth-child(1)) {
-			display:none !important;
+		[page-subtype="home"] ytd-rich-section-renderer:not(:nth-child(1)),
+		[page-subtype="subscriptions"] ytd-rich-section-renderer:not(:nth-child(1)) {
+			display: none !important;
 		}
 		[page-subtype="channels"] ytd-two-column-browse-results-renderer .flex-container.ytd-compact-station-renderer {
 			background: none !important;
@@ -2557,7 +2562,7 @@ function addCustomStyles() {
 			margin-left: 0 !important;
 		}
 		`,
-		hideRelatedVideoAge: `
+		hideRelatedVideoAgeRe: `
 		#related yt-content-metadata-view-model [role="group"]:nth-child(2) > span:not(:first-child) {
 			display: none !important;
 		}

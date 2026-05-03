@@ -322,20 +322,31 @@
         .toggle + span {
             display: flex;
             height: 100%;
-            opacity: 0.35;
+            opacity: 1;
             border: 1px solid #909090;
-            background-color: white;
+            background-color: #3d74ff;
+            color: white;
             cursor: pointer;
             padding: 0px 5px 0 5px;
             border-radius: 4px;
+            justify-content: center;
+            align-items: center;
         }
         .toggle:checked + span {
-            opacity: 1;
+            opacity: 0.35;
+            background-color: white;
+            color: black;
         }
-        .toggle + span::before {
+        .toggle:not(:checked) + span::before {
+            content: "✔";
+            color: #00ff1e;
+        }
+        .toggle:checked + span::before {
+            content: "✖";
+        }
+        .toggle + span::after {
             content: attr(aria-label);
-            display: flex;
-            align-items: center;
+            margin-left: 5px;
         }
         .hide label {
             position: relative;
@@ -561,22 +572,22 @@
                     </div>
                     <div id="page-3" class="page">
                         <div style="display: flex; flex-direction: column;">
-                            <redux style="margin: 5px 0 5px 0;">Hide features
+                            <redux style="margin: 5px 0 5px 0;">Features visibility
                                 <div class="tooltip" style="right: 1px; font-weight: normal; font-family: unset;">
-                                    <span class="tooltip-text" style="font-weight: normal; transform: translateY(-5%);">Select what you want to hide:
+                                    <span class="tooltip-text" style="font-weight: normal; transform: translateY(-5%);">If not enabled:
+                                        <br>• Shorts - removes the button from homepage and hides shorts in search results
+                                        <br>• Related videos age - removes this info (time since upload date) from related videos
                                         <br>• Auto-play - removes the button from video player controls
                                         <br>• Play on TV - removes the button from video player controls; AKA the Cast button which allows you to cast video to the paired TV
                                         <br>• Join - removes the button from channel actions under the video player
                                         <br>• Thanks - removes the button from video actions under the video player
                                         <br>• Channel avatars on homepage - no effect when 'Extra layout changes' setting is enabled, which already hides channel avatars
                                         <br>• Search with your voice - removes the button to the right of the search bar
-                                        <br>• Related videos age - removes this info (time since upload date) from related videos
                                         <br>• Description extras - removes all extra info from video description
                                         <br>• Video categories - removes this info from video description
                                         <br>• Country code - removes this info from YouTube logo
                                         <br>• Dislikes - removes the dislike button and count from video page
                                         <br>• Download - removes the button from video page
-                                        <br>• Shorts - removes the button from homepage and hides shorts in search results
                                         <br>• Chapters in description - removes the chapters section from video description
                                         <br>• Chapters in search - removes the chapters section from search results
                                         <br>• Heatmap - removes the heatmap from above the video progress bar
@@ -594,12 +605,13 @@
                             </redux>
                             <div style="padding-top: 0; padding-bottom: 0; display:flex; flex-basis: 100%;" class="hide">
                                 <div style="display: flex; width: 100%; justify-content: center; flex-wrap: wrap;" class="scrollable">
+                                    <label class="toggle-label"><input type="checkbox" name="hideShorts" class="settings toggle"></input><span aria-label="Shorts"></span></label>
+                                    <label class="toggle-label"><input type="checkbox" name="hideRelatedVideoAgeRe" class="settings toggle"></input><span aria-label="Related videos age"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideAutoplayButton" class="settings toggle"></input><span aria-label="Auto-play"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideVoiceSearch" class="settings toggle"></input><span aria-label="Search with your voice"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideCastButton" class="settings toggle"></input><span aria-label="Play on TV"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideJoinButton" class="settings toggle"></input><span aria-label="Join"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideThanks" class="settings toggle"></input><span aria-label="Thanks"></span></label>
-                                    <label class="toggle-label"><input type="checkbox" name="hideRelatedVideoAge" class="settings toggle"></input><span aria-label="Related videos age"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideDescriptionExtras" class="settings toggle"></input><span aria-label="Description extras"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideVideoCategory" class="settings toggle"></input><span aria-label="Video categories"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideChaptersInDescription" class="settings toggle"></input><span aria-label="Chapters in description"></span></label>
@@ -607,7 +619,6 @@
                                     <label class="toggle-label"><input type="checkbox" name="hideCountryCode" class="settings toggle"></input><span aria-label="Country code"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideDislikes" class="settings toggle"></input><span aria-label="Dislikes"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideDownload" class="settings toggle"></input><span aria-label="Download"></span></label>
-                                    <label class="toggle-label"><input type="checkbox" name="hideShorts" class="settings toggle"></input><span aria-label="Shorts"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideHeatmap" class="settings toggle"></input><span aria-label="Heatmap"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideSurveys" class="settings toggle"></input><span aria-label="Surveys"></span></label>
                                     <label class="toggle-label"><input type="checkbox" name="hideHomeChannelAvatars" class="settings toggle"></input><span aria-label="Homepage avatars"></span></label>

@@ -433,7 +433,8 @@ yt-light-shape {
     padding: calc((var(--yt-delhi-big-mode-pill-height, 56px) - 24px)/2) !important;
 }
 ytd-rich-item-renderer .ytSpecButtonShapeNextMono.ytSpecButtonShapeNextText,
-#related yt-lockup-view-model .ytSpecButtonShapeNextMono.ytSpecButtonShapeNextText {
+#related yt-lockup-view-model .ytSpecButtonShapeNextMono.ytSpecButtonShapeNextText,
+#comment-container #action-menu button {
     opacity: 0.2 !important;
 }
 ytd-rich-item-renderer .ytSpecButtonShapeNextMono.ytSpecButtonShapeNextText:hover,

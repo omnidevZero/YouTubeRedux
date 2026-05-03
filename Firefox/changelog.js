@@ -41,3 +41,19 @@ function addShowMore() {
 
 handleChangelog();
 addShowMore();
+
+browser.storage.sync.get(['reduxSettings'], function(result) {
+	if (result) {
+		const settings = result.reduxSettings;
+		const changelogToggle = document.querySelector('input[name="showChangelog"]');
+		changelogToggle.checked = settings.showChangelog ? true : false;
+		changelogToggle.addEventListener('change', function() {
+			settings.showChangelog = this.checked;
+			browser.storage.sync.set({ reduxSettings: settings });
+		});
+	}
+});
+
+document.querySelector('.point-link').addEventListener('click', () => {
+	document.querySelector('.pointer').style.display = 'block';
+});

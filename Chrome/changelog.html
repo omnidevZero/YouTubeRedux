@@ -74,12 +74,16 @@
             font-weight: normal;
             opacity: 0.75;
         }
-        @keyframes scroll {
+        @keyframes point {
             0% {
-                transform: translate(500px, 0);
+                transform: scale(20) rotate(45deg);
+                width: 30px;
+                filter: hue-rotate(0deg);
             }
             100% {
-                transform: translate(-250px, 0);
+                transform: scale(20) rotate(45deg);
+                width: 100px;
+                filter: hue-rotate(360deg);
             }
         }
         .important {
@@ -101,10 +105,70 @@
             height: 48px;
         }
         .update {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             padding: 2px;
-            background-color: #0078d4;
+            margin: 10px 0;
+            background-image: linear-gradient(135deg, #0078d4 0%, rgba(255, 255, 255, 0) 75%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 8px;
             color: white;
-            border-radius: 5px;
+            text-shadow: 1px 1px 2px black;
+            width: 66%;
+        }
+        .update div:nth-child(1) {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .update div:nth-child(2) {
+            font-size: 11px;
+        }
+        .pointer {
+            position: absolute;
+            animation-name: point;
+            animation-iteration-count: infinite;
+            animation-duration: 0.5s;
+            animation-direction: alternate;
+            text-align: end;
+            pointer-events: none;
+            display: none;
+        }
+        .toggle {
+            display: none;
+        }        
+        .toggle + span {
+            display: flex;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            height: 25px;
+            opacity: 1;
+            border: 1px solid #909090;
+            background-color: #3d74ff;
+            color: white;
+            cursor: pointer;
+            padding: 0px 5px 0 5px;
+            border-radius: 4px;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+        .toggle:not(:checked) + span {
+            opacity: 0.35;
+            background-color: white;
+            color: black;
+        }
+        .toggle:checked + span::before {
+            content: "✔";
+            color: #00ff1e;
+        }
+        .toggle:not(:checked) + span::before {
+            content: "✖";
+        }
+        .toggle + span::after {
+            content: attr(aria-label);
+            margin-left: 5px;
         }
       </style>
       <script src="./initial-setup.js"></script>
@@ -120,11 +184,18 @@
         </a>
         <div>
             <div id="youtube-redux-header">YouTube Redux has been updated<span id="version"></span>!</div>
+            <label class="toggle-label"><input type="checkbox" name="showChangelog" class="settings toggle"></input><span aria-label="Show changelog on updates"><div class="pointer">👈</div></span></label>
             <div id="main">
                 <div class="header-main" style="margin-top:20px;">What's new?</div> 
                 <div id="changes">
                     <ul>
-                        <b class="update">3.11.0</b><span> - 01.05.2026</span>
+                        <div class="update"><div>3.12.0</div><div>03.05.2026</div></div>
+                        <li>made it <a class="point-link" href="#">even more obvious</a> that showing this page can be disabled</li>
+                        <li>made the "Hide features > Related videos age" setting disabled by default</li>
+                        <li>reworked the "Hide features" section of settings so that it highlights features that will remain visible and renamed it to "Features visibility"</li>
+                        <li>fixed additional sections like "Most relevant" or "Shorts" showing up on Subscriptions page</li>
+                        <li>fixed an issue with displaying dislikes button and count when using the "Show precise values for likes/dislikes" setting</li>
+                        <div class="update"><div>3.11.0</div><div>01.05.2026</div></div>
                         <li>removed the requirement to visit YouTube page in order to change extension settings</li>
                         <li>improved the quality of old icons for likes/dislikes</li>
                         <li>fixed an issue that caused livestreams to be hidden when using "Extra layout changes"</li>
@@ -168,102 +239,102 @@
                         <li>merged <i>Making YouTube Redux more faithful to pre-Polymer style</i> (<a href="https://github.com/omnidevZero/YouTubeRedux/pull/322">#322</a>) - thanks <a href="https://github.com/Tali64">Tali64</a></li>
                         <li>merged <i>Fix issue #324 + more tweaks to make extension even closer to pre-Polymer</i> (<a href="https://github.com/omnidevZero/YouTubeRedux/pull/330">#330</a>) - thanks <a href="https://github.com/Tali64">Tali64</a> and <a href="https://github.com/arnavbhate">arnavbhate</a></li>
                         <li>temporarily removed the above fix for issue #324</li>
-                        <b class="update">3.10.0</b><span> - 27.10.2025</span>
+                        <div class="update"><div>3.10.0</div><div>27.10.2025</div></div>
                         <li>initial changes to restore the old video player UI - more changes will follow</li>
                         <li>added an option to enable immersive fullscreen mode which hides everything besides the exit button while in fullscreen mode <note>(disabled by default, found within "Video page" section of settings)</note></li>
                         <li>fixes for "Restore old icons" setting</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.9.4</b><span> - 11.10.2025</span>
+                        <div class="update"><div>3.9.4</div><div>11.10.2025</div></div>
                         <li>added an option to hide extra search categories like "Channels new to you", "Previously watched", "From related searches" from search results <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>fixed hiding homepage avatars</li>
                         <li>fixed hiding shorts in search results</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.9.3</b><span> - 08.08.2025</span>
+                        <div class="update"><div>3.9.3</div><div>08.08.2025</div></div>
                         <li>fixed the option to hide channel avatars on homepage and merged it with a similar option</li>
-                        <b class="update">3.9.2</b><span> - 03.08.2025</span>
+                        <div class="update"><div>3.9.2</div><div>03.08.2025</div></div>
                         <li>fixed new video player controls not displaying properly <note>(future updates will attempt to restore the previous video player controls UI once the new one is widely available as it's still being rolled out to users)</note></li>
                         <li>fixed likes/dislikes buttons' default look and their related settings</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.9.1</b><span> - 28.07.2025</span>
+                        <div class="update"><div>3.9.1</div><div>28.07.2025</div></div>
                         <li>updated download permissions to be optional (used for exporting settings to file)</li>
                         <li>added an option to export and import settings manually, skipping additional permissions</li>
-                        <b class="update">3.9.0</b><span> - 26.07.2025</span>
+                        <div class="update"><div>3.9.0</div><div>26.07.2025</div></div>
                         <li>added an option to export and import settings <note>(found in the top-right corner of settings window)</note></li>
                         <li>CSS fixes</li>
-                        <b class="update">3.8.4</b><span> - 22.06.2025</span>
+                        <div class="update"><div>3.8.4</div><div>22.06.2025</div></div>
                         <li>fixed misaligned views count</li>
-                        <b class="update">3.8.3</b><span> - 10.05.2025</span>
+                        <div class="update"><div>3.8.3</div><div>10.05.2025</div></div>
                         <li>number of videos per row setting now works on pages other than homepage</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.8.2</b><span> - 05.05.2025</span>
+                        <div class="update"><div>3.8.2</div><div>05.05.2025</div></div>
                         <li>added an option to disable end screen cards (thumbnails linking to other creator's videos) from the end of a video <note>(disabled by default, found within "Hide features" section of settings)</note></li>
                         <li>CSS fixes</li>
-                        <b class="update">3.8.1</b><span> - 26.04.2025</span>
+                        <div class="update"><div>3.8.1</div><div>26.04.2025</div></div>
                         <li>fixed shifted homepage sidebar for users that didn't get new layout changes yet</li>
-                        <b class="update">3.8.0</b><span> - 26.04.2025</span>
+                        <div class="update"><div>3.8.0</div><div>26.04.2025</div></div>
                         <li>fixed visual issues on homepage that occurred due to new YouTube layout updates</li>
                         <li>fixed an issue that prevented homepage video title from being clickable when video preview was displayed</li>
                         <li>fixed an issue that prevented "Disable video preview" setting from disabling homepage video previews</li>
                         <li>added an option to hide tickets shelf on video page <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>added an option to hide AI summary on video page <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>CSS fixes</li>
-                        <b class="update">3.7.0</b><span> - 20.01.2025</span>
+                        <div class="update"><div>3.7.0</div><div>20.01.2025</div></div>
                         <li>added an option to hide hashtags on video page <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>moved the "Hide features" section to its own, third page of settings</li>
                         <li>added a visual indicator pointing to the next settings page in order to showcase all of its pages - navigating to the last page will stop this indicator from being displayed in the future</li>
                         <li>shorts redirection setting will no longer add a new entry in session history</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.6.0</b><span> - 22.12.2024</span>
+                        <div class="update"><div>3.6.0</div><div>22.12.2024</div></div>
                         <li>removed alternative video page setting since it wasn't working properly for a while now and was causing conflicts with other settings; it may return fixed in the future</li>
                         <li>removed the option to sort by oldest videos on the channel page since this button was already added back by YouTube</li>
                         <li>number of videos per row setting will now also be applied to channel page videos</li>
                         <li>added an option to ignore scrolling down to chapters list when clicking on an empty space below the video progress bar <note>(enabled by default, found within "Misc" section of settings)</note>; this behavior will be automatically applied when using the "True fullscreen mode" setting</li>
                         <li>fixed old upload icon setting not working (this setting will now be enabled by default)</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.5.5</b><span> - 30.11.2024</span>
+                        <div class="update"><div>3.5.5</div><div>30.11.2024</div></div>
                         <li>fixed likes count CSS regression introduced in the previous update</li>
-                        <b class="update">3.5.4</b><span> - 29.11.2024</span>
+                        <div class="update"><div>3.5.4</div><div>29.11.2024</div></div>
                         <li>CSS fixes</li>
-                        <b class="update">3.5.3</b><span> - 07.11.2024</span>
+                        <div class="update"><div>3.5.3</div><div>07.11.2024</div></div>
                         <li>added an option to hide the live chat replay section from video description <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>added an option to hide the background animations of buttons when clicking on them <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>changelog will now only be displayed when visiting YouTube instead of being triggered globally in the browser</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.5.2</b><span> - 26.10.2024</span>
+                        <div class="update"><div>3.5.2</div><div>26.10.2024</div></div>
                         <li>added an option to make avatars in video comments square shaped (enabled by default, found within "Misc" section of settings)</li>
                         <li>fixed an issue that prevented the "Trim subscribers count" setting from working properly</li>
                         <li>fixed an issue that prevented the "Trim view count" setting from working properly</li>
                         <li>fixed multiple issues related to like/dislike icons and their colors settings</li>
                         <li>multiple CSS fixes</li>
-                        <b class="update">3.5.1</b><span> - 19.10.2024</span>
+                        <div class="update"><div>3.5.1</div><div>19.10.2024</div></div>
                         <li>fixed an issue that would cause the video page to stop responding if precise likes values setting was used in combination with RYD</li>
                         <li>enabled video pillar boxing by default</li>
                         <li>added missing new options from the previous update in Firefox</li>
-                        <b class="update">3.5.0</b><span> - 06.10.2024</span>
+                        <div class="update"><div>3.5.0</div><div>06.10.2024</div></div>
                         <li>fixed multiple issues with video page elements missing or remaining incorrect after page navigation <br/><note>this change will cause the button that holds more actions to appear as first under the channel info on video page until a proper fix is made</note></li>
                         <li>fixed multiple issues with precise likes/dislikes values</li>
                         <li>added an option to hide channel avatars on homepage <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>added an option to hide mix stack indicators for video thumbnails <note>(enabled by default, found within "Hide features" section of settings)</note></li>
                         <li>minor CSS fixes for homepage and dark playlist</li>
-                        <b class="update">3.4.1</b><span> - 20.01.2024</span>
+                        <div class="update"><div>3.4.1</div><div>20.01.2024</div></div>
                         <li>improved the way how homepage items are displayed which fixes multiple issues related to it; as the result the homepage fix setting was removed</li>
-                        <b class="update">3.4.0</b><span> - 17.01.2024</span>
+                        <div class="update"><div>3.4.0</div><div>17.01.2024</div></div>
                         <li>added an option to hide video rating surveys (enabled by default, found within "Hide features" section of settings)</li>
                         <li>hiding shorts will now also hide shorts remixing this video</li>
                         <li>fixed an issue that caused the video page to be missing certain elements</li>
                         <li>fixed incorrect size of the like button when not using old like/dislike icons</li>
                         <li>CSS fixes for video page</li>
-                        <b class="update">3.3.0</b><span> - 01.12.2023</span>
+                        <div class="update"><div>3.3.0</div><div>01.12.2023</div></div>
                         <li>fixed empty homepage that would occur when user's watch history was off</li>
                         <li>fixed empty space at the top of the homepage that would appear after rearranging homepage items</li>
                         <li>fixed multiple issues with displaying likes/dislikes - precise values should be working again</li>
                         <li>fixed likes/dislikes buttons that were misaligned for some users due to recent YouTube changes</li>
-                        <b class="update">3.2.0</b><span> - 23.10.2023</span>
+                        <div class="update"><div>3.2.0</div><div>23.10.2023</div></div>
                         <li>changed the way the video page is rearranged - it will no longer use the hidden deprecated layout and will instead modify the current one that was already rolled out to all users; due to this some Redux functionality will not work properly (like raw likes values) - further improvements will follow</li>
                         <li>fixed dislikes compatibility as the result of the change above</li>
                         <li>hiding shorts also hides related shorts based on music used in them</li>
                         <li>restored old icons again, mostly</li>
-                        <b class="update">3.1.2</b><span> - 13.05.2023</span>
+                        <div class="update"><div>3.1.2</div><div>13.05.2023</div></div>
                         <li>made it more obvious that showing this page can be disabled</li>
                         <li>fixed dislikes not working (for Return Youtube Dislike compatibility)</li>
                         <br><note>as a temporary workaround dislikes values will be precise regardless of user settings</note></li>
@@ -271,11 +342,11 @@
                         <li>fixed "Oldest" button not being properly added when navigating pages</li>
                         <li>fixed issues with video page buttons after navigating through multiple videos</li>
                         <li>CSS fixes</li>
-                        <b class="update">3.1.1</b><span> - 07.05.2023</span>
+                        <div class="update"><div>3.1.1</div><div>07.05.2023</div></div>
                         <li>fixed likes bar not being properly filled when not using precise likes values</li>
                         <li>updated the look of the "Oldest" sorting button when it's clicked and improved its behavior</li>
                         <li>fixed darker red color not being applied to subscribe button</li>
-                        <b class="update">3.1.0</b><span> - 06.05.2023</span>
+                        <div class="update"><div>3.1.0</div><div>06.05.2023</div></div>
                         <li>added an option to hide chapters in search results (enabled by default)</li>
                         <li>added an option to sort channel videos by oldest (enabled by default)</li>
                         <li>fixed shorts not being hidden in search results when using the option to hide them</li>
@@ -289,43 +360,43 @@
                         <li>removed rounded corners in certain elements</li>
                         <li>uploaded the latest manifest V2 version of the extension to its Github's release page</li>
                         <li>additional fixes will follow</li>
-                        <b class="update">3.0.0</b><span> - 31.12.2022</span>
+                        <div class="update"><div>3.0.0</div><div>31.12.2022</div></div>
                         <li>updated the extension to manifest v3 (Chrome only)</li>
                         <li>CSS fixes</li>
-                        <b class="update">2.13.9</b><span> - 15.12.2022</span>
+                        <div class="update"><div>2.13.9</div><div>15.12.2022</div></div>
                         <li class="important">this is the last update using manifest v2 as the extension will migrate to v3 in the following update</li>
                         <li>this page can now be visited via the link in the "Show changelog on updates" setting</li>
                         <li>fixed an issue that prevented the miniplayer from being properly disabled</li>
                         <li>CSS fixes</li>
-                        <b class="update">2.13.8</b><span> - 25.11.2022</span>
+                        <div class="update"><div>2.13.8</div><div>25.11.2022</div></div>
                         <li>the extension will now detect if the video player has Ambient Mode enabled and will adjust the background color accordingly in order to not cause a visual conflict; if needed this behavior can be disabled via a new option "Ignore adjusting to Ambient Mode"</li>
                         <li>fixed the appearance of subscribed button when using darker red color setting</li>
                         <li>potential performance improvements</li>
                         <li>multiple CSS fixes</li>
-                        <b class="update">2.13.7</b><span> - 16.11.2022</span>
+                        <div class="update"><div>2.13.7</div><div>16.11.2022</div></div>
                         <li>multiple layout fixes</li>
-                        <b class="update">2.13.6</b><span> - 08.11.2022</span>
+                        <div class="update"><div>2.13.6</div><div>08.11.2022</div></div>
                         <li>fixed the appearance of like/dislike buttons</li>
                         <li>fixed precise likes values not working correctly</li>
                         <li>fixed related videos' views being hidden instead of their time since upload date</li>
                         <li>fixed incorrect number of videos per row on channel pages</li>
                         <li>added an option to hide the "Thanks" button on video page</li>
                         <li>additional round edges removed</li>
-                        <b class="update">2.13.5</b><span> - 03.11.2022</span>
+                        <div class="update"><div>2.13.5</div><div>03.11.2022</div></div>
                         <li>initial changes aiming to accomodate for the recent YouTube updates <br/><note>note: some things may still look out of place or not be fully functional - more fixes will follow shortly</note></li>
-                        <b class="update">2.13.4</b><span> - 09.09.2022</span>
+                        <div class="update"><div>2.13.4</div><div>09.09.2022</div></div>
                         <li>fixed an issue with hiding the 'Download' button</li>
                         <li>fixed minor issues with displaying playlist buttons</li>
                         <li>reverted a couple of "!important" CSS property removals to resolve issues with certain userscript management extensions</li>
-                        <b class="update">2.13.3</b><span> - 19.08.2022</span>
+                        <div class="update"><div>2.13.3</div><div>19.08.2022</div></div>
                         <li>fixed the updated video page layout that would appear broken for certain users</li>
-                        <b class="update">2.13.2</b><span> - 06.08.2022</span>
+                        <div class="update"><div>2.13.2</div><div>06.08.2022</div></div>
                         <li>implemented a temporary workaround to try and force all users to use the old video page layout</li>
                         <li>removed a lot of unnecessary "!important" CSS properties which will increase the out-of-the-box compatibility with other extensions or userscripts</li>
                         <li>restored the old look of scrollbars, again</li>
                         <li>fixed an issue that caused a 'Download' button to be displayed on the video page even if the current video didn't support it</li>
                         <li>fixed an issue that caused certain video page buttons to go missing when navigating between pages</li>
-                        <b class="update">2.13.1</b><span> - 02.08.2022</span>
+                        <div class="update"><div>2.13.1</div><div>02.08.2022</div></div>
                         <li>added an option to hide video heatmap (graph showing most watched parts)</li>
                         <li>removed the option to align search bar to the left - it is now included in 'Extra layout changes' setting</li>
                         <li>number of videos per row setting will now be properly retained during page navigation</li>
@@ -333,7 +404,7 @@
                         <li>fixed an issue that caused video player controls to go missing after exiting fullscreen mode</li>
                         <li>minor fixes for new video page layout that's being rolled out - restoration of this page is basic at most for now as this change still wasn't made global (affects a specific group of users), more updates will follow</li>
                         <li>added a GitHub repository link to this page</li>
-                        <b class="update">2.13.0</b><span> - 10.07.2022</span>
+                        <div class="update"><div>2.13.0</div><div>10.07.2022</div></div>
                         <li>Return YouTube Dislike compatibility setting is now enabled by default and has been renamed for clarity (as RYD was the only compatible extension anyway)</li>
                         <li>partially restored the old look of music licensing and scaled down the new elements</li>
                         <li>added an option to hide the chapters section from video description (enabled by default, can be changed within "Hide features" section of settings)</li>
@@ -342,556 +413,408 @@
                         <li>fixed an issue which could cause the extension's changelog page to show up on browser update (thanks SIX10)</li>
                         <li>fixed an issue that affected specific videos which caused the "Up next" section to be moved to the bottom of related videos</li>
                         <li>fixed an issue that affected specific videos which prevented infinite scrolling from being properly disabled for related videos</li>
-                        <b class="update">2.12.3</b><span> - 14.05.2022</span>
+                        <div class="update"><div>2.12.3</div><div>14.05.2022</div></div>
                         <li>added a separate option to recreate old video page layout for users whose layout was changed by a recent YouTube update (enabled by default)
                             <br><u>Note: this feature is a work in progress.</u> Not everything has been restored yet: e.g. likes bar is missing, precise likes values aren't displayed. Expect this setting to be fully functional when YouTube rolls out these UI changes to all users.
                         </li>
                         <li>updated hiding video categories to work with recent video page changes</li>
                         <li>fixed favicon changing</li>
-                        <b class="update">2.12.2</b><span> - 20.04.2022</span>
+                        <div class="update"><div>2.12.2</div><div>20.04.2022</div></div>
                         <li>fixed small video player layout issues</li>
-                        <b class="update">2.12.1</b><span> - 03.04.2022</span>
+                        <div class="update"><div>2.12.1</div><div>03.04.2022</div></div>
                         <li>added a button to restore default settings (located in top right corner)</li>
                         <li>improved disabling infinite scrolling</li>
-                        <b class="update">2.12.0</b><span> - 14.03.2022</span>
+                        <div class="update"><div>2.12.0</div><div>14.03.2022</div></div>
                         <li>added an option to hide Shorts (from homepage sidebar and search results) - available in 'Hide features' section of settings, disabled by default</li>
                         <li>added an option to enable automatic redirection from Shorts to default video page - available in 'Misc' section of settings, disabled by default</li>
                         <li>fixed volume slider not displaying properly in fullscreen</li>
                         <li>fixed homepage not properly refreshing when clicking on YouTube logo</li>
                         <li>improved playlists grouping on homepage</li>
-                        <b class="update">2.11.8</b><span> - 26.01.2022</span>
+                        <div class="update"><div>2.11.8</div><div>26.01.2022</div></div>
                         <li>updated the option to disable video preview to make it compatible with recent changes</li>
                         <li>fixed an issue which could cause likes to be incorrectly displayed</li>
                         <li>fixed an issue with displaying the extension's settings popup</li>
-                        <b class="update">2.11.7</b><span> - 21.12.2021</span>
+                        <div class="update"><div>2.11.7</div><div>21.12.2021</div></div>
                         <li>actually added the option to hide the 'Download' button - as per previous update</li>
                         <li>fixed likes bar not properly updating in Firefox</li>
-                        <b class="update">2.11.6</b><span> - 14.12.2021</span>
+                        <div class="update"><div>2.11.6</div><div>14.12.2021</div></div>
                         <li>added an option to hide the 'Download' button (it is hidden by default and appears to be an upcoming feature)</li>
                         <li>fixed an issue where precise dislikes values did not work</li>
                         <li>fixed an issue where likes bar did not update correctly</li>
-                        <b class="update">2.11.5</b><span> - 09.12.2021</span>
+                        <div class="update"><div>2.11.5</div><div>09.12.2021</div></div>
                         <li>added an option to hide dislikes (button + count)</li>
                         <li>fixed an issue where number of likes was incorrectly displayed when watching streams or videos with count disabled</li>
                         <li>fixed an issue which prevented trimmed view count from working properly in Firefox</li>
-                        <b class="update">2.11.4</b><span> - 07.12.2021</span>
+                        <div class="update"><div>2.11.4</div><div>07.12.2021</div></div>
                         <li>minor changes to make the extension work properly with more browsers (again)</li>
-                        <b class="update">2.11.3</b><span> - 05.12.2021</span>
+                        <div class="update"><div>2.11.3</div><div>05.12.2021</div></div>
                         <li>added a 'Dislikes restoring compatibility' option (in misc category) to have the likes bar and dislikes count work properly with extensions that modify dislikes.
                             <br>Disabled by default as conflicts between extensions may cause issues if they keep fighting over priority to modify page elements.
                         </li>
                         <li>fixed an issue with precise likes values which stopped working after dislikes removal</li>
                         <li>adjusted homepage fix to work with more browsers</li>
-                        <b class="update">2.11.2</b><span> - 28.11.2021</span>
+                        <div class="update"><div>2.11.2</div><div>28.11.2021</div></div>
                         <li>added an option to use a fix for homepage layout that was changed recently (enabled by default).
                             <br>Recently there were some behind-the-scenes changes to the homepage which broke Redux layout. These changes were reverted and then reimplemented multiple times so users may want to disable this fix in case YouTube reverts the change once again.
                         </li>
-                        <b class="update">2.11.1</b><span> - 01.11.2021</span>
+                        <div class="update"><div>2.11.1</div><div>01.11.2021</div></div>
                         <li>visual changes to settings page</li>
                         <li>added options to automatically expand sidebar playlists and subscriptions</li>
                         <li>CSS fixes for video player controls, sub count borders</li>
-                        <b class="update">2.11.0</b><span> - 16.10.2021</span>
+                        <div class="update"><div>2.11.0</div><div>16.10.2021</div></div>
                         <li>added an option to disable video preview when hovering over thumbnails</li>
                         <li>trimmed sub count now works properly with alternative video page layout</li>
                         <li>fixed a potential performance issue when using small player</li>
                         <li>improved quality of old upload icon</li>
                         <li>CSS fixes for video player controls and darker red option</li>
-                        <b class="update">2.10.3</b><span> - 02.10.2021</span>
+                        <div class="update"><div>2.10.3</div><div>02.10.2021</div></div>
                         <li>CSS fixes</li>
-                        <b class="update">2.10.2</b><span> - 21.09.2021</span>
+                        <div class="update"><div>2.10.2</div><div>21.09.2021</div></div>
                         <li>dark theme fix for moved autoplay separator</li>
                         <li>improved old logo when using unsupported Firefox versions</li>
-                        <b class="update">2.10.1</b><span> - 20.09.2021</span>
+                        <div class="update"><div>2.10.1</div><div>20.09.2021</div></div>
                         <li>hotfix for moved autoplay</li>
-                        <b class="update">2.10.0</b><span> - 20.09.2021</span>
+                        <div class="update"><div>2.10.0</div><div>20.09.2021</div></div>
                         <li>added an option to disable miniplayer</li>
                         <li>added an option to move the autoplay button from video player back to related videos (enabled by default)</li>
                         <li>added an option to hide country code</li>
                         <li>added an option to hide collapsed chat (when collapsed the button to expand it will no longer be shown)</li>
                         <li>CSS fixes</li>
-                        <b class="update">2.9.0</b><span> - 18.09.2021</span>
+                        <div class="update"><div>2.9.0</div><div>18.09.2021</div></div>
                         <li>multiple style changes to the rearranged video page</li>
                         <li>added options to hide: related videos age, video categories, licensing info (all of these are enabled by default)</li>
                         <li>CSS fixes</li>
-                        <b class="update">2.8.3</b><span> - 12.09.2021</span>
+                        <div class="update"><div>2.8.3</div><div>12.09.2021</div></div>
                         <li>mini video filters option is now enabled by default and now displays all filters instead of 2</li>
                         <li>added an option to hide 'People also search for' section in search results (enabled by default)</li>
                         <li>added an option to fully collapse sidebar on home page - it will no longer be displayed instead of being minimized</li>
-                        <b class="update">2.8.2</b><span> - 05.09.2021</span>
+                        <div class="update"><div>2.8.2</div><div>05.09.2021</div></div>
                         <li>fixed trimmed subscribers count on video page which didn't clear previous value when changing videos</li>
                         <li>fixed an issue where the page would shift to the sides when pressing arrow keys while being in theater mode and using small player</li>
                         <li>improved reliability of aligning small player</li>
                         <li>changelog will now show last 3 updates</li>
                         <li>CSS fixes</li>
-                        <b class="update">2.8.1</b><span> - 02.09.2021</span>
+                        <div class="update"><div>2.8.1</div><div>02.09.2021</div></div>
                         <li>added an option to hide the 'Clip' button</li>
                         <li>reset 'No home page scaling' setting to make it enabled by default (2.8.1)</li>
                         <li>extra layout changes setting no longer hides video filters on home page - these can still be manually hidden via settings</li>
                         <li>minor CSS fixes (including old comments styles)</li>
-                        <b class="update">2.8.0</b><span> - 30.08.2021</span>
+                        <div class="update"><div>2.8.0</div><div>30.08.2021</div></div>
                         <li>added an option to restore old comment styles <note>(enabled by default)</note></li>
                         <li>'My channel' button text can now be customized by clicking on its option via settings</li>
                         <li>multiple style fixes</li>
-                        <b class="update">2.7.3</b><span> - 27.08.2021</span>
+                        <div class="update"><div>2.7.3</div><div>27.08.2021</div></div>
                         <li>fixed invalid url for 'My channel' button</li>
-                        <b class="update">2.7.1 + 2.7.2</b><span> - 26.08.2021</span>
+                        <div class="update"><div>2.7.1 + 2.7.2</div><div>26.08.2021</div></div>
                         <li>fixed certain issues related to the previous update</li>
                         <li>added more old Firefox browser compatibility styles</li>
-                        <b class="update">2.7.0</b><span> - 25.08.2021</span>
+                        <div class="update"><div>2.7.0</div><div>25.08.2021</div></div>
                         <li>added an option to add 'My channel' button to sidebar menu</li>
                         <li>added an option to make subs avatars square shaped (this was already a default setting but can now be changed by user)</li>
                         <li>added an option to trim video view count</li>
                         <li>fixes for old icons</li>
-                        <b class="update">2.6.0</b><span> - 22.08.2021</span>
+                        <div class="update"><div>2.6.0</div><div>22.08.2021</div></div>
                         <li>added an option to disable showing changelog page on extension updates</li>
                         <li>added an option to restore old icons across the site (on by default)</li>
                         <li>added an option to make the alternative loader even smaller</li>
                         <li>fixed an issue that caused the old like icon not to change color when its sidebar button was active</li>
-                        <b class="update">2.5.9</b><span> - 13.08.2021</span>
+                        <div class="update"><div>2.5.9</div><div>13.08.2021</div></div>
                         <li>fixed related videos overlapping with playlist when small player's height exceeded certain value</li>
-                        <b class="update">2.5.8</b><span> - 08.08.2021</span>
+                        <div class="update"><div>2.5.8</div><div>08.08.2021</div></div>
                         <li>fixed hiding 'Play on TV' button</li>
                         <li>slightly reduced size of the alternative loader</li>
                         <li>fixed an issue where small player prevented Clip menu from being accessed</li>
                         <li>fixed issues with stream buttons rearrangement</li>
-                        <b class="update">2.5.7</b><span> - 03.08.2021</span>
+                        <div class="update"><div>2.5.7</div><div>03.08.2021</div></div>
                         <li>updated 'Disable video player action animations' setting to work properly with the recent YouTube update</li>
-                        <b class="update">2.5.6</b><span> - 31.07.2021</span>
+                        <div class="update"><div>2.5.6</div><div>31.07.2021</div></div>
                         <li>alternative loader now scales with screen width</li>
                         <li>old like icon now also applies to the sidebar</li>
-                        <b class="update">2.5.5</b><span> - 27.07.2021</span>
+                        <div class="update"><div>2.5.5</div><div>27.07.2021</div></div>
                         <li>added an option to use alternative loader for videos that resembles old spinner (found under Misc settings)</li>
                         <li>minor css fixes</li>
-                        <b class="update">2.5.4</b><span> - 15.07.2021</span>
+                        <div class="update"><div>2.5.4</div><div>15.07.2021</div></div>
                         <li>updated 'Disable video player action animations' option to hide the new forward/backward icons</li>
-                        <b class="update">2.5.3</b><span> - 15.07.2021</span>
+                        <div class="update"><div>2.5.3</div><div>15.07.2021</div></div>
                         <li>added an option to hide video player animations when pausing, resuming and skipping forward/backward</li>
                         <li>fixed disabling infinite scrolling for comments</li>
-                        <b class="update">2.5.2</b><span> - 07.07.2021</span>
+                        <div class="update"><div>2.5.2</div><div>07.07.2021</div></div>
                         <li>fixed an issue that caused old likes icons to replace playlist buttons</li>
                         <li>fixed an issue that caused the icon from 'Subscribe' button to be displayed on 'Edit video' button</li>
                         <li>minor css fixes</li>
-                        <b class="update">2.5.1</b><span> - 26.06.2021</span>
+                        <div class="update"><div>2.5.1</div><div>26.06.2021</div></div>
                         <li>added a changelog page that will show up on updates; this page also displays the settings menu that can be configured in the same way as via the extension's icon/popup</li>
-                        <b class="update">2.5.0</b><span> - 26.06.2021</span>
+                        <div class="update"><div>2.5.0</div><div>26.06.2021</div></div>
                         <li>added an option for extra channel page changes (enabled by default)</li>
                         <li>added an option to use old upload icon</li>
                         <li>added an option to trim subscribers count (e.g. changes '420k subscribers' to '420k')</li>
                         <li>added an option to use alternative strings while on the video page (e.g. changes the 'Save' button to 'Add to', adds 'Published on' to the upload date)</li>
                         <li>fixed search bar alignment option</li>
-                        <b class="update">2.4.1</b><span> - 21.06.2021</span>
+                        <div class="update"><div>2.4.1</div><div>21.06.2021</div></div>
                         <li>fixed video page recreation to accomodate for YT changes</li>
-                        <b class="update">2.4.0</b><span> - 14.06.2021</span>
+                        <div class="update"><div>2.4.0</div><div>14.06.2021</div></div>
                         <li>minor fixes for compatibility styles</li>
                         <li>added an option to hide 'Youtube apps' button</li>
                         <li>added an option to use green/red colored likes/dislikes buttons</li>
                         <li>added an option to hide 'Join' button</li>
-                        <b class="update">2.3.6</b><span> - 06.06.2021</span>
+                        <div class="update"><div>2.3.6</div><div>06.06.2021</div></div>
                         <li>added some compatibility styles for better experience on older browsers</li>
-                        <b class="update">2.3.5</b><span> - 01.06.2021</span>
+                        <div class="update"><div>2.3.5</div><div>01.06.2021</div></div>
                         <li>minor css changes</li>
                         <li>added an option to use old like/dislike icons</li>
-                        <b class="update">2.3.4</b><span> - 26.05.2021</span>
+                        <div class="update"><div>2.3.4</div><div>26.05.2021</div></div>
                         <li>added 2013 logo</li>
                         <li>added a warning info in extension's settings for unsupported browsers</li>
-                        <b class="update">2.3.3</b><span> - 23.05.2021</span>
+                        <div class="update"><div>2.3.3</div><div>23.05.2021</div></div>
                         <li>fixed auto pause confirm... maybe</li>
                         <li>fixed XL logo when using dark theme</li>
-                        <b class="update">2.3.2</b><span> - 22.05.2021</span>
+                        <div class="update"><div>2.3.2</div><div>22.05.2021</div></div>
                         <li>fixed an issue with saving settings when using old Firefox versions</li>
-                        <b class="update">2.3.1</b><span> - 21.05.2021</span>
+                        <div class="update"><div>2.3.1</div><div>21.05.2021</div></div>
                         <li>fixed duplicated video page elements</li>
-                        <b class="update">2.3.0</b><span> - 21.05.2021</span>
+                        <div class="update"><div>2.3.0</div><div>21.05.2021</div></div>
                         <li>user data (settings) will now be stored using storage API instead of localStorage which will prevent it from being reset when clearing website data and will allow it to be synced between devices; note: this change will restore default settings</li>
                         <li>minor css changes</li>
                         <li>made auto pause confrm more reliable</li>
                         <li>fixed misplaced alternative logo elements</li>
-                        <b class="update">2.2.2</b><span> - 15.05.2021</span>
+                        <div class="update"><div>2.2.2</div><div>15.05.2021</div></div>
                         <li>fixed sub alert icon look when used with sub count border setting</li>
                         <li>added an alternative 2005 logo</li>
-                        <b class="update">2.2.1</b><span> - 14.05.2021</span>
+                        <div class="update"><div>2.2.1</div><div>14.05.2021</div></div>
                         <li>minor fix for the default logo size</li>
-                        <b class="update">2.2.0</b><span> - 14.05.2021</span>
+                        <div class="update"><div>2.2.0</div><div>14.05.2021</div></div>
                         <li>added an option to choose YT logo from a selection of XL, 2005, 2011, 2015 (and its brighter version) and 2017 logos (preview included)</li>
                         <li>added an option to add border to subscribers count on the video page</li>
                         <li>small player fixes</li>
                         <li>subscriptions page fixes</li>
                         <li>fixed missing Save and Share buttons upon using miniplayer and going back to full player</li>
-                        <b class="update">2.1.2</b><span> - 13.05.2021</span>
+                        <div class="update"><div>2.1.2</div><div>13.05.2021</div></div>
                         <li>fixed regression for missing small player controls</li>
-                        <b class="update">2.1.1</b><span> - 12.05.2021</span>
+                        <div class="update"><div>2.1.1</div><div>12.05.2021</div></div>
                         <li>code refactor and a minor font size fix for settings</li>
                         <li>enabled small player by default</li>
-                        <b class="update">2.1.0</b><span> - 09.05.2021</span>
+                        <div class="update"><div>2.1.0</div><div>09.05.2021</div></div>
                         <li>slightly reworked extension's settings page</li>
                         <li>added an option to group playlist items on the home page (note: this works with the newest playlists layout - the one where the playlist indicator is a horizontal bar instead of vertical)</li>
                         <li>added an option to use custom fonts for video titles (or choose from presets)</li>
                         <li>added an option to use custom size for small video player</li>
                         <li>added an option to hide the 'Search with your voice' button</li>
                         <li>fixed the duplicated 'Analytics' button</li>
-                        <b class="update">2.0.7</b><span> - 06.05.2021</span>
+                        <div class="update"><div>2.0.7</div><div>06.05.2021</div></div>
                         <li>fixed the duplicated 'Join' button</li>
-                        <b class="update">2.0.6</b><span> - 06.05.2021</span>
+                        <div class="update"><div>2.0.6</div><div>06.05.2021</div></div>
                         <li>fixed precise likes values to accomodate for YT changes</li>
-                        <b class="update">2.0.5</b><span> - 02.05.2021</span>
+                        <div class="update"><div>2.0.5</div><div>02.05.2021</div></div>
                         <li>css fix for the previous fix</li>
-                        <b class="update">2.0.4</b><span> - 01.05.2021</span>
+                        <div class="update"><div>2.0.4</div><div>01.05.2021</div></div>
                         <li>minor css fixes</li>
-                        <b class="update">2.0.3</b><span> - 28.04.2021</span>
+                        <div class="update"><div>2.0.3</div><div>28.04.2021</div></div>
                         <li>added missing channel styling in search results</li>
-                        <b class="update">2.0.2</b><span> - 26.04.2021</span>
+                        <div class="update"><div>2.0.2</div><div>26.04.2021</div></div>
                         <li>fixed channel page styles that stopped working at some point</li>
-                        <b class="update">2.0.1</b><span> - 25.04.2021</span>
+                        <div class="update"><div>2.0.1</div><div>25.04.2021</div></div>
                         <li>made alternative video page layout more compatible when not using extra layout setting</li>
                         <li>fixes for null value likes/dislikes when using alternative video page layout</li>
-                        <b class="update">2.0.0</b><span> - 25.04.2021</span>
+                        <div class="update"><div>2.0.0</div><div>25.04.2021</div></div>
                         <li>added an option to use alternative video page layout that mimics older YT layouts</li>
                         <li>added an option to use extra sidebar changes which brings is closer to old layout</li>
                         <li>added an option to use square avatars in search results</li>
                         <li>css fixes</li>
-                        <b class="update">1.9.2</b><span> - 18.04.2021</span>
+                        <div class="update"><div>1.9.2</div><div>18.04.2021</div></div>
                         <li>restored all scrollbars to their previous look</li>
-                        <b class="update"></b><span></span>
-                        <li>
-                        Older updates:
-                        <br>
-                            1.9.1 - 18.04.2021
-
-                        - added an option to prevent home page scaling
-                        <br>
-                        1.9.0 - 17.04.2021
-                        
-                        - css changes for better home page scaling
-                        - added an option to hide channel avatars on home page
-                        - added an option to make own avatar square shaped
-                        <br>
-                        1.8.5 - 17.04.2021
-                        
-                        - small player fixes
-                        <br>
-                        1.8.4 - 13.04.2021
-                        
-                        - css fixes to accomodate for YT changes
-                        <br>
-                        1.8.3 - 06.04.2021
-                        
-                        - minor css changes
-                        - fixed precise likes values breaking when navigating back to videos with disabled comments
-                        <br>
-                        1.8.2 - 31.03.2021
-                        
-                        - removed recent css changes for compatibility
-                        <br>
-                        1.8.1 - 30.03.2021
-                        
-                        - fixed an issue with css that caused the video to be offset upwards in fullscreen mode
-                        <br>
-                        1.8.0 - 30.03.2021
-                        
-                        - added an option to align the search bar to the left (enabled by default)
-                        - minor css changes
-                        <br>
-                        1.7.12 - 28.03.2021
-                        
-                        - fixed the previous fix throwing errors
-                        <br>
-                        1.7.11 - 25.03.2021
-                        
-                        - fixed an issue that caused the "Auto confirm 'Video paused' popup" setting to also be applied to Unsubscribe popup
-                        <br>
-                        1.7.10 - 24.03.2021
-                        
-                        - fixed video player alignment for premiere videos
-                        - fixed Trending page column view (while also adding it to the Explore page)
-                        <br>
-                        1.7.9 - 16.03.2021
-                        
-                        - fixed 'Video paused' auto confirmation
-                        <br>
-                        1.7.8 - 13.03.2021
-                        
-                        - css fixes to accomodate for YT changes
-                        - added an option to use list view for channel videos
-                        <br>
-                        1.7.7 - 22.02.2021
-                        
-                        - restored old channel verification icon
-                        - fixed precise likes/dislikes values that stopped working recently
-                        <br>
-                        1.7.6 - 16.02.2021
-                        
-                        - fixed jumpy tooltips in settings
-                        <br>
-                        1.7.5 - 16.02.2021
-                        
-                        - added an option to change favicon
-                        - split settings into colums to accomodate for increased number of options
-                        <br>
-                        1.7.4 - 13.02.2021
-                        
-                        - additional css changes (mainly for video page)
-                        <br>
-                        1.7.3 - 11.02.2021
-                        
-                        - css and trending page fixes
-                        <br>
-                        1.7.2 - 08.02.2021
-                        
-                        - fixed content to player misalignment when using small player which could happen occasionally (this time when navigating to video via user channel that contains a player)
-                        <br>
-                        1.7.1 - 07.02.2021
-                        
-                        - fixed content to player misalignment when using small player which could happen occasionally
-                        <br>
-                        1.7.0 - 06.02.2021
-                        
-                        - added a 'true fullscreen mode' option which prevents scrolling while in fullscreen mode
-                        <br>
-                        1.6.14 - 06.02.2021
-                        
-                        - fixed classic logo
-                        <br>
-                        1.6.13 - 24.01.2021
-                        
-                        - improved trending page column splitting
-                        <br>
-                        1.6.12 - 23.01.2021
-                        
-                        - fixed missing Save and Share buttons when navigating to video page via search results
-                        <br>
-                        1.6.11 - 23.01.2021
-                        
-                        - css fixes for darker red
-                        <br>
-                        1.6.10 - 23.01.2021
-                        
-                        - fixed the color of subscribed button when using darker red
-                        <br>
-                        1.6.9 - 23.01.2021
-                        
-                        - darker red is now also applied to YT logo
-                        <br>
-                        1.6.8 - 22.01.2021
-                        
-                        - added an option to use slightly darker red color for multiple elements; off by default
-                        - dark theme playlist fixes
-                        <br>
-                        1.6.7 - 18.01.2021
-                        
-                        - dark theme css fixes
-                        <br>
-                        1.6.6 - 17.01.2021
-                        
-                        - added an icon to subscribe button
-                        <br>
-                        1.6.5 - 17.01.2021
-                        
-                        - fixed left menu border for dark theme
-                        <br>
-                        1.6.4 - 16.01.2021
-                        
-                        - fixed an issue that caused small player setting to break some channel pages
-                        - more fixes and changes for extra layout changes styles
-                        - 'Show more' buttons added by 'Disable infinite scrolling' option are now localized (with English fallback)
-                        <br>
-                        1.6.3 - 16.01.2021
-                        
-                        - styles based on user settings are injected earlier resulting in smoother experience on initial page load
-                        - adjusted home page skeleton when using extra layout changes setting
-                        <br>
-                        1.6.2 - 15.01.2021
-                        
-                        - fixed content to player misalignment when using small player
-                        <br>
-                        1.6.1
-                        
-                        - fixed an issue that caused Save and Share buttons to go missing when changing videos
-                        <br>
-                        1.6.0
-                        
-                        - multiple style changes
-                        - extra layout changes setting now adjusts home page (and others) to match the old layout even closer; this setting is now enabled by default
-                        - many font recolors now ignore dark theme
-                        - added a user settings check that inserts a missing setting if required
-                        <br>
-                        1.5.2
-                        
-                        - extra layout changes setting now supports dark theme
-                        - added dark theme support for classic YT logo
-                        <br>
-                        1.5.1
-                        
-                        - extra layout changes setting now ignores dark theme
-                        <br>
-                        1.5.0
-                        
-                        - added an option to use extra layout changes - this brings the layout even closer to the old one, mainly noticable in the video page
-                        - reorganized settings - moved all features from experimental section to the main one and rearranged them to have more feature-rich options on top
-                        <br>
-                        1.4.3
-                        
-                        - added options to hide video filters (they appear on home and video pages if your YT language is set to English)
-                        <br>
-                        1.4.2
-                        
-                        - added an option to use green/red colored likes/dislikes bar
-                        <br>
-                        1.4.1
-                        
-                        - fixes for disabling infinite scrolling
-                        - minor visual changes for disabling  infinite scrolling
-                        - fixes for trending page column view
-                        <br>
-                        1.4.0
-                        
-                        - added an option to hide 'Auto-play' button located in the video player
-                        - fixed hiding the 'Play on TV' button which failed when 'Auto-play' button was present
-                        - more tooltips added to extension's settings 
-                        - fixed broken player controls after zooming in/out or resizing the window
-                        - split trending page into columns
-                        - improved reliability of disabling infinite scrolling for related videos
-                        - fixed an issue where disabling infinite scrolling for comments would break when quickly changing videos
-                        <br>
-                        1.3.9
-                        
-                        - infinite scrolling fixes for sorting and for videos with disabled comments
-                        <br>
-                        1.3.8
-                        
-                        - restored default views font variant
-                        - minor changes to extension's tooltips
-                        - slightly improved zooming in experience when using small player
-                        - dark theme adjustments for disabling infinite scrolling
-                        - multiple fixes for infinite scrolling
-                        <br>
-                        1.3.7
-                        
-                        - fixed duplication of auto resume checks
-                        - fixed displaying 1:1 aspect ratio videos in small player
-                        <br>
-                        1.3.6
-                        
-                        - fixed displaying 21:9 videos in small player
-                        - increased reliability of page realignment when using small player
-                        - added tooltips to multiple extension settings
-                        - fixed small player progress bar issues when changing between normal, theater and fullscreen modes
-                        <br>
-                        1.3.5
-                        
-                        - fixed small player progress bar issues
-                        - added player size presets (colored preset indicates default value)
-                        <br>
-                        1.3.4
-                        
-                        - refactored displaying raw likes values (now called precise values)
-                        - properly implemented disabling infinite scrolling - now also works for related videos
-                        <br>
-                        1.3.3
-                        
-                        - fixed video date font color for dark theme when using rearranged layout
-                        - changed and rearranged 'Join', 'Analytics' and 'Edit video' buttons
-                        <br>
-                        1.3.2
-                        
-                        - added an option to restore classic YouTube logo
-                        <br>
-                        1.3.1
-                        
-                        - minor changes to YouTube Redux settings window
-                        <br>
-                        1.3.0
-                        
-                        - default video page layout was rearranged to closely match old design - changes affect channel info, likes, views, upload date, etc
-                        
-                        ^(This can be turned off via options in Experimental/WIP section.)
-                        <br>
-                        1.2.5
-                        
-                        - increased video title font size to match old layout
-                        - fixed small player causing a blank space below it on smaller screen resolutions
-                        - fixed some elements not scaling down properly when zooming in
-                        - fixed dark themed playlist height calculation
-                        <br>
-                        1.2.4
-                        
-                        - fixed some incorrect text colors when using dark themed playlist
-                        <br>
-                        1.2.3
-                        
-                        - additional changes to small player to bring it more in line with old layout
-                        - small player content align option is now used by default
-                        - added an option to use pillarboxing for non-standard aspect ratio videos - fills the player with black bars on the sides
-                        <br>
-                        1.2.2
-                        
-                        - fixed unsafe var assignment
-                        <br>
-                        1.2.1
-                        
-                        - added an option to align page contents to player size 
-                        
-                        ^(to be used with small player size; causes elements underneath the video to have a maximum width that matches the player width which lines them up together)
-                        <br>
-                        1.2.0
-                        
-                        - added an option to disable infinite comments scrolling
-                        
-                        ^(note: this is pretty much a hacky workaround than actual disabling as I haven't found a relatively easy way to do it. This option prevents scrolling past the point where YouTube automatically loads more comments and inserts a button to manually load more. Stopping scrolling may look a bit jarring for now though but I guess it kinda works!)
-                        <br>
-                        1.1.2
-                        
-                        - properly fixed progress bar preview not showing up when using small player
-                        <br>
-                        1.1.1
-                        
-                        - nothing changed - increased version to fix a webstore issue
-                        <br>
-                        1.0.9
-                        
-                        - reverted preview fix
-                        <br>
-                        1.0.8
-                        
-                        - fixed progress bar preview not showing up when using small player
-                        - fixed displaying likes for videos with disabled likes counter
-                        <br>
-                        1.0.7
-                        
-                        - fixed small player size for videos with aspect ratio other than 16:9
-                        - moved auto resume from experimental into main settings
-                        <br>
-                        1.0.6
-                        
-                        - fixed an issue that prevented small player from resizing itself when switching to theatre or fullscreen mode
-                        <br>
-                        1.0.5
-                        
-                        - fixed auto resume... once again
-                        <br>
-                        1.0.4
-                        
-                        - refactored grid changing function
-                        <br>
-                        1.0.3
-                        
-                        - fixed auto resume again
-                        - changed option to hide 'Play on TV' to be off by default 
-                        <br>
-                        1.0.2
-                        
-                        - fixed auto resume
-                        <br>
-                        1.0.1
-                        
-                        - attempt to fix auto resume by manually playing video on url change
-                        
-                        - added important to grid css for smooth injection by default</li>
+                        <div class="update"><div>1.9.1</div><div>18.04.2021</div></div>
+                        <li>added an option to prevent home page scaling</li>
+                        <div class="update"><div>1.9.0</div><div>17.04.2021</div></div>
+                        <li>css changes for better home page scaling</li>
+                        <li>added an option to hide channel avatars on home page</li>
+                        <li>added an option to make own avatar square shaped</li>
+                        <div class="update"><div>1.8.5</div><div>17.04.2021</div></div>
+                        <li>small player fixes</li>
+                        <div class="update"><div>1.8.4 </div><div>13.04.2021</div></div>
+                        <li>css fixes to accomodate for YT changes</li>
+                        <div class="update"><div>1.8.3</div><div>06.04.2021</div></div>
+                        <li>minor css changes</li>
+                        <li>fixed precise likes values breaking when navigating back to videos with disabled comments</li>
+                        <div class="update"><div>1.8.2</div><div>31.03.2021</div></div>
+                        <li>removed recent css changes for compatibility</li>
+                        <div class="update"><div>1.8.1</div><div>30.03.2021</div></div>
+                        <li>fixed an issue with css that caused the video to be offset upwards in fullscreen mode</li>
+                        <div class="update"><div>1.8.0</div><div>30.03.2021</div></div>
+                        <li>added an option to align the search bar to the left (enabled by default)</li>
+                        <li>minor css changes</li>
+                        <div class="update"><div>1.7.12</div><div>28.03.2021</div></div>
+                        <li>fixed the previous fix throwing errors</li>
+                        <div class="update"><div>1.7.11</div><div>25.03.2021</div></div>
+                        <li>fixed an issue that caused the "Auto confirm 'Video paused' popup" setting to also be applied to Unsubscribe popup</li>
+                        <div class="update"><div>1.7.10</div><div>24.03.2021</div></div>
+                        <li>fixed video player alignment for premiere videos</li>
+                        <li>fixed Trending page column view (while also adding it to the Explore page)</li>
+                        <div class="update"><div>1.7.9</div><div>16.03.2021</div></div>
+                        <li>fixed 'Video paused' auto confirmation</li>
+                        <div class="update"><div>1.7.8</div><div>13.03.2021</div></div>
+                        <li>css fixes to accomodate for YT changes</li>
+                        <li>added an option to use list view for channel videos</li>
+                        <div class="update"><div>1.7.7</div><div>22.02.2021</div></div>
+                        <li>restored old channel verification icon</li>
+                        <li>fixed precise likes/dislikes values that stopped working recently</li>
+                        <div class="update"><div>1.7.6</div><div>16.02.2021</div></div>
+                        <li>fixed jumpy tooltips in settings</li>
+                        <div class="update"><div>1.7.5</div><div>16.02.2021</div></div>
+                        <li>added an option to change favicon</li>
+                        <li>split settings into colums to accomodate for increased number of options</li>
+                        <div class="update"><div>1.7.4</div><div>13.02.2021</div></div>
+                        <li>additional css changes (mainly for video page)</li>
+                        <div class="update"><div>1.7.3</div><div>11.02.2021</div></div>
+                        <li>css and trending page fixes</li>
+                        <div class="update"><div>1.7.2</div><div>08.02.2021</div></div>
+                        <li>fixed content to player misalignment when using small player which could happen occasionally (this time when navigating to video via user channel that contains a player)</li>
+                        <div class="update"><div>1.7.1</div><div>07.02.2021</div></div>
+                        <li>fixed content to player misalignment when using small player which could happen occasionally</li>
+                        <div class="update"><div>1.7.0 </div><div>06.02.2021</div></div>
+                        <li>added a 'true fullscreen mode' option which prevents scrolling while in fullscreen mode</li>
+                        <div class="update"><div>1.6.14</div><div>06.02.2021</div></div>
+                        <li>fixed classic logo</li>
+                        <div class="update"><div>1.6.13</div><div>24.01.2021</div></div>
+                        <li>improved trending page column splitting</li>
+                        <div class="update"><div>1.6.12</div><div>23.01.2021</div></div>
+                        <li>fixed missing Save and Share buttons when navigating to video page via search results</li>
+                        <div class="update"><div>1.6.11</div><div>23.01.2021</div></div>
+                        <li>css fixes for darker red</li>
+                        <div class="update"><div>1.6.10</div><div>23.01.2021</div></div>
+                        <li>fixed the color of subscribed button when using darker red</li>
+                        <div class="update"><div>1.6.9</div><div>23.01.2021</div></div>
+                        <li>darker red is now also applied to YT logo</li>
+                        <div class="update"><div>1.6.8</div><div>22.01.2021</div></div>
+                        <li>added an option to use slightly darker red color for multiple elements; off by default</li>
+                        <li>dark theme playlist fixes</li>
+                        <div class="update"><div>1.6.7</div><div>18.01.2021</div></div>
+                        <li>dark theme css fixes</li>
+                        <div class="update"><div>1.6.6</div><div>17.01.2021</div></div>
+                        <li>added an icon to subscribe button</li>
+                        <div class="update"><div>1.6.5</div><div>17.01.2021</div></div>
+                        <li>fixed left menu border for dark theme</li>
+                        <div class="update"><div>1.6.4</div><div>16.01.2021</div></div>
+                        <li>fixed an issue that caused small player setting to break some channel pages</li>
+                        <li>more fixes and changes for extra layout changes styles</li>
+                        <li>more' buttons added by 'Disable infinite scrolling' option are now localized (with English fallback)</li>
+                        <div class="update"><div>1.6.3</div><div>16.01.2021</div></div>
+                        <li>styles based on user settings are injected earlier resulting in smoother experience on initial page load</li>
+                        <li>adjusted home page skeleton when using extra layout changes setting</li>
+                        <div class="update"><div>1.6.2</div><div>15.01.2021</div></div>
+                        <li>fixed content to player misalignment when using small player</li>
+                        <div class="update"><div>1.6.1</div><div>10.01.2021</div></div>
+                        <li>fixed an issue that caused Save and Share buttons to go missing when changing videos</li>
+                        <div class="update"><div>1.6.0</div><div>10.01.2021</div></div>
+                        <li>multiple style changes</li>
+                        <li>extra layout changes setting now adjusts home page (and others) to match the old layout even closer; this setting is now enabled by default</li>
+                        <li>many font recolors now ignore dark theme</li>
+                        <li>added a user settings check that inserts a missing setting if required</li>
+                        <div class="update"><div>1.5.2</div><div>08.01.2021</div></div>
+                        <li>extra layout changes setting now supports dark theme</li>
+                        <li>added dark theme support for classic YT logo</li>
+                        <div class="update"><div>1.5.1</div><div>07.01.2021</div></div>
+                        <li>extra layout changes setting now ignores dark theme</li>
+                        <div class="update"><div>1.5.0</div><div>07.01.2021</div></div>
+                        <li>added an option to use extra layout changes - this brings the layout even closer to the old one, mainly noticable in the video page</li>
+                        <li>reorganized settings - moved all features from experimental section to the main one and rearranged them to have more feature-rich options on top</li>
+                        <div class="update"><div>1.4.3</div><div>05.01.2021</div></div>
+                        <li>added options to hide video filters (they appear on home and video pages if your YT language is set to English)</li>
+                        <div class="update"><div>1.4.2</div><div>04.01.2021</div></div>
+                        <li>added an option to use green/red colored likes/dislikes bar</li>
+                        <div class="update"><div>1.4.1</div><div>04.01.2021</div></div>
+                        <li>fixes for disabling infinite scrolling</li>
+                        <li>minor visual changes for disabling  infinite scrolling</li>
+                        <li>fixes for trending page column view</li>
+                        <div class="update"><div>1.4.0</div><div>31.12.2020</div></div>
+                        <li>added an option to hide 'Auto-play' button located in the video player</li>
+                        <li>fixed hiding the 'Play on TV' button which failed when 'Auto-play' button was present</li>
+                        <li>more tooltips added to extension's settings </li>
+                        <li>fixed broken player controls after zooming in/out or resizing the window</li>
+                        <li>split trending page into columns</li>
+                        <li>improved reliability of disabling infinite scrolling for related videos</li>
+                        <li>fixed an issue where disabling infinite scrolling for comments would break when quickly changing videos</li>
+                        <div class="update"><div>1.3.9</div><div>31.12.2020</div></div>
+                        <li>infinite scrolling fixes for sorting and for videos with disabled comments</li>
+                        <div class="update"><div>1.3.8</div><div>26.12.2020</div></div>
+                        <li>restored default views font variant</li>
+                        <li>minor changes to extension's tooltips</li>
+                        <li>slightly improved zooming in experience when using small player</li>
+                        <li>dark theme adjustments for disabling infinite scrolling</li>
+                        <li>multiple fixes for infinite scrolling</li>
+                        <div class="update"><div>1.3.7</div><div>24.12.2020</div></div>
+                        <li>fixed duplication of auto resume checks</li>
+                        <li>fixed displaying 1:1 aspect ratio videos in small player</li>
+                        <div class="update"><div>1.3.6</div><div>23.12.2020</div></div>
+                        <li>fixed displaying 21:9 videos in small player</li>
+                        <li>increased reliability of page realignment when using small player</li>
+                        <li>added tooltips to multiple extension settings</li>
+                        <li>fixed small player progress bar issues when changing between normal, theater and fullscreen modes</li>
+                        <div class="update"><div>1.3.5</div><div>22.12.2020</div></div>
+                        <li>fixed small player progress bar issues</li>
+                        <li>added player size presets (colored preset indicates default value)</li>
+                        <div class="update"><div>1.3.4</div><div>20.12.2020</div></div>
+                        <li>refactored displaying raw likes values (now called precise values)</li>
+                        <li>properly implemented disabling infinite scrolling - now also works for related videos</li>
+                        <div class="update"><div>1.3.3</div><div>17.12.2020</div></div>
+                        <li>fixed video date font color for dark theme when using rearranged layout</li>
+                        <li>changed and rearranged 'Join', 'Analytics' and 'Edit video' buttons</li>
+                        <div class="update"><div>1.3.2</div><div>17.12.2020</div></div>
+                        <li>added an option to restore classic YouTube logo</li>
+                        <div class="update"><div>1.3.1</div><div>17.12.2020</div></div>
+                        <li>minor changes to YouTube Redux settings window</li>
+                        <div class="update"><div>1.3.0</div><div>17.12.2020</div></div>
+                        <li>default video page layout was rearranged to closely match old design - changes affect channel info, likes, views, upload date, etc</li>
+                        <note>(This can be turned off via options in Experimental/WIP section.)</note>
+                        <div class="update"><div>1.2.5</div><div>15.12.2020</div></div>
+                        <li>increased video title font size to match old layout</li>
+                        <li>fixed small player causing a blank space below it on smaller screen resolutions</li>
+                        <li>fixed some elements not scaling down properly when zooming in</li>
+                        <li>fixed dark themed playlist height calculation</li>
+                        <div class="update"><div>1.2.4</div><div>13.12.2020</div></div>
+                        <li>fixed some incorrect text colors when using dark themed playlist</li>
+                        <div class="update"><div>1.2.3</div><div>13.12.2020</div></div>
+                        <li>additional changes to small player to bring it more in line with old layout</li>
+                        <li>small player content align option is now used by default</li>
+                        <li>added an option to use pillarboxing for non-standard aspect ratio videos - fills the player with black bars on the sides</li>
+                        <div class="update"><div>1.2.2</div><div>12.12.2020</div></div>
+                        <li>fixed unsafe var assignment</li>
+                        <div class="update"><div>1.2.1</div><div>11.12.2020</div></div>
+                        <li>added an option to align page contents to player size </li>
+                        <note>(to be used with small player size; causes elements underneath the video to have a maximum width that matches the player width which lines them up together)</note>
+                        <div class="update"><div>1.2.0</div><div>09.12.2020</div></div>
+                        <li>added an option to disable infinite comments scrolling</li>
+                        <note>(note: this is pretty much a hacky workaround than actual disabling as I haven't found a relatively easy way to do it. This option prevents scrolling past the point where YouTube automatically loads more comments and inserts a button to manually load more. Stopping scrolling may look a bit jarring for now though but I guess it kinda works!)</note>
+                        <div class="update"><div>1.1.2</div><div>03.12.2020</div></div>
+                        <li>properly fixed progress bar preview not showing up when using small player</li>
+                        <div class="update"><div>1.1.1</div><div>03.12.2020</div></div>
+                        <li>nothing changed - increased version to fix a webstore issue</li>
+                        <div class="update"><div>1.0.9</div><div>02.12.2020</div></div>
+                        <li>reverted preview fix</li>
+                        <div class="update"><div>1.0.8</div><div>30.11.2020</div></div>
+                        <li>fixed progress bar preview not showing up when using small player</li>
+                        <li>fixed displaying likes for videos with disabled likes counter</li>
+                        <div class="update"><div>1.0.7</div><div>29.11.2020</div></div>
+                        <li>fixed small player size for videos with aspect ratio other than 16:9</li>
+                        <li>moved auto resume from experimental into main settings</li>
+                        <div class="update"><div>1.0.6</div><div>28.11.2020</div></div>
+                        <li>fixed an issue that prevented small player from resizing itself when switching to theatre or fullscreen mode</li>
+                        <div class="update"><div>1.0.5</div><div>23.11.2020</div></div>
+                        <li>fixed auto resume... once again</li>
+                        <div class="update"><div>1.0.4</div><div>14.11.2020</div></div>
+                        <li>refactored grid changing function</li>
+                        <div class="update"><div>1.0.3</div><div>12.11.2020</div></div>
+                        <li>fixed auto resume again</li>
+                        <li>changed option to hide 'Play on TV' to be off by default </li>
+                        <div class="update"><div>1.0.2</div><div>09.11.2020</div></div>
+                        <li>fixed auto resume</li>
+                        <div class="update"><div>1.0.1</div><div>09.11.2020</div></div>
+                        <li>attempt to fix auto resume by manually playing video on url change</li>
+                        <li>added important to grid css for smooth injection by default</li>
+                        <div class="update"><div>1.0.0</div><div>08.11.2020</div></div>
+                        <li>initial release</li>
                     </ul>
                 </div>
                 <iframe id="changes-iframe" src="./popup.html" style="position:relative; top:0; left:0; min-width: 581px; max-width: 581px; min-height: 460px; margin-top: 10px; border: 1px solid black;" frameborder=0 height="100%"></iframe>
-                <div style="overflow:hidden; width: 500px; white-space: nowrap;">
-                    <div class="marquee">This page can be disabled using settings above.</div>
-                </div>
                 <div class="header-main" style="margin-top:20px;">You can access these settings via the extension's icon next to the address bar</div> 
             </div>
         </div>

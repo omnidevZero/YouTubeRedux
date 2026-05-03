@@ -797,7 +797,7 @@ function updateDislikes() {
 			let dislikesSource = document.querySelector('#top-level-buttons-computed .ryd-tooltip:last-of-type #tooltip') || document.querySelector('ytd-video-primary-info-renderer #top-level-buttons-computed #segmented-dislike-button span'); 
 			if (!dislikesSource) return;
 			
-			let dislikes = document.querySelector('#above-the-fold dislike-button-view-model button');
+			let dislikes = document.querySelector('#above-the-fold dislike-button-view-model button .ytSpecButtonShapeNextButtonTextContent');
 			let dislikesCount = dislikesSource.innerText.match(/(?<=\/).*/) ? dislikesSource.innerText.match(/(?<=\/).*/)[0].trim() : dislikesSource.innerText;
 			
 			if (dislikes) {
