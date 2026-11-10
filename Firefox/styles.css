@@ -464,9 +464,12 @@ ytd-mini-guide-renderer.ytd-app {
 } */
 
 /*VIDEO STYLES*/
+/* hover preview player: it sizes and anchors itself inside its thumbnail
+   container, so any margin here shifts it off-centre and pushes it past the
+   card edges (the 12px margin added in v3.8.0 did exactly that on the current
+   lockup layout). Leave positioning to YouTube. */
 ytd-video-preview {
     padding: 0 !important;
-    margin: 12px;
 }
 #above-the-fold #title yt-formatted-string {
     font-size: 20px;
